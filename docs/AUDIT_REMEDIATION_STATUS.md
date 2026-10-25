@@ -100,3 +100,14 @@ This ledger should be updated when code commits, test results or third-party app
 
 **Next deployment deliverables when source implementation starts:** parameterized OCI IAM/VCN/compute/volume definitions, hardened non-root ARM64 application delivery, secrets provisioning, database migration and rollback pipeline, encrypted Object Storage backup + external-restore exercise, observed service health/alarms, per-child cost telemetry and a signed dev → staging → limited pilot → paid-production go/no-go record.
 
+## 8. New India-law, resilience, subscription and capacity audit closure status (2026-10-26)
+
+**Documentation-level remediation (NOT implementation approval):**
+- **AG-005/016:** [India DPDP and US Chicago transfer assessment](INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md) now references official Gazette, child age under 18, section 9(3) behaviour monitoring restriction, limited safety real-time exemption, phased 2027 commencement and lawyer/deployment stop gate. **LEGAL_REVIEW_OPEN**; no automatic exemption for consumer tracking/history/usage. B-01/B-02/X-03 unchanged OPEN.
+- **AG-013:** [SOS escalation/fallback](SOS_ESCALATION_AND_INDEPENDENT_DELIVERY_DESIGN.md) includes real guardian ACK, FCM-vs-SMS-vs-independent worker differences, bounded attempts/cost and outage tests. **SOS-B01–07 OPEN**; no emergency-grade promise.
+- **AG-011/022:** [OCI disaster recovery and testable RPO/RTO targets](OCI_CHICAGO_RECOVERY_AND_PILOT_READINESS.md) reconcile one Always Free VM with actual failure domains and restore evidence. **UNTESTED**; hardware/provisioning/HA funds missing.
+- **AG-021/023:** [Current-price fully-loaded break-even and staffing plan](PRICE_BREAK_EVEN_STAFFING_AND_DELIVERY_CAPACITY.md) proves ₹50/₹500 viability **cannot yet be concluded**, names engineering roles, hardware and cash blockers. TEAM-01–08 open.
+- **AG-003/004/009:** [Owner register §I](BLOCKERS_AND_OWNER_DECISIONS.md) now provides explicit pending inputs for legal publisher, child ages, retention, guardian scopes, Google Sign-In candidate, resettable test phone and rollout gates. **OWNER_DECISION_OPEN**; product owner hasn't answered.
+
+**No changes to earlier AG-001–AG-026 original finding counts.** These are additive design controls. Do not close an audit item merely because a document exists; actual owner decisions, code tests, legal memoranda, hardware trials and vendor/OCI billing verification are the evidence required.
+
