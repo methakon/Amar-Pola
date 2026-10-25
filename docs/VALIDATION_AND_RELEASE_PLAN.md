@@ -155,3 +155,6 @@ Anything left blank is a blocker for claims that the corresponding area is compl
 
 Evidence docs: [India DPDP](INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md), [SOS](SOS_ESCALATION_AND_INDEPENDENT_DELIVERY_DESIGN.md), [DR](OCI_CHICAGO_RECOVERY_AND_PILOT_READINESS.md), [Staffing/unit economics](PRICE_BREAK_EVEN_STAFFING_AND_DELIVERY_CAPACITY.md), [Owner decisions](BLOCKERS_AND_OWNER_DECISIONS.md). Never close a gate with this table alone.
 
+## 11. Canonical M0–M9 and M1 test/CI authority
+
+Use [single master milestones M0–M9](MASTER_MILESTONE_IMPLEMENTATION_AND_RELEASE_PLAN.md) over the old M0–M7 table above. In particular M1 must pass [M1 OpenAPI](openapi-m1.yaml) structural lint, [migrations](../backend/persistence/migrations/0001_m1_identity.sql), [two-family negative RLS test](../backend/tests/m1_tenant_isolation.sql), and [T-M1-01…14 detailed cases](../backend/tests/M1_ACCEPTANCE_TEST_CASES.md). A [GitHub Actions CI](../.github/workflows/m1-contract-and-tenant.yml) defines a PostgreSQL 16 execution environment. Real phone/DPC, backend handlers, legal under-18 authority and actual OCI India tenancy remain blocked.
