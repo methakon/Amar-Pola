@@ -124,3 +124,7 @@ The project owner selected **native parent Android**, **managed-device provision
 ## Eraser.io high- and low-level design diagrams (2026-10-26)
 
 [**Eight editable HLD and LLD architecture diagrams**](docs/ERASER_HLD_LLD_DIAGRAM_INDEX.md) are available in the connected [Eraser Amar-Pola workspace](https://app.eraser.io/workspace/dP8nMbuaxaFXBkBzUHCv): context/trust boundaries, OCI Mumbai deployment, M1 pairing proof, M1 PostgreSQL ERD, GPS ingestion, guardian revocation, SOS escalation and family billing. These are planned designs; legal, device, database CI and deployment gates remain open.
+
+## Editable Android UI boards — tldraw
+
+[**225 editable Light / Dark / Battery Saver screen variants**](docs/ui/tldraw/README.md) for 54 parent and 21 child screens are stored in the [live tldraw board](https://www.tldraw.com/f/-IuhoGjlF7uXC5imxkaL3) with [native snapshot backup](docs/ui/tldraw/amar-pola-ui-master-snapshot.json) checked into GitHub. Covers Google Sign-In, guided child installation and permissions, location and map evidence, guardians, alerts, safety check-ins, privacy, DPC and subscription management. Visual prototypes; application implementation remains pending.
