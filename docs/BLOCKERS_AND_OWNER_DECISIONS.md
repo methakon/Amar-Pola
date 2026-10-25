@@ -77,3 +77,16 @@ This documentation refresh can remediate **design gaps** AG-001/002/003/006/007/
 4. Keep **remote hidden capture, protected private-file access, and Android security bypass** excluded.
 
 Related: [Feasibility](WHOLE_PROJECT_FEASIBILITY_GATE_2026.md) · [Audit](TECHNICAL_DOCUMENT_AUDIT_GAPS_2026.md) · [SRS](SRS.md).
+
+## F. Newly confirmed architecture constraints — 2026-10-25
+
+The project owner has supplied these additional instructions. They update the **design direction** but do not certify platform capabilities or legal compliance:
+
+| Blocker | New information | Decision status | What remains open |
+|---|---|---|---|
+| **B-05** | Managed-device provisioning is available | **DIRECTION DECIDED:** plan optional fully managed child DPC path in addition to STANDARD app | Exact enrollment approach, factory reset acceptance and physical proof of device-owner authority |
+| **B-10** | A mix of older and newer Android versions must be supported | **PARTIALLY DECIDED:** implement API-aware Android compatibility path, proposed minSdk 29 | Exact supported Android versions/OEM models, test fleet and capability pass evidence |
+| **B-19** | Parent interface is a **native Android app** | **DECIDED:** Kotlin/Jetpack Compose native client, no web parent client in M1 | None for architecture choice; production UI remains to be coded |
+| **B-03** | Transparent, permission-based monitoring is prioritized | **DIRECTION DECIDED:** identifiable child app and system monitoring notification are nonnegotiable | Exact localized disclosure, jurisdiction/consent and Play Console approval |
+
+The implementation plan and acceptance tests are now specified in [M1 Android/C++ Architecture and Implementation](M1_ANDROID_CPP_ARCHITECTURE_AND_IMPLEMENTATION.md). This is a design status update only. Device-owner provisioning and supported Android behavior remain engineering verification tasks.
