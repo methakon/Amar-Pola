@@ -121,3 +121,17 @@ The initial matrix in section 6 was a preliminary assessment. A more detailed, s
 - The initial parent-granted-permissions assumption remains, but permission grants do not override background execution constraints.
 - Proposed roadmap, Play declaration and validation details are in [Implementation Technical Specification](IMPLEMENTATION_TECHNICAL_SPECIFICATION.md), [Google Play Publishing Requirements](GOOGLE_PLAY_PUBLISHING_REQUIREMENTS.md) and [Validation and Release Plan](VALIDATION_AND_RELEASE_PLAN.md).
 - **No Android device compatibility results or Google Play approvals have yet been obtained.**
+
+## 8. New product request: parent-labeled addresses, road history and multiple stops (2026-10-25)
+
+The parent shall be able to create arbitrary address/coordinate pins with titles and see these labels near the observed child position on Google Maps. Historical movement shall be shown as a segmented, time-ordered travelled track with multiple dwell-stop markers, not a computed directions route presented as a fact.
+
+**Decision D-013:** Evaluate stops and named-place matches on the C++ backend so the child need not run geocoding or map rendering. Parent place markers require no additional child GPS sampling.
+
+**Decision D-014:** Use adaptive location modes and define the measurable battery/accuracy trade-off. Default to lower-power, potentially sparse tracks; reserve time-limited high-detail recording for genuine need.
+
+**Decision D-015:** Apply road matching only to sufficiently dense, reliable vehicle observations **after** checking Google Roads API commercial tracking license and content retention terms. Sparse segments and unknown gaps shall remain explicitly approximate/unknown.
+
+**Decision D-016:** Preserve independent device provenance when watches/tablets/phones may report the same child's position. Watch GNSS absence and disconnects must not be hidden.
+
+Detailed conditions, technical approach, schemas, API endpoints and device tests: [Live Trip Route, Named Places and Battery Specification](LIVE_TRIP_ROUTE_NAMED_PLACES_BATTERY_SPECIFICATION.md).
