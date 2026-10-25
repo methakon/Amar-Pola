@@ -90,3 +90,18 @@ The project owner has supplied these additional instructions. They update the **
 | **B-03** | Transparent, permission-based monitoring is prioritized | **DIRECTION DECIDED:** identifiable child app and system monitoring notification are nonnegotiable | Exact localized disclosure, jurisdiction/consent and Play Console approval |
 
 The implementation plan and acceptance tests are now specified in [M1 Android/C++ Architecture and Implementation](M1_ANDROID_CPP_ARCHITECTURE_AND_IMPLEMENTATION.md). This is a design status update only. Device-owner provisioning and supported Android behavior remain engineering verification tasks.
+
+## G. Oracle Chicago hosting selection and finance decision — 2026-10-25
+
+The owner has selected **Oracle OCI US Midwest Chicago (us-chicago-1)** as the design/home-region target, prioritizing Always Free allowances and later PAYG scaling. Detailed deployment/cost assumptions are documented in [OCI Chicago Deployment and Financial Plan](OCI_CHICAGO_DEPLOYMENT_AND_FINANCIAL_PLAN.md).
+
+| Existing ID | Updated decision status | Remaining blockage |
+|---|---|---|
+| **B-08** | **PARTIALLY DECIDED:** cloud provider Oracle, planned region Chicago | OCI account creation, real A1 capacity, US child-data hosting legality, hosting budget, backups |
+| **B-21** | Cost model added for 100–10,000 children with one subscription per child | Expected actual enrollment, maximum monthly spend, staff/support/HA budget |
+| **B-14** | Per-child subscription billing unit established by owner | Actual monthly price, Play fees/taxes/trial/refund policy; ₹149 is example only |
+| **E-08** | Chicago hardware/load topology designed | Actual CPU/DB/queue synthetic load evidence absent |
+| **X-03** | US database region made explicit | Jurisdiction, minor privacy, cross-border transfer/legal consent assessment |
+| **X-08** | OCI resource selected on paper | Live VM and capacity not verified; OS/OEM test fleet still needed |
+
+**Do not mark B-08 fully closed:** Oracle home-region selection is materially difficult to change after tenancy creation, capacity is not publicly guaranteed, and OCI requires an authorized account holder to create resources. No tenancy, instance, domain or payment method was accessed or changed by this documentation step.
