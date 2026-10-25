@@ -533,3 +533,14 @@ The standalone [third-party cost analysis §1.1](THIRD_PARTY_SERVICES_COST_ANALY
 **Revenue remaining per child before taxes, paid optional APIs, support, payroll, legal/security, refunds and HA costs:** approximately **₹126.45/month direct-cost basis**, or **₹123.41/month after allocating reserved hosting budget**. Do not classify either amount as net profit.
 
 The combined view is **not** an OCI-only expense and does not alter the OCI-only model in §14. Rounding, free allowance eligibility, tax treatment and server load tests are still open.
+
+## 16. Current subscription-price viability and mandatory DR budget correction (2026-10-26)
+
+**Current public-price PROPOSAL is ₹50 per child/month or ₹500 per child/year. The ₹149/month tables in §8 are HISTORICAL commercial sensitivity only, NOT the recommended product price.** Billing fee scales down with subscription receipts; revenue scales down too. Do not reuse §8 historical profit/revenue rows as the new forecast. [Current price/fully loaded break-even analysis](PRICE_BREAK_EVEN_STAFFING_AND_DELIVERY_CAPACITY.md).
+
+At **1,000** fully paid child seats and using this report's existing **₹3,238.47/month budgeted OCI hosting including reserve**, the illustrative tax-INCLUSIVE (18% consumer GST example, 15% Play fee calculated on net of GST) revenue remaining after Play fees + hosting is approximately **₹32.78 per child per month** at ₹50 monthly, or **₹321.31 per child per year** at ₹500 annually. These are NOT full profits: they exclude paid guardian/SOS SMS, support, developer salaries, real production HA, higher Maps usage, churn, acquisition, refunds and legal counsel. 18% is a hypothetical tax example pending accountant confirmation.
+
+**Single-VM availability correction:** one OCI A1 VM can be reclaimed/lose disk/network; API, PostgreSQL and C++ workers share fate. [Recovery plan](OCI_CHICAGO_RECOVERY_AND_PILOT_READINESS.md) defines *unverified* dev RPO 24h/RTO 48h, real-data pilot proposed RPO≤4h/RTO≤12h, production target ≤1h/≤4h requiring separate funded resilience and rehearsed restore. **None of those are guaranteed or included in historic ₹0.20 per-child/month direct hosting**. FCM from same VM cannot guarantee SOS; [independent delivery](SOS_ESCALATION_AND_INDEPENDENT_DELIVERY_DESIGN.md) remains blocked by provider/fallback funding.
+
+**Legal transfer stop:** Chicago is a TECHNICAL PLANNING REGION, NOT authorization to export Indian children's precise GPS. [India DPDP child-data and US hosting gate](INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md) requires legal entity, section 9/16 review, verifiable guardian authority, data categories and retention approval before real collection. No VM created, quota or paid HA cost verified.
+
