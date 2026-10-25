@@ -36,3 +36,19 @@ The child app's main activity does not need to remain open for every background 
 5. Add capability-gated, authorized media workflows, Drive integration, subscriptions, and release hardening.
 
 The documents are an initial design baseline, not a claim that the application is already implemented or that every feature works on every device.
+
+## Expanded documentation (2026-10-25 review)
+
+The following documents supplement the initial v0.1 baseline. They are architecture, validation, and Play-submission drafts—not proof of device tests or approval:
+
+- [Feature feasibility, reasons and precise conditions](docs/FEASIBILITY_CONDITIONS_AND_EVIDENCE.md)
+- [Implementation technical specification and roadmap](docs/IMPLEMENTATION_TECHNICAL_SPECIFICATION.md)
+- [Google Play publishing and permission requirements](docs/GOOGLE_PLAY_PUBLISHING_REQUIREMENTS.md)
+- [Play Data safety and Android permission worksheet](docs/DATA_SAFETY_WORKSHEET.md)
+- [Privacy policy publication draft](docs/PRIVACY_POLICY_DRAFT.md)
+- [Account and data deletion design](docs/ACCOUNT_DELETION_DESIGN.md)
+- [Store listing and Play reviewer guidance](docs/PLAY_STORE_LISTING_AND_REVIEWER_GUIDE.md)
+- [Verification, testing and release roadmap](docs/VALIDATION_AND_RELEASE_PLAN.md)
+- [Security architecture and operations](docs/SECURITY_AND_OPERATIONS.md)
+
+**Publication warning:** There are not yet release AABs, live privacy/deletion web pages, Play Console declarations, reviewer demonstration videos, or verified Android device test results. These must be created and validated before publishing either app.
