@@ -90,3 +90,10 @@ If you have an active subscription through Google Play, follow the Play subscrip
 ## Official source
 
 https://support.google.com/googleplay/android-developer/answer/13327111
+
+## 8. India data retention, purpose revocation and backup-recovery legal gate
+
+The India-first plan requires consent/authority and DPDP feature-purpose review before ingestion of any real child's data: a realtime safety location exemption may not extend to app-usage or historic route datasets. [India DPDP and Chicago transfer](INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md). Retention assumptions in old financial projections are not policy approval. Candidate design: raw 14d, history 90d, usage OFF, audit 365d, backups 30d; final periods require owner and legal signoff.
+
+Erasure/restoration tests must cover **offline device queue**, replicated/bucket backups, token/SSE revocation, separate Drive account responsibilities and legally necessary record retention. A recovered snapshot may not resurrect erased child GPS; see [OCI DR and restore tests](OCI_CHICAGO_RECOVERY_AND_PILOT_READINESS.md). Public deletion web page still not deployed.
+
