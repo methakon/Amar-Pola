@@ -73,3 +73,7 @@ See [Adaptive Movement and Multi-Tenant C++ Server Architecture](docs/ADAPTIVE_M
 ## Feedback-led differentiation study (October 2026)
 
 [Market Feedback, Competitive Gaps & Feasible Differentiation](docs/MARKET_FEEDBACK_GAPS_AND_DIFFERENTIATION_2026.md) reviews the original five Play apps plus Life360, Qustodio, Bark and Family Link against sampled Play reviews, feedback aggregators, Reddit parent discussions and official Android/Play guidance. It proposes confidence-aware trips, a device reliability center, offline trip repair, time-limited guardian grants, low-noise commute alerts, privacy access receipts and policy previews. **These are research proposals, not verified competitor absences or approved SRS features.**
+
+## Documentation quality audit (2026-10-25)
+
+[Technical Specification and Whole-Project SRS Gap Audit](docs/TECHNICAL_DOCUMENT_AUDIT_GAPS_2026.md) records **26 prioritized findings** after reviewing the current consolidated SRS, older canonical technical specification, C++ architecture, feasibility, OpenAPI, Android compatibility, privacy and Play documents. **Most urgent:** replace outdated canonical technical spec, formalize all endpoint/tenant/deletion contracts, complete FR-to-test traceability, and validate Android, battery and server failure cases. This is a documentation audit, **not** a code, hardware or Play Console certification; corrective changes have not yet been implemented.
