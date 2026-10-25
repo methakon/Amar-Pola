@@ -294,3 +294,7 @@ The following optional interaction modes let the parent preserve the original lo
 | Loud ring | Parent command triggering permitted sound plus on-device indication | Do not guarantee bypass of DND/silent settings |
 
 **Decision required:** Does “child app never in foreground” mean **no mandatory ongoing screen** (compatible with optional SOS/widget/UI), or **no child interaction at all** (then skip SOS/check-in/rewards, retaining automatic safety alerts and guardian controls)? Neither choice removes Android's required monitoring notices.
+
+## 13. October 2026 parent-feedback and differentiated-experience follow-up
+
+See [Market Feedback, Competitive Gaps & Feasible Differentiation](MARKET_FEEDBACK_GAPS_AND_DIFFERENTIATION_2026.md). This additional research incorporates sampled Google Play reviews, Reddit parent concerns, Life360/Qustodio/Bark/Family Link features and official Android/Play feasibility. It corrects any temptation to call SOS, arrival alerts, extra-time requests, screen-time rewards or driving reports inherently unique. The strongest proposed differentiation is an **evidence-first and privacy-accountable experience**: transparent route gaps, diagnostics, late-trip recovery, time-limited guardian grants and clear feature/billing support states. Every candidate remains pending product/security approval and device testing.
