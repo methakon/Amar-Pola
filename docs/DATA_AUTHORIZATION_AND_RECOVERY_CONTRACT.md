@@ -225,3 +225,12 @@ Before release: migration apply/rollback in isolated DB; cross-family and child-
 - https://www.postgresql.org/docs/current/sql-select.html
 - https://postgis.net/docs/ST_DWithin.html
 - https://owasp.org/API-Security/
+
+## 10. Guardian-authority and Indian legal scope qualification
+
+**Implementation default pending owner approval:** only an independently verified family owner can create/revoke child-specific guardian grants, no default history scope, pickup current-location-only and ≤45-minute candidate TTL. These are architectural protections, **not settled guardian/authority policy B-09/B-18**. Enforce RBAC and DB RLS separately from any legal adult identity/parental authority verification. A Google Sign-In account token does not prove custody.
+
+India's DPDP s.9/rules 10/12 may permit only a narrow real-time safety location purpose; do not populate location_observations, trips/stops, usage tables or SOS recipient fanout with **real Indian minors' data** until the corresponding purpose and India-to-US Chicago transfer have been signed off by counsel and owner. For real pilot use a server-side deny-by-default purpose registry with versioned verification/consent receipt and revoke epoch; never allow client claims to override legal denial. [India legal release gate](INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md).
+
+Retention: raw 14d, derived 90d, usage OFF, audit 365d, backup 30d are only engineering candidates, not signed processing commitments. Revocation, erasure across time-partitioned data and restored backups remain implementation testing gates.
+
