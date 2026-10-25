@@ -393,7 +393,7 @@ The following monthly table **adds all specifically priced host items**, rather 
 | 20,000 (illustrative) | PAYG 16/96 | 1500 GB | 600 GB | ₹15,757 | ₹5,279 | ₹1,437 | ₹150 | **₹22,624** | **₹2,71,483** |
 | 50,000 (illustrative) | PAYG 24/144 | 3000 GB | 1200 GB | ₹26,359 | ₹11,370 | ₹2,899 | ₹150 | **₹40,778** | **₹4,89,337** |
 
-**Example at 5,000 children (illustration, not capacity claim):** A1 8/48 uses paid monthly resources above the 3k/18k allowance; compute ≈ **₹5,156/month**, additional 300 GB block ≈ **₹1,218/month**, 150 GB chargeable object backups ≈ **₹365/month**, domain ≈ **₹150/month**. **Priced-line total ≈ ₹6,889/month**, or **₹82,669/year** at constant use/rates, excluding reserve/tax/unlisted services.
+**Example at 5,000 children (illustration, not capacity claim):** A1 8/48 uses paid monthly resources above the 3k/18k allowance; compute ≈ **₹5,156/month**, additional 300 GB block ≈ **₹1,218/month**, 150 GB chargeable object backups ≈ **₹365/month**, domain ≈ **₹150/month**. **Priced-line total ≈ ₹6,889/month**, or **₹82,671/year** at constant use/rates, excluding reserve/tax/unlisted services.
 
 ### 14.4 Safer cash planning budget: what to allocate to hosting
 
@@ -409,7 +409,7 @@ These are **cash allocations**, not invoices: the priced-line service subtotal +
 | 20,000 | ₹22,624 | ₹4,525 | ₹45,000 | **₹72,148** | **₹8,65,780** | ₹4 |
 | 50,000 | ₹40,778 | ₹8,156 | ₹1,00,000 | **₹1,48,934** | **₹17,87,205** | ₹3 |
 
-**How to read it:** For 2,500 hypothetical children with 6/36 A1, 300 GB total volume and 80 GB object backups: **~₹3,232** specifically priced services per month. With ~₹646 risk margin and ₹6,000 optional additional hosting reserve, **allocate ~₹9,878/month = ₹1,18,540/year**. This is not a claim that Oracle will bill ₹9,878; unspent reserve remains unspent.
+**How to read it:** For 2,500 hypothetical children with 6/36 A1, 300 GB total volume and 80 GB object backups: **~₹3,232** specifically priced services per month. With ~₹646 risk margin and ₹6,000 optional additional hosting reserve, **allocate ~₹9,878/month = ₹1,18,538/year**. This is not a claim that Oracle will bill ₹9,878; unspent reserve remains unspent.
 
 **If you want the minimum plausible OCI bill rather than your safer business hosting budget, use §14.3**, not the larger allocations in this table. Neither version pays for actual human support, development, Play fees, media APIs or production-grade HA.
 
@@ -431,9 +431,9 @@ The A1 credit accounts for up to **~₹5,446/month** of compute at these 730-hou
 ### 14.6 What is the added cost when we scale?
 
 At 730 hours, after the combined A1 free pool has been exhausted:
-- **+1 OCPU** adds ~**₹697/month**, or **₹8,371/year**, compute only.
-- **+1 GB RAM** adds ~**₹105/month**, or **₹1,256/year**, compute only.
-- A proportional step of **+2 OCPU and +12 GB** adds ~**₹2,650/month**, or **₹31,802/year**, compute only.
+- **+1 OCPU** adds ~**₹697/month**, or **₹8,370/year**, compute only.
+- **+1 GB RAM** adds ~**₹105/month**, or **₹1,255/year**, compute only.
+- A proportional step of **+2 OCPU and +12 GB** adds ~**₹2,650/month**, or **₹31,805/year**, compute only.
 - **+100 GB balanced paid boot/block** adds ~**₹406/month**, or **₹4,873/year**. Only true once the shared free 200 GB has already been consumed.
 - **+100 GB paid backup objects** adds ~**₹244/month**, or **₹2,924/year**, provided stored object GB exceed their free allowance.
 
@@ -469,4 +469,4 @@ A **single VM** (even 12/72) is a single point of failure and is not commercial 
 - Block Volume VPUs and lower-cost vs balanced tier: https://docs.oracle.com/en-us/iaas/Content/Block/Concepts/blockvolumeelasticperformance.htm
 - Oracle OCI Cost Estimator: https://www.oracle.com/cloud/costestimator.html
 
-**Executive number:** On the selected A1 architecture, **5,000 hypothetical children** at 8/48 and 500 GB provisioned disk imply about **₹6,889/month (~₹82,669/year) priced-line hosting**, while **₹20,267/month (~₹2,43,206/year)** is an intentionally larger hosting **planning allocation** with reserves. These are illustrative, not evidence that this hardware tier can run 5,000 children, and omit commercial HA and staff.
+**Executive number:** On the selected A1 architecture, **5,000 hypothetical children** at 8/48 and 500 GB provisioned disk imply about **₹6,889/month (~₹82,671/year) priced-line hosting**, while **₹20,267/month (~₹2,43,205/year)** is an intentionally larger hosting **planning allocation** with reserves. These are illustrative, not evidence that this hardware tier can run 5,000 children, and omit commercial HA and staff.
