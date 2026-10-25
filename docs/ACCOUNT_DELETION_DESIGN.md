@@ -1,0 +1,92 @@
+# Account and Data Deletion: Functional and Technical Design
+
+**Amar-Pola | Draft 2026-10-25 | Not yet implemented**
+
+This document describes **mandatory planned behavior** for the parent app's account deletion path, a public account-deletion web entry point, child unpairing, retention and optional Drive data. Do not publish a deletion URL or claim deletion capabilities until the service exists.
+
+## 1. Product requirements
+
+- A signed-in parent can access `Settings > Account > Delete account` or a clear equivalent.
+- An unauthenticated former user can request deletion from a public, identifiable web page without reinstalling Amar-Pola.
+- The service shall provide identity verification proportional to the deletion risk, without demanding that a user restore access to the deleted app.
+- The page explains which data will be deleted, which could legally be retained and how long, and how subscriptions are canceled.
+- Deletion of an account revokes linked device credentials, stops new telemetry ingestion, revokes delegated backend integration access where feasible, deletes or schedules erasure of attached historical data, and records minimal auditable request state.
+- A parent can unpair an individual child device without necessarily deleting their entire parent account.
+- Removal from our backend does not automatically erase a parent-created Google Drive copy unless the actual authorized API operation and parent approval cover it; explain this separately.
+
+## 2. Proposed API
+
+```text
+POST /v1/account/deletion-request
+  -> request_id, verification_state, created_at
+POST /v1/account/deletion-request/{id}/verify
+  -> verified | rejected
+GET /v1/account/deletion-request/{id}/status
+  -> requested | verifying | queued | processing | completed | failed
+POST /v1/devices/{deviceId}/unpair
+  -> revoked_at
+POST /v1/integrations/google-drive/revoke
+  -> revocation_result
+```
+
+Use authenticated parent identity where available and secure one-time verification for web requests. Rate-limit requests. Do not expose request status across accounts.
+
+## 3. Deletion state machine
+
+```text
+REQUESTED -> VERIFIED -> ACCESS_REVOKED -> DELETING -> COMPLETED
+    |            |             |
+    v            v             v
+  REJECTED    CANCELLED    FAILED_RETRYABLE
+```
+
+Access revocation is immediate once authorized; data deletion may be asynchronous and retried. Use durable job IDs and idempotency.
+
+## 4. Data category workflow
+
+| Category | Expected action | Verification |
+|---|---|---|
+| Parent profile/auth link | Deactivate and remove/retain minimal legal audit as appropriate | Cannot authenticate after completion |
+| Device enrollment keys | Revoke and remove | Child API returns unauthorized |
+| Location and route history | Delete per device/account in primary storage | Queries return no deleted events |
+| Usage aggregates | Delete | Reports return empty |
+| Policies and commands | Cancel execution, revoke pairing, minimize audit as legally appropriate | No new command delivered |
+| Optional media metadata/files | Delete owned internal storage; handle Drive copies according to clear policy and parent choice | Object inaccessible and deletion receipt |
+| Google Drive OAuth | Revoke stored token and unlink | Integration no longer works |
+| Backups | Delete or expire under explicit documented schedule | Restore test does not resurrect deleted data after relevant retention |
+| Security/billing records | Retain only as required under defined legal/fraud obligations | Retention exception documented |
+
+## 5. Public request page content — draft
+
+**Title:** Request deletion of your Amar-Pola account
+
+“Use this page to request deletion of your Amar-Pola parent account and associated information, including paired devices, location history and app-usage reports. We may need to verify account ownership before acting. Some transaction or security records may be retained where legally required; see our Privacy Policy for the exact categories and periods.
+
+If you have an active subscription through Google Play, follow the Play subscription cancellation process. Account deletion and subscription cancellation are separate actions. [SUPPORT CONTACT] can help with access or deletion requests.”
+
+**Web destination:** `https://[PUBLIC DOMAIN]/account/delete` — placeholder only, **not live**.
+
+## 6. Test cases
+
+- Owner requests deletion while signed in; credentials revoked and children no longer sync.
+- Unauthenticated web request with valid email verification, invalid email and replay.
+- Subscription active; clear instruction and entitlement handling, no surprise billing promises.
+- Device offline during deletion; later sync rejected.
+- Interrupted deletion job resumes without recreating accounts.
+- Google Drive previously unlinked, token expired, and uploaded copies handled according to published policy.
+- Deleted account attempt to sign in/re-pair without re-registration.
+- Private/deleted data absent from analytics/logs/backups according to documented schedule.
+
+## 7. Publication blockers
+
+- [ ] Final support email/operator identity
+- [ ] Actual public HTTPS deletion page and working request workflow
+- [ ] In-app deletion entry point
+- [ ] Tested background deletion job and device credential revocation
+- [ ] Defined backup/log/legal retention limits
+- [ ] Live privacy policy reflecting this behavior
+- [ ] Data safety declaration reconciled with actual deletion capabilities
+
+## Official source
+
+https://support.google.com/googleplay/android-developer/answer/13327111
