@@ -289,3 +289,20 @@ Official verification:
 All 49 functional and 16 non-functional requirements now have planned module/owner/test assignments in [Requirements Traceability](REQUIREMENTS_TRACEABILITY.md). The new canonical [Technical Specification v1.0](TECHNICAL_SPECIFICATION.md) links each implementation group to [Data/Authorization/Recovery](DATA_AUTHORIZATION_AND_RECOVERY_CONTRACT.md), [Android Runtime and Algorithm Contract](TRACKING_RUNTIME_AND_ALGORITHM_CONTRACT.md), [Command/SOS/Usage/Queue Contract](COMMAND_SOS_USAGE_QUEUE_CONTRACT.md), and the expanded [OpenAPI 3.1 draft](openapi.yaml).
 
 **Approval is conditional:** See [Blockers and Owner Decisions](BLOCKERS_AND_OWNER_DECISIONS.md) for unresolved launch markets, legal publisher, guardianship, retention, managed mode, hardware support and subscription scope; [Audit Remediation Status](AUDIT_REMEDIATION_STATUS.md) separates completed documentation from missing binaries, migrations, tests and Play policy review. No FR is certified implemented by this SRS.
+
+## 16. India DPDP and pilot release constraints (2026-10-26)
+
+This section is a **binding specification/release gate** for all existing FRs/NFRs, not a claim about current legal compliance. No real minors' data in any build/test environment until required purpose-by-purpose legal authority is verified. The source of legal interpretation and scope gating is [India DPDP Child Privacy and US Transfer](INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md), covering DPDP Act s.9, s.16, Rules 10/12, narrow real-time safety exemption and 2027 phased commencement. **Live location safety, historic route history and app usage are NOT automatically covered by the same exception.**
+
+- **FR-003/004/015–018/024/028/033:** observed live location must separately pass India child-purpose + Chicago data-transfer consent/legal review; trip/stops/commute/history **OFF** for minors until explicitly signed scope.
+- **FR-005/047:** app usage and behavioural monitoring **OFF** in India minor pilots pending a specifically favorable legal assessment, regardless of Android Usage Access being granted.
+- **FR-013/027:** product owner and counsel approve data-category retention and backup/deletion including replay of erased offline event streams. Raw 14d / derived 90d / audit 365d / backup 30d are **unapproved planning candidates**, never user-facing published policies.
+- **FR-022/034/035:** only verified owner is provisional inviter/revoker; new guardians never inherit children automatically; temporary pickup limited to one child, time and current view only; parent identity must be verified beyond a mere account when required.
+- **FR-044:** **no emergency-grade SOS claim** until backup channel, independent failure-domain design and actual guardian acknowledgement/fault-injection evidence exist. FCM send success is not guardian receipt. A limited best-effort check-in may be separately released with truthful state and permissions. [SOS contract](SOS_ESCALATION_AND_INDEPENDENT_DELIVERY_DESIGN.md).
+- **NFR-003/012 and readiness:** single Always Free VM cannot meet a production high-availability claim. Need signed target and measured RPO/RTO; proposed synthetic-only 24h/48h, reviewed pilot 4h/12h, production 1h/4h **targets**, not current capacity. [Disaster Recovery](OCI_CHICAGO_RECOVERY_AND_PILOT_READINESS.md).
+- **Commercial FR-012:** current proposed ₹50/month / ₹500/year per child; ₹149 historic only. Full break-even must include tax, Play fees, real API, HA, staff, support and acquisition. [Financial viability](PRICE_BREAK_EVEN_STAFFING_AND_DELIVERY_CAPACITY.md).
+- **M1 acceptance:** requires at least one actual owner-approved resettable DPC-capable spare and physical API/OEM test device; otherwise M1 hardware portion remains BLOCKED while emulator tasks may proceed.
+- **M2/pilot:** no real GPS/usage collection until legal entity, child-purpose, guardian policy, consent/verification, US hosting review, RPO/RTO backup tests, device hardware evidence and support owner pass signoff.
+
+All are mandatory go/no-go gates; implementing synthetic-data algorithms is allowed before legal signoff.
+
