@@ -303,3 +303,12 @@ The architecture is feasible in principle, but several capabilities are conditio
 10. Store results with device model, Android version/API level, app build, permissions, enrollment mode, test steps, and observed result.
 
 Result vocabulary: **Pass**, **Pass with conditions**, **Fail**, **Not tested**. Only verified combinations should be marketed as supported.
+
+## 15. Detailed implementation and publication supplements
+
+- [Full Implementation Technical Specification](IMPLEMENTATION_TECHNICAL_SPECIFICATION.md) expands this baseline into Kotlin/C++ modules, API flows, proposed schema, state transitions, implementation phases and verification criteria.
+- [Feature Feasibility Conditions and Evidence](FEASIBILITY_CONDITIONS_AND_EVIDENCE.md) explains conditional Android API support and limits.
+- [Google Play Publishing Requirements](GOOGLE_PLAY_PUBLISHING_REQUIREMENTS.md) documents API-level, monitoring-policy, permission declaration, app signing and native 16 KB page compatibility requirements.
+- [Data Safety Worksheet](DATA_SAFETY_WORKSHEET.md), [Privacy Policy Draft](PRIVACY_POLICY_DRAFT.md), [Account Deletion Design](ACCOUNT_DELETION_DESIGN.md), [Reviewer Guide](PLAY_STORE_LISTING_AND_REVIEWER_GUIDE.md), [Validation Plan](VALIDATION_AND_RELEASE_PLAN.md) and [Security/Operations](SECURITY_AND_OPERATIONS.md) complete the initial documentation set.
+
+These are planning documents. Android compatibility must be tested and Play Console declarations submitted when applications and services actually exist.
