@@ -1,0 +1,45 @@
+name: M1 API and tenant isolation
+on:
+  push:
+    paths:
+      - "docs/openapi-m1.yaml"
+      - "backend/persistence/migrations/**"
+      - "backend/tests/**"
+      - ".github/workflows/m1-contract-and-tenant.yml"
+  pull_request:
+    paths:
+      - "docs/openapi-m1.yaml"
+      - "backend/persistence/migrations/**"
+      - "backend/tests/**"
+jobs:
+  contracts-and-isolation:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: synthetic_test_only_password
+          POSTGRES_DB: amar_pola_m1
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d amar_pola_m1"
+          --health-interval 10s --health-timeout 5s --health-retries 10
+    env:
+      PGHOST: localhost
+      PGPORT: "5432"
+      PGUSER: postgres
+      PGPASSWORD: synthetic_test_only_password
+      PGDATABASE: amar_pola_m1
+    steps:
+      - uses: actions/checkout@v4
+      - name: Structural OpenAPI M1 lint
+        run: python3 backend/tests/lint_openapi_m1.py docs/openapi-m1.yaml
+      - name: M1 PostgreSQL migration
+        run: psql -v ON_ERROR_STOP=1 -f backend/persistence/migrations/0001_m1_identity.sql
+      - name: Two-family and child-scope isolation regression
+        run: psql -v ON_ERROR_STOP=1 -f backend/tests/m1_tenant_isolation.sql
+      - name: Verify no sensitive production fixture paths
+        run: |
+          test -f backend/tests/M1_ACCEPTANCE_TEST_CASES.md
+          ! grep -q 'BEGIN PRIVATE KEY' backend/tests/M1_ACCEPTANCE_TEST_CASES.md
