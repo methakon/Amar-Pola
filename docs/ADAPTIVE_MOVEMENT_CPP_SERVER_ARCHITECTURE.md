@@ -863,3 +863,69 @@ Future design revisions must record an ADR/change log: description, reason, alte
 **Document owner:** Amar-Pola project architecture  
 **Review status:** Awaiting implementation and device validation  
 **Primary references:** official Android, Google Maps Platform, PostgreSQL/PostGIS, Drogon and OWASP sources linked in section 1.
+
+## 20. Coordinating app usage, remote operations and subscription work at scale
+
+Location is the highest-volume write path, but Amar-Pola also needs application usage summaries, limited remote control commands, guardian access, subscription checks, and possibly Drive backup. **Do not execute all these in the same priority queue or database transaction.**
+
+### 20.1 Priority and workload isolation
+
+| Workload | Character | Preferred execution path | Throttling / isolation |
+|---|---|---|---|
+| Telemetry ingestion | High-volume small writes | Dedicated Drogon API handler + batched PostgreSQL commits | Device quotas, per-family budgets, bounded DB pool |
+| Trip reconstruction | CPU-heavy, asynchronous | Separate worker queue keyed by device | Fixed CPU concurrency, catch-up SLO |
+| App-usage aggregates | Moderate volume, delayed | Separate batch ingestion and scheduled C++ aggregation job | Coalesced daily intervals, no per-second usage updates |
+| Parent map/history reads | Latency-sensitive | Parent read endpoint + latest position cache, indexed history | Pagination, per-family read budgets |
+| Restriction policy application | Low volume, time-sensitive, device-dependent | Authenticated command queue; local Android DPC enforcement when eligible | Audited, TTL, idempotency, device capability validation |
+| Subscription renewal and provider callbacks | Low volume, high integrity | Protected billing webhook inbox + entitlement worker | Signature validation and exactly-once business effect using idempotency |
+| Media/Google Drive | Large payload, bandwidth intensive | Dedicated upload pipeline only for approved/authorized functionality | Separate bandwidth/object-size quotas, isolated transient storage |
+| Retention and deletion | Expensive batch work | Scheduled protected maintenance queue | Rate-limited with privacy priority and deletion completion evidence |
+
+### 20.2 Usage activity pipeline
+
+The child UsageStats adapter obtains permitted coarse-grained per-package foreground duration and event timestamps after Usage Access is granted. It periodically constructs records of the form:
+
+~~~json
+{
+  "device_id": "enrolled-device-uuid",
+  "interval_start": "2026-10-25T00:00:00Z",
+  "interval_end": "2026-10-25T01:00:00Z",
+  "package_name": "org.example.app",
+  "foreground_duration_ms": 123000,
+  "collection_revision": 4
+}
+~~~
+
+- Child locally coalesces intervals to limit network/CPU cost; avoid unnecessary 1-second polls.
+- API validates device credentials and family/child ownership, timestamps, nonnegative durations, interval boundaries and idempotency.
+- Server stores permitted usage aggregates in a separate table and aggregates day/week/month/year using the user's declared reporting timezone.
+- Missing Usage Access or OS history is recorded as unavailable/partial, not **zero minutes**.
+- Usage worker concurrency and database connection budget must not starve GPS event writes.
+
+### 20.3 Remote command queues and fairness
+
+- Parent submits only actions authorized for specific child/device mode and subscription.
+- A command record contains actor, tenant, device, type, issue/expiry time, idempotency key, policy version and requested capability; route to a **separate** queue from trip analysis.
+- Child confirms execution with status (QUEUED/ACCEPTED/COMPLETED/OS_REJECTED/UNSUPPORTED/etc.). Backend never marks operation successful on delivery alone.
+- Restriction policies execute only via supported Android management APIs on properly managed devices; ordinary install cannot grant device-owner rights.
+- Make policy execution idempotent and permit rollback; never suspend protected critical packages.
+- Parent commands must not trigger expensive continuous GPS or unrelated child collection merely because a dashboard is open.
+
+### 20.4 Workload budgets and fairness policy
+
+A single family may own multiple devices or have multiple guardians watching. Enforce:
+- Token bucket limits by device for telemetry, by guardian for reads/commands, and by family for total work.
+- Limits on history date ranges, active SSE subscribers, named places, uploaded file size and queue depth.
+- Fair work leasing across families so one large enterprise-sized family or a compromised device cannot starve smaller families.
+- Privacy-critical revocation and credential invalidation take priority over nonessential historical recomputation.
+- Report partial/degraded service rather than silently discarding accepted events.
+
+### 20.5 Architecture review checklist
+
+- [ ] Location ingestion cannot be blocked by app-usage aggregation or media upload.
+- [ ] Subscription cancellation or guardian revocation is enforced on every authorized API call.
+- [ ] API and worker SQL roles do not bypass each other's tenant rules accidentally.
+- [ ] All queues are durable, bounded, retried and idempotent.
+- [ ] Device ingestion returns committed receipts with accepted/duplicate/rejected counts.
+- [ ] Redacted logs and deletion processes cover raw and derived tracking/usage information.
+- [ ] Play Data safety reflects each released collection category and processor.
