@@ -470,3 +470,20 @@ A **single VM** (even 12/72) is a single point of failure and is not commercial 
 - Oracle OCI Cost Estimator: https://www.oracle.com/cloud/costestimator.html
 
 **Executive number:** On the selected A1 architecture, **5,000 hypothetical children** at 8/48 and 500 GB provisioned disk imply about **₹6,889/month (~₹82,671/year) priced-line hosting**, while **₹20,267/month (~₹2,43,205/year)** is an intentionally larger hosting **planning allocation** with reserves. These are illustrative, not evidence that this hardware tier can run 5,000 children, and omit commercial HA and staff.
+
+
+### 14.9 Example: cumulative expenditure during a year of gradual scaling
+
+An annual budget is **not always 12 times the biggest final-month VM**. If the selected plan moves through four levels, each for exactly **three months**, while object-storage and volume assumptions instantly change to the corresponding row:
+
+| Quarter (3 months each) | Illustrative child scenario | Priced-line host cost per month | **Three-month incurred subtotal** | Reserved monthly allocation | **Three-month budget allocation** |
+|---|---:|---:|---:|---:|---:|
+| Q1 | 1,000 / PAYG 4/24 | ₹199 | ₹596 | ₹3,238 | ₹9,715 |
+| Q2 | 2,500 / PAYG 6/36 | ₹3,232 | ₹9,695 | ₹9,878 | ₹29,634 |
+| Q3 | 5,000 / PAYG 8/48 | ₹6,889 | ₹20,668 | ₹20,267 | ₹60,801 |
+| Q4 | 10,000 / PAYG 12/72 | ₹14,683 | ₹44,049 | ₹42,620 | ₹1,27,861 |
+| **Total first 12 months** | *Staged hypothetical growth* | — | **₹75,009** | — | **₹2,28,011** |
+
+Values are calculated using the unrounded rate formulas and rounded for display; the displayed per-quarter rounded values may differ by ₹1 on summation. The budget allocation includes **unused reserves** and is not a predicted OCI invoice. A real year may have different growth timing, partially utilized machines, retained excess backups or overlapping old/new VM deployments during migration. Those materially change the cumulative spend.
+
+**Important procurement point:** upgrading to a larger VM while the smaller VM remains online for the transition temporarily consumes the **sum** of both machines' OCPU-hours and memory GB-hours; the free PAYG benefit is a shared pool, **not per VM**.
