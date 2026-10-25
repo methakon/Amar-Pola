@@ -196,3 +196,27 @@ Sensitive data shall be minimized and encrypted. Credentials and OAuth tokens mu
 - Distribution policy review.
 - Elevated security/privacy risk from location and media.
 - Third-party OAuth and billing token lifecycle/dependency risks.
+
+
+## 11. Proposed feature feasibility and verification matrix
+
+This is an initial engineering assessment, not a substitute for tests on the declared support matrix.
+
+| Feature | Feasibility | Verification needed |
+|---|---|---|
+| Pairing without a separate child account | Feasible | Expiry, single use, revocation, and account authorization tests. |
+| Background location and route history | Feasible with conditions | Background permission/service rules, OEM battery restrictions, offline recovery and location freshness. |
+| Speed reporting | Feasible with conditions | Confirm speed availability/accuracy; show unavailable when missing. |
+| App usage reports | Feasible with Usage Access | Verify onboarding, revocation, and daily through yearly aggregation. |
+| Remote file listing | Partial | Limit to app-owned and explicitly accessible storage. |
+| Remote app blocking | Conditional | Test ordinary mode separately from managed-device/device-owner policies. |
+| Remote photo/video | Conditional, capability-gated | Test API level/device/enrollment; verify permissions, OS rejection, privacy indicators and status reporting. |
+| Remote microphone recording | Restricted, needs validation | Verify supported authorized workflow and background restrictions; no guarantee of arbitrary remote activation. |
+| Google Drive backup | Feasible | OAuth scopes, token revocation, retries, resumable uploads, and deletion behavior. |
+| Subscription system | Feasible | Purchase verification, renewal, expiry, cancellation and server-side entitlement tests. |
+| Low resource use | Target, not yet proven | Establish CPU/RAM/network/battery budgets and benchmark representative devices. |
+| C++ backend | Feasible | Load, security, availability, recovery and operational tests. |
+
+### Feasibility acceptance gate
+
+Before release, each feature must have a supported Android/API/device/enrollment range and a recorded test result. Untested features must be marked **Not tested**, not assumed feasible. A remote command is successful only when the child agent confirms completion.
