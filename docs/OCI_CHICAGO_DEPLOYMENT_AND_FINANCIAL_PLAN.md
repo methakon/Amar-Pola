@@ -544,3 +544,6 @@ At **1,000** fully paid child seats and using this report's existing **₹3,238.
 
 **Legal transfer stop:** Chicago is a TECHNICAL PLANNING REGION, NOT authorization to export Indian children's precise GPS. [India DPDP child-data and US hosting gate](INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md) requires legal entity, section 9/16 review, verifiable guardian authority, data categories and retention approval before real collection. No VM created, quota or paid HA cost verified.
 
+## 17. Historical comparison only — India OCI region is the new preferred hosting direction
+
+**2026-10-26 supersession:** User prefers hosting in India if it reduces data-transfer complexity. New deployment target is **Mumbai ap-mumbai-1**, alternate **Hyderabad ap-hyderabad-1**, subject to OCI home region, A1 quota and actual cost. This **Chicago cost model is historical**; its ₹0.20/child direct, ₹3.24/child reserved, and annual tables must not be advertised as validated Indian-region invoices. One-VM failure and SRE/SOS concerns remain regardless of geography. The new authoritative location/owner gate is [India OCI Region and M0 Decision](INDIA_REGION_AND_M0_OWNER_DECISION_GATE.md).
