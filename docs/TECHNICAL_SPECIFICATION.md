@@ -268,3 +268,38 @@ Validate transitions server-side and retain timestamps and concise reason codes.
 - Google Maps SDK for Android: https://developers.google.com/maps/documentation/android-sdk
 - Google Drive API: https://developers.google.com/drive/api/guides/about-sdk
 - Google Play Billing: https://developer.android.com/google/play/billing
+
+
+## 14. Proposed feasibility assessment and validation matrix
+
+The architecture is feasible in principle, but several capabilities are conditional on Android version, device/OEM, permission state, and enrollment mode. This is a proposed validation plan, not a claim of completed compatibility testing.
+
+| Capability | Initial assessment | Design consequence |
+|---|---|---|
+| Pairing without a separate child account | Feasible | One-time pairing code and revocable device credentials. |
+| Background location and travel history | Feasible with conditions | Use Android-supported background/foreground-service patterns; expose stale/accuracy state. |
+| Speed | Feasible when reported by location provider | Optional field; do not fabricate missing values. |
+| App usage statistics | Feasible after Usage Access | Use UsageStatsManager and report access loss. |
+| Strong app blocking | Conditional | Use DevicePolicyManager only for valid managed enrollment; do not promise universal blocking in standard mode. |
+| Remote file listing | Partial | Scope to app-owned or explicitly accessible files; no arbitrary private app-data access. |
+| Remote photo/video | Conditional | Capability negotiation plus execution-time revalidation; handle permission missing, user action required, OS rejected, unsupported and completed states. |
+| Remote microphone | Restricted / needs per-device validation | Runtime permission does not imply unrestricted background activation; honor OS restrictions and privacy indicators. |
+| Google Drive media backup | Feasible with parent OAuth | Narrow scopes, secure token lifecycle, resumable upload and revocation. |
+| Paid subscription | Feasible | Verify purchases/entitlements server-side. |
+| Low-resource operation | Goal; empirical validation required | Adaptive sampling, batching, bounded queues and device-matrix benchmarks. |
+| C++ HTTP backend | Feasible | Production security and operations remain required; C++ does not itself guarantee low latency or safety. |
+
+### Compatibility validation procedure
+
+1. Define minimum/target Android API levels and supported device families.
+2. Establish separate standard-install and managed-device test profiles.
+3. Exercise first-run permission onboarding and later permission revocation.
+4. Test location while moving/stationary, backgrounded, offline, and under battery optimization.
+5. Test Usage Access and usage-period calculations.
+6. Provision a test device as managed and verify restriction enforcement and rollback.
+7. Exercise photo/video/audio requests on every supported profile and verify actual OS behavior and privacy indicators; do not infer capability from API level alone.
+8. Test Drive authorization, upload recovery, subscription transitions, command authentication, retention/deletion, and audit records.
+9. Measure CPU, resident memory, network traffic and battery drain on representative hardware.
+10. Store results with device model, Android version/API level, app build, permissions, enrollment mode, test steps, and observed result.
+
+Result vocabulary: **Pass**, **Pass with conditions**, **Fail**, **Not tested**. Only verified combinations should be marketed as supported.
