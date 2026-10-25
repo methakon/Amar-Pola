@@ -99,3 +99,10 @@ https://support.google.com/googleplay/android-developer/answer/10787469
 https://support.google.com/googleplay/android-developer/answer/13327111
 
 https://support.google.com/googleplay/android-developer/answer/9859455
+
+## India child data and cross-border review gate — 2026-10-26
+
+The India-first deployment plans OCI Chicago (United States); do not answer Google Play Data Safety as if every child's information remains in India. Legal publisher/contact and purpose-by-purpose Indian DPDP Act s.9, Rule 10/12 (real-time safety exception **not blanket monitoring exemption**), section 16 transfer and retention are still undecided. Child historical GPS, app-usage/behavioural monitoring, guardian invitations and SOS messages need separate documented purpose and processor review before category declarations. Google Maps/FCM, Play Billing, parent login and optional SMS/Drive must be classified by **actual integrated SDK data flows**, not architectural possibilities.
+
+Reference: [Indian minor privacy and Chicago legal gate](INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md), [Privacy Policy Draft](PRIVACY_POLICY_DRAFT.md). Until adult parent identity verification, lawful-processing opinion and signed product scope exist, **do not collect real child data** or claim a completed Data Safety form.
+
