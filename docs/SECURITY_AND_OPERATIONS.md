@@ -92,3 +92,12 @@ Backend can disable a risky operation, but child-app controls must not depend on
 ## 8. Scalable location infrastructure and family authorization supplement
 
 See [Adaptive Movement and Multi-Tenant C++ Server Architecture](ADAPTIVE_MOVEMENT_CPP_SERVER_ARCHITECTURE.md) for the guardian/family/child ACL model, PostgreSQL row-level security with transaction-scoped context, protection of location event/outbox queues, strict API IDOR/BOLA tests, per-tenant SSE and cache isolation, accepted-but-late data handling, synthetic load tests and individual account deletion across raw partitions and derived trips. Security signoff remains blocked until this design is implemented and tested.
+
+## 9. 2026-10-26 India-law, recovery and operational staffing additions
+
+**India DPDP:** under-18 parent verification, Rule 12 limited real-time safety exception, app-usage/history scope and US Chicago transfer require counsel opinion before real children's data. See [legal gate](INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md). Identity/permissions alone do not confer legal custody.
+
+**Resilience:** OCI one-VM architecture has unproven RPO/RTO. [Recovery readiness](OCI_CHICAGO_RECOVERY_AND_PILOT_READINESS.md) proposes clocked backup/rebuild tests, RPO/RTO targets by dev/pilot/prod tier, off-host erasure ledger and separate SOS fallback. A single-VM process restart does not satisfy HA or guarantee guardian alerts.
+
+**Staffing:** [Delivery capacity & break-even](PRICE_BREAK_EVEN_STAFFING_AND_DELIVERY_CAPACITY.md) assigns explicit accountable Android parent, Android child, C++/DB, QA, security/legal and OCI ops ownership. All remain **unassigned** pending owner roster, actual cash/runway and on-call coverage; do not claim round-the-clock monitoring/support.
+
