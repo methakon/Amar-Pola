@@ -279,3 +279,20 @@ Cumulative spend is dominated by **Play commission**. This example is **not** cu
 13. USD/INR 2026-10-23 reference price (~₹94.94): https://indiagraphs.com/data/usd-inr-exchange-rate/usd-to-inr-daily
 
 **Model refresh policy:** Recompute immediately after selecting the actual login method, subscription SKU and location billing country; upon any signed Maps/Roads API contract; upon new Drive/API fee; and monthly after actual provider usage appears. Before publishing prices or claiming profit, reconcile payment taxes/refunds and optionally combine this separate analysis with the OCI hosting report **in a third, unified financial forecast**. **This file deliberately does NOT count any Oracle hosting expense.**
+
+## 13. Current ₹50 / ₹500 pricing, SOS fallback and service-cost correction (2026-10-26)
+
+**Authoritative price proposal:** [Subscription Plans](SUBSCRIPTION_PLANS_PRICING_AND_RULES_2026.md) now specifies **₹50/month or ₹500/year per paying child**; the ₹149/month revenue, 15% Play fee per-child totals and combined revenue rows in §§1, 6–9 are **historical scenarios ONLY**. Maps/API per-SKU pricing and zero-usage examples still apply, but must be recalculated for actual India billing eligibility/guardian traffic.
+
+| 1,000 child-seat current-price example | All monthly recurring | All annual recurring (12-month term) |
+|---|---:|---:|
+| Child price charged over 12 months | ₹600 | ₹500 |
+| Google Play 15% fee, assuming pre-tax fee base | ₹90/year/child | ₹75/year/child |
+| Existing OCI reserved hosting **external to this document**, for economic cross-check only | ~₹38.86/year/child | ~₹38.86/year/child |
+| Cash available **before GST, staff, paid services, refunds and operations** | ~₹471.14/year/child | ~₹386.14/year/child |
+| Illustrative **18%-tax-inclusive** price, Play 15% of net-of-GST, OCI budget deducted | ~₹32.78/month/child | ~₹321.31/year/child |
+
+**Important:** OCI values in this table are **contextual cross-check references, not additional third-party vendor line items**. This file's per-SKU third-party price model still entirely **EXCLUDES ORACLE HOSTING**.
+
+Additional non-Oracle cost gaps: high-priority SOS with SMS escalation requires chosen telecom vendor, guardian opt-in, India DLT registration/templates, a verified sending cost and independent fault path; FCM alone is no-cost but not guaranteed delivery. [SOS provider cost/failure model](SOS_ESCALATION_AND_INDEPENDENT_DELIVERY_DESIGN.md). Auth via Google Sign-In is only a candidate; adult legal verification may incur external provider cost. [Full viability and staffing model](PRICE_BREAK_EVEN_STAFFING_AND_DELIVERY_CAPACITY.md). Do not infer ₹50/₹500 is profitable at 1,000 subscribers.
+
