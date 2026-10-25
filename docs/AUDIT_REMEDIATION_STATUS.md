@@ -1,0 +1,81 @@
+# Amar-Pola — Audit Gap Remediation Progress
+
+**Date:** 2026-10-25 | **Scope:** Documentation remediation only | **Original audit:** [26 findings](TECHNICAL_DOCUMENT_AUDIT_GAPS_2026.md)
+
+**Do not interpret DESIGN_UPDATED as IMPLEMENTED.** The ledger separates completed documentation work from actual code, hardware testing, cloud deployment, legal review and Google Play approval.
+
+## 1. Status definitions
+
+- **DESIGN_UPDATED:** an implementation-level specification or decision contract is now written; software/test proof remains open.
+- **PROVISIONAL_DESIGN:** methods specified but calibration/parameter selection awaits tests.
+- **PARTIAL_DESIGN:** some decisions or artifacts remain missing.
+- **OWNER_OPEN:** product/legal decision required.
+- **EXTERNAL_OPEN:** third-party approval, hosting identity or real release proof missing.
+
+## 2. Findings and current closure evidence
+
+| Audit ID | Original gap | Documentation status | Added design evidence | What is STILL needed to close implementation/release |
+|---|---|---|---|---|
+| AG-001 | Canonical TSD vs SRS version | DESIGN_UPDATED | Canonical TSD v1.0 replacing v0.1 | Review/signoff still required |
+| AG-002 | Partial OpenAPI | DESIGN_EXPANDED | 39-operation OpenAPI 3.1 draft | Formal OpenAPI lint, generated code and contract tests remain |
+| AG-003 | Per-child guardian ACL | DESIGN_UPDATED | Data authorization annex + matrix | Implement/RLS/cross-tenant tests |
+| AG-004 | Deletion, backups, reingest | PARTIAL_DESIGN | Deletion ordering/tombstones in data annex | Retention decisions, code and backup restore exercise |
+| AG-005 | Public privacy/deletion/Play | EXTERNAL_OPEN | Release docs and blocker register | Legal entity, URLs and actual Play approval |
+| AG-006 | FR-to-test traceability | DESIGN_UPDATED | 49 FR and 16 NFR matrix | Test cases and CI evidence absent |
+| AG-007 | Geo quality/stop parameters | PROVISIONAL_DESIGN | Tracking algorithm/quality contract | Labeled device trials and threshold signoff |
+| AG-008 | Durable worker crash/replay | DESIGN_UPDATED | Ingest transaction+epoch fencing contract | Executable SQL and crash tests absent |
+| AG-009 | Android lifecycle matrix | DESIGN_UPDATED | Android API/case table in runtime annex | Real OEM test proof absent |
+| AG-010 | Battery metrics and target | PARTIAL_DESIGN | Candidate power profiles+coverage formula | Device bench and numeric acceptance targets absent |
+| AG-011 | Scale/cost/RPO | PARTIAL_DESIGN | C++ server capacity model already exists | Synthetic load, RPO/RTO and provider budgets absent |
+| AG-012 | Normalized DB schema | PARTIAL_DESIGN | Composite FK/RLS/migration fragments | Runnable versioned migrations not created |
+| AG-013 | Command/SOS states | DESIGN_UPDATED | Command state and SOS/queue annex | Backend/device implementations and tests absent |
+| AG-014 | High risk features | DESIGN_UPDATED | Feature gates standard vs managed vs media research | DPC/media actual platform, policy signoff remain |
+| AG-015 | Play build manifests/AAB | EXTERNAL_OPEN | Play checklist and canonical TSD | Build/sign/16KB/test tracks actual evidence absent |
+| AG-016 | Guardian age/territory law | OWNER_OPEN | Blockers B-01/B-02/B-03 | Business/legal decisions needed |
+| AG-017 | Encrypted offline queue | PROVISIONAL_DESIGN | Queue size, key and retry contract | Actual crypto choices/device fault tests remain |
+| AG-018 | Map UI uncertainty/conflicts | PARTIAL_DESIGN | Map status vocabulary and optimistic versioning | Final UX screens/instrumentation tests absent |
+| AG-019 | Device reinstall/transfer | PARTIAL_DESIGN | Keystore credential transfer/re-enrollment guidance | Full device state machine and OS tests absent |
+| AG-020 | Usage timezone/long term | DESIGN_UPDATED | UTC interval split and completeness in usage annex | Usage Access real-device sampling tests |
+| AG-021 | Provider quota/licensing | EXTERNAL_OPEN | Roads off by default; API cost controls | Google license, provider pricing and finance approval |
+| AG-022 | SRE on-call and restore | PARTIAL_DESIGN | Existing security/operations and 2026 architecture | Named ops owners, drills and RPO/RTO measurements |
+| AG-023 | Backlog/owner/dependencies | PARTIAL_DESIGN | Phased canonical TSD+effort report+blocker owners | Real capacity plan, GitHub issues and schedule decisions |
+| AG-024 | Wear/tablet certification | PARTIAL_DESIGN | Runtime matrix and source provenance design | Hardware and actual tests |
+| AG-025 | Documentation precedence | DESIGN_UPDATED | Canonical v1.0 TSD and owner index | Review all annex references when changed |
+| AG-026 | Generated client/error schemas | PARTIAL_DESIGN | Expanded OpenAPI/error codes annex | Formal validator and generated Kotlin/C++ DTOs absent |
+
+## 3. Newly added/updated authoritative documents
+
+| Document | What gap it addresses |
+|---|---|
+| [Canonical Technical Specification v1.0](TECHNICAL_SPECIFICATION.md) | AG-001, AG-025 and architecture/code ownership |
+| [Data, Authorization and Recovery](DATA_AUTHORIZATION_AND_RECOVERY_CONTRACT.md) | AG-003/004/008/012, versioned event writes, RLS, deletion and fencing |
+| [Android Runtime and Tracking Algorithms](TRACKING_RUNTIME_AND_ALGORITHM_CONTRACT.md) | AG-007/009/010/018/024 |
+| [Commands, SOS, Usage and Queue](COMMAND_SOS_USAGE_QUEUE_CONTRACT.md) | AG-013/017/020 and remote command correctness |
+| [Expanded OpenAPI 3.1](openapi.yaml) | AG-002/026; 39 operations; **formal validation pending** |
+| [Full Requirements Traceability](REQUIREMENTS_TRACEABILITY.md) | AG-006, 49 FR + 16 NFR mapped to planned tests |
+| [Project Owner/Engineering Blockers](BLOCKERS_AND_OWNER_DECISIONS.md) | AG-004/005/015/016/021/022/023 and evidence ownership |
+| [Feasibility](WHOLE_PROJECT_FEASIBILITY_GATE_2026.md) | Android/Play/DPC/media conditional gates |
+
+## 4. Implementation and release closures cannot be claimed yet
+
+- No runnable PostgreSQL migrations, Drogon/Kotlin code or device key implementation is evidenced.
+- No formal external OpenAPI validator result; JSON is syntactically parseable and is also valid YAML 1.2 representation, but generators, lint and cross-platform DTO checks remain.
+- No Android devices were tested for FGS, battery, app usage, optional watch or managed DPC.
+- No C++ server load tests, backups/RPO, retention deletes or attack test evidence.
+- No actual publisher/business identity, country-specific child privacy review, live privacy/deletion URL, Play Console approval, signed AAB or real screenshots.
+- Therefore no AG item is marked **production resolved**. DESIGN_UPDATED statuses mean the *documentation gaps* have substantially narrower, implementable next steps.
+
+## 5. Highest-priority owner decisions
+
+See [Blockers B-01 through B-22](BLOCKERS_AND_OWNER_DECISIONS.md); most important: legal publisher, launch territories/ages, transparent monitoring confirmation, standard vs managed product, retention, hosting region, target devices/watch, battery vs precision priority, subscriptions and deferral of remote media.
+
+## 6. Recommended implementation gate order
+
+1. Owner approves critical scope, legal/privacy, retention and device-management decisions.
+2. Backend engineer creates migrations and full auth/tenant contract tests.
+3. Android engineer makes compliant background-location prototype with encrypted queue and tests.
+4. C++ engineer implements durable ingest/worker fencing and synthetic GPS replay.
+5. QA measures route/stop accuracy, battery, offline recovery and multi-family authorization.
+6. Product publishes working privacy/deletion services and submits actual Play binary/declarations for review.
+
+This ledger should be updated when code commits, test results or third-party approvals exist. Do not close a production blocker with a document link alone.
