@@ -1,259 +1,285 @@
-# Software Requirements Specification (SRS)
+# Amar-Pola — Consolidated Software Requirements Specification (SRS)
 
-- **Version:** 0.1
-- **Date:** 2026-10-25
-- **Status:** Draft baseline
+**Document:** AP-SRS-001  
+**Revision:** 1.0 integrated design baseline  
+**Date:** 2026-10-25  
+**Status:** Approved for engineering design; no implementation, Android hardware results or Google Play approval is implied.  
+**Companion specifications:** [Whole-project Feasibility Gate](WHOLE_PROJECT_FEASIBILITY_GATE_2026.md), [Consolidated Technical Specification](TECHNICAL_SPECIFICATION.md), [Detailed C++ Architecture](ADAPTIVE_MOVEMENT_CPP_SERVER_ARCHITECTURE.md), [Route, Stop & Battery Design](LIVE_TRIP_ROUTE_NAMED_PLACES_BATTERY_SPECIFICATION.md), [Privacy and Play](GOOGLE_PLAY_PUBLISHING_REQUIREMENTS.md).
 
-## 1. Purpose
+## 1. Purpose, scope and definitions
 
-Define initial software requirements for Amar-Pola, a parent-supervised Android monitoring and device-management platform. This draft must be validated against target Android releases, device behavior, applicable law, and distribution rules before production release.
+Build a **transparent, parent-authorized Android family-safety and child-device-management platform** called Amar-Pola with:
 
-## 2. Scope
+1. **Child Android agent** running its ordinary tracking functions after one-time parent setup without requiring the main Activity to stay open, while complying with system notifications and user-visible monitoring disclosures.
+2. **Parent Android app** showing the latest observed location, quality, routes, saved named places, multiple trips/stops, usage history, permitted controls, subscriptions and family/guardian access management.
+3. **C++20 Drogon backend** with PostgreSQL/PostGIS for family-scoped data, secure pairing, durable telemetry, versioned trip reconstruction, command processing, usage analytics, privacy/deletion and billing integration.
+4. **Optional Wear OS/tablet and managed-device capabilities** whose support depends on actual hardware and enrollment mode.
+5. **Optional clearly authorized Google Drive media backup and future media workflows**, without bypassing Android storage/privacy boundaries.
 
-The system includes:
-- Child-side Android agent with C++ core and Kotlin/Java platform integration.
-- Parent app/dashboard.
-- C++ backend API and command service.
-- Database, auditing, and optional Google Drive integration.
-- Subscription-entitlement validation.
+**Terms:** A **location observation** is a dated device-reported fix, not proof that the child was physically present. An **observed route** connects only trustworthy observations; missing spans are gaps. A **stop** is an accuracy-aware dwell inference. A **named place** is a parent-defined location/title. **Managed mode** requires proper Android device-owner/profile-owner provisioning, not ordinary permissions. A **guardian grant** is a revocable child-specific authorization.
 
-### Out of scope
+## 2. Product goals and measurable outcomes
 
-- Bypassing Android permission or privacy safeguards.
-- Hidden/covert audio or camera capture.
-- Universal third-party app blocking on unmanaged phones.
-- Access to arbitrary private app data or protected system files.
-- Guaranteeing location when the OS, hardware, network, or user settings prevent it.
+- Trustworthy safety experience: always identify observed time, location accuracy, connectivity state and source device, never claim a stale point is live.
+- Reduce unnecessary child GPS/radio use with motion-adaptive sampling, local batching and server-side analysis; **numeric battery benefit must be measured**.
+- Securely support many families, each with multiple guardians, children and enrolled devices, without cross-family data leakage.
+- Provide understandable screen-time activity and conditional device controls, not universal block/camera/other-app-private-file promises.
+- Allow parent and authorized guardian account removal/permission revocation with clear effect, restricted retention and supportable audit.
+- Obtain applicable Play Console approval before releasing functionality to Play audiences; no stealth tracking.
 
-## 3. Roles
+## 3. Users, roles and enrollment modes
 
-- **Parent/guardian:** pairs devices, configures permissions and policies, views reports, authorizes integrations, and manages retention/subscription.
-- **Child device user:** uses the phone on which the agent is installed; OS permission prompts and indicators remain applicable.
-- **Service operator:** maintains backend availability, security, billing integration, and incident response.
-- **Authorized support/security staff:** handles support and security events under least-privilege access.
-
-## 4. Assumptions and constraints
-
-- Parent has authorization to configure the device.
-- Capabilities vary by Android API level, OEM, permission state, app lifecycle, and management mode.
-- Background location and Usage Access require the relevant grants/configuration.
-- Camera/microphone access is subject to runtime permissions, service/lifecycle constraints, and privacy indicators.
-- Device-owner/device-policy features require supported provisioning and are not implied by ordinary installation.
-- Connectivity is intermittent; local buffering is required.
-- Google Drive requires explicit parent OAuth authorization and suitable scopes.
-- Google Play distribution, if chosen, requires policy review.
-
-## 5. Functional requirements
-
-Priority: **P0** foundational; **P1** first useful release; **P2** later/conditional.
-
-### FR-001 Secure device pairing (P0)
-The system shall pair a child device to a parent account using a short-lived, single-use code or equivalent secure enrollment.
-- A separate child username/password is not required for the baseline.
-- Codes shall expire, be rate-limited, and be single-use.
-- Device credentials shall be unique and revocable.
-
-### FR-002 Permission onboarding (P0)
-The child app shall explain relevant permissions and guide the parent through runtime and special-access settings.
-- It shall report current permission/capability state.
-- It shall detect revoked/unavailable permissions and show degraded status.
-- It shall not claim that initial setup removes OS restrictions.
-
-### FR-003 Location collection (P1)
-When permitted, the child agent shall collect location fixes with timestamp, latitude, longitude, accuracy, and optional speed/bearing/altitude when available.
-- Respect background-location and foreground-service rules.
-- Use adaptive sampling based on motion/policy.
-- Expose location age and reported accuracy.
-
-### FR-004 Travel history (P1)
-The parent client shall show historic points and routes within the configured retention period.
-- Gaps in data shall remain visible.
-- Missing observations shall not be presented as actual recorded points.
-
-### FR-005 App-usage reports (P1)
-After Usage Access is granted, the agent shall collect available usage statistics through supported Android APIs.
-- Parent reports shall cover daily, weekly, monthly, and yearly periods.
-- UI shall explain data limitations where Android does not expose expected information.
-
-### FR-006 Authenticated remote commands (P1)
-The backend shall accept and deliver authorized commands to a paired device.
-- Each command shall include unique ID, actor, target device, creation time, expiry, type, and status.
-- Child agent shall reject expired, duplicate, unauthorized, and unsupported commands.
-- Results shall accurately distinguish queued, delivered, completed, failed, unsupported, permission-required, OS-rejected, and user-action-required states.
-
-### FR-007 App restrictions (P1/P2)
-The parent client shall configure restrictions supported by the active device mode.
-- Standard mode shall not claim universal prevention of other apps launching.
-- Managed mode may use supported device-policy APIs after valid provisioning.
-- Policies shall define target package, schedule, time zone, desired state, and policy version.
-- The system shall report whether each policy is enforceable on the device.
-
-### FR-008 File access (P2)
-The agent may list or transfer files in app-owned storage or locations where appropriate access has been granted. It shall not claim access to arbitrary private app data or protected files.
-
-### FR-009 Photo/video request (P2; capability gated)
-The parent client may request photo/video capture only where a tested, authorized workflow is supported.
-- Backend shall check reported OS/API level, app version, enrollment mode, and last-known capability profile before dispatch.
-- Child agent shall revalidate permission and current OS/service constraints immediately before execution.
-- If unsupported or rejected by Android, a specific failure state shall be returned.
-- Operation is complete only after media creation and persistence are confirmed.
-- The implementation shall not bypass privacy indicators or OS safeguards.
-
-### FR-010 Audio recording (P2; capability gated)
-Any audio feature shall use a supported, authorized workflow and respect runtime permissions, background microphone restrictions, and privacy indicators.
-- Product shall not promise unrestricted remote activation.
-- User-action requirements and failures shall be reported.
-
-### FR-011 Parent-authorized Drive backup (P2)
-Parent shall authorize Drive through OAuth.
-- Only selected/authorized media shall be uploaded.
-- Tokens shall be securely stored and revocable.
-- Upload progress, retries, and errors shall be recorded.
-- Use resumable uploads where supported for large files.
-
-### FR-012 Subscription entitlement (P1 for commercial release)
-Backend shall validate entitlement through a trusted billing integration.
-- Local client state alone shall not grant paid access.
-- Handle renewal, expiry, cancellation, grace period, and revocation according to provider rules.
-
-### FR-013 Privacy controls (P0)
-Parent shall be able to review and revoke paired devices, disconnect integrations, request deletion, and configure retention within product policy.
-- Sensitive actions shall be audit logged.
-- Access shall be limited to authorized parent accounts.
-
-### FR-014 Status and alerts (P1)
-System shall expose configured alerts for connectivity loss, stale location, permission revocation, failed commands, and subscription state.
-- Lock-screen notifications shall avoid unnecessary sensitive location/media details by default.
-
-## 6. Non-functional requirements
-
-### NFR-001 Battery
-Use adaptive location sampling, batched network transfer, and bounded background work. Measure drain on representative devices; make no universal battery-life promise before testing.
-
-### NFR-002 CPU and memory
-Avoid busy loops, tight polling, and unbounded queues. Define numeric budgets after selecting target devices.
-
-### NFR-003 Reliability
-Local queue shall survive process restarts and transient network failure. Use idempotency and deduplication for commands/uploads.
-
-### NFR-004 Security
-Use TLS, avoid secrets in mobile binaries, and validate authorization server-side for every sensitive operation.
-
-### NFR-005 Privacy
-Minimize collection, document retention/deletion, and protect data access. Avoid logging raw sensitive payloads.
-
-### NFR-006 Compatibility
-Maintain a tested matrix by Android API level, OEM behavior, permission state, and standard/managed mode.
-
-### NFR-007 Usability
-Clearly distinguish live, stale, approximate, unavailable, and failed states. Permission setup must explain why access is needed.
-
-### NFR-008 Maintainability
-Separate Android platform integration, shared C++ core, backend, parent interface, and provider integrations behind documented interfaces.
-
-## 7. External interfaces
-
-- Android location and foreground-service APIs.
-- UsageStatsManager / Usage Access settings.
-- DevicePolicyManager in valid managed mode.
-- Google Maps SDK/API.
-- Google Drive API with parent OAuth.
-- Billing-provider APIs.
-- HTTPS APIs between child, parent, and backend.
-
-## 8. Logical data requirements
-
-- Parent identity/authentication references.
-- Device enrollment, capability profile, permission state, and revocation.
-- Location point: device, observed time, coordinates, accuracy, optional motion fields.
-- Usage aggregate: package, interval, duration, collection time.
-- Policy: target package, schedule/time zone, mode, state, version.
-- Command: ID, actor, target, type, expiry, status, reason/result, timestamps.
-- Media metadata: type, size, checksum, authorization context, upload state, optional Drive reference.
-- Subscription entitlement/provider reference.
-- Audit event and retention/deletion state.
-
-Sensitive data shall be minimized and encrypted. Credentials and OAuth tokens must not be written to ordinary logs.
-
-## 9. MVP acceptance criteria
-
-1. Securely pair and revoke a test device.
-2. Accurately reflect granted, denied, and revoked permissions.
-3. Queue and synchronize timestamped location events without duplicate records.
-4. Map shows location age/accuracy and makes gaps visible.
-5. Usage reports are available only after required access is granted.
-6. Every remote command has truthful status and reason codes.
-7. Unsupported capture requests are rejected or require user action; they are never marked successful falsely.
-8. Managed restrictions are tested on a properly provisioned device and not advertised as standard-mode behavior.
-9. Sensitive endpoints enforce object-level authorization and produce audit events.
-10. Tests cover offline recovery, duplicate commands, expiry, permission loss, and authorization failures.
-
-## 10. Risks
-
-- API/OEM variations in background execution.
-- OS battery optimization delays.
-- Device-owner setup complexity and possible enrollment/reset requirements.
-- Distribution policy review.
-- Elevated security/privacy risk from location and media.
-- Third-party OAuth and billing token lifecycle/dependency risks.
-
-
-## 11. Proposed feature feasibility and verification matrix
-
-This is an initial engineering assessment, not a substitute for tests on the declared support matrix.
-
-| Feature | Feasibility | Verification needed |
+| Actor | Allowed responsibilities | Exclusions |
 |---|---|---|
-| Pairing without a separate child account | Feasible | Expiry, single use, revocation, and account authorization tests. |
-| Background location and route history | Feasible with conditions | Background permission/service rules, OEM battery restrictions, offline recovery and location freshness. |
-| Speed reporting | Feasible with conditions | Confirm speed availability/accuracy; show unavailable when missing. |
-| App usage reports | Feasible with Usage Access | Verify onboarding, revocation, and daily through yearly aggregation. |
-| Remote file listing | Partial | Limit to app-owned and explicitly accessible storage. |
-| Remote app blocking | Conditional | Test ordinary mode separately from managed-device/device-owner policies. |
-| Remote photo/video | Conditional, capability-gated | Test API level/device/enrollment; verify permissions, OS rejection, privacy indicators and status reporting. |
-| Remote microphone recording | Restricted, needs validation | Verify supported authorized workflow and background restrictions; no guarantee of arbitrary remote activation. |
-| Google Drive backup | Feasible | OAuth scopes, token revocation, retries, resumable uploads, and deletion behavior. |
-| Subscription system | Feasible | Purchase verification, renewal, expiry, cancellation and server-side entitlement tests. |
-| Low resource use | Target, not yet proven | Establish CPU/RAM/network/battery budgets and benchmark representative devices. |
-| C++ backend | Feasible | Load, security, availability, recovery and operational tests. |
+| Family owner/parent | Create child profiles, pair/revoke devices, approve guardians, manage plans/retention, view authorized reports | Cannot bypass Android system access or laws |
+| Guardian | Child-specific view/notifications/actions explicitly granted by owner | No implicit access to all children or billing/admin |
+| Time-limited pickup viewer | Limited current or recent location for one child until expiry | No app history, media, block controls or unlimited history |
+| Child device user | View monitoring identity and enabled monitoring, optional SOS/check-in/time remaining and relevant Android Settings | Child-facing interactivity not required for every background function |
+| Service operator/support | Securely administer infrastructure, limited redacted support | No default access to live location or raw media |
+| Enrolled device identity | Upload its own authorized observations/status and receive authorized policies | Never view siblings/parents/other devices |
 
-### Feasibility acceptance gate
+**Standard mode:** permission-based personal device. **Managed mode:** separately provisioned DPC with only actually permitted APIs. The UI and server **shall not** treat them as equivalent.
 
-Before release, each feature must have a supported Android/API/device/enrollment range and a recorded test result. Untested features must be marked **Not tested**, not assumed feasible. A remote command is successful only when the child agent confirms completion.
+## 4. Requirement priority/status vocabulary
 
-## 12. Requirements implementation and publication traceability
+- **P0:** non-negotiable foundational safety/security/product infrastructure, or inclusion in the first practical engineering slice.
+- **P1:** core product release/useful features after their dependencies.
+- **P2:** optional expansion with measured benefit.
+- **P3:** research-only, no launch commitment.
+- **C:** conditional on named Android/hardware/permission/policy criteria.
+- **D:** explicitly deferred/restricted.
+- **NOT_TESTED:** no device or integration evidence. All project requirements are currently design-only unless a later evidence record says otherwise.
 
-See [Implementation Technical Specification](IMPLEMENTATION_TECHNICAL_SPECIFICATION.md) for module responsibilities, API contract proposals and development milestones. [Feasibility Conditions and Evidence](FEASIBILITY_CONDITIONS_AND_EVIDENCE.md) records conditions for conditional requirements (FR-003, FR-005, FR-007, FR-008, FR-009 and FR-010). [Validation and Release Plan](VALIDATION_AND_RELEASE_PLAN.md) traces requirements to acceptance tests. [Google Play Publishing Requirements](GOOGLE_PLAY_PUBLISHING_REQUIREMENTS.md) captures publication gates and necessary declarations.
+All features shall carry **DESIGNED → IMPLEMENTED → DEVICE_VERIFIED → SECURITY_VERIFIED → POLICY_VERIFIED → RELEASE_ENABLED** gates. Approval of this SRS is not implementation approval of every conditional option.
 
-**Release gates:** Pass documented device tests; complete privacy/data safety and permissions review; no unsupported app blocking claims or covert media capture; ensure the release binary and its store disclosures match. The technical and publication docs do not represent implemented functionality.
+## 5. Functional requirements — foundations and device management
 
-## 13. New location, named-place and trip requirements (2026-10-25)
+### FR-001 Secure parent-child pairing — P0
+Use a short-lived, single-use enrollment code/QR issued by an authenticated parent. Device generates unique revocable credentials bound to an authorized child profile; no separate child username/password required for basic enrollment. Server rate-limits and audits enroll/revoke, blocks reused/expired codes, and prevents cross-family device claims.
 
-The full acceptance and design details for these requirements are in [Live Trip Route, Named Places and Battery Specification](LIVE_TRIP_ROUTE_NAMED_PLACES_BATTERY_SPECIFICATION.md).
+**Acceptance:** replay/expired code rejected; revoked child credential cannot ingest; parent account cannot pair over another family's existing device without approved transfer flow.
 
-- **FR-015 Named places (P1):** A parent shall add, edit, title, categorize, move and delete geolocated place markers for a paired child; labels shall appear near the observed position on the Google map without extra child location requests.
-- **FR-016 Route history (P1):** The parent shall view chronological, timestamped observed location segments as Google Maps polylines. Coverage gaps and low-confidence segments shall be identified; fabricated directions routes shall not be represented as actual travelled paths.
-- **FR-017 Trip and stops (P1):** The backend shall detect movement episodes, intermediate dwell stops, and start/end of observed trips; associate qualified stops with parent-saved places using spatial and accuracy-aware checks. Passing close to a place shall not automatically count as a visit.
-- **FR-018 Adaptive battery profile (P1):** The child shall switch between stationary, movement and power-saving profiles based on available location/motion evidence and Android permission/service rules; target thresholds shall be measured on each supported device family.
-- **FR-019 Conditional road geometry (P2):** Optional road matching shall be used only for sufficiently dense reliable vehicle tracks after third-party asset-tracking license, retention, pricing and policy checks. A raw-track fallback is mandatory.
-- **FR-020 Multi-device location identity (P2):** Phone, tablet and Wear OS source observations shall retain separate device identity; no unverified stitching of tracks across devices.
-- **FR-021 Place alerts (P2):** Optional enter/exit/dwell signals may use a limited, parent-selected set of Android geofences and must disclose delayed delivery and location uncertainty.
+### FR-002 Transparent permission onboarding — P0
+Explain monitored data in an app-visible disclosure before relevant Android permission requests, then guide parent through runtime grants and special-access settings. Track each feature's current permission status and revocation. On-device monitoring identity/icon and required persistent notification remain visible when applicable.
 
-**New acceptance:** saved titled pins persist; observed route gaps are not bridged as though known; red-light pauses are not falsely counted as multi-minute stops; watch GPS absence is reported; parent map rendering does not itself increase child GPS sample frequency.
+**Acceptance:** permission denied, later revoked and service restricted produce truthful statuses; no false completion; no stealth mode.
 
-## 14. Cross-cutting adaptive tracking and scalable server requirements
+### FR-003 Location observations — P1 / C
+Collect UTC timestamp, lat/lon, reported accuracy, source ID and optional speed/bearing/accuracy. Respect background location permission, location FGS type, FGS-start restrictions, OS power state and device capabilities. Prefer adaptive collection with user-visible purpose; no promise of guaranteed second-by-second updates.
 
-See [Adaptive Movement and Multi-Tenant C++ Server Architecture](ADAPTIVE_MOVEMENT_CPP_SERVER_ARCHITECTURE.md) for the technical rationale, implementation steps and validation requirements.
+**Acceptance:** tests cover walking, stationary, screen off, offline, approximate location, force-stop and revocation; UI identifies last observation time/accuracy.
 
-- **FR-022 Multi-guardian privacy grants (P0):** Every parent/guardian action shall be authenticated and explicitly authorized for the exact family, child and device. Shared guardianship shall be revocable and audited.
-- **FR-023 Durable GPS ingest (P0):** A child event shall be acknowledged only after durable server persistence; retries shall not duplicate events, stops or distance.
-- **FR-024 Event-time reconstruction (P1):** Trip/stop analysis shall use observed timestamps, permit late/offline updates and publish versioned provisional/final/revised results.
-- **FR-025 Server workload isolation (P0):** Child ingestion, C++ reconstruction, parent reads, usage aggregation and remote-command processing shall have separate bounded concurrency and service budgets.
-- **FR-026 Parent viewing independent of sampling (P1):** Opening one or multiple map viewers shall not automatically multiply child location requests.
-- **FR-027 Tenant-scoped data lifecycle (P0):** Device unpairing, guardian revocation, retention and account deletion shall invalidate authorization/caches and cover raw and derived history.
-- **FR-028 Quality-aware trips (P1):** Stop/route data shall express accuracy, source device, time gaps and provisional/revision status; no invented travelled streets.
-- **FR-029 Multi-device source attribution (P1/P2):** Phone/tablet/watch observations shall retain provenance and support explicit handoff policy.
-- **NFR-009 Capacity and backpressure (P1):** Establish measured ingest, query, worker and DB SLOs using synthetic 1k/10k/100k device scenarios; enforce quotas and safe retries.
-- **NFR-010 End-to-end access-control testing (P0):** Prevent object-level authorization leakage across families in API, RLS, caches, SSE and exports.
+### FR-004 Travel and route history — P1
+Persist observed positions under configured retention and display sorted trips and segments, mileage estimate with quality notes, start/end, multiple intermediate stops and explicit unobserved gaps; raw observed track is authoritative.
 
-Current status: design and desk research only; no Android hardware measurements or server load tests have been run.
+**Acceptance:** no directions-route substitution for unobserved roads; gaps aren't joined as certain travel; trip source device is identified.
+
+### FR-005 Usage statistics — P1 / C
+After Usage Access, collect available per-app foreground usage interval information. Backend aggregates by day/week/month/year using defined reporting timezone. Missing historical coverage is recorded as UNKNOWN or PARTIAL, not zero. Enforce limits on collection frequency/retention.
+
+**Acceptance:** long-term report derives from stored observations; access revocation stops future collection and updates status.
+
+### FR-006 Authenticated remote commands — P0/P1
+Only authorized guardians with feature-specific grants may request time-bounded device commands. Server validates target, subscription and capability; child rechecks current Android state. States distinguish CREATED, QUEUED, DELIVERED, ACCEPTED, COMPLETED, EXPIRED, DEVICE_OFFLINE, PERMISSION_REQUIRED, USER_ACTION_REQUIRED, OS_REJECTED, UNSUPPORTED, FAILED and CANCELLED.
+
+**Acceptance:** a delivered command is not reported as completed; stale/replayed/expired requests cannot execute.
+
+### FR-007 Scheduled screen-time restrictions — P2 / C managed
+Support schedules and eligible per-app restrictions with visible reasons and safe exceptions. Enforce package suspension **only** through public supported device-policy APIs for correctly enrolled authorized DPC; preserve critical apps and allow reliable rollback. Standard mode does not advertise universal blocking.
+
+**Acceptance:** safe suspend/restore on managed test phone; excluded system apps never blocked; ordinary app returns UNSUPPORTED_POLICY.
+
+### FR-008 File/media access — P2 / C
+List, preview and transfer only app-owned or appropriately authorized MediaStore/Storage Access Framework files. Never promise arbitrary other-app private directories, password extraction, or OS sandbox bypass.
+
+**Acceptance:** authorized URI works; revoked grant and other app-private paths fail securely.
+
+### FR-009 Authorized photo/video request — P3 / D
+Parent UI may present **only certified, policy-approved, clearly authorized visible** capture workflows. Backend checks device/version/capability before dispatch and child verifies actual OS execution permissions; privacy indicators remain intact. Feature is disabled by default and never marks a command complete absent verified persisted media.
+
+### FR-010 Authorized audio capture — P3 / D
+Same transparency, lifecycle, permissions, child rights and truthful status principles as FR-009. No covert listening, hidden mic indicator or unrestricted background recording promise.
+
+### FR-011 Google Drive backup — P2 / C
+Parent separately enables OAuth with narrow scopes for explicitly authorized media. Secure token lifecycle, resumable transfer, checksum, cancellation, revoke and distinct deletion responsibilities are required.
+
+### FR-012 Subscription entitlements — P1 commercial
+Use required Google Play Billing flow for applicable digital purchases; backend verifies provider events/purchase tokens and implements active, grace, hold, cancellation, expiry, refunds and restoration. Do not imply payment grants Android privileges.
+
+### FR-013 Privacy, retention and deletion — P0
+Provide device unpair, guardian revoke, purpose-specific enablement, account export/deletion, integration revoke, bounded retention, encrypted sensitive fields/backups and supported public web deletion request. Deleting a family prevents late event reingest and removes authorized histories/derived material according to the published policy.
+
+### FR-014 Operational status and notifications — P1
+Parent shows last_seen, last_fix, accuracy, tracking mode and reasoned device status; alerts for requested high-value events, not uncontrolled repeats. Sensitive lockscreen details are minimized; alert acknowledgement/delivery states are recorded.
+
+## 6. Functional requirements — maps, routes, multi-device scaling
+
+### FR-015 Parent-defined named places — P1
+Add/edit/delete titled coordinates by long-press, search or dragging marker. Title, category, optional description, radius, visibility and child/family ownership. Markers render from stored parent/backend data without waking child GPS merely because the map opens.
+
+### FR-016 Observed route reconstruction — P1
+Render chronological segmented Google Maps polylines from source observations with accuracy/gap legends, playback and historical time selectors. Optional Roads API only after licensing/cost/retention/coverage checks; do not treat suggested directions as history.
+
+### FR-017 Multiple trip legs and stops — P1
+C++ pipeline detects trips, walking/vehicle pauses and accuracy-aware dwell points, using configurable thresholds and hysteresis. Stop labels only match parent named places when evidence supports dwell; near-passing does not imply visit.
+
+### FR-018 Adaptive power-aware tracking — P1
+Implement low-power, balanced and bounded detailed tracking modes; use Android supported fused/passive fixes and optional Activity Transition hints. Sampling policy reacts to movement, accuracy, power constraints and permission; parent viewing does not automatically increase child sampling.
+
+### FR-019 Optional map matching — P2 / C
+Only eligible dense vehicle route segments are optionally road-matched by backend respecting provider licensing, quotas, point limits and content caching rules. Sparse or uncertain segments fall back to observed route with honest gaps.
+
+### FR-020 Phone/tablet/Wear provenance — P1 data model / P2 watch support
+Preserve per-device source of each observation; show approximate accuracy/hardware capability. No unverified splicing of watch and phone data; optional explicitly logged source switch. Detect no-GNSS and paired-device dependence.
+
+### FR-021 Selected named-place alerts — P1 / C
+Support opt-in enter/exit/dwell and arrival/departure event candidates using server proximity analysis and, where eligible, a **limited** subset of Android geofences. No immediate-entry guarantee; confidence, delay and hysteresis displayed.
+
+### FR-022 Child-specific family/guardian permissions — P0
+Authenticated roles and fine-grained child grants; no implicit data sharing with all parents. Model child owner, approved guardian, restricted viewer, and device identity. On grant revocation terminate sessions/streams and invalidate cached access.
+
+### FR-023 Durable idempotent ingestion — P0
+Event IDs survive device retransmits; accepted telemetry is acknowledged **only after durable server transaction**; offline queue survives process restarts, sends bounded batches; backend prevents duplicated trips or distances.
+
+### FR-024 Event-time reconstruction and revision — P1
+Derived trips/stops follow observation timestamps and may be revised by late offline batches; use processing version and provisional/updated labels. No fabricated observations or retroactively false live history.
+
+### FR-025 C++ workload isolation — P0
+C++ Drogon ingress, trip worker, usage worker, command worker, billing/deletion and parent map queries operate with bounded concurrency and per-family limits; historical recomputation cannot block secure ingestion or urgent SOS.
+
+### FR-026 Map view independent of child GPS demand — P1
+Opening map and multiple parent viewers fetches latest stored qualified fixes/history. Requesting more frequent observation is a separate feature flag that must respect Android lifecycle and battery policy, and is never automatically repeated per viewer.
+
+### FR-027 Scoped retention/revocation across all storage — P0
+Family deletion/revocation covers primary history, derived trips/stops, caches/streams, queues, backups under published retention; cross-family permission revocation takes immediate effect in reads.
+
+### FR-028 Quality-aware map interpretation — P1
+Every displayed trip/stop includes observed time, data provenance, confidence class/accuracy and gap status; route distances/arrival times clearly estimates if not measured.
+
+### FR-029 Scalable capacity and access verification — P0/P1
+Synthetic 1k/10k/100k-device load plans, latency/backpressure controls, per-tenant quotas and full API/RLS/SSE/caches cross-family security tests. Performance figures only promoted when benchmarked.
+
+## 7. Functional requirements — new research-backed improvements D01–D14
+
+| Requirement | Candidate | Priority | Required behavior and acceptance | Conditions |
+|---|---|---|---|---|
+| FR-030 | **D01 Evidence layer** | **P0** | Expose OBSERVED/APPROXIMATE/GAP/STOP_CONFIRMED reason codes and map legend; parent may flag derived stop interpretation, raw events remain immutable | Labeled GPS data accuracy evaluation |
+| FR-031 | **D02 Reliability Center** | **P0** | Distinguish last device heartbeat, last observed GPS, last received, last trip processed, permission state, UNKNOWN causes; show actionable diagnostics | Cannot infer unseen current settings from a silent device |
+| FR-032 | **D03 Offline revision history** | **P0** | Present reconstructed late trips with revision reason/time, dedupe correction notices and source event references | C++ event-time recompute + race/replay tests |
+| FR-033 | **D04 Commute confidence** | **P1 C** | Schedule Home/School trips, arrival window, missing location vs confirmed elsewhere vs confirmed arrival, bounded notification escalation | Verified low false-alarm rates, timezones/holidays |
+| FR-034 | **D05 Expiring guardian access** | **P1** | Verified guardian pickup invitation with one-child limited scope and explicit TTL; revoke token and active SSE in bounded time | Strict security threat model, no unverified raw-link sharing |
+| FR-035 | **D06 Access ledger** | **P1** | Show permitted child-specific guardian roles and significant access/export/grant events without logging raw coordinates; retained/deleted per policy | Identity and audit privacy validation |
+| FR-036 | **D07 Battery/coverage** | **P1 C** | Present measured power profiles and credible tracking coverage formula, not invented battery savings; background errors exposed | OEM/watch baseline benchmarks and accuracy labels |
+| FR-037 | **D08 Policy preview & rollback** | **P1 C managed** | Dry-run 7-day block schedules and next transitions, timezone/DST rules, essential app exception, safe revert and actual per-device execution states | Tested managed DPC with eligible packages |
+| FR-038 | **D09 Source handoff explanations** | **P2 C** | Show phone/watch/tablet provenance, last source and uncertainty/conflicting sources; don't claim source equals child's person | Real watch/phone handoff validation |
+| FR-039 | **D10 Capability before purchase** | **P1** | Explain per-device supported/requires permission/managed-only/unavailable features before subscription purchase; reflect later revocation and renewal | Entitlement server verification and UI accuracy |
+| FR-040 | **D11 Support diagnostic packet** | **P1/P2** | Explicit parent-approved redacted diagnostic export with timestamps/errors; no raw GPS/media/tokens by default; short TTL | Support access control and redaction tests |
+| FR-041 | **D12 Transparency center** | **P0/P1** | Child-accessible monitoring summary with enabled data categories, recognized guardians and OS permission guidance; main Activity need not stay open | Age-appropriate UX, monitoring notice, jurisdictional review |
+| FR-042 | **D13 Corridor deviation** | **P3 research** | If separately approved, compare supported observations to known permitted corridor; uncertainty/alternate routes must prevent false emergency claims | Labeled field evidence, false alert threshold and map license |
+| FR-043 | **D14 Schedule-aware sampling** | **P2 C** | Versioned school/commute monitoring profile schedule controls fix-quality targets within Android limits and reports downgrade | Battery/Android lifecycle and alert-quality validation |
+
+The descriptions above **include** all 14 features even when deferred. This is not a statement that FR-042 or restricted media will be in the first commercial release.
+
+## 8. Additional cross-feature safety/coordination requirements
+
+### FR-044 Emergency SOS (P1)
+Child-initiated visible SOS/wearable/notification action (where supported) records last known fix and time, safe optional fresh fix, high-priority durable alert to permitted guardians with receipt/acknowledge; never claims dispatch to emergency services. Offline state is “queued,” not “guardian notified.”
+
+### FR-045 Find-device signal (P1 C)
+Authenticated bounded ring/sound request, child-visible purpose and time-limited command; DND/audio restriction and permission state yield truthful error.
+
+### FR-046 Family quick check-in (P1 optional child UI)
+A visible action or widget sends “I'm safe”, “Please call”, or “Need pickup” with delivery/ack receipt and narrow notification, without any microphone requirement.
+
+### FR-047 Screen-time safe rules and optional tasks (P1/P2 C)
+Display remaining time and school/night rules where supported. Protect emergency and OS-critical packages. Optional tasks/parent-approved time-credit ledger are P2 and must not manipulate children into excessive tracking or recording.
+
+### FR-048 Device health (P1)
+Attach battery/charging and connectivity/permission snapshot to existing sync heartbeat; avoid high-frequency status polling.
+
+### FR-049 Alert deduplication and quiet hours (P1)
+Deduplicate geofence/SOS/commute alerts by idempotent event ID; rate-limit recurring ordinary notifications; SOS follows distinct high-priority policy, retaining delivery uncertainty.
+
+## 9. Non-functional requirements
+
+| ID | Area | Mandatory verifiable criterion |
+|---|---|---|
+| NFR-001 | Battery | Measure actual incremental drain stationary/walking/vehicle/wear against baseline; adaptively reduce GNSS/network wakeups; no fixed savings claim before tests |
+| NFR-002 | Performance | Bounded worker pools, memory queues, network batches, per-tenant quotas; no busy loops or unbounded queries |
+| NFR-003 | Durability | Acknowledged ingest survives API/worker crash; queue/replay idempotency; retention/deletion runs recover after restart |
+| NFR-004 | Security | TLS, Keystore device credential, parent OIDC/PKCE, per-device/family-child authorization, redacted audit, encrypted at-rest data/backups |
+| NFR-005 | Child privacy | Data minimization, explicit disclosure, visible monitoring identity and required notification, retention and deletion controls |
+| NFR-006 | Android compatibility | Track OS/OEM/build, management mode, grants and actual feature-test evidence; denied permissions never silently bypassed |
+| NFR-007 | Accessibility & clarity | Clear labels, screen reader support, accessible error explanations, local timezones and localization; uncertain data visibly distinct |
+| NFR-008 | Maintainability | Stable Kotlin/JNI/C++ boundaries, versioned OpenAPI, migration code, testable pure C++ algorithms, configuration/ADR change log |
+| NFR-009 | Capacity | Load test staged 1k/10k/100k **synthetic** devices; report measured p95 writes/reads/queue-lag, WAL/retention and cost before SLA |
+| NFR-010 | Access-control isolation | All API, cache, SSE, export, commands and worker tables have cross-family negative test; expected leak count zero |
+| NFR-011 | Accuracy | Quantify stop false positives/negatives, observed route gaps and commute uncertain/missed classifications on labeled routes |
+| NFR-012 | Operational resilience | Health metrics, signed builds, staging, backups/recovery, alerts, rolling deploy and incident response, privacy-safe diagnostic logging |
+| NFR-013 | Honest statuses | Device offline, app permission loss, queue delay, OS rejection and stale location surfaced without false completion |
+| NFR-014 | Billing and provider | Server-side entitlement, webhook replay safety, OAuth Drive revoke, Google Maps API restrictions and expense quotas |
+| NFR-015 | Native packaging | C++ shared libraries support 16 KB memory-page devices, release AAB signed and security scanned |
+| NFR-016 | Deletion integrity | Data delete across partitions, derived tracks, queues, caches and backups according to disclosed schedule, with no reingest after revoke |
+
+## 10. External interfaces and artifacts
+
+- Android: permissions/special access, FusedLocationProvider or tested LocationManager, Activity Transition API, UsageStatsManager, location foreground service, optional GeofencingClient, optional DPC, notification/Widget/Wear APIs.
+- Parent: Maps SDK markers/polylines; optional Places search; Google Play Billing; parent authentication.
+- Backend: C++ Drogon HTTPS endpoints; PostgreSQL/PostGIS; optional durable broker/Redis; push provider if approved; separate Google Drive OAuth integration.
+- Documentation: canonical [technical specification](TECHNICAL_SPECIFICATION.md), [detailed route and battery](LIVE_TRIP_ROUTE_NAMED_PLACES_BATTERY_SPECIFICATION.md), [C++ multi-tenant](ADAPTIVE_MOVEMENT_CPP_SERVER_ARCHITECTURE.md), [API draft](openapi.yaml), [release plan](VALIDATION_AND_RELEASE_PLAN.md).
+
+## 11. Acceptance & security test matrix
+
+| Group | Representative must-pass tests |
+|---|---|
+| Pairing | Reuse, expiration, stolen device credential, cross-family enroll and revoke |
+| GPS | Screen off, doze, offline, moving/still, background permission revoke, battery fallback, Wear lacking GNSS |
+| Reconstruction | Traffic signal not visit; 6-min dwell; trip multiple stops; accuracy jitter; GPS tunnel gap; 3-hour late batch; duplicate after retry; partial history |
+| Parent map | Named places marker persist; open two viewers doesn't add child requests; source and accuracy shown; alternate time zones |
+| Usage | Special access granted/revoked, data continuity, daily-to-yearly time boundaries |
+| Managed restriction | Device owner/provision, eligible package suspension, protected apps, schedule DST/reboot, rollback |
+| Trust D01–D03 | Explainable observed/gap/uncertain, diagnostics UNKNOWN path, revision update with algorithm version |
+| Privacy D05–D06 | Expired invite/stream, scope denied, no GPS in ledger, denied other family |
+| Commute D04/D13 | Missing fix vs genuinely not arrived; quantified false alerts; corridor remains disabled until validation |
+| Billing D10 | Server entitlement, renewal/hold/refund/revoke, eligibility shown before purchase |
+| Support D11/D12 | Redacted packet opt-in, child transparency visible, no covert features |
+| Performance | Synthetic 1k/10k/100k workload, bounded queue, API/worker crash, DB restore, finite retention |
+| Release | Play 2026 target API, background-location disclosure/declaration/video, monitoring metadata, 16 KB C++ libs, privacy/deletion URL, Data safety and real screenshots |
+
+## 12. Delivery plan and official product acceptance
+
+| Phase | Engineering outcome | Gate |
+|---|---|---|
+| M0 | Feasibility, product/privacy decisions, target devices, canonical requirements and threat model | Reviewed design, no unsupported promises |
+| M1 | C++ backend skeleton, auth, pairing, PostgreSQL schema, secure Android enrollment | Cross-family and pairing tests |
+| M2 | Encrypted child event queue, adaptive compliant GPS, durable ingest | Offline/dedupe tests, real Android battery and service lifecycle |
+| M3 | C++ trip/stop engine, named places, parent Map, route quality | Annotated-trip accuracy, GPS gap correctness |
+| M4 | Usage reporting, SOS/device health/alerts, D01–D03 trust features | Reports and failure-state tests |
+| M5 | Guardian time-limited grants/privacy ledger, capability pre-purchase, support/child transparency | Security/redaction/expiry tests |
+| M6 | Conditional commute/battery UX, managed policy/simulation, Wear device handoff | Named devices and false-alert, DPC and power test evidence |
+| M7 | Drive, commercial billing, account/data deletion, operational scaling | Provider and penetration/performance tests |
+| M8 | Optional research: route corridor, media (only authorized visible) and other deferred features | Never shipped without legal/OS/policy evidence |
+| M9 | Play launch package, target API and native compliance, privacy pages, form/declaration, staged rollout | Play approval and complete evidence |
+
+## 13. Exclusions and conflict-resolution decisions
+
+- The child main Activity normally remains closed after setup; optional SOS/check-in/rewards **may** provide small child-visible UI, notifications or widgets. A child-facing action is not hidden monitoring.
+- No remote microphone/camera bypass, covert background capture, suppressing Android indicators or universal other-app private file access.
+- No fake “live” map data, precise street history, real-time ETA, medical/crash/emergency service guarantee, or promised battery percentage without evidence.
+- Parent permission grant alone does not give device-owner privileges or defeat background restrictions.
+- Research feature D13 and restricted media are explicitly non-launch until their independent gates pass.
+- Existing v0.1 discussion and specialized technical papers remain useful historical/context references; **this SRS v1.0 is the current project-wide requirements source**.
+
+## 14. Change log and references
+
+**v1.0:** Consolidates original FR-001–FR-029 with D01–D14 as FR-030–FR-043, SOS/check-in/health as FR-044–FR-049, and adds security/operations/battery/release requirements. Feasibility criteria in [gate](WHOLE_PROJECT_FEASIBILITY_GATE_2026.md) govern each conditional feature.
+
+Official verification:
+- https://developer.android.com/develop/background-work/services/fgs/restrictions-bg-start
+- https://developer.android.com/about/versions/14/changes/fgs-types-required
+- https://developer.android.com/reference/android/app/admin/DevicePolicyManager
+- https://developer.android.com/develop/sensors-and-location/location/geofencing
+- https://support.google.com/googleplay/android-developer/answer/9888380
+- https://support.google.com/googleplay/android-developer/answer/9799150
+- https://support.google.com/googleplay/android-developer/answer/11926878
+- https://developer.android.com/guide/practices/page-sizes
