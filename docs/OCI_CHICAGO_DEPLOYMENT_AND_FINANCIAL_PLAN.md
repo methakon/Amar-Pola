@@ -515,3 +515,19 @@ Values are calculated using the unrounded rate formulas and rounded for display;
 ## 15. Separate third-party API and subscription processing costs
 
 **Excluded from all OCI hosting figures above:** fees for Google Play Billing subscriptions, paid Google Maps Places/Geocoding/Roads calls, optional SMS/identity vendor, Drive API over-quota behavior, and other provider costs. They are calculated separately in [Third-Party Services Cost Analysis (excluding Oracle)](THIRD_PARTY_SERVICES_COST_ANALYSIS_2026.md). In the India ₹149/child/month, 1,000 paying-child illustrative case, the external-provider model gives approximately **₹22,350/month** (₹22.35/child/month), primarily the modeled 15% Play subscription service fee; **this is not part of Oracle's ₹199/month priced-line hosting model**. Add OCI + provider amounts only for a wider business operating-cost projection, taking care not to add discretionary cash reserves as actual invoices or duplicate domain costs.
+
+
+### 15.1 Cross-document unit economics at exactly 1,000 paying child subscriptions
+
+The standalone [third-party cost analysis §1.1](THIRD_PARTY_SERVICES_COST_ANALYSIS_2026.md#11-per-child-combined-expense-at-1000-active-subscriptions-cross-document-comparison-only) provides this **informational** combined view. At the hypothetical **₹149/child/month** plan and 15% Play fee, with Indian Maps free-usage eligibility and the planned OCI A1 PAYG allowance:
+
+| Cost basis | Per child per month | Total for 1,000 per month | Total for 1,000 per year |
+|---|---:|---:|---:|
+| Third-party service fees (primarily Play) | ₹22.35 | ₹22,350 | ₹2,68,200 |
+| Direct hosting cost, **separate model** | ~₹0.20 | ~₹199 | ~₹2,385 |
+| **Combined direct estimated cost** | **~₹22.55** | **~₹22,549** | **~₹2,70,585** |
+| **Combined planned cash budget with hosting reserve** | **~₹25.59** | **~₹25,588** | **~₹3,07,062** |
+
+**Revenue remaining per child before taxes, paid optional APIs, support, payroll, legal/security, refunds and HA costs:** approximately **₹126.45/month direct-cost basis**, or **₹123.41/month after allocating reserved hosting budget**. Do not classify either amount as net profit.
+
+The combined view is **not** an OCI-only expense and does not alter the OCI-only model in §14. Rounding, free allowance eligibility, tax treatment and server load tests are still open.
