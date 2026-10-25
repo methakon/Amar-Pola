@@ -10,6 +10,11 @@ BEGIN
  IF NOT EXISTS(SELECT 1 FROM pg_roles WHERE rolname='ap_m1_api') THEN
    CREATE ROLE ap_m1_api NOLOGIN NOSUPERUSER NOBYPASSRLS;
  END IF;
+ IF NOT EXISTS(SELECT 1 FROM pg_roles WHERE rolname='ap_m1_auth') THEN
+   -- Non-login, read-only auth helper function owner. This role bypasses RLS
+   -- ONLY in audited SECURITY DEFINER lookup functions; app role never can.
+   CREATE ROLE ap_m1_auth NOLOGIN NOSUPERUSER BYPASSRLS;
+ END IF;
 END $roles$;
 CREATE SCHEMA IF NOT EXISTS ap_m1 AUTHORIZATION ap_m1_owner;
 SET LOCAL ROLE ap_m1_owner;
@@ -304,6 +309,14 @@ CREATE POLICY revocation_r ON ap_m1.revocation_epochs FOR SELECT
 -- occur through a future separately reviewed SECURITY DEFINER enrollment function,
 -- not through blanket direct M1 API table permissions.
 RESET ROLE;
+-- Force-RLS policy helpers need an independent lookup role to avoid RLS recursion.
+-- The bypass role has NO LOGIN and only SELECT on the exact auth metadata tables.
+GRANT USAGE ON SCHEMA ap_m1 TO ap_m1_auth;
+GRANT SELECT ON ap_m1.guardian_memberships, ap_m1.child_guardian_grants,
+ ap_m1.devices TO ap_m1_auth;
+ALTER FUNCTION ap_m1.has_scope(uuid,uuid,text) OWNER TO ap_m1_auth;
+ALTER FUNCTION ap_m1.family_owner(uuid) OWNER TO ap_m1_auth;
+ALTER FUNCTION ap_m1.owns_active_device(uuid) OWNER TO ap_m1_auth;
 GRANT USAGE ON SCHEMA ap_m1 TO ap_m1_api;
 GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA ap_m1 TO ap_m1_api;
 GRANT SELECT ON ap_m1.families, ap_m1.parent_principals,
