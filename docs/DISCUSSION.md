@@ -111,3 +111,13 @@ This assessment records the initial planning view, not a guarantee that every fe
 9. Record results as **Pass**, **Pass with conditions**, **Fail**, or **Not tested**, including OS/device/build details.
 
 No feature should be described as production-supported until this validation is complete.
+
+## 7. Follow-up conditional feasibility review — 2026-10-25
+
+The initial matrix in section 6 was a preliminary assessment. A more detailed, source-linked review is maintained in [Feature Feasibility Conditions and Evidence](FEASIBILITY_CONDITIONS_AND_EVIDENCE.md). Treat the newer document as authoritative for **why** features work, **what conditions** are needed and **what remains unsupported**. In particular:
+
+- Eligible applications may be suspended under correctly provisioned managed-device policy APIs; ordinary runtime permissions alone do not confer that authority.
+- Camera/microphone access is not universally impossible but is highly conditional on permitted platform execution context, privacy/disclosure requirements and independent distribution approval. Unrestricted or concealed remote recording is not a product promise.
+- The initial parent-granted-permissions assumption remains, but permission grants do not override background execution constraints.
+- Proposed roadmap, Play declaration and validation details are in [Implementation Technical Specification](IMPLEMENTATION_TECHNICAL_SPECIFICATION.md), [Google Play Publishing Requirements](GOOGLE_PLAY_PUBLISHING_REQUIREMENTS.md) and [Validation and Release Plan](VALIDATION_AND_RELEASE_PLAN.md).
+- **No Android device compatibility results or Google Play approvals have yet been obtained.**
