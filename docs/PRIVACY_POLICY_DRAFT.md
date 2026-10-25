@@ -70,3 +70,12 @@ We will update the policy and notify users where required if data handling or th
 - [ ] Account deletion web URL functional without requiring app install
 - [ ] Accessibility/language review
 - [ ] Public policy revised and approved by counsel
+
+## 11. India child-data and US hosting publication blockers (2026-10-26)
+
+**DO NOT PUBLISH as compliant terms or begin real Indian child-data collection yet.** The planned India-first product has unresolved India DPDP Act 2023 s.9 children's data processing and behavioural-monitoring prohibitions, Rule 10 adult parent consent mechanism, Rule 12 narrow real-time child-safety purpose exception, and section 16/Rule 15 US hosting transfer issues. Most provisions are phased toward approximately May 2027 under November 2025 Gazette; this timing is **not** blanket permission today. [Detailed primary-source legal gate](INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md).
+
+Provider wording must list **Oracle OCI Chicago, United States** *if actually deployed there*, plus Google Maps/FCM/Billing, identity service and any SMS fallback/other processor with actual subprocessor purposes. Real age scope, adult/guardian verification, lawful collection purposes, each live-vs-history-vs-app-usage retention and legal transfer approval are **NOT DETERMINED**.
+
+**Safe defaults:** no real child data in development; app-usage history and historical tracking disabled for minors pending signed counsel advice; owner-specific guardian invitations, purpose notices and erasure tests; never imply a Play permission or purchase proves parent authority. Publisher identity, support/grievance contact and real public deletion page remain blank until supplied. Retention 14/90/365/30 are engineering candidates, **not approved published dates**.
+
