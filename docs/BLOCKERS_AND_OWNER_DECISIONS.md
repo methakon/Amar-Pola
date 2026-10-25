@@ -123,3 +123,25 @@ The [deployment financial document §14](OCI_CHICAGO_DEPLOYMENT_AND_FINANCIAL_PL
 | **COST-07** | Validate load/backup capacity before linking number of children to VM | Child counts are scenario labels only |
 
 This supplements B-07, B-08, B-12, B-14 and B-21; do not mark them closed until choices and evidence exist.
+
+## I. 2026-10-26 critical India/M2/pilot decisions and evidence blockers
+
+**Status rule:** Proposed defaults are NOT your answers. No real child data collection until India DPDP/legal and US hosting review. Current confirmed direction: India-first pricing and Chicago target; legal identity, country/age policy and specific purposes still unsigned.
+
+| Prior ID / new gate | Exact decision or evidence requested **now** | Provisional architectural default | May proceed without answer? |
+|---|---|---|---|
+| **B-01 / LG-01** | Publisher legal name, entity type, registration/jurisdiction and public support/privacy contact | Anonymous placeholder; synthetic data | **No real child data** |
+| **B-02 / LG-02** | Sign off India-only first launch, exact child ages within under-18 group, guardian authority and languages | India-only *proposal*, under-18 legal review; no global launch | **No real child data** |
+| **B-07 / LG-05** | Approve raw GPS, history, usage, SOS, audit, auth, backups and deletion retention after lawyer review | Raw 14 days; history 90 days **DISABLED** pending purpose review; app usage **OFF**; backups candidate 30d; audit 365d legal candidate | Synthetic design only |
+| **B-09/B-18 / LG-07** | Who may invite, approve, revoke and view each child, including disputes and pickup scope? | Verified family owner **only** can invite/revoke; per-child grants; history opt-in, pickup current only 45m candidate, no role inheritance | SQL can use defaults; cannot enable real access before approval |
+| **OCI-06 / AUTH-01** | Parent login provider, India onboarding age/identity provider and account recovery | **Google Sign-In through Android Credential Manager and backend ID-token verification** as M1 *engineering candidate*, not adult/parent identity proof; no SMS initially | Synthetic pairing allowed |
+| **TEAM-04 / HW-01** | Real device inventory: model, Android API/OEM, parent test phone, older phone, and one **owner-approved factory-resettable spare** | Emulator/synthetic only, standard mode first; managed-DPC proof blocked | **M1 physical acceptance cannot pass** |
+| **B-21 / TEAM-01–07** | Named engineer(s), independent QA/security/legal, OCI operator, monthly cash budget and funded runway | No staffing or operating capacity presumed | No credible paid pilot estimate |
+| **FR-044 / SOS-B01–07** | Decide best-effort check-in vs public emergency SOS; trusted contacts, fallback SMS/vendor/cost, independent dispatch failure path | Best-effort check-in **only**; public emergency SOS OFF | M2 prototype only |
+| **OCI-12 / DR-B01–07** | Approve pilot/production RPO/RTO and paid standby, backup/restore drills, support rota | Dev synthetic 24h RPO/48h RTO **targets only**; no production claims | **No real pilot without proof** |
+| **SUB-16 / TEAM-06** | Verify ₹50/₹500 final tax-inclusive checkout, Play fee, refunds, churn, support and staff break-even | Prices PROPOSED; ₹149 historic model | Pricing design only |
+
+**Related actionable designs:** [India child privacy law](INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md), [SOS fallback](SOS_ESCALATION_AND_INDEPENDENT_DELIVERY_DESIGN.md), [OCI recovery](OCI_CHICAGO_RECOVERY_AND_PILOT_READINESS.md), [Price break-even/staffing](PRICE_BREAK_EVEN_STAFFING_AND_DELIVERY_CAPACITY.md).
+
+**Answer format (any subset):** B-01 legal publisher identity; B-02 country and ages; B-07 proposed retention approved/edited; B-09/B-18 scope policy; OCI-06 login approved/changed; HW-01 devices safe for reset; B-21 team and monthly budget; SOS-B01 emergency vs check-in; DR-B01 pilot RPO/RTO and funding. Keep identity documents, passwords, child data, contact numbers and cloud keys OUT of public GitHub.
+
