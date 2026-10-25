@@ -1,314 +1,263 @@
-# Technical Specification
+# Amar-Pola — Canonical Whole-Project Technical Specification
 
-- **Version:** 0.1
-- **Date:** 2026-10-25
-- **Status:** Proposed architecture
+**Document ID:** AP-TSD-001  
+**Revision:** 1.0; consolidates the former v0.1 technical specification into one authoritative implementation overview.  
+**Date:** 2026-10-25  
+**Status:** Architecture/design sufficiently specified for prototype engineering; NOT production-verified.  
+**Requirement source:** [SRS v1.0](SRS.md) (FR-001–FR-049 and NFR-001–NFR-016).  
+**Feasibility source:** [Whole Project Feasibility Gate](WHOLE_PROJECT_FEASIBILITY_GATE_2026.md).  
+**Blockers:** [Decisions and Resolution Register](BLOCKERS_AND_OWNER_DECISIONS.md).  
+**Traceability:** [Full FR/NFR Test Matrix](REQUIREMENTS_TRACEABILITY.md).  
+**Machine-readable API:** [OpenAPI 3.1 draft](openapi.yaml).  
+**Deep implementation contracts:** [Data/Authorization/Recovery](DATA_AUTHORIZATION_AND_RECOVERY_CONTRACT.md), [Android/Geo Algorithms](TRACKING_RUNTIME_AND_ALGORITHM_CONTRACT.md), [C++ scaling](ADAPTIVE_MOVEMENT_CPP_SERVER_ARCHITECTURE.md).
 
-## 1. System architecture
+## 1. Decision authority and nonnegotiable invariants
 
-```text
-Child Android device
-  Kotlin/Java platform layer
-    - permission onboarding and capability checks
-    - location foreground service + Android location APIs
-    - UsageStatsManager integration
-    - optional DevicePolicyManager (managed mode)
-    - authorized capability-gated media adapter
-    - WorkManager / push-assisted synchronization
-               | JNI / stable C API
-  C++ core
-    - event model, validation, policy parsing, queue helpers
-               |
-  Encrypted local queue (SQLite) + HTTPS client
-               |
-               | TLS
-               v
-C++ backend (Drogon or Boost.Beast)
-  Auth/pairing | Commands | Telemetry | Policies | Subscription adapter
-  Audit        | Retention/deletion | Drive upload coordination
-               |
-      PostgreSQL / optional push provider
-               |
-       Parent app/dashboard
-         - Google Maps
-         - location and usage reports
-         - supported remote controls
-         - Google Drive authorized backup
-```
+This document is the project's current **canonical TSD**. Specialized annexes specify subdomains in greater detail. When two old documents conflict, the precedence is: latest approved **SRS** for what; **feasibility gate** for whether/where; this **TSD** for overall system design; named annex for algorithms/data/API; signed ADR for an explicit exception. No paragraph means a feature is implemented or a supported Android mode is proven.
 
-## 2. Technology choices
+- Privacy: transparent authorized parental monitoring, recognizable child app identity, user-visible disclosures, required monitoring notification and OS privacy indicators. Never introduce covert capture or Android permission bypass.
+- Trust: parent/grant ownership evaluated for each action; device credential only operates on its own enrolled device; no request-body role/tenant trust.
+- Truthful data: a stale GPS fix isn't live; a possible stop isn't a visit; an interpolated path isn't the actually observed street; command delivery isn't execution.
+- Durability: 202 event batch success only **after durable transaction**; at-least-once transport with idempotent effect; rollback/replay doesn't double route length or stops.
+- Concurrency: C++ HTTP request loop never runs heavy reconstruction or large blocking SQL. Bounded parallel work with backpressure and per-tenant fairness.
+- Low energy: phone runs minimal Android location + data queue, not map rendering, geocoding or complex trip analysis. Parent viewer count does not increase child GPS sampling.
+- Conditional mode: managed DPC device restrictions require real device-owner or other authorized managed provisioning, not merely grants from parent in Settings.
+- Deferred: remote media capture, corridor alerts and broad web interception are not part of general Play release until separate evidence and signoffs.
 
-### Child Android agent
-- Kotlin for Android lifecycle-aware integration, services, permissions and platform API calls.
-- C++17/20 via Android NDK for performance-sensitive/shared business logic.
-- Keep JNI narrow and versioned; do not route every platform API through C++.
-- WorkManager for deferrable synchronization, not as a replacement for a permitted continuous location service.
-- Use a location foreground service only where needed and compliant with the relevant Android rules.
-- UsageStatsManager after Usage Access is granted.
-- DevicePolicyManager only in valid supported managed enrollment.
-- Isolate camera/audio functionality behind tested capability interfaces.
+## 2. Deployable architecture and communication
 
-### Parent interface
-Initial recommendation: Kotlin + Jetpack Compose for a native Android parent app. A web dashboard can be added later on the same API. Google Maps SDK renders current/last-known position, accuracy, markers, polylines, and route playback.
+~~~text
+Child Android app
+ Kotlin: Onboarding / PermissionRegistry / LocationEngine
+         UsageStats Adapter / TrackingPolicy / FGS / Notification
+         WorkManager uploader / optional ManagedDPC / Child Actions
+ C++20 NDK: bounded queue model, validation, compact event serializer
+ Protected SQLite queue + Android Keystore
+          | device-authenticated HTTPS, batched events and receipt
+          v
+Edge TLS / rate limits / request-size limits
+          |
+          +--> C++20 Drogon stateless API replicas
+          |      Authentication / family-child grants / pairing
+          |      Device ingest, places, location and history query
+          |      SOS/commands / user management / entitlements
+          |
+          +--> PostgreSQL + PostGIS
+                 Raw observations partitioned by observed time
+                 Event dedup ledger, outbox/reconstruction jobs
+                 Guardian grants, child/device map, named places
+                 Trips/stops/revisions, usage and audit/deletion
+                       |
+             +---------+----------+----------------+
+             |                    |                |
+      C++ reconstruction      Usage/policy      Retention/billing/
+      workers by device       alert workers     notification workers
+             |                    |                |
+             +--------------------+----------------+
+                          |
+                 Latest-position read table
+                 + SSE fanout (parent only)
+                          |
+                 Parent Kotlin/Jetpack Compose
+                 Google Maps + child history + status
+~~~
 
-### Backend
-- C++17/20.
-- Drogon for an asynchronous web framework, or Boost.Beast for a more controlled low-level HTTP implementation.
-- PostgreSQL for multi-account production data.
-- SQLite for local child queue; use a managed persistent database for the production backend.
-- TLS termination, authentication, rate limiting, input validation, structured logs, metrics, backups, and security patching are required operational concerns.
+Start with a **modular monolith**: one or two API replicas, one bounded C++ reconstruction process and one maintenance worker against managed PostgreSQL/PostGIS. Split workloads to distinct services or a durable broker only after a measured operational bottleneck, not reflexively.
 
-## 3. Proposed repository layout
+Optional integrations: FCM as best-effort notification hint, Google Maps and optionally Places on the parent side, Google Drive OAuth when selected, Google Play Billing for applicable digital products. Push delivery must not be the source of truth for completion.
 
-```text
-Amar-Pola/
-├── android/
-│   ├── child-app/
-│   └── parent-app/
-├── backend/
-│   ├── CMakeLists.txt
-│   ├── src/
-│   └── tests/
-├── shared/
-│   ├── include/amar_pola/
-│   └── src/
-├── infra/
-├── docs/
-└── scripts/
-```
+## 3. Project code structure and build strategy
 
-This is a future implementation layout; it does not imply that those implementation files exist yet.
+~~~text
+android/
+  child-app/        Gradle Kotlin services, permissions, onboarding
+  parent-app/       Gradle Kotlin Compose, Maps, usage, guardians, billing
+  wear-app/         optional separate Wear OS module and source identity
+shared/
+  core/include/     C++20 stable domain types, portable validation
+  core/src/         serialization and testable pure algorithms
+backend/
+  api/              Drogon controllers, auth filters and role checks
+  domain/           plain C++ event and rule types
+  ingest/           validated durable event writer and outbox
+  geo/              quality filter, movement, stops, route, confidence
+  workers/          reconstruction, usage, SOS, retention, deletion
+  migrations/       versioned PostgreSQL/PostGIS SQL and rollback plan
+  tests/            CTest, API, seeded DB, security, load fixtures
+infra/              staging/prod configs, dashboards and backup runbooks
+docs/               source specifications, ADRs, API and test evidence
+.github/workflows/  lint, unit tests, integration tests, artifact scans
+~~~
 
-## 4. Capability negotiation and platform compatibility
+Recommended: Kotlin controls all Android runtime permissions and location lifecycle; only thin JNI interfaces connect C++ portable helpers. Native Kotlin interoperability is not a reason to run location directly from unmanaged NDK threads. Drogon asynchronous HTTP/SQL plus C++ testable geospatial workers; PostgreSQL for ACID and PostGIS indexed proximity. Avoid home-grown auth/TLS/crypto.
 
-Do not infer support from Android version alone. At enrollment and periodically thereafter, the child agent should report:
-- Android API level and app version.
-- Standard versus managed enrollment mode.
-- Current relevant runtime permissions and special-access state.
-- Tested/supported feature flags with reason codes.
-- Last capability refresh timestamp.
-- OEM/model details only where needed for diagnostics, with data minimization.
+**Build/release:** pin compiler, NDK and dependencies; Android new standard app target SDK >=36 under 2026 Play rule (Wear OS has separate >=35); selected minSdk **candidate** 29. Bundle Android AAB, sign via Play App Signing, scan dependencies, test all native shared libraries for 16 KB ELF/zip alignment and runtime, protect CI secrets and signing keys. Parent, child and Wear application manifests/privacy declarations need separate review.
 
-Example capability flags:
-- `background_location`
-- `usage_stats`
-- `managed_app_restrictions`
-- `authorized_photo_capture`
-- `authorized_video_capture`
-- `authorized_audio_capture`
+## 4. Feature implementation crosswalk — entire project
 
-Parent-side Drive authorization is a separate server/integration state. Capability profiles are advisory and time-sensitive; the child agent must revalidate sensitive operations immediately before execution.
+| Requirement group | Core method and owned module | Data and API | Test/reference |
+|---|---|---|---|
+| FR-001/002: pairing & permission onboarding | Parent identity; one-use code, device Keystore key; Kotlin disclosure wizard & capability snapshots | family/device/credential tables; pairing and capabilities endpoints | T-FR-001/002; authorization/data annex |
+| FR-003/018: adaptive tracking | FusedLocationProvider LocationRequest modes, distance filter, Activity Recognition hint, lawful typed FGS, queue | device observations, policy version | T-FR-003/018, device runtime annex |
+| FR-004/015–017/028: route, stops, saved places | Event-time C++ qualify → motion → dwell cluster → legs/gaps; PostGIS ST_DWithin; Maps polyline/markers | location_observations, trips, stops, places, segments | T-FR-004/015/016/017/028 |
+| FR-005 and usage parts of FR-047 | Usage Access from Settings, interval aggregates and bounded sync | usage_aggregates, usage API | T-FR-005/047 |
+| FR-006/007: commands and managed restrictions | Typed signed/authorized commands; on-device DPC package suspension only if eligible; local safe scheduler | commands/policies and execution receipts | T-FR-006/007 |
+| FR-008/011: authorized files and Drive | Storage Access Framework/MediaStore only; OAuth least scopes & resumable transfer | media metadata and Drive grants | T-FR-008/011 |
+| FR-009/010: optional media | **DISABLED** absent separately reviewed authorized visible capture workflow and OS/Play gate | no launch API/permission | T-FR-009/010 disabled |
+| FR-012/039: billing and compatibility | Play Billing token verification at backend, product capability matrix before pay | entitlements, provider receipts, capability status | T-FR-012/039 |
+| FR-013/027: privacy/erasure | Grant/device revocation, cache + live-stream invalidation, deletion tombstones and jobs | deletion API, family/device/raw/derived rows | T-FR-013/027 |
+| FR-014/048–049: health and alerts | Piggyback battery/permission heartbeats; FCM only for hint, deduped notices and separate SOS priority | health snapshots, notification delivery | T-FR-014/048/049 |
+| FR-019/020/021: road matching/Wear/geofence | Optional Roads adapter after legal review; device provenance; selected geofences (up to 100 active/device user) | source and geofence records | T-FR-019/020/021 |
+| FR-022/034–035: family grants, temporary pickup & ledger | Child-specific scope/expiry, audited grants, RLS defense in depth, SSE invalidation | guardian_grants / access receipts | T-FR-022/034/035 |
+| FR-023/024/032: durability and revisions | Atomic event dedup + raw + outbox; per-device worker fence and event-time replay | dedup/jobs/checkpoints/trip_revisions | T-FR-023/024/032 |
+| FR-025/026/029: scaling and read separation | Bounded Drogon APIs + separate CPU workers, latest qualified position table, parent SSE with quota | health/latest/trips | T-FR-025/026/029 |
+| FR-030/031: evidence and reliability | GPS quality classes and source timestamps, reason codes and parent diagnostic page | observation_quality, tracking_health | T-FR-030/031 |
+| FR-033/042: commute and corridor | Confirmed dwell + schedule; distinguish UNKNOWN/ARRIVAL_NOT_CONFIRMED; corridor **research only** | commute plans and alert rules | T-FR-033 pilot, 042 deferred |
+| FR-036/038/043: battery feedback, handoff, schedule | Real measured tracking coverage/energy; phone/watch source provenance and safe preference; schedule event hints | power profiles/source events | T-FR-036/038/043 conditional |
+| FR-037: screen-time rule preview | Pure C++ schedule engine and DST, eligible package list and safe rollback | policy preview and result API | T-FR-037 managed conditional |
+| FR-040/041: support diagnostics/child transparency | Sanitized opt-in diagnostic bundle and child-visible monitoring summary | support API + privacy disclosures | T-FR-040/041 |
+| FR-044/045/046: SOS, ring, check-in | Child-visible action, urgent durable dispatch, device bounded ring command, check-in acknowledgement | SOS, command and check-in APIs | T-FR-044/045/046 |
 
-### Photo/video command lifecycle
-1. Parent submits an action request.
-2. Backend authenticates parent, authorizes target device, checks pairing/subscription/expiry and reported capability.
-3. Backend stores a command with unique ID and expiry.
-4. Child agent receives command using supported push/synchronization.
-5. Agent rechecks permission, lifecycle/service requirements, enrollment mode, and current OS capability.
-6. If blocked, return `UNSUPPORTED`, `PERMISSION_REQUIRED`, `OS_REJECTED`, or `USER_ACTION_REQUIRED` as appropriate.
-7. Run only an authorized supported capture workflow.
-8. Confirm media creation and local persistence before reporting `COMPLETED`.
-9. Register metadata and upload only within configured authorization and retention policies.
+FR-001–FR-049 and all NFR-001–NFR-016 are individually enumerated and assigned to test IDs in [Traceability](REQUIREMENTS_TRACEABILITY.md); do not rely solely on grouped table for release coverage.
 
-A queued/delivered request is not a completed capture.
+## 5. Data model and family isolation
 
-## 5. API proposal
+Canonical ownership: **family → child profiles → enrolled devices**, with independent authenticated guardian memberships and **explicit guardian-to-child action grants**. Device enrollment to a child can be transferred only through a deliberate revoke/verify/re-enroll process; don't silently reassign a credential. A child may have phone and watch, but each record preserves source device identity.
 
-All routes require TLS. Parent routes require parent authentication; device routes require device credentials and target-device authorization. Names are illustrative and should be finalized in OpenAPI before implementation.
+Minimum core persisted domain: family/parent_principal/guardian_membership/child/guardian_child_grant/device/device_key_record, location_event_dedup, time-partitioned location_observations, latest_position, named_places, trips/legs/segments/stops/revisions, device reconstruction jobs and epochs, usage aggregates, policies/commands, SOS/notifications, billing, audit, media grants and deletion tombstones.
 
-### Parent API
-- `POST /v1/pairing-codes` — issue a short-lived pairing code.
-- `POST /v1/devices/{deviceId}/commands` — create a remote command.
-- `GET /v1/devices` — list paired devices and state.
-- `GET /v1/devices/{deviceId}/locations?from=&to=` — location history.
-- `GET /v1/devices/{deviceId}/usage?period=` — usage aggregates.
-- `GET /v1/devices/{deviceId}/commands/{commandId}` — command result.
-- `DELETE /v1/devices/{deviceId}/pairing` — revoke pairing.
-- `GET /v1/audit-events` — authorized audit history.
-- `POST /v1/integrations/google-drive/revoke` — revoke Drive link.
+**PostgreSQL correctness:** Raw time partitions require partition key in unique constraint; maintain separate ledger for global per-device event ID idempotence. Authenticated request context is set transaction-locally for RLS using low-privilege non-owner runtime roles. Always check exact child scope in controllers and SSE/cache, not merely family membership.
 
-### Child API
-- `POST /v1/enroll` — redeem pairing code.
-- `POST /v1/devices/{deviceId}/heartbeat` — connection/capability state.
-- `POST /v1/devices/{deviceId}/locations:batch` — upload location points.
-- `POST /v1/devices/{deviceId}/usage:batch` — upload usage aggregates.
-- `GET /v1/devices/{deviceId}/commands` — poll pending commands where push is unavailable.
-- `POST /v1/devices/{deviceId}/commands/{commandId}:result` — report command outcome.
-- `POST /v1/devices/{deviceId}/media` — register authorized media metadata.
+**Executable schema path:** engineer generates migrations from [Data Contract](DATA_AUTHORIZATION_AND_RECOVERY_CONTRACT.md), tests apply/rollback on isolated PostgreSQL and signs review. The annex's SQL fragments are **illustrative**, not a production migration set.
 
-## 6. Logical data model
+## 6. Full data journey and state lifecycles
 
-### `parent_accounts`
-- `id` UUID primary key
-- `auth_provider`, `provider_subject`
-- `created_at`, `status`
+### Enrollment
+Parent logs in → requests one-use pairing code → physical child setup enters code → device creates Keystore key → backend verifies code and binds identity to one child → reports permissions/capability. Reuse/expiry/unauthorized transfer rejected.
 
-### `devices`
-- `id` UUID primary key
-- `parent_account_id` foreign key
-- `display_name`, `platform`, `android_api_level`, `app_version`
-- `management_mode`, `capability_profile` JSONB
-- `last_seen_at`, `paired_at`, `revoked_at`
+### Position capture and synchronization
+Kotlin LocationEngine receives a valid OS fix → local encrypted queue transaction persists stable event ID and time → WorkManager batch upload when allowed → C++ API authenticates and commits per-device dedup ledger + raw event + outbox in one transaction → HTTP durable receipt → child deletes acknowledged queue records → separate C++ worker calculates provisional/updated trips and emits parent read update.
 
-### `location_points`
-- `id` UUID primary key
-- `device_id` foreign key
-- `observed_at`, `latitude`, `longitude`, `accuracy_m`
-- optional `speed_mps`, `bearing_deg`, `altitude_m`
-- `ingested_at`; index `(device_id, observed_at)`
+### C++ geo processing
+Per device/affected interval: sort/dedup by observation time; quality/clock/accuracy check; motion inference with hysteresis; dwell clustering and stop qualification; derive trips/legs/segmented gaps; match saved places via PostGIS; version/revision upsert guarded by worker lease epoch; parent sees computed route **only with confidence and provenance**. Late offline batches trigger bounded revision/backfill.
 
-### `usage_aggregates`
-- `id` UUID primary key
-- `device_id`, `package_name`
-- `period_start`, `period_end`, `foreground_duration_ms`
-- `collected_at`
+### Parent view
+Parent bearer token → check active family/child grant for specific action → fetch latest qualified position or paginated history, no device wake merely for viewing → parent Google Maps renders position/accuracy halo, labeled markers, observed polyline segments, stop timeline and unknown gaps. An SSE stream is optional while parent opens the screen, with active authorization/revocation, bounded subscriber quota.
 
-### `policies`
-- `id` UUID primary key
-- `device_id`, `policy_version`, `policy_type`, `policy_json`
-- `created_by`, `created_at`, `enabled`
+### Managed app rule
+Parent rule form → pure C++ schedule simulator checks timezone, DST and essential-package exclusions → backend stores versioned authorized policy → child verifies actual managed authority and package eligibility → Android DevicePolicyManager applies only permitted restrictions → child returns per-package results. Standard mode reports unsupported enforcement, not success.
 
-### `commands`
-- `id` UUID primary key
-- `device_id`, `parent_account_id`, `command_type`, `payload_json`
-- `created_at`, `expires_at`, `status`, `result_code`, `result_summary`, `completed_at`
-- unique idempotency key
+### SOS / check-in
+Child initiates a clear, visible action → device queues urgent event → backend durable intake, authenticates source → priority notification to authorized guardians with delivery/ack states. Offline “queued” is not delivered. Find-phone sound obeys Android audio/DND permissions and explicit expiry.
 
-### `media_objects`
-- `id` UUID primary key
-- `device_id`, `media_type`, `created_at`, `size_bytes`, `sha256`
-- `authorization_context`, `upload_state`, optional Drive file reference
-- Never store OAuth access tokens in this table.
+### Account deletion
+Verified owner initiates app/web deletion request → server revokes credentials/grants/streams first, writes tombstone → bounded idempotent jobs remove raw and derived records, caches, processor tokens, optional app-owned media and legally allowed audit → backup restore respects erasure ledger. Do not mark COMPLETED before actual deletion phase passes.
 
-### `audit_events`
-- `id` UUID primary key
-- `actor_type`, `actor_id`, `device_id`, `event_type`, `occurred_at`
-- Minimal structured metadata; exclude secrets and unnecessary raw payloads.
+## 7. API and error contract
 
-Use retention/deletion jobs. Partition historical location data by time only when scale warrants it.
+The canonical planned endpoint catalog is the **OpenAPI 3.1 draft**, currently expanded with 39 operations for pairing, location, trip revisions, places, usage, SOS, grants, diagnostics, commands, policy preview, billing, and deletion. Every route has per-principal security declaration plus required object/action scope and a shared error shape.
 
-## 7. Security model
+### Universal transport rules
 
-- TLS 1.2+; prefer TLS 1.3 where supported.
-- Short-lived one-time pairing codes, rate limiting, and brute-force protections.
-- Unique, revocable, rotatable device credentials.
-- Parent authentication through a trusted identity provider or passkeys.
-- Object-level authorization on every device/history/command/media endpoint.
-- Server-side subscription entitlement validation.
-- Secrets in a managed secret store, not source code or mobile binaries.
-- Encrypt sensitive database volumes/backups; evaluate field-level encryption for high-risk fields.
-- Minimize Google Drive OAuth scopes; prefer the narrowest suitable app-controlled storage scope.
-- Never collect/store Google passwords.
-- Audit security-sensitive actions; restrict audit-log access.
-- Define threat model, incident response, backups, restore tests, and key rotation before production.
+- HTTPS only, short-lived parent token/device proof, bounded body (default candidates: <=500 events/batch and compressed/uncompressed request limits), structured correlation ID.
+- Parent routes must check exact child/family action scope in authoritative DB. Device routes bind path deviceId to authenticated enrolled key; body device IDs never grant rights.
+- Inputs finite and bounded, observed_at UTC, supported API schema version, conservative request timeouts.
+- Idempotency-Key for parent command writes; stable event_id for device observations and SOS; well-defined 409 conflict and 429 Retry-After for quotas.
+- Use pagination/cursors and bounded date windows; parent read results contain observation timestamp, source, quality, completeness/revision.
+- State changes are event-sourced/audited; **queued** and **delivered** not equivalent to **completed**.
+- API/OpenAPI currently design-level: **lint, tests, generated types and actual handlers are future implementation gates**.
 
-## 8. Privacy, retention and deletion
+Command terminal states: COMPLETED, FAILED, EXPIRED, OS_REJECTED, UNSUPPORTED, PERMISSION_REQUIRED, USER_ACTION_REQUIRED, CANCELLED. DEVICE_OFFLINE can be a nonterminal reported state while expiry clock runs. Server forbids transitions back from terminal states, except a separate explicit corrective audit event; versioned policy commands enforce idempotence.
 
-- Collect only data required for enabled functions.
-- Publish retention defaults and allow configuration within product policy.
-- Provide access review, device revocation, integration revocation, and deletion workflows.
-- Cover primary records, derived reports, queued uploads, and backups under the documented retention/deletion schedule.
-- Keep sensitive payloads out of ordinary logs, crash reports, analytics, and push messages.
-- Define consequences of subscription expiry, unpairing, and account deletion.
+## 8. Security architecture
 
-## 9. Performance design
+Threats: parent account takeover, cross-family BOLA/IDOR, unauthorized guardian invites, device spoofing, stale SSE stream after revoke, exposed precise GPS in logs, compromised backup keys, malicious payload, expensive historical query, coerced monitoring and misuse of managed power.
 
-- Adaptive location intervals/distance thresholds; no busy-loop GPS polling.
-- Batch location and usage records; compress where useful.
-- Bounded local queues with backpressure and expiry.
-- Exponential backoff with jitter for transient network failures.
-- Separate critical location operation from deferrable reports and media uploads.
-- Avoid frequent empty polling; use push where reliable and a periodic sync fallback.
-- Measure idle/moving battery drain, CPU, resident memory, upload volume, and recovery time on a representative device matrix before defining budgets.
-- Do not claim a fixed battery saving before testing.
+Mandatory controls:
+- OIDC/PKCE or passkeys for parents, optional MFA/step-up on critical operations; unique device Keystore-bound credentials with expiry/revocation.
+- Strict child action grants and PostgreSQL tenant RLS as defense-in-depth with non-owner DB role; guard SSE and cache with same scope.
+- Managed secret store; strong TLS; protected backup encryption and access logs; no hardcoded shared private keys in mobile binaries.
+- Cross-family negative tests across every endpoint and derived data object, including errors, exports, logs and cache.
+- Data minimization: no raw location in standard request logs, crash payloads or push notifications; publish retention/deletion policy and implement verified erasure.
+- Support diagnostic bundle requires explicit parent opt-in, redaction and short retention; “who viewed data” ledger itself must not expose coordinates.
+- Feature flags restrict managed controls, capture, corridor and road matching; never allow old client to force-enable unsupported feature via unsigned JSON.
 
-## 10. Command states
+Security exception and privacy owner decisions are recorded in [Blockers](BLOCKERS_AND_OWNER_DECISIONS.md). No production privacy promise until operator and processors are selected.
 
-Suggested states:
-- `CREATED`
-- `QUEUED`
-- `DELIVERED`
-- `ACCEPTED`
-- `COMPLETED`
-- `FAILED`
-- `EXPIRED`
-- `UNSUPPORTED`
-- `PERMISSION_REQUIRED`
-- `OS_REJECTED`
-- `USER_ACTION_REQUIRED`
-- `DEVICE_OFFLINE`
-- `CANCELLED`
+## 9. Location accuracy, battery and resource optimization
 
-Validate transitions server-side and retain timestamps and concise reason codes. Do not log sensitive command payloads.
+Android child uses motion-aware candidate profiles: STILL ~5–15 min/passive, WALKING 30–90s, VEHICLE_BALANCED 30–60s, time-limited VEHICLE_DETAIL adaptive 5–15s, and watch lower-rate defaults. Numbers are **tuning hypotheses**, not guaranteed or measured intervals. Apply distance threshold, permitted maxUpdateDelay batching, cool-down/hysteresis, GPS permission revalidation and energy downgrade.
 
-## 11. Testing strategy
+Server efficiency:
+- C++ domain algorithms with bounded per-device processing windows; no heavy work in Drogon I/O loop.
+- Durable work outbox and per-device lease fencing, coalesce intervals when offline backlog arrives.
+- Postgres partitions by observation timestamp, indexed device/time filters, per-parent read limits, latest qualified position materialization.
+- Parent position SSE at viewing session only; a map open doesn't trigger child GNSS.
+- Upload compression only when genuinely reducing bytes without decompression DoS; bounded offline queue and retries.
+- Geofence subset limited to 100 active per app/device user, event responsiveness can be delayed; server handles saved pins without child geofence count expansion.
+- Roads API reserved for sufficiently dense reliable vehicle fixes, subject to provider legal cost/licensing and data retention.
 
-- C++ unit tests for event validation, serialization, queue behavior, policy parsing, and command-state transitions.
-- Android instrumentation tests for permission state, background services, usage access, location, and managed-device enrollment.
-- Device matrix testing across supported API levels and selected OEMs.
-- Integration tests for pairing, authorization, idempotency, offline recovery, command expiry, and Drive upload.
-- Security tests for object authorization, token leakage, replay, brute force, revocation, and deletion.
-- Performance tests for stationary/moving collection, network loss, memory pressure, and battery impact.
-- Capture compatibility tests must verify real OS behavior and privacy indicators; do not infer availability from OS version alone.
+Initial performance sizing scenario: 300 observations/device/day; at 100,000 devices ~30 million/day, or ~347 observations/s average. Bursts, WAL, index size and parent reads can dominate. These are **calculated assumptions** not measured server capacity. See [C++ scaling annex](ADAPTIVE_MOVEMENT_CPP_SERVER_ARCHITECTURE.md).
 
-## 12. Deployment and operations
+## 10. Development phases and dependency logistics
 
-- Containerize backend where appropriate; deploy behind a hardened TLS endpoint/reverse proxy.
-- Use migrations and backward-compatible API versioning.
-- Separate development/staging/production credentials.
-- Configure database backups, restore tests, monitoring, rate limits, alerting, and patching.
-- Do not expose a raw C++ server directly to the public internet without input validation, authentication, rate limiting, and operational monitoring.
+| Stage | Implement and review | Gating proof | Dependencies |
+|---|---|---|---|
+| 0 — Decisions | Family owner/child data policy, target countries/age, retention, hosting, modes/devices, privacy threat model | Owner decisions logged | Blockers B-01 onward |
+| 1 — Contracts | Full OpenAPI DTOs, SQL migration set, guardian ACL and grants, C++ core CMake and Gradle skeleton | CI contract lint, tenant cross-access tests | Stage 0 scoped defaults |
+| 2 — Secure foundation | Parent auth, one-use pairing, device Keystore IDs, consent UI, revocation, audit | Replay/spoof and parent isolation tests | Stage 1 |
+| 3 — Location pipeline | Android compliant FGS and tracking, encrypted queue, durable batch API/dedup/outbox | Real device lifecycle and crash/retry tests | Stage 2 |
+| 4 — Route engine | C++ event-time quality/motion/stop/trips and PostGIS named places, map playback | Labeled truth/failure/late replay tests | Stage 3 |
+| 5 — Trust UI | Route evidence, Reliability Center, offline revision history, battery/coverage baseline | UI explanation, real device sample and quality tests | Stage 4 |
+| 6 — Family & activity | Usage Access/aggregation, guardian pickup grants, audit access ledger, SOS/check-in, notifications | Scoped access, replay and DST/alert tests | Stages 2–5 |
+| 7 — Commercial features | Backend Play Billing, child capability-before-purchase, account deletion, optional Drive | Sandbox billing, account deletion/backup rehearsal | Stage 6 |
+| 8 — Conditional expansion | Managed DPC restrictions, policy simulator, commute alerts, Wear source handoff and schedule tuning | Actual eligible device tests/false-alarm rate | Product selections |
+| 9 — Release hardening | Battery/load/pen tests, monitoring disclosure, 16 KB native build, AAB, Store Data safety, live URLs and Play review | All release-scope FR tests passed + Play approved | Prior stages |
+| 10 — Research | Corridor deviation, optional Roads and visible authorized media workflows only if separately approved | Independent feasibility/policy/license gates | Outside baseline launch |
 
-## 13. Official documentation to re-check during implementation
+**Deployment:** private dev/staging first with synthetic fixtures, nightly tests, monitored CI. Release to internal testers only after core security and privacy basics; proceed to applicable closed testing and staged production when legal/Play requirements met.
 
-- Android background location: https://developer.android.com/develop/sensors-and-location/location/background
-- Android foreground services: https://developer.android.com/develop/background-work/services/foreground-services
-- Android UsageStatsManager: https://developer.android.com/reference/android/app/usage/UsageStatsManager
-- Android device policy: https://developer.android.com/work/dpc
-- Google Maps SDK for Android: https://developers.google.com/maps/documentation/android-sdk
-- Google Drive API: https://developers.google.com/drive/api/guides/about-sdk
-- Google Play Billing: https://developer.android.com/google/play/billing
+## 11. Validation evidence and definition of done
 
+All 49 FR and 16 NFR are enumerated by ID in [Traceability](REQUIREMENTS_TRACEABILITY.md). Every release-enabled FR needs build SHA, tested hardware or software environment, inputs, expected and actual behavior, security coverage, reviewer and date. Never mark a documentation link as test evidence.
 
-## 14. Proposed feasibility assessment and validation matrix
+**High severity security:** zero cross-family reads/exports/streams, successful revoke and deletion.  
+**Location:** no false live timestamp, no uncertain gaps rendered as actual streets, labeled stop precision/recall and battery drain measured on supported phones.  
+**Server:** per-device dedup across retries/partitions, proper lease fencing, bounded memory and accepted-event durability under simulated crashes, documented recovery time.  
+**Commercial:** subscription entitlements server-authoritative; parent sees unsupported features before pay.  
+**Play:** signed AAB, release manifests/disclosure, background-location permission video, persistent monitoring notification, proper metadata flag, Data safety, account deletion app+web, 16 KB native binaries and policy review.
 
-The architecture is feasible in principle, but several capabilities are conditional on Android version, device/OEM, permission state, and enrollment mode. This is a proposed validation plan, not a claim of completed compatibility testing.
+Actual SLOs (for example p95 ingestion/parent read latency), permissible battery budget, location freshness, reliability and costs become signed test thresholds after owner/product choices and baseline benchmarks. No guaranteed “live every 5 seconds” or “100k devices supported” claim from planning alone.
 
-| Capability | Initial assessment | Design consequence |
-|---|---|---|
-| Pairing without a separate child account | Feasible | One-time pairing code and revocable device credentials. |
-| Background location and travel history | Feasible with conditions | Use Android-supported background/foreground-service patterns; expose stale/accuracy state. |
-| Speed | Feasible when reported by location provider | Optional field; do not fabricate missing values. |
-| App usage statistics | Feasible after Usage Access | Use UsageStatsManager and report access loss. |
-| Strong app blocking | Conditional | Use DevicePolicyManager only for valid managed enrollment; do not promise universal blocking in standard mode. |
-| Remote file listing | Partial | Scope to app-owned or explicitly accessible files; no arbitrary private app-data access. |
-| Remote photo/video | Conditional | Capability negotiation plus execution-time revalidation; handle permission missing, user action required, OS rejected, unsupported and completed states. |
-| Remote microphone | Restricted / needs per-device validation | Runtime permission does not imply unrestricted background activation; honor OS restrictions and privacy indicators. |
-| Google Drive media backup | Feasible with parent OAuth | Narrow scopes, secure token lifecycle, resumable upload and revocation. |
-| Paid subscription | Feasible | Verify purchases/entitlements server-side. |
-| Low-resource operation | Goal; empirical validation required | Adaptive sampling, batching, bounded queues and device-matrix benchmarks. |
-| C++ HTTP backend | Feasible | Production security and operations remain required; C++ does not itself guarantee low latency or safety. |
+## 12. Project-wide open decisions and current evidence status
 
-### Compatibility validation procedure
+See [Blockers and Owner Decisions](BLOCKERS_AND_OWNER_DECISIONS.md) for 22 owner questions B-01–22, engineering blockers E-01–14, and external blockers X-01–08. **Most urgent:** publisher/territories/ages, transparent monitoring agreement, standard vs managed release, retention, hosting region, test devices/Wear, tracking detail tradeoff, subscription scope and media deferral.
 
-1. Define minimum/target Android API levels and supported device families.
-2. Establish separate standard-install and managed-device test profiles.
-3. Exercise first-run permission onboarding and later permission revocation.
-4. Test location while moving/stationary, backgrounded, offline, and under battery optimization.
-5. Test Usage Access and usage-period calculations.
-6. Provision a test device as managed and verify restriction enforcement and rollback.
-7. Exercise photo/video/audio requests on every supported profile and verify actual OS behavior and privacy indicators; do not infer capability from API level alone.
-8. Test Drive authorization, upload recovery, subscription transitions, command authentication, retention/deletion, and audit records.
-9. Measure CPU, resident memory, network traffic and battery drain on representative hardware.
-10. Store results with device model, Android version/API level, app build, permissions, enrollment mode, test steps, and observed result.
+**What is closed at documentation level by this revision:** canonical architecture version conflict, grouped FR mapping, normalized role/tenant design decisions, the event-time transaction algorithm, provisional location quality rules, Android runtime decision table, API endpoint catalog and traceability assignments.
 
-Result vocabulary: **Pass**, **Pass with conditions**, **Fail**, **Not tested**. Only verified combinations should be marketed as supported.
+**What remains open in reality:** runnable SQL migrations, actual generated SDK/API handlers, cloud deployment, child/parent code, device and security tests, battery and route quality data, legal/Play approvals, billing and public privacy/deletion pages. Never mark these “done” based on prose.
 
-## 15. Detailed implementation and publication supplements
+## 13. Annexes, official sources and change control
 
-- [Full Implementation Technical Specification](IMPLEMENTATION_TECHNICAL_SPECIFICATION.md) expands this baseline into Kotlin/C++ modules, API flows, proposed schema, state transitions, implementation phases and verification criteria.
-- [Feature Feasibility Conditions and Evidence](FEASIBILITY_CONDITIONS_AND_EVIDENCE.md) explains conditional Android API support and limits.
-- [Google Play Publishing Requirements](GOOGLE_PLAY_PUBLISHING_REQUIREMENTS.md) documents API-level, monitoring-policy, permission declaration, app signing and native 16 KB page compatibility requirements.
-- [Data Safety Worksheet](DATA_SAFETY_WORKSHEET.md), [Privacy Policy Draft](PRIVACY_POLICY_DRAFT.md), [Account Deletion Design](ACCOUNT_DELETION_DESIGN.md), [Reviewer Guide](PLAY_STORE_LISTING_AND_REVIEWER_GUIDE.md), [Validation Plan](VALIDATION_AND_RELEASE_PLAN.md) and [Security/Operations](SECURITY_AND_OPERATIONS.md) complete the initial documentation set.
+- [Data Auth, SQL and Recovery](DATA_AUTHORIZATION_AND_RECOVERY_CONTRACT.md).
+- [Android Runtime and Movement Algorithm](TRACKING_RUNTIME_AND_ALGORITHM_CONTRACT.md).
+- [C++ Server Capacity and Security](ADAPTIVE_MOVEMENT_CPP_SERVER_ARCHITECTURE.md).
+- [Route, Stops, Maps and Wear](LIVE_TRIP_ROUTE_NAMED_PLACES_BATTERY_SPECIFICATION.md).
+- [OpenAPI v1 Draft](openapi.yaml).
+- [Requirements Traceability](REQUIREMENTS_TRACEABILITY.md).
+- [Blockers](BLOCKERS_AND_OWNER_DECISIONS.md).
+- [Google Play Publication](GOOGLE_PLAY_PUBLISHING_REQUIREMENTS.md).
+- [Audit Findings](TECHNICAL_DOCUMENT_AUDIT_GAPS_2026.md).
 
-These are planning documents. Android compatibility must be tested and Play Console declarations submitted when applications and services actually exist.
+Authoritative references:
+- Android background typed FGS/while-in-use: https://developer.android.com/develop/background-work/services/fgs/restrictions-bg-start
+- Android location battery: https://developer.android.com/develop/sensors-and-location/location/battery
+- DevicePolicyManager: https://developer.android.com/reference/android/app/admin/DevicePolicyManager
+- PostgreSQL RLS: https://www.postgresql.org/docs/current/ddl-rowsecurity.html
+- Partitioned primary key: https://www.postgresql.org/docs/current/ddl-partitioning.html
+- Google Play parental-monitoring policy: https://support.google.com/googleplay/android-developer/answer/9888380
+- Play target SDK: https://support.google.com/googleplay/android-developer/answer/11926878
+- Account deletion: https://support.google.com/googleplay/android-developer/answer/13327111
+- Native 16KB: https://developer.android.com/guide/practices/page-sizes
+
+**Change history:** v1.0 on 2026-10-25 replaces outdated canonical technical document while preserving prior Git history. Every future change requires an explicit design decision record for changed permissions, child data, roles, API schemas or platform capabilities.
