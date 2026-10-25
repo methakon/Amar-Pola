@@ -1,0 +1,139 @@
+# Amar-Pola — Command, SOS, Usage Reporting and Device Queue Contract
+
+**Version:** 1.0 | **Date:** 2026-10-25 | **Status:** implementation design, not tested  
+**Scope:** SRS FR-005–007, FR-014, FR-023, FR-033, FR-037, FR-044–049 and NFR-003/013.
+
+## 1. Durable child command protocol
+
+A parent command is an **intent**. Success can be reported only after the child agent has executed and confirmed the supported OS action. The server validates the actor's current child-specific grant, subscription, device enrollment, command capability, payload schema and expiry before queueing. The child revalidates OS mode and permission **immediately before execution**.
+
+### Command fields
+
+command_id UUID, family_id, child_id, device_id, actor_id, type, schema_version, idempotency_key, policy_version optional, created_at, expires_at, required_capability, payload_json (strict type allowlist), state, reason_code, created_at/accepted_at/completed_at, last_device_report_version, audit_id.
+
+Do not store unnecessary sensitive media or raw GPS in normal command payload. Push notification contains **opaque command reference only**, never credentials or raw child location.
+
+### State transition table
+
+| From | Allowed next states | Reject |
+|---|---|---|
+| CREATED | QUEUED, UNSUPPORTED, PERMISSION_REQUIRED, CANCELLED | COMPLETED without child proof |
+| QUEUED | DELIVERED, EXPIRED, CANCELLED, DEVICE_OFFLINE | COMPLETED without execution receipt |
+| DEVICE_OFFLINE | QUEUED if retry window open, EXPIRED, CANCELLED | fresh execution after expiry |
+| DELIVERED | ACCEPTED, EXPIRED, CANCELLED, OS_REJECTED, UNSUPPORTED, USER_ACTION_REQUIRED | server-imposed COMPLETED |
+| ACCEPTED | COMPLETED, FAILED, EXPIRED, OS_REJECTED, PERMISSION_REQUIRED, USER_ACTION_REQUIRED | silently ignoring hardware/session failure |
+| Terminal: COMPLETED / FAILED / EXPIRED / CANCELLED / UNSUPPORTED / PERMISSION_REQUIRED / OS_REJECTED / USER_ACTION_REQUIRED | No further ordinary transitions; correction via **new** auditable command or explicit reconciliation event | overwriting terminal success/failure without audit |
+
+A delivered push is not completion. Accept device outcomes only when the enrolled device credential binds to the same command's device and reports a monotonic response version. A command with expired deadline must not execute on reconnection. Server cancels queued instructions on device/guardian revoke and on account deletion.
+
+### Device-side action handler
+
+1. Wake/sync through approved Android scheduling/notification path; no hidden persistent app UI or FGS permission bypass.
+2. Verify command expiry, ID, replay and signed/authorized profile; recheck current OS permission and device owner status.
+3. Persist claimed action in local command result ledger to avoid duplicate sound/policy actions on retries.
+4. Apply only supported action; return typed result code.
+5. Persist receipt locally, sync when allowed; server stores exact result and notifies parent. If result uncertain after process death, return INDETERMINATE / FAILED_RETRYABLE *as separate reason*, not fake COMPLETED.
+
+Ringing must remain bounded and respect audio/DND state; remote recording is deferred unless a separate approved, visible workflow passes policy. App restrictions only via eligible DPC APIs.
+
+## 2. SOS priority pipeline and uncertainty
+
+- Child uses optional clearly identifiable notification action/widget or brief Activity to trigger SOS/check-in; main app screen need not stay open for routine location collection.
+- SOS event carries stable UUID, device identity, observed_at, optional reference to a recent qualified GPS fix, location accuracy and message category. Do not require a fresh GNSS fix to let SOS be queued.
+- Locally persist high-priority SOS event before attempting network; retain until durable receipt or explicit reasonable expiry/deletion.
+- C++ API authenticates device and writes event + fanout outbox atomically. Worker dispatches notifications to authorized guardian scopes, respecting grant revocation and delivery provider status.
+- Parent sees QUEUED, SENT_TO_PROVIDER, DELIVERED_IF_CONFIRMED, ACKNOWLEDGED or UNKNOWN; a provider success receipt alone may not prove user saw it.
+- Urgent SOS should bypass **routine** quiet-hour digest but not platform notification restrictions. Do not promise actual emergency dispatch, availability or delivery.
+- Prevent flooding: dedupe SOS UUID, dynamic abuse/rate budget, but protect against a legitimate repeated emergency; do not silently discard subsequent urgent requests.
+- Parent acknowledgement requires verified guardian identity and child grant; action logged without default raw coordinates.
+
+## 3. Application usage aggregation and incomplete history
+
+Android UsageStatsManager provides app usage only after Usage Access. It does not guarantee complete long-term event history. The child must collect **bounded** windows, track source timestamp/collection_time, data completeness and version. Server aggregates from its own securely stored intervals.
+
+### Canonical usage event
+
+device_id, event_id, package_name (only authorized visibility), interval_start_utc, interval_end_utc, foreground_duration_ms, collected_at_utc, provider/source, aggregation_revision, completeness (COMPLETE/PARTIAL/UNAVAILABLE), reason_code.
+
+Invariants:
+- interval_end > start and foreground_duration_ms cannot exceed interval duration; reject or quarantine malformed events.
+- UTC is canonical storage; user's report timezone determines local day/week/month/year cutoffs, including DST, so **split intervals at actual local-time boundaries** before aggregation.
+- Uploads may overlap due to repeated collection; dedupe event IDs **and** use versioned interval replacement or normalized source-event identity, never sum overlapping versions twice.
+- Yearly report accumulates retained server data, not assumed 365 days of available OS history.
+- If Usage Access revoked or no data in a time window, mark PARTIAL/UNAVAILABLE separately from **zero minutes**.
+- App categories derive from curated mapping with version/UNKNOWN fallback, not guaranteed Google Play catalog classification.
+
+### Test vectors
+
+- Local day includes DST 23/25-hour day, UTC-normalized duration remains valid.
+- Midnight-crossing 90-minute interval contributes to two local calendar days.
+- Same interval uploaded twice does not double counts.
+- Reinstall/switch device does not silently merge app usage from physically separate sources.
+- Child loses Usage Access midweek; report coverage shows missing window.
+- API rejects packages outside configured visibility grant as designed.
+
+## 4. Child offline queue storage decisions
+
+Candidate storage: SQLite with approved database/content encryption (e.g., SQLCipher) and Android Keystore-backed key envelope. SQLite in default mode is not encrypted. Sensitive queue backups must be excluded from unprotected cloud/device backup paths.
+
+### Proposed bounds (must benchmark and product-approve)
+
+| Control | Candidate default | Safety behavior |
+|---|---|---|
+| Raw GPS queue | 20 MiB max disk reserved for active device telemetry | Stop unbounded growth, compact acked events, show queue-pressure warning |
+| Normal telemetry queued age | up to 14 days or parent-retention lower limit | Reject stale expired records, preserve audit-safe drop summary |
+| Upload batch | 100 events target, 500 hard server max | Compress when net benefit, cap decompressed input |
+| Network retries | exponential backoff with jitter (e.g., 30s to 6h cap) | Obey Retry-After, battery/data saver |
+| Fatal auth/revocation error | stop upload; clear sensitive device data according to owner/revocation policy | No re-pair or bypass |
+| Storage full/corrupt | do not silently overwrite newest good route; mark DATA_LOSS risk and attempt safe recovery | Report gaps and operational diagnostics |
+| Device reboot/process death | journaled queue survives; unsent events unchanged | Dedup stable IDs on reconnect |
+
+These limits are engineering hypotheses, not guaranteed Android OS limits. If profile requires longer offline retention, derive disk budget from actual event size/rate and B-07. A false “complete trip” must never be produced from points dropped at the queue boundary.
+
+### Encrypted queue transaction order
+
+Write fix → local commit → schedule deferrable upload → send bounded batch → receive and validate committed device receipt with accepted/duplicate/rejected per event → delete only acknowledged local IDs → if timeout, retry stable UUIDs. Never delete queue on mere network send. Protect boot-locked storage behavior and key invalidation (re-enroll rather than decode without proper key).
+
+## 5. Scheduling and policy simulation
+
+Use a pure C++ schedule evaluator shared conceptually with child application:
+- Input: timezone (IANA), calendar exception dates, local start/end (including overnight), package allow/block list, revision, expiry and permitted managed mode.
+- Output: deterministic next N transitions as UTC instants, expected affected package statuses and conflicts.
+- Exclude emergency dialer/system-critical apps. DPC adapter verifies eligibility and reports per package.
+- During DST repeated/skipped local hours, adopt a **documented policy**: candidate first-valid local instant on fall-back, next valid instant on spring-forward; owner can revise after UX testing.
+- Parent preview must not be mistaken for applied restriction; child reports actual action.
+- Offline device keeps last authorized policy only until explicit TTL and local expiry. An unsuspendable package returns UNSUPPORTED_PACKAGE, not broad success.
+
+## 6. Error and retry catalog
+
+| Code | HTTP/device semantics | Retry? | Parent UI |
+|---|---|---|---|
+| AUTH_REQUIRED | 401 credentials invalid/expired | Refresh/re-auth | Sign in |
+| CHILD_SCOPE_DENIED | 403 action-specific guardian grant missing | No | Access not granted |
+| DEVICE_REVOKED | 403 device enrollment invalid | No | Re-pair with authorized person |
+| EVENT_REPLAY_CONFLICT | 409 duplicate event ID with different digest | No, investigate | Data conflict |
+| REVISION_CONFLICT | 409 stale place/policy version | Refresh-and-retry | Updated elsewhere |
+| INVALID_GPS | 422 malformed/impossible location | Correct data | No reported position |
+| CAPABILITY_UNSUPPORTED | 422 or device UNSUPPORTED | No | Feature unavailable on this device |
+| PERMISSION_REQUIRED | device terminal response | Needs local OS grant | Permission needed |
+| USER_ACTION_REQUIRED | device terminal response | On-device interaction | Finish setup on child device |
+| OS_REJECTED | device terminal response | Only if context changes | Android prevented action |
+| RATE_LIMITED | 429 + Retry-After | Yes, bounded | Retry scheduled |
+| DEVICE_OFFLINE | Command delivery deferred | Yes until expiry | Pending; not completed |
+| INGEST_UNAVAILABLE | 503, no durable ack | Yes with same event IDs | Sync delayed |
+| LOCATION_STALE | Successful read of last known fix | GPS may later recover | Last seen at timestamp |
+| TRIP_PROVISIONAL | Processing incomplete / late data possible | Not client retry | Trip may update |
+| ACCOUNT_DELETION_QUEUED | 202 deletion request accepted | Query verified status | Deletion pending |
+
+Use one structured error format: code, message, request_id, retryable, optional safe details. Avoid leaking whether another family's child/device exists (403/404 disclosure policy). Error codes must be reconciled with actual OpenAPI response shapes.
+
+## 7. Verification plan
+
+- Command transition property tests: every illegal edge denied, terminal outcomes immutable, expiry/race and idempotent replay.
+- SOS offline/partial FCM delivery/guardian revocation/notification disabled, acknowledgement trace.
+- Usage aggregation leap/DST/time-zone and duplicate interval tests.
+- Queue process kill, key invalidation, storage nearly full, network blackout, Retry-After and duplicate 202 receipt tests.
+- Managed DPC schedule day/night reboot, rollback and critical package exclusions.
+- Real-device permitted sound test including mute/DND and user-perceptible status.
+
+This document fills **protocol design**, not deployed function or delivery guarantees.
