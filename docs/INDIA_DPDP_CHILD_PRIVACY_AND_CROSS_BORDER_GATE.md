@@ -99,3 +99,7 @@ Retention does **not** start automatically merely because a number appears in a 
 - [OCI Deployment](OCI_CHICAGO_DEPLOYMENT_AND_FINANCIAL_PLAN.md) region decision is conditional, not legal clearance.
 
 **Research caveat:** This memo summarizes primary legislative instruments verified on 2026-10-26. It does not offer legal advice; lawyer review must also check any changes after that date and other sectoral, consumer, employment and cross-border obligations.
+
+## 8. India-primary region option supersedes original Chicago preference
+
+The user has selected **India OCI location as preferred** for new infrastructure: Mumbai (ap-mumbai-1), Hyderabad fallback, subject to tenancy home-region/availability/pricing. The original Chicago-specific analysis is retained as a contingency in case of US processing or third-party transfer, **not** the current recommended deployment. Domestic OCI hosting may simplify the primary storage transfer question, but Google/Firebase/identity processors, support, backup replication and any cross-border handling still need mapping. Section 9, Rule 10/12 under-18 consent/behavioral-monitoring questions and exact ages/lawful guardian proof remain open. [India region decision](INDIA_REGION_AND_M0_OWNER_DECISION_GATE.md).
