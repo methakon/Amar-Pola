@@ -247,3 +247,12 @@ All subscription plans must have an in-app **Manage / Cancel subscription** rout
 - External API and earlier illustrative ₹149 pricing: [Third Party Cost Analysis](THIRD_PARTY_SERVICES_COST_ANALYSIS_2026.md)
 
 **Document precedence for pricing:** THIS document is the **new proposal baseline** for Amar-Pola subscription prices. The ₹149/month figures in older cost analyses are **historical price sensitivity examples only**, not official or recommended public prices. No price, billing SKU, tax-inclusive status or merchant configuration has yet been activated in Play Console.
+
+## 12. Pre-launch India legal and full cash break-even correction
+
+This document is **not a launch clearance**. For under-18 Indian children, require legal counsel interpretation of DPDP Act section 9, Rule 10 verifiable parent and Fourth Schedule Rule 12 real-time safety exception; separate decisions for historical routes and app-usage behavioural monitoring, and section 16 processing of Indian minors' data on OCI Chicago in the US. Child-related DPDP provisions have staggered commencement ~May 2027; this is not a compliance holiday. [India child-data legal gate](INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md). Unapproved history/usage are OFF until signed legal scope; avoid selling a subscription for legally blocked capabilities.
+
+**Pricing sustainability:** A budgeted OCI hosting cost of ₹38.86/child/year and Play's assumed 15% fee do NOT cover support, independent Android QA, security/legal review, cross-tenant incident on-call, server recovery/HA, SMS SOS fallback, Maps paid APIs, chargebacks or marketing. At 1,000 paid seats, if ₹50/₹500 consumer prices **include illustrative 18% GST**, available monthly cash after a modeled Play fee and **existing hosted reserves** is only **~₹32.78/child/month** on all-monthly or **~₹26.78/child/month equivalent** on all-annual; staffing ₹50,000/month alone exceeds both. Detailed formula, fixed-cost sensitivity and staffing inventory: [Break-Even and Team Capacity](PRICE_BREAK_EVEN_STAFFING_AND_DELIVERY_CAPACITY.md).
+
+**Owner must approve** publisher/countries/child ages, purpose-specific retention, who can add/revoke guardians, login/age verification, safe resettable Android test phone, RPO/RTO and named team + customer support budget before any real-child pilot or revenue/profit claim. [Decision register](BLOCKERS_AND_OWNER_DECISIONS.md).
+
