@@ -23,6 +23,34 @@
 
 **If ₹149 is a tax-inclusive selling price, or purchase fees depend on region/transaction/billing programme, the 15%-of-₹149 simplification must be replaced by real Play reports.**
 
+### 1.1 Per-child *combined* expense at 1,000 active subscriptions (cross-document comparison only)
+
+This subsection **cross-references**, but does not incorporate into this document's own third-party-service totals, the independent [Oracle hosting cost model, §14.10](OCI_CHICAGO_DEPLOYMENT_AND_FINANCIAL_PLAN.md#1410-per-child-hosting-cost-at-1000-subscribed-children). Its purpose is to answer: **what is the projected combined expense for one paying child when 1,000 child subscriptions are active?** Oracle charges **remain excluded** from the third-party-only tables in §§1, 6, 8 and 9; never add the combined figures below to those tables.
+
+Assumptions: India launch, 1,000 **paying** children, ₹149 subscription per child per month (hypothetical, pre-tax), an illustrative 15% Google Play subscription fee, no billable India Maps/Places events under the lean case, eligible Oracle Chicago PAYG A1 allowances, and the hosting plan's 4 OCPU / 24 GB configuration with its documented block/backup/domain amounts. All costs are modelled, **not measured or invoiced**.
+
+| Cost component | Project/month for 1,000 children | Project/year (12 months) | **Per child/month** | **Per child/year** |
+|---|---:|---:|---:|---:|
+| Third-party integrations and Google Play subscription fee (this document) | **₹22,350** | **₹2,68,200** | **₹22.35** | **₹268.20** |
+| Oracle infrastructure and modelled domain/backup (**separate hosting plan**) | ~₹199 | ~₹2,385 | ~₹0.20 | ~₹2.39 |
+| **Combined estimated direct running expense** | **~₹22,549** | **~₹2,70,585** | **~₹22.55** | **~₹270.59** |
+| Hosting-budget contingency **instead of** direct Oracle line (₹3,238/month, includes hosting and its reserves) | ₹3,238 | ₹38,862 | ₹3.24 | ₹38.86 |
+| **Combined budget allocation including hosting reserves** (third-party ₹22,350 + *entire* reserved hosting budget ₹3,238) | **~₹25,588** | **~₹3,07,062** | **~₹25.59** | **~₹307.06** |
+
+**Do not double-count:** The last row *replaces* the direct Oracle hosting line with the full hosting budget; it is **not** ₹22,549 plus ₹3,238. The hosting contingency represents money reserved against uncertain charges, **not another invoice**. Annual amounts use the hosting document's displayed rounded annual values; a paise difference can arise from rounding the underlying monthly provider and hosting formulas.
+
+### Revenue remaining per child at the illustrative ₹149 subscription
+
+| Per-child monthly unit economics | Direct-cost view | Including budgeted hosting reserve |
+|---|---:|---:|
+| Subscription revenue collected (assumed pre-tax) | ₹149.00 | ₹149.00 |
+| Third-party + hosting cost / allocation | ~₹22.55 | ~₹25.59 |
+| **Amount remaining before unmodelled costs** | **~₹126.45** | **~₹123.41** |
+
+**This remainder is not profit.** Excluded or unverified: sales/GST/VAT and Play fee actual settlement, refunds and payment failures, Google identity/SMS if selected, increased paid Maps/Places/Roads use, database HA/managed services, paid monitoring beyond quotas, operational support, development/staff salaries, incident response, child-data privacy/legal compliance and actual production capacity. In particular, no load test has proven that the planned OCI 4/24 server can serve 1,000 active children at the requested tracking frequency. If the PAYG free compute allowance is unavailable or already consumed, recalculate the hosting portion before fixing subscription prices.
+
+**Financial control:** Use third-party-only §6 to budget providers, hosting §14.10 to budget Oracle, and this cross-check only to understand product unit economics at 1,000 subscriptions.
+
 ## 2. Included service inventory and alternatives
 
 | Provider / service | Amar-Pola purpose | Release state | Recurring pricing model | Billing owner |
