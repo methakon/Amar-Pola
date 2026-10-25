@@ -220,3 +220,9 @@ This is an initial engineering assessment, not a substitute for tests on the dec
 ### Feasibility acceptance gate
 
 Before release, each feature must have a supported Android/API/device/enrollment range and a recorded test result. Untested features must be marked **Not tested**, not assumed feasible. A remote command is successful only when the child agent confirms completion.
+
+## 12. Requirements implementation and publication traceability
+
+See [Implementation Technical Specification](IMPLEMENTATION_TECHNICAL_SPECIFICATION.md) for module responsibilities, API contract proposals and development milestones. [Feasibility Conditions and Evidence](FEASIBILITY_CONDITIONS_AND_EVIDENCE.md) records conditions for conditional requirements (FR-003, FR-005, FR-007, FR-008, FR-009 and FR-010). [Validation and Release Plan](VALIDATION_AND_RELEASE_PLAN.md) traces requirements to acceptance tests. [Google Play Publishing Requirements](GOOGLE_PLAY_PUBLISHING_REQUIREMENTS.md) captures publication gates and necessary declarations.
+
+**Release gates:** Pass documented device tests; complete privacy/data safety and permissions review; no unsupported app blocking claims or covert media capture; ensure the release binary and its store disclosures match. The technical and publication docs do not represent implemented functionality.
