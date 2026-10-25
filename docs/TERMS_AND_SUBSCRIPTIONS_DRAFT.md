@@ -4,6 +4,8 @@
 
 This draft is provided for legal/product review. It cannot be published until the legal publisher identity, supported features, prices, jurisdictions, service limitations and customer support are finalized.
 
+**Pricing proposal reference (not an enforceable consumer offer):** [Subscription Plans, Hidden Charges and Play Rules](SUBSCRIPTION_PLANS_PRICING_AND_RULES_2026.md) proposes **₹50/month or ₹500/year per paying child seat**, grouped family subscriptions, Play-managed auto-renewal/cancellation and separately unresolved tax-inclusive final price, refund, country and legal requirements. The older ₹149/month amount is only historical modelling. Update this legal template **after** tax and Play merchant review, not before; no price is live.
+
 ## 1. Parties and eligible use
 
 These terms would govern the relationship between **[LEGAL PUBLISHER]** and a parent/guardian using Amar-Pola. The user represents that they have the legal authority to supervise and configure the child's device in **[SUPPORTED TERRITORIES]**. The service is for appropriately authorized parental monitoring, not covert tracking of spouses, adults or third parties.
