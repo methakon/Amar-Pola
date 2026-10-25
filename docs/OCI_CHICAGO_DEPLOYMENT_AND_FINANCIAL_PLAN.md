@@ -487,3 +487,27 @@ An annual budget is **not always 12 times the biggest final-month VM**. If the s
 Values are calculated using the unrounded rate formulas and rounded for display; the displayed per-quarter rounded values may differ by ₹1 on summation. The budget allocation includes **unused reserves** and is not a predicted OCI invoice. A real year may have different growth timing, partially utilized machines, retained excess backups or overlapping old/new VM deployments during migration. Those materially change the cumulative spend.
 
 **Important procurement point:** upgrading to a larger VM while the smaller VM remains online for the transition temporarily consumes the **sum** of both machines' OCPU-hours and memory GB-hours; the free PAYG benefit is a shared pool, **not per VM**.
+
+
+### 14.10 Per-child hosting cost at 1,000 subscribed children
+
+**Planning answer:** Assuming **1,000 paying child subscriptions** (not 1,000 separate families), a constant **PAYG A1 4 OCPU / 24 GB** total server allocation, **200 GB combined provisioned boot/database block volumes**, **30 GB Standard Object Storage backups**, and the published PAYG A1 recurring allowance applying to this OCI tenancy, **the modeled direct recurring hosting charge is about ₹0.20 per child per month**. The **safer hosting budget with discretionary reserves is about ₹3.24 per child per month**.
+
+| Cost view for 1,000 child subscriptions | Monthly project total | Annual project total (12 months) | **Per child / month** | **Per child / year** |
+|---|---:|---:|---:|---:|
+| A1 compute after assumed PAYG free allowance | ₹0 | ₹0 | ₹0.00 | ₹0.00 |
+| Extra boot/block volume beyond 200 GB included | ₹0 | ₹0 | ₹0.00 | ₹0.00 |
+| 20 GB billable Object Storage backups | ~₹49 | ~₹585 | ~₹0.05 | ~₹0.58 |
+| Modelled domain/DNS allowance (not Oracle invoice) | ₹150 | ₹1,800 | ₹0.15 | ₹1.80 |
+| **Combined priced-line hosting estimate** | **~₹199** | **~₹2,385** | **~₹0.20** | **~₹2.39** |
+| Additional 20% cost uncertainty margin | ~₹40 | ~₹477 | ~₹0.04 | ~₹0.48 |
+| Additional discretionary hosting reserve | ₹3,000 | ₹36,000 | ₹3.00 | ₹36.00 |
+| **Safer hosting budget allocation** | **~₹3,238** | **~₹38,862** | **~₹3.24** | **~₹38.86** |
+
+**Calculation:** ~₹199 ÷ 1,000 = **~₹0.20/child/month**; ~₹3,238 ÷ 1,000 = **~₹3.24/child/month**. Annual figures are based on the underlying unrounded monthly rate model for a constant 12-month configuration; displayed line items/per-child totals are independently rounded and may differ by a few rupees/paise on summation.
+
+**Important distinction:** The ₹3,000/month discretionary reserve and 20% uncertainty allowance are **budget reserves, not charges payable to Oracle**. If the official PAYG 3,000 OCPU-hour and 18,000 GB-hour allowances do **not** apply (or are consumed elsewhere in the tenancy), the same 4/24 VM consumes roughly **₹5,301/month of A1 compute alone**, increasing the project and per-child hosting estimate correspondingly. The normal model also assumes the free block-storage allocation and outbound data-transfer limits are not exceeded.
+
+**Not included in either figure:** GST/taxes, Oracle paid monitoring or other chargeable services beyond budget reserves, Google Maps/Places/Roads, Play subscription service fees, employee/technical support costs, incident operations, legal/privacy/security work, managed PostgreSQL, paid load balancing, database replication/production-grade HA, and optional media/Drive expenses. Real costs can be much higher if these are required.
+
+**No verified capacity claim:** The 1,000-child row is a commercial planning **scenario**. It does not prove that one 4/24 VM can reliably ingest and serve 1,000 children with the desired GPS collection and concurrent parent-map load. Confirm actual enrollment, observation frequency, data retention, query latency and OCI usage with load tests and the tenancy's Cost Analysis before relying on this per-child number for subscriptions or production launch.
