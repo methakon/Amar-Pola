@@ -4781,7 +4781,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": "",
                   "properties": {
                     "case_id": {
                       "type": "string",
