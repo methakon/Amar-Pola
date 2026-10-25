@@ -1,7 +1,7 @@
 # Amar-Pola — C++ Android Parental Monitoring
 
 **Status:** Requirements and architecture planning  
-**Documentation baseline:** 0.1  
+**Documentation baseline:** SRS and canonical technical specification v1.0; deployment plan is not deployed  
 **Repository:** `methakon/Amar-Pola`
 
 Amar-Pola is a privacy-conscious parental monitoring and device-management platform planned around three components:
@@ -17,6 +17,8 @@ The child app's main activity does not need to remain open for every background 
 - [Discussion and decisions](docs/DISCUSSION.md)
 - [Software Requirements Specification (SRS)](docs/SRS.md)
 - [Technical Specification](docs/TECHNICAL_SPECIFICATION.md)
+- [Oracle Chicago Deployment, Capacity and Financial Plan](docs/OCI_CHICAGO_DEPLOYMENT_AND_FINANCIAL_PLAN.md) — planned architecture, deployment sequence, finances and OCI-01–OCI-12 blockers (not provisioned)
+- [Audit Remediation Status](docs/AUDIT_REMEDIATION_STATUS.md) — documentation fixes versus open implementation/deployment proof
 
 ## Design principles
 
