@@ -405,3 +405,9 @@ All tests record model, Android API, security patch, build SHA, battery and radi
 - Google Roads billing and quotas: https://developers.google.com/maps/documentation/roads/usage-and-billing
 
 **Disclaimer:** This is a detailed design specification and verification roadmap, not an implementation or confirmed device-test report.
+
+## 17. Production server implementation and multi-family security supplement
+
+See [Adaptive Movement and Multi-Tenant C++ Server Architecture](ADAPTIVE_MOVEMENT_CPP_SERVER_ARCHITECTURE.md) for the deeper production architecture, including horizontal Drogon API scalability, per-device ordered reconstruction and late offline recovery, guardian-to-child grants, PostgreSQL/PostGIS migrations and partitioning, tenant RLS, queue leases, idempotent ingest, compute/fanout separation, capacity modelling and threat analysis. The current route design describes feature-level algorithms; the architecture supplement defines **how these can be operated securely and efficiently for many families**.
+
+No implementation, Android device validation or real server performance benchmark has yet been completed.
