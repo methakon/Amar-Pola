@@ -145,3 +145,9 @@ This supplements B-07, B-08, B-12, B-14 and B-21; do not mark them closed until 
 
 **Answer format (any subset):** B-01 legal publisher identity; B-02 country and ages; B-07 proposed retention approved/edited; B-09/B-18 scope policy; OCI-06 login approved/changed; HW-01 devices safe for reset; B-21 team and monthly budget; SOS-B01 emergency vs check-in; DR-B01 pilot RPO/RTO and funding. Keep identity documents, passwords, child data, contact numbers and cloud keys OUT of public GitHub.
 
+## J. Indian OCI preference and single M0–M9 / M1 validation execution (2026-10-26)
+
+The owner has chosen **India-region preference** to avoid unnecessary primary OCI US location. **Preferred Mumbai ap-mumbai-1, alternative Hyderabad ap-hyderabad-1**; tenancy/home-region availability and price still require confirmation. **B-08 direction updated, not closed.** Chicago plan remains historical. See [India OCI region decision](INDIA_REGION_AND_M0_OWNER_DECISION_GATE.md).
+Canonical milestones now [M0–M9](MASTER_MILESTONE_IMPLEMENTATION_AND_RELEASE_PLAN.md). M1-only [OpenAPI](openapi-m1.yaml), [RLS migration](../backend/persistence/migrations/0001_m1_identity.sql), [two-family negative test](../backend/tests/m1_tenant_isolation.sql), [14 M1 test cases](../backend/tests/M1_ACCEPTANCE_TEST_CASES.md) and [CI workflow](../.github/workflows/m1-contract-and-tenant.yml) are committed. API structural validation is green; PostgreSQL actual execution, Kotlin/C++ code, hardware and Play/legal gates **are not** proven.
+
+Owner answers still needed: legal publisher B-01; exact Indian children ages and guardian proof B-02; raw/location/history/audit/backup retention B-07; who can invite/revoke guardians and scope B-09/B-18; final login vendor/adult-verification plan OCI-06; actual test-device inventory/resettable handset HW-01; team size and monthly budget B-21. No secrets, identity scans or real child records in public GitHub.
