@@ -350,7 +350,90 @@ Guard all endpoints with OIDC parent/device authentication and child-specific gr
 6. **POLICY:** Play monitoring metadata, notification identity, background-location disclosure and approved scope.
 7. **RELEASE:** ship only features with measured acceptance and accurate listing claims.
 
-## 12. Sources and verifiable feedback records
+## 12. Incremental effort and difficulty above the current Amar-Pola proposal
+
+### 12.1 Estimation basis: what we are and are NOT estimating
+
+**Baseline assumed already implemented for estimating the delta:** secure parent/child pairing and scoped family access; C++ Drogon ingestion and reconstruction workers; PostgreSQL/PostGIS with raw location events, trips, stops, named places, late event handling and basic audit; Android permission-compliant adaptive location collection plus encrypted local queue; parent Maps UI/history; usage statistics; capability reporting; and the planned subscription and supported managed-device policy foundations described in the existing SRS and architecture specifications.
+
+**Critical:** As of this report date, those baseline components are **proposed, not implemented**. The values below estimate **incremental engineering work once their baseline dependencies exist**, NOT the end-to-end cost of building Amar-Pola from its current documentation-only state. Building the baseline itself is additional work.
+
+- **Unit:** *engineering person-days* (EPD), roughly one focused 8-hour developer-day; **not elapsed calendar days** and **not a delivery commitment**.
+- **Included:** design refinement, backend/Android/parent UI coding as relevant, migrations, automated unit/integration tests, and focused functional QA.
+- **Excluded or separately gated:** implementing the underlying baseline; Play Console approval or legal advice; third-party Maps/hosting/billing fees; extensive security penetration testing; marketing/support staffing; multi-week field studies; OEM device procurement; and large-scale production operations.
+- **Uncertainty:** early planning ROM estimates, potentially ±50% or more until designs and target devices are fixed. Cross-feature changes may overlap (or conflict); **do not simply sum rows into a precise project duration**. Multi-engineer staffing does not make all work fully parallel.
+- **Difficulty levels:** **Low** = mainly UI/API extension using current data; **Medium** = moderate multi-layer coordination; **High** = algorithm, lifecycle or cross-device complexity with significant testing; **Very high** = weak signal/false-positive risk and substantial accuracy/policy validation.
+
+### 12.2 Feature matrix, grouped by increasing incremental difficulty
+
+| Difficulty | ID | Proposed differentiator | Existing design reused (not counted again) | **Extra work beyond baseline** | Effort (EPD) | Principal challenge / release gate | Adoption |
+|---|---|---|---|---|---:|---|---|
+| **Low** | **D10** | Capability-before-purchase and no-surprise plan comparison | Device capability report; backend subscription entitlement | Parent feature/plan compatibility screen; entitlement explanations; purchase-state error UX | **5–10** | Capability changes after purchase; avoid unsupported promises | **Early P1** |
+| **Low** | **D12** | Child-readable monitoring/transparency center | Existing onboarding, monitoring notification, permission report | Compact accessible settings/info screen; guardian visibility and enabled-feature summary | **6–12** | Age-appropriate disclosures and accurate permission state | **Early P1** |
+| **Medium** | **D06** | Who-viewed-what privacy access ledger | Core backend audit events; family grants | Aggregate meaningful reads/exports; access history API/UI; retention controls | **7–15** | Audit volume, sensitive relationship data, guardian privileges | **P1** |
+| **Medium** | **D01** | Route Evidence and confidence explanations | Location quality flags; C++ segments/stops and Google Maps polylines | Explainability codes; uncertainty legend; parent stop-correction feedback UI | **8–18** | Confidence must reflect evidence, not fabricated percentages | **Core P0** |
+| **Medium** | **D02** | Tracking Reliability Center | Heartbeats, capability states, last fix timestamps, server metrics | Multi-stage diagnostic classification; parent troubleshooting UX; sanitized fault traces | **8–18** | Unknown causes must remain UNKNOWN, not guessed as permission loss | **Core P0** |
+| **Medium** | **D03** | Visible late-sync trip revisions | Offline queue; durable idempotent ingest; base event-time reconstruction | Revision history data/API; recomputation UX; deduped correction notices; stronger regression tests | **9–20** | Late events can change a previously displayed trip; transaction/version safety | **Core P0** |
+| **Medium** | **D05** | Temporary pickup guardian grants | Existing family memberships, per-child ACL and authentication | Invite/expiry/revoke workflow; limited scope; expiring viewer session and SSE revocation tests | **10–20** | Child-location data authorization and invite forwarding threats | **Security-gated P1** |
+| **Medium** | **D11** | Privacy-safe support diagnostic bundle | Existing health metrics, redacted event logs and monitoring | User-approved export of sanitized support data; support case link/UI; retention controls | **8–18** | Accidental exposure of coordinates, keys or child personal data | **P1/P2** |
+| **High** | **D14** | Trusted schedule-aware tracking pulse | Adaptive tracking states; saved places; existing scheduling | Schedule-aware policy engine; OS-compatible transitions; battery/false-alert tests | **12–26** | Android background limits; cannot assume a new high-accuracy fix on demand | **P2** |
+| **High** | **D07** | Energy-versus-route-coverage measurement | Adaptive child location profiles; server quality metadata | Coverage metric, parent comparison UI, profile tuning controls, multi-OEM battery trials | **14–30** | Device-battery measurement and definition of credible coverage | **P1 after field tests** |
+| **High** | **D08** | Screen-time policy simulator and rollback | Base policy/command model, C++ evaluator, proposed managed DPC integration | Dry-run next transitions, protected-package conflicts, rollback UX, DST/reboot tests | **15–32** | Enforcement possible only for eligible managed-mode packages; policy parity | **Conditional P1** |
+| **High** | **D09** | Phone/watch/tablet source handoff explanations | Per-device identities, observations and provenance already proposed | Source-selection state machine, handoff timeline, fallback/conflict UX, wear/tablet tests | **16–34** | Cannot prove which device a child carries; companion-provided watch location | **P2** |
+| **High** | **D04** | Confidence-aware school commute / missed arrival | Trips/stops, labeled places, geofence signals and guardians | Timetable model, arrival certainty rules, delayed escalation, quiet-hours UI and QA | **18–38** | False alarms when GPS is missing; child safety messaging must be precise | **P1/P2 pilot** |
+| **Very high** | **D13** | Route-corridor deviation warnings | Existing segmented routes and destination rules | Expected corridor model, uncertainty handling, route deviation logic, labeled data and extensive false-positive trials | **30–65** | GPS gaps, alternative travel routes, sensitive alerts; potential Roads API licensing if used | **Research only / defer** |
+
+**All 14 candidates D01–D14 are represented.** D13 and D14 appeared in the earlier opportunity list even though the original narrative detailed mainly D01–D12; their estimates are especially uncertain.
+
+### 12.3 Why some estimates are smaller than building the feature from scratch
+
+| Candidate | Already in the project baseline | What the table truly estimates |
+|---|---|---|
+| D01 | Route segmentation, stop clustering and GPS quality are already specified | Making existing quality data understandable/actionable to parents |
+| D03 | Offline queue and late-data reconstruction already specified | Recording/exposing revisions and validating correction workflows |
+| D05 | Parent/guardian grants already specified | Temporarily scoped invitation, expiry and UI on top of that ACL |
+| D07 | Adaptive location requests already specified | Measuring and explaining coverage versus actual battery usage |
+| D08 | Managed policy enforcement already specified as conditional | Dry-run simulation, diagnostics and rollback, **not** establishing device-owner mode |
+| D09 | Multi-device IDs and non-silent track stitching are already specified | Tested handoff policy and provenance explanation |
+| D10 | Subscription and capability negotiation are already specified | Honest pre-purchase compatibility and billing status UX |
+
+### 12.4 Incremental engineering tasks by component
+
+| Implementation area | Likely additional changes | Most relevant candidates |
+|---|---|---|
+| **Parent Android UI** | Confidence overlays, diagnostics, access logs, grants, rule preview, profile modes, correction notices | D01–D12 |
+| **C++ Drogon REST API** | Explainability and revision endpoints; diagnostic classification; time-bound ACL; support/plan responses | D01, D02, D03, D05, D06, D10, D11 |
+| **C++ reconstruction/rules engine** | Revision-aware explainability, commute schedules, policy simulation, source selection, corridor inference | D01, D03, D04, D08, D09, D13, D14 |
+| **PostgreSQL/PostGIS** | Health/revision records, scoped grants, meaningful access receipts, schedules, provenance | D02–D06, D09 |
+| **Child Kotlin / Wear OS** | Permission/health reporting improvements, battery profile controls and conditional source diagnostics | D02, D07, D09, D12, D14 |
+| **Security and compliance** | Access-scoped guardian roles, per-family auditing, privacy-safe support package, eligibility/authorization tests | D05, D06, D10, D11, D12 |
+| **Real-device QA** | Accuracy/stops, offline reconstruction, scheduling/Doze, battery deltas, DPC support, cross-device location sourcing | D01–D04, D07–D09, D13–D14 |
+
+### 12.5 Recommended phased adoption by marginal value and risk
+
+| Bundle | Proposed features | Logic | Prerequisite to start | Expected result |
+|---|---|---|---|---|
+| **Quick improvements** | **D10 + D12** | Modest additional effort; transparent purchase and monitoring | Parent billing/capability UI and child onboarding working | Fewer unsupported-feature surprises |
+| **Tracking trust bundle** | **D01 + D02 + D03** | Largest differentiation and reuse of existing core | Real ingest, per-device quality flags and reconstruction working | Understandable GPS uncertainty and offline catch-up |
+| **Family trust bundle** | **D05 + D06** | Gives scoped access and accountability | Fine-grained guardian authorization implemented and reviewed | Expiring pickup access and meaningful access audit |
+| **Safety/quality pilot** | **D04 + D07** | Useful but requires real-world observation and tuning | Basic trip/stop model validated on phones; test fleet available | Calmer commute alerts and measured battery trade-offs |
+| **Conditional management** | **D08** | High value only for eligible managed devices | Real DPC provisioning/policy tests | Preview and rollback for supported blocking rules |
+| **Extended device support** | **D09** | Adds complexity only once watch/tablet users exist | Multiple enrolled devices with provenance | Explainable source handoff |
+| **Optional later** | **D11 + D14** | Support process and routine-aware sampling enhancements | Stable diagnostics and measured power behavior | Better troubleshooting and low-noise routines |
+| **Research gate** | **D13** | Costly and easy to get wrong | Labeled route dataset, legal/policy review and low false alarms | Decision whether deviation alerts are safe to ship |
+
+**Scheduling caution:** The quick improvements still depend on the baseline's parent/billing/onboarding screens. The trust bundle is best developed while implementing the base GPS event schema so explainability/revision fields need not be retrofitted later. D05 requires dedicated security review even if its code effort appears medium.
+
+### 12.6 Next planning deliverables
+
+1. Break each candidate into implementation issues with acceptance criteria and assign Android, C++ backend, parent UI and QA owners.
+2. Identify which baseline modules are already built at sprint start; recalculate **remaining** effort (not ROM delta).
+3. Prototype D01/D02/D03 with synthetic GPS tracks and explicit offline/revocation tests.
+4. Gate D04/D07/D09/D13 on real-device accuracy/power evidence; do not advertise projected battery improvements or precise detours.
+5. Require threat-model and guardian-authorization review before D05/D06.
+6. Keep this effort matrix separate from schedule commitments and Play approval; re-estimate after first vertical slice.
+
+## 13. Sources and verifiable feedback records
 
 ### Original five Google Play products and excerpts
 1. Findmykids Google Play: https://play.google.com/store/apps/details?id=org.findmykids.app — examples of slow/no updates, place alert difficulties and subscription concerns (review dates include September 2026). Other app users report successful tracking; not a quantified failure rate.
