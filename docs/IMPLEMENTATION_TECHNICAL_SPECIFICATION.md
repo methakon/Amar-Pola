@@ -249,3 +249,9 @@ See [release and test plan](VALIDATION_AND_RELEASE_PLAN.md). Every SRS functiona
 - https://developer.android.com/work/dpc/dedicated-devices
 - https://support.google.com/googleplay/android-developer/answer/11926878
 - https://developer.android.com/guide/practices/page-sizes
+
+## 19. Live route tracking and named places expansion (2026-10-25)
+
+[Live Trip Route, Named Places and Battery Specification](LIVE_TRIP_ROUTE_NAMED_PLACES_BATTERY_SPECIFICATION.md) is the detailed feature-level implementation plan for the parent Google Map: labeled places and optional geofence alerts, adaptive child location collection, event-time ingest, C++ trip/stop clustering, route segmentation, conditional Google Roads API, multi-device provenance, endpoint/data-model additions and reproducible battery testing. Treat that document's 8-milestone feature roadmap as a workstream **within** the existing main M1–M7 milestones, not evidence that implementation is complete.
+
+**Important:** Low-power history and accurately road-matched vehicle paths have competing sampling requirements. Do not offer automatic high-confidence road snapping for sparse vehicle observations. Comply with Google Roads API asset-tracking licensing, caching and attribution requirements before enabling in a commercial tracking product.
