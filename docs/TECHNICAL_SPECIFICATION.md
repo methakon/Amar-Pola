@@ -288,3 +288,7 @@ See [OCI Chicago Deployment and Financial Plan](OCI_CHICAGO_DEPLOYMENT_AND_FINAN
 
 **Finances/staff:** Current proposed consumer price ₹50/month or ₹500/year (₹149 historic analysis). [Break-even and staffing](PRICE_BREAK_EVEN_STAFFING_AND_DELIVERY_CAPACITY.md) shows 1,000 child seats cannot prove sustainability or fund full professional team/HA. Assign Android parent/child, C++ backend, independent QA, security, legal, OCI operator, customer support and real cash budget before paid pilot. Blocker tracking: [owner register](BLOCKERS_AND_OWNER_DECISIONS.md).
 
+## 17. 2026-10-26 preferred India OCI and M0–M9 / strict M1 implementation contracts
+
+The **single authoritative stage numbering** is [M0–M9](MASTER_MILESTONE_IMPLEMENTATION_AND_RELEASE_PLAN.md) (old milestones superseded). New hosting design **prefers OCI Mumbai** with Hyderabad fallback, replacing planned Chicago but subject to capacity, costs, and India child legal purpose review. [Regional choice](INDIA_REGION_AND_M0_OWNER_DECISION_GATE.md).
+M1 scope is fixed to 11 endpoints in [linted M1 OpenAPI](openapi-m1.yaml), with [PostgreSQL identity/RLS migration](../backend/persistence/migrations/0001_m1_identity.sql), [two-family isolation regression](../backend/tests/m1_tenant_isolation.sql) and [14 acceptance scenarios](../backend/tests/M1_ACCEPTANCE_TEST_CASES.md). These files are code/test designs in git, **not an executed API**. Contract structure passes direct validation; actual PostgreSQL CI, Android and C++ handlers still open.
