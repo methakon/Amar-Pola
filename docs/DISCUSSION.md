@@ -78,3 +78,36 @@ Every command must have an ID, expiry, and auditable state. A queued or delivere
 - The dashboard distinguishes live, stale, approximate, and unavailable data.
 - The product does not promise universal app blocking or unrestricted background recording.
 - Permission revocation, offline devices, and OS rejection produce clear degraded/error states.
+
+
+## 6. Proposed feasibility assessment
+
+This assessment records the initial planning view, not a guarantee that every feature works on every Android device. Final feasibility must be confirmed on target API levels, OEMs, permission states, distribution channel, and enrollment modes.
+
+| Feature | Initial feasibility | Key condition / limitation |
+|---|---|---|
+| Pairing without a separate child account | Feasible | Short-lived pairing and revocable device credentials. |
+| Background location, position, route history and speed | Feasible with conditions | Appropriate permissions, compliant background execution, connectivity, and accuracy/freshness reporting. |
+| Daily/weekly/monthly/yearly app usage | Feasible with special access | Usage Access must be granted; available data depends on Android APIs. |
+| Remote commands and file listing | Partial | Command delivery is feasible; file access is limited to app-owned or explicitly accessible storage. |
+| Scheduled app blocking | Conditional | Strong enforcement generally requires supported device-policy controls and managed-device provisioning. Ordinary apps cannot universally block all other apps. |
+| Remote photo/video requests | Conditional and capability-gated | Check OS/API level, permission, service/lifecycle restrictions, enrollment mode, and tested device behavior; report OS rejection or user-action-required states truthfully. |
+| Remote audio recording | Restricted / requires validation | Runtime permission alone does not guarantee arbitrary background activation; use supported authorized workflows and honor privacy indicators. |
+| Parent-authorized Google Drive backup | Feasible | OAuth authorization, least-privilege scopes, secure token handling, and upload retry/resume. |
+| Subscription billing | Feasible | Trusted provider integration and server-side entitlement validation. |
+| Low CPU/RAM/battery use | Goal, not yet measured | Adaptive sampling, bounded queues, batching, and real-device performance tests are required. |
+| Lightweight C++ backend | Feasible | Production-grade TLS, authentication, rate limiting, secure storage, monitoring, and operations are required. |
+
+### Feasibility validation plan
+
+1. Select a minimum Android API level and representative devices/OEMs.
+2. Test standard installation and managed-device enrollment separately.
+3. Verify each permission/special-access flow, including later revocation.
+4. Test location in background, stationary/moving states, offline recovery, and battery impact.
+5. Test Usage Access and usage aggregation.
+6. Test app restrictions on a properly provisioned managed test device.
+7. Test camera/audio requests against actual OS behavior; verify indicators and truthful command statuses.
+8. Validate Google OAuth/Drive upload, subscription entitlement, security, and retention.
+9. Record results as **Pass**, **Pass with conditions**, **Fail**, or **Not tested**, including OS/device/build details.
+
+No feature should be described as production-supported until this validation is complete.
