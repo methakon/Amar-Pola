@@ -255,3 +255,9 @@ See [release and test plan](VALIDATION_AND_RELEASE_PLAN.md). Every SRS functiona
 [Live Trip Route, Named Places and Battery Specification](LIVE_TRIP_ROUTE_NAMED_PLACES_BATTERY_SPECIFICATION.md) is the detailed feature-level implementation plan for the parent Google Map: labeled places and optional geofence alerts, adaptive child location collection, event-time ingest, C++ trip/stop clustering, route segmentation, conditional Google Roads API, multi-device provenance, endpoint/data-model additions and reproducible battery testing. Treat that document's 8-milestone feature roadmap as a workstream **within** the existing main M1–M7 milestones, not evidence that implementation is complete.
 
 **Important:** Low-power history and accurately road-matched vehicle paths have competing sampling requirements. Do not offer automatic high-confidence road snapping for sparse vehicle observations. Comply with Google Roads API asset-tracking licensing, caching and attribution requirements before enabling in a commercial tracking product.
+
+## 20. Consolidated C++ multi-tenant backend and adaptive tracking architecture
+
+[Adaptive Movement and Multi-Tenant C++ Server Architecture](ADAPTIVE_MOVEMENT_CPP_SERVER_ARCHITECTURE.md) contains the detailed **how and why** behind the proposed server design: family/guardian/child/device grants, battery-aware Android motion state machine, C++ Drogon service boundaries, durable ingestion and outbox processing, C++ reconstruction pseudocode, PostGIS spatial matching, time-partitioned SQL, event-time late-data revisions, RLS, capacity and database/storage cost model, usage/command workload isolation, testing and delivery roadmap.
+
+This supersedes overly simple assumptions that a single HTTP server should perform GPS ingestion and trip analysis synchronously. Maintain separate bounded CPU and database workloads. All performance/SLO numbers in that document are **design hypotheses until measured**.
