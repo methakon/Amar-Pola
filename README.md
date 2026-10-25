@@ -69,3 +69,7 @@ See [Adaptive Movement and Multi-Tenant C++ Server Architecture](docs/ADAPTIVE_M
 ## Competitive product review (October 2026)
 
 [Comparison of Findmykids, Find my Phone – Family Locator, Pinardin, FamiSafe and Kids360](docs/COMPETITOR_FEATURE_COMPARISON_AND_ADOPTION_2026.md) documents verified advertised features, Amar-Pola gaps, conditional Android feasibility and a proposed adoption backlog. **Proposals are not automatically approved product requirements or implemented features.**
+
+## Feedback-led differentiation study (October 2026)
+
+[Market Feedback, Competitive Gaps & Feasible Differentiation](docs/MARKET_FEEDBACK_GAPS_AND_DIFFERENTIATION_2026.md) reviews the original five Play apps plus Life360, Qustodio, Bark and Family Link against sampled Play reviews, feedback aggregators, Reddit parent discussions and official Android/Play guidance. It proposes confidence-aware trips, a device reliability center, offline trip repair, time-limited guardian grants, low-noise commute alerts, privacy access receipts and policy previews. **These are research proposals, not verified competitor absences or approved SRS features.**
