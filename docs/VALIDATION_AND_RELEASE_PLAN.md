@@ -138,3 +138,20 @@ Actual Play Console review status:
 ```
 
 Anything left blank is a blocker for claims that the corresponding area is complete.
+
+## 10. Additional M0/M1/M2 Indian-law, emergency and recovery go/no-go (2026-10-26)
+
+| Gate | Required signoff and actual evidence | Stop condition |
+|---|---|---|
+| **M0-LAW** | India publisher, age scope, DPDP sections 9/16 and Rule 12 interpretation from India lawyer; consent/parent verification procedure; Chicago cross-border review | Synthetic data only until signed |
+| **M0-POLICY** | Real owner authorizes B-07/B-09/B-18 retention and child guardian access; backend enforces scoped grants | No child-data onboarding |
+| **M1-AUTH** | Google Sign-In/Credential Manager candidate independently verified; identity/person-age review separate | No production identity |
+| **M1-DEVICE** | Older and newer Android real phones plus approved resettable DPC spare, manifest/FGS and device-owner actual evidence | Cannot claim M1 hardware ready |
+| **M1-TEAM** | Named Android/C++/QA/security/SRE owner, legal counsel and support staffing cash budget | No delivery or release commitment |
+| **M2-PRIVACY** | Separate lawful scope for current location, history, usage, geofences, SOS, apps; privacy notices and deletion tests | Location/usage for real minors OFF |
+| **M2-SOS** | Tested guardian ACK and optional SMS + independent fallback path; or explicit **best-effort check-in** only | No emergency SOS promise |
+| **M2-DR** | Approved, clocked RPO/RTO from failed-VM/restore tests, backup erasure and active on-call | No real child pilot |
+| **COMMERCIAL** | 50/500 actual tax-inclusive-or-exclusive Play prices, real settlement, staff/support/HA, refund and churn break-even | No profitability assertion or paid launch |
+
+Evidence docs: [India DPDP](INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md), [SOS](SOS_ESCALATION_AND_INDEPENDENT_DELIVERY_DESIGN.md), [DR](OCI_CHICAGO_RECOVERY_AND_PILOT_READINESS.md), [Staffing/unit economics](PRICE_BREAK_EVEN_STAFFING_AND_DELIVERY_CAPACITY.md), [Owner decisions](BLOCKERS_AND_OWNER_DECISIONS.md). Never close a gate with this table alone.
+
