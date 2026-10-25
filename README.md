@@ -77,3 +77,18 @@ See [Adaptive Movement and Multi-Tenant C++ Server Architecture](docs/ADAPTIVE_M
 ## Documentation quality audit (2026-10-25)
 
 [Technical Specification and Whole-Project SRS Gap Audit](docs/TECHNICAL_DOCUMENT_AUDIT_GAPS_2026.md) records **26 prioritized findings** after reviewing the current consolidated SRS, older canonical technical specification, C++ architecture, feasibility, OpenAPI, Android compatibility, privacy and Play documents. **Most urgent:** replace outdated canonical technical spec, formalize all endpoint/tenant/deletion contracts, complete FR-to-test traceability, and validate Android, battery and server failure cases. This is a documentation audit, **not** a code, hardware or Play Console certification; corrective changes have not yet been implemented.
+
+## Canonical project specification and blocker review — 2026-10-25
+
+**Read in this order:**
+
+1. [Consolidated SRS v1.0](docs/SRS.md) — what the product must do; 49 FR and 16 NFR.
+2. [Whole-project Feasibility Gate](docs/WHOLE_PROJECT_FEASIBILITY_GATE_2026.md) — where Android/security/policy permits each feature.
+3. [Canonical Whole-Project Technical Specification v1.0](docs/TECHNICAL_SPECIFICATION.md) — authoritative system architecture, algorithms, API/data responsibilities, security, delivery.
+4. [Decisions & Blockers for the Project Owner](docs/BLOCKERS_AND_OWNER_DECISIONS.md) — **22 owner questions**, 14 engineering blockers and 8 external release gates.
+5. [Requirements Traceability](docs/REQUIREMENTS_TRACEABILITY.md) — every FR-001–049 and NFR-001–016 mapped to planned test IDs.
+6. [Audit Remediation Status](docs/AUDIT_REMEDIATION_STATUS.md) — documentation fixes and real implementation/evidence still missing.
+
+**Implementation annexes:** [Data/Authorization/Event Recovery](docs/DATA_AUTHORIZATION_AND_RECOVERY_CONTRACT.md), [Android Runtime/Tracking Algorithms](docs/TRACKING_RUNTIME_AND_ALGORITHM_CONTRACT.md), [Commands/SOS/Usage/Queue](docs/COMMAND_SOS_USAGE_QUEUE_CONTRACT.md), and [expanded OpenAPI 3.1 draft](docs/openapi.yaml).
+
+These are **engineering design documents**, not executed code, verified device compatibility, legally approved privacy terms or Google Play publication approval. Older documentation reflects the historical exploration; use the above canonical sources for new implementation decisions.
