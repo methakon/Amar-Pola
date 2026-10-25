@@ -240,3 +240,20 @@ The full acceptance and design details for these requirements are in [Live Trip 
 - **FR-021 Place alerts (P2):** Optional enter/exit/dwell signals may use a limited, parent-selected set of Android geofences and must disclose delayed delivery and location uncertainty.
 
 **New acceptance:** saved titled pins persist; observed route gaps are not bridged as though known; red-light pauses are not falsely counted as multi-minute stops; watch GPS absence is reported; parent map rendering does not itself increase child GPS sample frequency.
+
+## 14. Cross-cutting adaptive tracking and scalable server requirements
+
+See [Adaptive Movement and Multi-Tenant C++ Server Architecture](ADAPTIVE_MOVEMENT_CPP_SERVER_ARCHITECTURE.md) for the technical rationale, implementation steps and validation requirements.
+
+- **FR-022 Multi-guardian privacy grants (P0):** Every parent/guardian action shall be authenticated and explicitly authorized for the exact family, child and device. Shared guardianship shall be revocable and audited.
+- **FR-023 Durable GPS ingest (P0):** A child event shall be acknowledged only after durable server persistence; retries shall not duplicate events, stops or distance.
+- **FR-024 Event-time reconstruction (P1):** Trip/stop analysis shall use observed timestamps, permit late/offline updates and publish versioned provisional/final/revised results.
+- **FR-025 Server workload isolation (P0):** Child ingestion, C++ reconstruction, parent reads, usage aggregation and remote-command processing shall have separate bounded concurrency and service budgets.
+- **FR-026 Parent viewing independent of sampling (P1):** Opening one or multiple map viewers shall not automatically multiply child location requests.
+- **FR-027 Tenant-scoped data lifecycle (P0):** Device unpairing, guardian revocation, retention and account deletion shall invalidate authorization/caches and cover raw and derived history.
+- **FR-028 Quality-aware trips (P1):** Stop/route data shall express accuracy, source device, time gaps and provisional/revision status; no invented travelled streets.
+- **FR-029 Multi-device source attribution (P1/P2):** Phone/tablet/watch observations shall retain provenance and support explicit handoff policy.
+- **NFR-009 Capacity and backpressure (P1):** Establish measured ingest, query, worker and DB SLOs using synthetic 1k/10k/100k device scenarios; enforce quotas and safe retries.
+- **NFR-010 End-to-end access-control testing (P0):** Prevent object-level authorization leakage across families in API, RLS, caches, SSE and exports.
+
+Current status: design and desk research only; no Android hardware measurements or server load tests have been run.
