@@ -155,7 +155,7 @@ Verified owner initiates app/web deletion request → server revokes credentials
 
 ## 7. API and error contract
 
-The canonical planned endpoint catalog is the **OpenAPI 3.1 draft**, currently expanded with 39 operations for pairing, location, trip revisions, places, usage, SOS, grants, diagnostics, commands, policy preview, billing, and deletion. Every route has per-principal security declaration plus required object/action scope and a shared error shape.
+The canonical planned endpoint catalog is the **OpenAPI 3.1 draft**, currently expanded with 41 operations for pairing, location, trip revisions, places, usage, SOS, grants, diagnostics, commands, policy preview, billing, and deletion. Every route has per-principal security declaration plus required object/action scope and a shared error shape.
 
 ### Universal transport rules
 
