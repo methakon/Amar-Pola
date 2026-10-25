@@ -61,3 +61,7 @@ Additional implementation and release references:
 ## Route tracking, named places and stop detection
 
 See [Live Trip Route, Named Places and Battery Specification](docs/LIVE_TRIP_ROUTE_NAMED_PLACES_BATTERY_SPECIFICATION.md) for the implementation design: parent-titled address markers, live map, raw GPS route polylines, multi-stop trip timeline, motion-aware low-battery collection, phone/tablet/Wear OS support, conditional Google Roads matching and device verification. This is a **proposed** implementation; no hardware tests have been executed.
+
+## Adaptive movement tracking and scalable C++ reconstruction architecture
+
+See [Adaptive Movement and Multi-Tenant C++ Server Architecture](docs/ADAPTIVE_MOVEMENT_CPP_SERVER_ARCHITECTURE.md) for a researched implementation specification: low-battery Android collection, durable batched ingestion, multi-guardian/child authorization, stateless Drogon API replicas, C++ per-device trip/stop reconstruction workers, PostgreSQL/PostGIS schema and security controls, capacity modelling, operations, tests, and phased delivery. **Engineering design only; not a measured production implementation.**
