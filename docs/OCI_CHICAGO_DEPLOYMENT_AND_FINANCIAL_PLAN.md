@@ -157,6 +157,8 @@ For a real 31-day month, use actual 744 hours. Free hours and GB-hours apply to 
 
 ## 7. Monthly infrastructure scenario projections in INR
 
+> **For updated total monthly and annual expenses that explicitly include excess paid disk and backup storage, use §14.** The figures in this §7 are older CPU-plus-reserve projections and must **not** be added on top of §14 totals.
+
 Two separate columns prevent a false “free commercial operations” claim:
 1. **A1 compute:** calculated against Oracle published allowances.
 2. **Planning reserve:** illustrative **noncompute/operational contingency** set by Amar-Pola planning for domains, independent encrypted backups, monitoring, billing reconciliation and unmeasured external charges. **Not an OCI quoted charge and NOT a sufficient staffed 24/7 support budget.** Adjust it after provider bills.
@@ -324,3 +326,147 @@ Sources: [OCI price list India](https://www.oracle.com/in/cloud/price-list/), [M
 Re-run this financial model when Oracle changes free-tier limits, when account switches billing type, on new Maps provider quotas, when the product introduces extra media capture, or when the real tracking samples/day materially differ from **300**. All figures **exclude taxes unless clearly stated**.
 
 **Document status:** researched deployment/cost design, not actual provisioning or a provider quote.
+
+## 14. Cumulative recurring hosting cost beyond Free Tier — monthly, annual and scaling sensitivity
+
+**This is the direct answer to the total hosting expense question.** This section supersedes the **simple computer-plus-unpriced-reserve budgets in §7** for cumulative/monthly/yearly comparisons. The older §7 is retained as a historical high-level projection; do not add its totals to these totals. These prices are illustrative **service usage forecasts**, not a quote, invoice, provider guarantee, or measured production capacity. Updated 2026-10-26 using Oracle's published India price list and the selected OCI Chicago infrastructure design.
+
+### 14.1 What is counted and what is not
+
+**Included in the priced-line hosting subtotal:**
+1. All **A1 compute** for the stated aggregate OCPU and RAM capacity across all VMs/processes, after PAYG monthly A1 allowance (if confirmed in tenancy).
+2. All provisioned **boot + block volume capacity**, after 200 GB Always Free allocation in the home region; model additional storage at **10 VPU/GB balanced performance**. This is billed provisioned capacity, not just used database rows.
+3. Stored compressed, encrypted **off-instance logical backup objects** (assume PAYG first 10 GB Standard Object Storage free; Free-only baseline assumes its combined 20 GB allowance is allocated to these standard objects). Model stored *average occupied GB*, not the number of backup runs.
+4. **₹150/month** for a hypothetical domain/DNS provision; **not an OCI tariff** (actual registrar and DNS may differ).
+
+**Excluded from the priced-line subtotal:** taxes/GST, OCI paid requests/Logging beyond free allotments, paid load balancer, managed database, standbys/HA architecture, other paid OCI services, off-region disaster recovery, optional paid provider APIs, Maps/Places/Roads, app-store fees, salaries, customer support, legal/security consulting, hardware, development or marketing. A1 free consumption/volume allocations apply tenancy-wide and may be shared with unrelated workloads. Network egress is assumed within Oracle's 10 TB/month free outbound allowance. An OCI paid account may still have a bill despite zero A1 compute charges.
+
+**Not an actual concurrency benchmark:** Number of children in each row is a **scenario label only**, not evidence that the indicated machine can serve that number reliably, or that the same amount of RAM is sufficient for PostGIS, workers and database. Production HA and data residency will materially change actual cost.
+
+### 14.2 Official price inputs and billing formula
+
+| Item | Planning rate / allowance | Basis |
+|---|---:|---|
+| A1 processor | **₹0.95545/OCPU-hour** | Oracle India rate card |
+| A1 memory | **₹0.1433175/GB-hour** | Oracle India rate card |
+| PAYG A1 recurring free amount | **3,000 OCPU-hours + 18,000 GB-hours per month** | Oracle price list, verify actual tenancy |
+| Free-only A1 recurring amount | **1,500 OCPU-hours + 9,000 GB-hours per month** | Oracle Always Free resources |
+| Home-region block + boot volumes | **200 GB included** | All eligible tenancies; boot counts |
+| Extra block storage | **₹2.4363975/GB-month + ₹0.1624265/VPU/GB-month** | Assumed 10 VPUs adds ₹1.624265/GB/month; ~₹4.0606625 total for each billed GB |
+| Standard Object Storage backup | **₹2.4363975/GB-month** beyond modelled included quota | Model PAYG 10 GB Standard free; additional requests/storage tiers may vary |
+| Modelled domain/DNS | **₹150/month** | Owner-controlled estimate, not Oracle list price |
+| Service utilization | **730 hours/month, 8,760 hours/year (12 × 730)** | Long-run monthly average; real 28/30/31 day billing differs |
+| Uncertainty allowance | **20% of the priced-line subtotal** | Budget margin, not an OCI billed line |
+
+~~~text
+PAYG_A1_₹/month =
+  max(0, combined_A1_OCPUs*730 - 3000) * 0.95545
+  + max(0, combined_A1_RAM_GB*730 - 18000) * 0.1433175
+
+PAID_BLOCK_₹/month = max(0, all_boot_and_block_GB - 200) * (2.4363975 + 10*0.1624265)
+BACKUP_₹/month     = max(0, stored_standard_object_GB - 10) * 2.4363975
+
+HOSTING_PRICED_LINE_SUBTOTAL_₹/month =
+  PAYG_A1 + PAID_BLOCK + BACKUP + 150 (domain/DNS estimate)
+
+RISK_MARGIN_₹/month = HOSTING_PRICED_LINE_SUBTOTAL * 0.20
+PLANNING_HOSTING_BUDGET_₹/month =
+  HOSTING_PRICED_LINE_SUBTOTAL + RISK_MARGIN
+  + SCENARIO_SPECIFIC_ADDITIONAL_HOSTING_CONTINGENCY
+
+ANNUAL_RECURRING_BUDGET_₹ = MONTHLY_RECURRING_BUDGET * 12
+~~~
+
+**Important:** The additional hosting contingency is a **reserved budget**, not an expected Oracle charge. It creates room for unmodelled observability, paid request usage, backup transfer, emergency storage growth, DNS, additional VM, deployment or recovery needs; it is **NOT** a price quote for real commercial HA/SRE and should be higher when service-level guarantees are promised.
+
+### 14.3 Priced-line cumulative hosting charges
+
+The following monthly table **adds all specifically priced host items**, rather than showing A1 compute alone. Object backup volume and provisioned disk are new explicit assumptions; remeasure them before buying resources.
+
+| Hypothetical active children | Aggregate compute profile | Provisioned boot+DB block | Retained Object backups | A1 paid CPU+RAM/month | Extra block/month | Backup objects/month | Domain/month | **Priced-line subtotal/month** | **12-month subtotal** |
+|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| 500 (illustrative) | Free-only 2/12 | 150 GB | 20 GB | ₹0 | ₹0 | ₹0 | ₹150 | **₹150** | **₹1,800** |
+| 1,000 (illustrative) | PAYG 4/24 | 200 GB | 30 GB | ₹0 | ₹0 | ₹49 | ₹150 | **₹199** | **₹2,385** |
+| 2,500 (illustrative) | PAYG 6/36 | 300 GB | 80 GB | ₹2,505 | ₹406 | ₹171 | ₹150 | **₹3,232** | **₹38,782** |
+| 5,000 (illustrative) | PAYG 8/48 | 500 GB | 160 GB | ₹5,156 | ₹1,218 | ₹365 | ₹150 | **₹6,889** | **₹82,671** |
+| 10,000 (illustrative) | PAYG 12/72 | 1000 GB | 350 GB | ₹10,456 | ₹3,249 | ₹828 | ₹150 | **₹14,683** | **₹1,76,200** |
+| 20,000 (illustrative) | PAYG 16/96 | 1500 GB | 600 GB | ₹15,757 | ₹5,279 | ₹1,437 | ₹150 | **₹22,624** | **₹2,71,483** |
+| 50,000 (illustrative) | PAYG 24/144 | 3000 GB | 1200 GB | ₹26,359 | ₹11,370 | ₹2,899 | ₹150 | **₹40,778** | **₹4,89,337** |
+
+**Example at 5,000 children (illustration, not capacity claim):** A1 8/48 uses paid monthly resources above the 3k/18k allowance; compute ≈ **₹5,156/month**, additional 300 GB block ≈ **₹1,218/month**, 150 GB chargeable object backups ≈ **₹365/month**, domain ≈ **₹150/month**. **Priced-line total ≈ ₹6,889/month**, or **₹82,669/year** at constant use/rates, excluding reserve/tax/unlisted services.
+
+### 14.4 Safer cash planning budget: what to allocate to hosting
+
+These are **cash allocations**, not invoices: the priced-line service subtotal + 20% calculation uncertainty + the owner's discretionary extra hosting contingency. Extra contingency amounts are **₹1,500, ₹3,000, ₹6,000, ₹12,000, ₹25,000, ₹45,000 and ₹1,00,000/month** as the scenarios grow. These are chosen planning allowances (roughly increasing with workload/operational risk), **not charges from Oracle**.
+
+| Illustrative children | Priced subtotal/month | 20% risk margin/month | Additional *reserved* hosting contingency/month | **Recommended monthly hosting allocation** | **Annual hosting allocation (12×)** | Allocation/child/month |
+|---:|---:|---:|---:|---:|---:|---:|
+| 500 | ₹150 | ₹30 | ₹1,500 | **₹1,680** | **₹20,160** | ₹3 |
+| 1,000 | ₹199 | ₹40 | ₹3,000 | **₹3,238** | **₹38,862** | ₹3 |
+| 2,500 | ₹3,232 | ₹646 | ₹6,000 | **₹9,878** | **₹1,18,538** | ₹4 |
+| 5,000 | ₹6,889 | ₹1,378 | ₹12,000 | **₹20,267** | **₹2,43,205** | ₹4 |
+| 10,000 | ₹14,683 | ₹2,937 | ₹25,000 | **₹42,620** | **₹5,11,440** | ₹4 |
+| 20,000 | ₹22,624 | ₹4,525 | ₹45,000 | **₹72,148** | **₹8,65,780** | ₹4 |
+| 50,000 | ₹40,778 | ₹8,156 | ₹1,00,000 | **₹1,48,934** | **₹17,87,205** | ₹3 |
+
+**How to read it:** For 2,500 hypothetical children with 6/36 A1, 300 GB total volume and 80 GB object backups: **~₹3,232** specifically priced services per month. With ~₹646 risk margin and ₹6,000 optional additional hosting reserve, **allocate ~₹9,878/month = ₹1,18,540/year**. This is not a claim that Oracle will bill ₹9,878; unspent reserve remains unspent.
+
+**If you want the minimum plausible OCI bill rather than your safer business hosting budget, use §14.3**, not the larger allocations in this table. Neither version pays for actual human support, development, Play fees, media APIs or production-grade HA.
+
+### 14.5 What changes if the PAYG A1 free-hours benefit does not apply?
+
+A conservative sensitivity is to charge **every A1 OCPU-hour and RAM-hour** at the published rate, with no A1 credits; all other priced assumptions remain unchanged. This is **not** an assertion that Oracle will withhold the published benefit; it is a what-if if a billing scenario, consumed shared quota, capacity/eligibility or deployment arrangement differs.
+
+| Aggregate A1 profile | A1/month WITH published PAYG allowance | A1/month with NO A1 allowance | Compute-only increase/month |
+|---|---:|---:|---:|
+| PAYG 4/24 | ₹0 | ₹5,301 | +₹5,301 |
+| PAYG 6/36 | ₹2,505 | ₹7,951 | +₹5,446 |
+| PAYG 8/48 | ₹5,156 | ₹10,602 | +₹5,446 |
+| PAYG 12/72 | ₹10,456 | ₹15,903 | +₹5,446 |
+| PAYG 16/96 | ₹15,757 | ₹21,203 | +₹5,446 |
+| PAYG 24/144 | ₹26,359 | ₹31,805 | +₹5,446 |
+
+The A1 credit accounts for up to **~₹5,446/month** of compute at these 730-hour and rate assumptions once a plan fully consumes both allowances. **Do not spend against credits not visible in your OCI Cost Analysis/Billing dashboard.** Free-only tenancies cannot simply exceed free provisioning quota and guarantee a paid-scale deployment.
+
+### 14.6 What is the added cost when we scale?
+
+At 730 hours, after the combined A1 free pool has been exhausted:
+- **+1 OCPU** adds ~**₹697/month**, or **₹8,371/year**, compute only.
+- **+1 GB RAM** adds ~**₹105/month**, or **₹1,256/year**, compute only.
+- A proportional step of **+2 OCPU and +12 GB** adds ~**₹2,650/month**, or **₹31,802/year**, compute only.
+- **+100 GB balanced paid boot/block** adds ~**₹406/month**, or **₹4,873/year**. Only true once the shared free 200 GB has already been consumed.
+- **+100 GB paid backup objects** adds ~**₹244/month**, or **₹2,924/year**, provided stored object GB exceed their free allowance.
+
+Additional A1 capacity is **not** the same as an equally reliable service: DB replicas and load balancers, network security/operations and multi-domain failover require separately designed paid resources and larger budgets. Extra 10 TB outbound or provider API calls may trigger materially different costs; this model assumes no such charges.
+
+### 14.7 Production-grade/high-availability scenario is not priced by the free-node plan
+
+A **single VM** (even 12/72) is a single point of failure and is not commercial HA. A serious paid deployment should independently estimate: at least two API failure domains, bounded reconstruction workers, PostgreSQL replication and verified failover, private network, a load balancer if used, cross-domain backup/restore, incident response and monitoring/on-call.
+
+**For rough scale reference only**, doubling combined A1 use from 4/24 to 8/48 changes modeled A1 compute from ₹0 to ~₹5,156/month before volume, LB and operations costs. Two API VMs sharing one unreplicated database **are not HA**. Commercial HA price remains **UNPRICED/BLOCKED** until provider topology, RPO/RTO, support and live cost estimator are approved. Do not use the §14.4 budgeting figures as an uptime SLA quote.
+
+### 14.8 Blockers that prevent conversion of forecasts to invoices
+
+| ID | What is missing | Who must resolve |
+|---|---|---|
+| COST-01 | Actual eligible PAYG allowance and OCI Cost Analysis screenshots for Chicago | OCI account owner |
+| COST-02 | Available A1 sizes and quota in Chicago | OCI account owner / provider |
+| COST-03 | Measured per-child telemetry, location precision, 30/90-day retention, raw+index+WAL+backup storage | Android QA / backend |
+| COST-04 | Measured concurrent parent requests, query p95 and C++ CPU/memory footprint | Backend load test |
+| COST-05 | Real backup retention and stored Object Storage usage by tier | SRE/privacy owner |
+| COST-06 | Whether single VM is acceptable for pilot; target uptime, RPO/RTO and HA topology/prices | Product + SRE |
+| COST-07 | Which payable services exceed quotas: logging, DNS, egress, LB, dedicated DB, access proxies, support | OCI Cost Estimator/account |
+| COST-08 | Real invoice currency, tax treatment, committed discounts and production operating region | Finance/OCI billing |
+| COST-09 | Owner-approved monthly **hard spending cap**, alerts and action on overrun | Project owner |
+| COST-10 | Selected Drive/Maps/Roads and real service request rates | Product/provider billing |
+
+**Before production:** replicate the scenario in OCI Cost Estimator with region us-chicago-1, review tenancy allowance, verify taxes, and record a signed monthly budget envelope. Set compartment quotas and budget alerts; OCI budget alerts alone should not be assumed to hard-stop billing.
+
+### Sources (verified 2026-10-26)
+
+- Oracle India current rates and PAYG A1 allowances: https://www.oracle.com/in/cloud/price-list/
+- Oracle Always Free storage, limits and outbound allowance: https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm
+- Block Volume VPUs and lower-cost vs balanced tier: https://docs.oracle.com/en-us/iaas/Content/Block/Concepts/blockvolumeelasticperformance.htm
+- Oracle OCI Cost Estimator: https://www.oracle.com/cloud/costestimator.html
+
+**Executive number:** On the selected A1 architecture, **5,000 hypothetical children** at 8/48 and 500 GB provisioned disk imply about **₹6,889/month (~₹82,669/year) priced-line hosting**, while **₹20,267/month (~₹2,43,206/year)** is an intentionally larger hosting **planning allocation** with reserves. These are illustrative, not evidence that this hardware tier can run 5,000 children, and omit commercial HA and staff.
