@@ -929,3 +929,7 @@ A single family may own multiple devices or have multiple guardians watching. En
 - [ ] Device ingestion returns committed receipts with accepted/duplicate/rejected counts.
 - [ ] Redacted logs and deletion processes cover raw and derived tracking/usage information.
 - [ ] Play Data safety reflects each released collection category and processor.
+
+## 21. Feedback-derived reliability and product differentiation workstream (2026-10-25)
+
+See [Market Feedback, Competitive Gaps & Feasible Differentiation](MARKET_FEEDBACK_GAPS_AND_DIFFERENTIATION_2026.md). Additive technical proposals include quality/explanation codes for GPS events, health snapshots with independent fix/receipt/reconstruction timestamps, revision audit for offline late-arriving tracks, per-child time-bounded guardian grants, low-noise commute-alert classifications and privacy access receipts. These fit the existing event-time C++ reconstruction, Drogon API and PostgreSQL/PostGIS architecture; they do not justify continuous extra child GPS sampling or bypass OS constraints. Status: **research proposals only**, requiring labeled route tests, tenant authorization security review and battery measurements.
