@@ -106,6 +106,8 @@ The owner has selected **Oracle OCI US Midwest Chicago (us-chicago-1)** as the d
 
 **Do not mark B-08 fully closed:** Oracle home-region selection is materially difficult to change after tenancy creation, capacity is not publicly guaranteed, and OCI requires an authorized account holder to create resources. No tenancy, instance, domain or payment method was accessed or changed by this documentation step.
 
+**Subscription pricing direction changed on 2026-10-26:** Proposed ₹50/month or ₹500/year per child, **not** ₹149/month. See [Subscription Plans and Fees](SUBSCRIPTION_PLANS_PRICING_AND_RULES_2026.md) for SUB-01–SUB-16 approvals and unresolved tax/Play/family-seat checkout constraints. This specifically updates product direction for B-14; **pricing is not yet activated in Play Console**.
+
 ## H. Cumulative OCI paid-hosting cost decisions (2026-10-26)
 
 The [deployment financial document §14](OCI_CHICAGO_DEPLOYMENT_AND_FINANCIAL_PLAN.md#14-cumulative-recurring-hosting-cost-beyond-free-tier--monthly-annual-and-scaling-sensitivity) now includes **priced monthly and annual hosting totals**, explicit boot/block and Object Storage usage, a separate 20% uncertainty allowance, a discretionary hosting budget and 7 hypothetical workload/VM shapes. These **do not certify child capacity** or a managed/HA production architecture.
