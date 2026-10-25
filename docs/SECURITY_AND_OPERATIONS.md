@@ -1,0 +1,90 @@
+# Security Architecture, Threat Model and Operations
+
+**Amar-Pola | Draft 2026-10-25**
+
+## 1. Security priorities
+
+Protect the child's precise location, activity, media (if ever released), parent identity, command execution and billing. A compromised parent credential or backend is a high-severity privacy event. Default authorization is deny, with smallest useful permission scope.
+
+## 2. Trust boundaries
+
+1. Child Android sandbox / Android OS and permission state.
+2. Local encrypted queue / Android Keystore-backed device identity.
+3. Public Internet / HTTPS API ingress and push service.
+4. Backend API / authorization logic / persistent PostgreSQL.
+5. Parent Android app / parent auth identity provider.
+6. Third-party Google Maps, Play Billing, Drive, cloud hosting and monitoring processors.
+7. Optional managed DPC commands, separate from ordinary install.
+
+Never trust a client-supplied `parent_id`, device management flag or subscription status without server verification. Capability reports are hints and must be revalidated on the device at execution.
+
+## 3. Threat inventory and mitigations
+
+| Risk | Attack | Controls | Test |
+|---|---|---|---|
+| Parent account takeover | Unauthorized device history/control | OIDC/passkeys, step-up auth for sensitive actions, session revoke, login anomaly alerts | Token reuse and session revoke |
+| Device pairing hijack | Attacker redeems code | Short-lived one-use codes, rate limiting, parent confirmation, device bound key | Replay, brute force, code expiry |
+| Insecure direct object reference | Parent queries another family's location | Per-request ownership authorization, strict tenant scoping | Cross-account negative tests |
+| Device impersonation | Fake location/usage upload | Per-device cryptographic credential, signature or mTLS as appropriate, key rotation | Forged device ID |
+| Command replay/abuse | Duplicate or expired instruction | Unique command ID, TTL, idempotency, least privilege, signed policy version | Duplicate delivery and expiry |
+| Location exposure | Leaked logs/database/backups | Encryption, data minimization, separate secrets, retention, redacted logs | Log/backup inspection |
+| Unsafe DPC rule | Critical app blocked | Protected-package denylist plus Android policy eligibility check and recoverability | Recovery from rejected suspension |
+| OAuth theft | Drive access | Encrypted protected token store, PKCE, narrow scopes, revocation | Token log/leak test |
+| Billing bypass | Fake purchase token | Verify provider server-side, deduplicate provider notifications | Fake/refunded purchase |
+| Denial of service | Flood command/data endpoints | Rate limits, request bounds, quotas, bounded queue, circuit breakers | Load and malformed body tests |
+| Release supply-chain compromise | Malicious SDK/native library | Dependency/SBOM scans, reproducible build, signed tags, limited CI secrets | Tamper test |
+| Retention failure | Restored erased data | Deletion ledger, retention jobs, controlled backups and restore protocol | Restore of deleted tenant |
+
+## 4. Minimum cryptographic and credential plan
+
+- Strong TLS, current ciphers, strict HTTPS and verified hostnames.
+- Parent OIDC with PKCE on public clients; never embed server secret in APK.
+- Child private key preferably non-exportable in Android Keystore, unique per pairing, rotated/revoked after compromise.
+- Backend asymmetric signing keys/rotating key IDs and protected secret manager.
+- Database encrypted disks plus tightly scoped DB roles; consider field-level protection for high-risk attributes.
+- Backups encrypted and access logged; restore instructions never restore revoked credentials to active state.
+- CI secrets isolated from untrusted pull requests; release signing/upload key never stored in Git.
+
+## 5. Security alerts and incidents
+
+Severity examples:
+- **Critical:** unauthorized access to multiple families, credential exfiltration, covert recording defect.
+- **High:** improper device pairing, unexpected command execution, sensitive access control bypass.
+- **Medium:** prolonged telemetry backlog or subscription state error.
+- **Low:** non-sensitive UI error.
+
+Incident response: contain (disable remote commands if necessary), revoke credentials, preserve redacted audit evidence, assess exposure and legal notice obligations, patch and test, restore service, document root cause.
+
+## 6. Operations runbook
+
+### Availability
+Use health/readiness endpoints; monitor p95 latency, DB connections, queues, location lag, request failures, app crashes/ANRs. Alert on sustained degradation, not every offline phone.
+
+### Backups
+Encrypted daily/incremental according to SLA; perform periodic restoration tests. Distinguish disaster recovery from account-deletion obligations.
+
+### Rotations
+Document key rotation, cert renewal, API key restrictions, OAuth token revocation and Play Billing webhook/authentication changes.
+
+### Deployment
+Staging data is synthetic. Promote container by immutable digest; migrate database with reviewed reversible changes; use gradual deployment with rollback and feature switches.
+
+### Feature shutdown
+Backend can disable a risky operation, but child-app controls must not depend on concealment or blocked user-facing permissions. Respect device owner and Android policy lifecycles.
+
+## 7. Security release checklist
+
+- [ ] Document actual auth provider and device credential implementation.
+- [ ] Complete API authorization (including cross-tenant negative tests).
+- [ ] Review crash/log data for personal location/media leakage.
+- [ ] Penetration test pairing, policy control, billing and account deletion.
+- [ ] Review mobile app signing and third-party SDKs.
+- [ ] Test DPC safe recovery and policy cancellation.
+- [ ] Test retention, revocation, backup and restore.
+- [ ] Complete operator on-call and incident communication contacts.
+- [ ] Complete age/privacy/legal and Google Play monitoring policy review.
+
+### Further reference
+- https://mas.owasp.org/
+- https://owasp.org/API-Security/
+- https://developer.android.com/privacy-and-security/security-best-practices
