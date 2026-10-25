@@ -237,3 +237,9 @@ Still need operator identity and launch countries/ages, retention, hosting regio
 - Play parental-monitoring manifest flag: https://support.google.com/googleplay/android-developer/answer/12955211
 
 **M1 is a planned milestone, not a delivered build.**
+
+## 12. M1 deployment target: Oracle Chicago
+
+The confirmed **planning** cloud choice is OCI US Midwest Chicago (us-chicago-1), with Ampere A1 ARM64 VM.Standard.A1.Flex **2 OCPU / 12 GB** under free-only eligibility, **50 GB boot + 100 GB DB disk**, a single VM for C++ Drogon API + C++ worker + PostgreSQL/PostGIS, and secured HTTPS/OCI monitoring. The selected deployment/financial model is [OCI Chicago Deployment and Financial Plan](OCI_CHICAGO_DEPLOYMENT_AND_FINANCIAL_PLAN.md).
+
+M1 acceptance must add: actual OCI account/home-region evidence; A1 shape successfully allocated; ARM64 backend binary+PostGIS installed; RLS migrations and two-family negative tests; SSL/private DB; backup+restore and cost alarms. If A1 is out of capacity, mark OCI provisioning **BLOCKED**, do not assert a running service or silently upgrade payment mode. Publisher identity, US child-data hosting law, payment/price and retention remain decisions. All cost-per-child figures are forecasts, not observed AWS/OCI bills.
