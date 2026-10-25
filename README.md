@@ -92,3 +92,7 @@ See [Adaptive Movement and Multi-Tenant C++ Server Architecture](docs/ADAPTIVE_M
 **Implementation annexes:** [Data/Authorization/Event Recovery](docs/DATA_AUTHORIZATION_AND_RECOVERY_CONTRACT.md), [Android Runtime/Tracking Algorithms](docs/TRACKING_RUNTIME_AND_ALGORITHM_CONTRACT.md), [Commands/SOS/Usage/Queue](docs/COMMAND_SOS_USAGE_QUEUE_CONTRACT.md), and [expanded OpenAPI 3.1 draft](docs/openapi.yaml).
 
 These are **engineering design documents**, not executed code, verified device compatibility, legally approved privacy terms or Google Play publication approval. Older documentation reflects the historical exploration; use the above canonical sources for new implementation decisions.
+
+## First implementation milestone — Android + C++ (2026-10-25)
+
+The project owner selected **native parent Android**, **managed-device provisioning support**, and **mixed Android OS versions**. The new [M1 Architecture and Implementation Contract](docs/M1_ANDROID_CPP_ARCHITECTURE_AND_IMPLEMENTATION.md) defines Kotlin/Compose parent and child platform services, portable C++20 NDK library, C++20 Drogon API, PostgreSQL identity/grant schema, test DPC owner provisioning and safe eligible app suspension/restore. It specifies the 10 M1 work packages, 14 test scenarios, and next milestones. It does **not** claim Android apps, backend code or DPC tests have already been implemented. [Updated owner blockers](docs/BLOCKERS_AND_OWNER_DECISIONS.md) record what is decided versus still open.
