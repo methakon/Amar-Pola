@@ -176,3 +176,9 @@ A parental monitoring application may be permissible on Play if marketed and imp
 Most urgently: **(1) upgrade canonical technical spec, (2) lock access control and deletion semantics, (3) complete API+DB contracts, (4) prove Android collection/worker correctness through tests, then (5) demonstrate battery/scaling/policy compliance.**
 
 This audit leaves the implementation documents unchanged: findings are recorded here pending corrective architecture work. Each item should become an issue with owner, target phase, evidence link and resolution before closure. Do not label documentary improvements as actual testing or feature completion.
+
+## 8. Remediation update — 2026-10-25
+
+This audit remains the historical **finding record**; its original conclusion was accurate before remediation. The follow-up [Remediation Status Ledger](AUDIT_REMEDIATION_STATUS.md) tracks all AG-001–AG-026 against newly written canonical [Technical Specification v1.0](TECHNICAL_SPECIFICATION.md), expanded [OpenAPI draft](openapi.yaml), [49 FR/16 NFR Traceability](REQUIREMENTS_TRACEABILITY.md), [Data/Authorization/Recovery](DATA_AUTHORIZATION_AND_RECOVERY_CONTRACT.md), [Android/Geo Algorithms](TRACKING_RUNTIME_AND_ALGORITHM_CONTRACT.md), [Command/SOS/Usage/Queue](COMMAND_SOS_USAGE_QUEUE_CONTRACT.md) and [Owner Blockers](BLOCKERS_AND_OWNER_DECISIONS.md).
+
+Documentation design gaps are narrower, but **all actual implementation, real-device, security, privacy and Play approval evidence gates remain OPEN** until the listed test artifacts exist.
