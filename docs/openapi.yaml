@@ -1,0 +1,334 @@
+openapi: 3.1.0
+info:
+  title: Amar-Pola API
+  version: 0.1.0
+  description: |
+    PROPOSED CONTRACT ONLY. No implementation or public endpoint exists.
+    Device and parent credentials must be checked on every operation.
+servers:
+  - url: https://api.example.invalid/v1
+    description: Placeholder; replace with approved deployment URL
+security:
+  - ParentBearer: []
+tags:
+  - name: Pairing
+  - name: Devices
+  - name: Location
+  - name: Usage
+  - name: Commands
+  - name: Privacy
+paths:
+  /pairing-codes:
+    post:
+      tags: [Pairing]
+      summary: Create a single-use, short-lived child pairing code
+      responses:
+        "201":
+          description: Code issued to authenticated parent
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [pairing_code, expires_at]
+                properties:
+                  pairing_code: {type: string}
+                  expires_at: {type: string, format: date-time}
+        "401": {$ref: "#/components/responses/Unauthorized"}
+  /enrollment:
+    post:
+      tags: [Pairing]
+      security: []
+      summary: Child redeems a parent-provided enrollment code
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [pairing_code, public_key, app_version]
+              properties:
+                pairing_code: {type: string}
+                public_key: {type: string, description: Device-generated public key}
+                app_version: {type: string}
+      responses:
+        "201":
+          description: Enrolled device reference; credential issuance subject to security design
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [device_id]
+                properties:
+                  device_id: {type: string, format: uuid}
+        "400": {$ref: "#/components/responses/BadRequest"}
+  /devices:
+    get:
+      tags: [Devices]
+      summary: List only devices belonging to the authenticated parent
+      responses:
+        "200":
+          description: Device summaries
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {$ref: "#/components/schemas/Device"}
+  /devices/{deviceId}/capabilities:
+    post:
+      tags: [Devices]
+      security:
+        - DeviceBearer: []
+      summary: Report current device capability and permission state
+      parameters:
+        - $ref: "#/components/parameters/deviceId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: "#/components/schemas/CapabilityReport"}
+      responses:
+        "202": {description: Capability report accepted}
+        "403": {$ref: "#/components/responses/Forbidden"}
+  /devices/{deviceId}/locations:batch:
+    post:
+      tags: [Location]
+      security:
+        - DeviceBearer: []
+      summary: Store idempotent location events from this specific device
+      parameters:
+        - $ref: "#/components/parameters/deviceId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [events]
+              properties:
+                events:
+                  type: array
+                  maxItems: 500
+                  items: {$ref: "#/components/schemas/LocationEvent"}
+      responses:
+        "202": {description: Accepted after schema/device check; may skip duplicates}
+        "403": {$ref: "#/components/responses/Forbidden"}
+  /devices/{deviceId}/locations:
+    get:
+      tags: [Location]
+      summary: Read location history belonging to authenticated parent
+      parameters:
+        - $ref: "#/components/parameters/deviceId"
+        - name: from
+          in: query
+          schema: {type: string, format: date-time}
+        - name: to
+          in: query
+          schema: {type: string, format: date-time}
+        - name: cursor
+          in: query
+          schema: {type: string}
+      responses:
+        "200":
+          description: Historical events with cursor pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [events]
+                properties:
+                  events:
+                    type: array
+                    items: {$ref: "#/components/schemas/LocationEvent"}
+                  next_cursor: {type: [string, "null"]}
+        "403": {$ref: "#/components/responses/Forbidden"}
+  /devices/{deviceId}/usage:
+    get:
+      tags: [Usage]
+      summary: Read permission-dependent aggregated app usage
+      parameters:
+        - $ref: "#/components/parameters/deviceId"
+        - name: period
+          in: query
+          required: true
+          schema: {type: string, enum: [day, week, month, year]}
+      responses:
+        "200":
+          description: Aggregates based on recorded events, not guessed device history
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {$ref: "#/components/schemas/UsageAggregate"}
+  /devices/{deviceId}/commands:
+    post:
+      tags: [Commands]
+      summary: Parent requests a capability-approved, authenticated operation
+      parameters:
+        - $ref: "#/components/parameters/deviceId"
+        - name: Idempotency-Key
+          in: header
+          required: true
+          schema: {type: string}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: "#/components/schemas/CreateCommand"}
+      responses:
+        "202":
+          description: Command QUEUED, not proof of completion
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/Command"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "422": {$ref: "#/components/responses/BadRequest"}
+    get:
+      tags: [Commands]
+      security:
+        - DeviceBearer: []
+      summary: Fetch pending commands for the authenticated device
+      parameters:
+        - $ref: "#/components/parameters/deviceId"
+      responses:
+        "200":
+          description: Expiring commands
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {$ref: "#/components/schemas/Command"}
+  /devices/{deviceId}/commands/{commandId}:result:
+    post:
+      tags: [Commands]
+      security:
+        - DeviceBearer: []
+      summary: Report observed command outcome after execution checks
+      parameters:
+        - $ref: "#/components/parameters/deviceId"
+        - name: commandId
+          in: path
+          required: true
+          schema: {type: string, format: uuid}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [status]
+              properties:
+                status: {$ref: "#/components/schemas/CommandStatus"}
+                reason_code: {type: string}
+                completed_at: {type: [string, "null"], format: date-time}
+      responses:
+        "200": {description: Recorded command status if valid transition}
+        "409": {description: Invalid status transition or expired command}
+  /devices/{deviceId}/pairing:
+    delete:
+      tags: [Privacy]
+      summary: Revoke a child pairing and device API credential
+      parameters:
+        - $ref: "#/components/parameters/deviceId"
+      responses:
+        "204": {description: Unpaired}
+  /account/deletion-request:
+    post:
+      tags: [Privacy]
+      summary: Create account deletion request after owner verification
+      responses:
+        "202":
+          description: Request recorded; deletion is not yet necessarily complete
+components:
+  securitySchemes:
+    ParentBearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    DeviceBearer:
+      type: http
+      scheme: bearer
+      bearerFormat: DeviceProof
+  parameters:
+    deviceId:
+      name: deviceId
+      in: path
+      required: true
+      schema: {type: string, format: uuid}
+  responses:
+    Unauthorized:
+      description: Authentication required
+    Forbidden:
+      description: Authenticated but not authorized for this device
+    BadRequest:
+      description: Invalid parameters or unsupported request
+  schemas:
+    Device:
+      type: object
+      required: [id, mode]
+      properties:
+        id: {type: string, format: uuid}
+        display_name: {type: [string, "null"]}
+        mode: {type: string, enum: [STANDARD, MANAGED]}
+        api_level: {type: [integer, "null"]}
+        last_seen_at: {type: [string, "null"], format: date-time}
+    CapabilityReport:
+      type: object
+      required: [observed_at, android_api, mode, features]
+      properties:
+        observed_at: {type: string, format: date-time}
+        android_api: {type: integer}
+        mode: {type: string, enum: [STANDARD, MANAGED]}
+        features:
+          type: object
+          additionalProperties:
+            type: string
+            enum: [SUPPORTED, UNSUPPORTED, PERMISSION_REQUIRED, USER_ACTION_REQUIRED, NOT_TESTED]
+    LocationEvent:
+      type: object
+      required: [event_id, observed_at, latitude, longitude, accuracy_m]
+      properties:
+        event_id: {type: string, format: uuid}
+        observed_at: {type: string, format: date-time}
+        latitude: {type: number, minimum: -90, maximum: 90}
+        longitude: {type: number, minimum: -180, maximum: 180}
+        accuracy_m: {type: number, minimum: 0}
+        speed_mps: {type: [number, "null"], minimum: 0}
+    UsageAggregate:
+      type: object
+      required: [package_name, period_start, period_end, foreground_duration_ms]
+      properties:
+        package_name: {type: string}
+        period_start: {type: string, format: date-time}
+        period_end: {type: string, format: date-time}
+        foreground_duration_ms: {type: integer, minimum: 0}
+    CreateCommand:
+      type: object
+      required: [type, expires_at]
+      properties:
+        type: {type: string, enum: [REFRESH_LOCATION, APPLY_SUPPORTED_POLICY, REVOKE_SUPPORTED_POLICY, REFRESH_CAPABILITIES]}
+        expires_at: {type: string, format: date-time}
+        payload: {type: object}
+    CommandStatus:
+      type: string
+      enum:
+        - CREATED
+        - QUEUED
+        - DELIVERED
+        - ACCEPTED
+        - COMPLETED
+        - FAILED
+        - EXPIRED
+        - UNSUPPORTED
+        - PERMISSION_REQUIRED
+        - OS_REJECTED
+        - USER_ACTION_REQUIRED
+        - DEVICE_OFFLINE
+        - CANCELLED
+    Command:
+      type: object
+      required: [id, status, expires_at]
+      properties:
+        id: {type: string, format: uuid}
+        status: {$ref: "#/components/schemas/CommandStatus"}
+        expires_at: {type: string, format: date-time}
+        reason_code: {type: [string, "null"]}
