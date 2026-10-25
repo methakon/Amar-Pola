@@ -149,7 +149,7 @@ The above intervals are **requested hints** and can be throttled; do not guarant
 6. Device posts timestamped capability snapshot (API, managed role, access grants). Parent sees device mode and last seen.
 7. Device revoke disables its key and future telemetry; reinstallation/key loss requires approved re-enrollment.
 
-**M1 interface contract extension required:** add /enrollment/{enrollmentId}/proof for device proof-of-possession and a consistent parent device revoke endpoint in OpenAPI before generating Kotlin/C++ DTOs. Current OpenAPI draft does not yet specify both.
+**M1 interface contract:** The draft [OpenAPI](openapi.yaml) now includes /enrollment/{enrollmentId}/proof for device proof-of-possession and DELETE /devices/{deviceId}/pairing for guardian-authorized revoke. Their handlers, cryptographic validation, formal OpenAPI lint and generated Kotlin/C++ DTOs are **not implemented or tested**.
 
 **Security tests:** reused code, expired code, forged public key/nonce, wrong family, mismatched device ID, revoked key, read across families, spoofed capability status, role-changing attacks, request flooding and logs without secrets.
 
