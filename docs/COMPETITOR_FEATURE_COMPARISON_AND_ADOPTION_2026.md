@@ -278,3 +278,19 @@ Each request requires strict principal/device/family ownership, nonce/idempotenc
 - [Android geofencing limits](https://developer.android.com/develop/sensors-and-location/location/geofencing)
 
 **Research integrity:** The sources establish developer-advertised capabilities; no APK was installed or reverse-engineered, no paid subscription was activated, and no comparative battery/performance/privacy benchmark was run. The above is an adoption report and proposal, not a competitor certification, validated device feasibility test, or a release approval.
+
+## 12. Explicit conflict with the existing minimal-child-UI requirement
+
+Earlier Amar-Pola discussions require that the child agent's **main Activity normally remains closed after setup**. This does **not** prohibit an identifiable app, required monitoring notification, or an explicitly chosen child interaction.
+
+The following optional interaction modes let the parent preserve the original low-interruption design:
+
+| Proposed new function | Minimal-UI option | Trade-off |
+|---|---|---|
+| SOS | Persistent monitoring notification action, child home-screen widget or wearable complication where supported | Child must initiate; lockscreen/widget accessibility depends on device/OS. A large optional SOS screen is more discoverable. |
+| “I'm safe” check-in | Notification action, widget or optional mini Activity | Avoid continual UI or microphone use |
+| Screen-time remaining | Child taps existing monitoring notification to open status, or parent enables visible countdown | Silent hard blocking can be confusing; visible warnings improve fairness and usability |
+| Earn-time tasks | **Optional child-facing Activity** | Incompatible with literally never showing the child app, so postpone until product owner approves child UX |
+| Loud ring | Parent command triggering permitted sound plus on-device indication | Do not guarantee bypass of DND/silent settings |
+
+**Decision required:** Does “child app never in foreground” mean **no mandatory ongoing screen** (compatible with optional SOS/widget/UI), or **no child interaction at all** (then skip SOS/check-in/rewards, retaining automatic safety alerts and guardian controls)? Neither choice removes Android's required monitoring notices.
