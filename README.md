@@ -65,3 +65,7 @@ See [Live Trip Route, Named Places and Battery Specification](docs/LIVE_TRIP_ROU
 ## Adaptive movement tracking and scalable C++ reconstruction architecture
 
 See [Adaptive Movement and Multi-Tenant C++ Server Architecture](docs/ADAPTIVE_MOVEMENT_CPP_SERVER_ARCHITECTURE.md) for a researched implementation specification: low-battery Android collection, durable batched ingestion, multi-guardian/child authorization, stateless Drogon API replicas, C++ per-device trip/stop reconstruction workers, PostgreSQL/PostGIS schema and security controls, capacity modelling, operations, tests, and phased delivery. **Engineering design only; not a measured production implementation.**
+
+## Competitive product review (October 2026)
+
+[Comparison of Findmykids, Find my Phone – Family Locator, Pinardin, FamiSafe and Kids360](docs/COMPETITOR_FEATURE_COMPARISON_AND_ADOPTION_2026.md) documents verified advertised features, Amar-Pola gaps, conditional Android feasibility and a proposed adoption backlog. **Proposals are not automatically approved product requirements or implemented features.**
