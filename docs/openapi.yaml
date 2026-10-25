@@ -4887,6 +4887,149 @@
           }
         }
       }
+    },
+    "/enrollment/{enrollmentId}/proof": {
+      "post": {
+        "tags": [
+          "Pairing"
+        ],
+        "operationId": "post_enrollment_enrollmentId_proof",
+        "summary": "Finish enrolled device key proof; challenge must be fresh and single-use",
+        "security": [],
+        "x-authentication": "Pending enrollment ID and short-lived challenge only; requires signature proof and server-side binding to pending record, never a normal unauthenticated enrollment bypass",
+        "parameters": [
+          {
+            "name": "enrollmentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "device_id",
+                  "challenge_id",
+                  "signature"
+                ],
+                "properties": {
+                  "device_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "challenge_id": {
+                    "type": "string"
+                  },
+                  "signature": {
+                    "type": "string"
+                  },
+                  "signature_algorithm": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Device credential issued after verified challenge, should bind to device key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "device_id",
+                    "credential",
+                    "expires_at"
+                  ],
+                  "properties": {
+                    "device_id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "credential": {
+                      "type": "string"
+                    },
+                    "expires_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication failed"
+          },
+          "403": {
+            "description": "No child/device-specific grant"
+          },
+          "409": {
+            "description": "Conflict or expired enrollment"
+          },
+          "422": {
+            "description": "Invalid request"
+          },
+          "429": {
+            "description": "Rate limited"
+          }
+        }
+      }
+    },
+    "/devices/{deviceId}/pairing": {
+      "delete": {
+        "tags": [
+          "Pairing"
+        ],
+        "operationId": "delete_devices_deviceId_pairing",
+        "summary": "Authorized parent revokes device credentials and stops further ingest",
+        "security": [
+          {
+            "ParentBearer": []
+          }
+        ],
+        "x-required-scope": "REVOKE_DEVICE",
+        "parameters": [
+          {
+            "name": "deviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Revoked device and invalidated associated device grant/commands"
+          },
+          "401": {
+            "description": "Authentication failed"
+          },
+          "403": {
+            "description": "No child/device-specific grant"
+          },
+          "409": {
+            "description": "Conflict or expired enrollment"
+          },
+          "422": {
+            "description": "Invalid request"
+          },
+          "429": {
+            "description": "Rate limited"
+          }
+        }
+      }
     }
   },
   "components": {
