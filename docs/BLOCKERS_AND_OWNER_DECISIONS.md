@@ -105,3 +105,19 @@ The owner has selected **Oracle OCI US Midwest Chicago (us-chicago-1)** as the d
 | **X-08** | OCI resource selected on paper | Live VM and capacity not verified; OS/OEM test fleet still needed |
 
 **Do not mark B-08 fully closed:** Oracle home-region selection is materially difficult to change after tenancy creation, capacity is not publicly guaranteed, and OCI requires an authorized account holder to create resources. No tenancy, instance, domain or payment method was accessed or changed by this documentation step.
+
+## H. Cumulative OCI paid-hosting cost decisions (2026-10-26)
+
+The [deployment financial document §14](OCI_CHICAGO_DEPLOYMENT_AND_FINANCIAL_PLAN.md#14-cumulative-recurring-hosting-cost-beyond-free-tier--monthly-annual-and-scaling-sensitivity) now includes **priced monthly and annual hosting totals**, explicit boot/block and Object Storage usage, a separate 20% uncertainty allowance, a discretionary hosting budget and 7 hypothetical workload/VM shapes. These **do not certify child capacity** or a managed/HA production architecture.
+
+| ID | Owner action needed | Why it matters |
+|---|---|---|
+| **COST-01** | Verify Oracle PAYG 3,000 OCPU-hour / 18,000 GB-hour monthly allowance in actual Chicago tenancy | Determines whether ~4 OCPU/24 GB incurs compute charge |
+| **COST-02** | Confirm successful A1 shape allocation, storage free quota and account billing mode | Published list prices do not mean your VM exists |
+| **COST-03** | Decide acceptable maximum paid hosting **budget per month** and annual cash ceiling | Planning contingency is not a payable line item |
+| **COST-04** | Select raw GPS/derived trip/audit retention | Determines DB, Object backups and restore cost |
+| **COST-05** | Decide whether single-node low-cost pilot is acceptable or paid HA/SLA required | Full HA/managed DB and on-call are **unpriced** |
+| **COST-06** | Verify cost in OCI Cost Estimator / actual invoices, tax and invoice currency | INR list price is an estimate, not a bill |
+| **COST-07** | Validate load/backup capacity before linking number of children to VM | Child counts are scenario labels only |
+
+This supplements B-07, B-08, B-12, B-14 and B-21; do not mark them closed until choices and evidence exist.
