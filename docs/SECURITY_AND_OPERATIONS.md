@@ -88,3 +88,7 @@ Backend can disable a risky operation, but child-app controls must not depend on
 - https://mas.owasp.org/
 - https://owasp.org/API-Security/
 - https://developer.android.com/privacy-and-security/security-best-practices
+
+## 8. Scalable location infrastructure and family authorization supplement
+
+See [Adaptive Movement and Multi-Tenant C++ Server Architecture](ADAPTIVE_MOVEMENT_CPP_SERVER_ARCHITECTURE.md) for the guardian/family/child ACL model, PostgreSQL row-level security with transaction-scoped context, protection of location event/outbox queues, strict API IDOR/BOLA tests, per-tenant SSE and cache isolation, accepted-but-late data handling, synthetic load tests and individual account deletion across raw partitions and derived trips. Security signoff remains blocked until this design is implemented and tested.
