@@ -1,0 +1,101 @@
+# Data Safety and Permission Inventory — Working Worksheet
+
+**Amar-Pola | Draft | 2026-10-25**
+
+**Do not submit these rows verbatim to Play Console.** Final declarations must be taken from the actual compiled parent and child apps, included SDKs, endpoints, storage behavior, and third-party recipients. Fill one worksheet **per package** and **per release track**. “Potentially collected” does not mean an enabled shipped feature.
+
+## 1. Data inventory
+
+| Data type | Collection source | Why needed | Recipient/storage | User control | Play disclosure review |
+|---|---|---|---|---|---|
+| Parent account identifier and email | Parent authentication | Pairing, account access, support | Auth provider and backend | Account deletion | Personal info / account |
+| Child device identifier and app version | Enrollment | Pairing, support and security | Backend | Unpair/delete | Device or other IDs |
+| Precise/approximate location and time | Child location API | Map and route history | Backend and authenticated parent | Turn off/revoke, retention/delete | Location; determine precise/approximate |
+| Travel speed and movement | Location provider | Trip report | Backend and parent | Retention/delete | May be derived from location |
+| App package usage duration | UsageStatsManager | App usage report | Backend and parent | Usage Access revoke, delete | App activity |
+| Installed app package inventory | Scoped package query, only if feature ships | Configure app limits | Backend if transmitted | Disable feature/delete | App info/activity |
+| Policy and command/audit metadata | Parent + child | Controls and security | Backend | Retention and deletion | App activity/device metadata |
+| Crash logs/performance telemetry | Optional diagnostics SDK | Reliability | Backend or named vendor | Diagnostics preferences | App performance / device IDs |
+| Authorized photos/videos | Only if a released media feature works | User-approved media backup | Backend temporary storage/Google Drive | Feature-specific delete | Photos/videos |
+| Authorized audio | Only if a released audio feature works | Explicit approved recording | Backend/Drive if chosen | Feature-specific delete | Audio files |
+| Subscription purchase token/entitlement | Play Billing backend verification | Entitlement and fraud prevention | Billing provider/backend | Account support/delete subject to legal retention | Purchases/financial category review |
+| Drive OAuth token reference | Parent Google consent | Upload access | Encrypted secret store | Revoke integration | Authentication/integration data review |
+| Push token | FCM if enabled | Wake/sync hints | Google FCM and backend | Re-pair/revoke | Device identifiers/SDK review |
+
+## 2. Column-by-column Play Console investigation
+
+For **every** shipped data category answer and document:
+1. Collected from device? Transmitted off device? Stored only ephemerally? (Follow current Play definitions.)
+2. Is transfer encrypted in transit?
+3. Is collection required for core function or optional?
+4. Purposes: app functionality, analytics, fraud prevention/security, account management, personalization or other (choose only truthful purposes).
+5. Shared with whom? Evaluate processors/service providers and parent recipients using Play's official sharing definitions.
+6. Is deletion request supported? Exact process and retention exceptions?
+7. Is the feature on in the child package, parent package, both, or neither?
+
+## 3. SDK/processors register (unresolved)
+
+| Processor/SDK | Planned reason | Status | Before release |
+|---|---|---|---|
+| Google Maps SDK | Parent map | Planned, not integrated | Review data handling / Android SDK policies |
+| Google Play services location | Child location | Candidate, not integrated | Audit services and data transmissions |
+| Firebase Cloud Messaging | Command wake signals | Optional, not integrated | Audit SDK and registration tokens |
+| Google Play Billing | Paid digital access | Planned | Audit purchase metadata and SDK data |
+| Google Drive API | Parent media backup | Planned | OAuth scope and token storage review |
+| Authentication provider | Parent sign-in | TBD | Name actual operator and vendor |
+| Crash reporting | Reliability | TBD | Off by default in specification until selected |
+| Hosting/database provider | Telemetry storage | TBD | Region, DPA, access and retention |
+
+## 4. Permission mapping to function
+
+| Permission/privilege | Required? | Feature | Review task |
+|---|---|---|---|
+| Fine/coarse location | Candidate P1 | Latest position, routes | Runtime prompt and disclosure |
+| Background location | Candidate P1 | Background tracking | Separate grant + Play permission form/video |
+| FGS location | Candidate P1 | Running location service | FGS declaration and notification |
+| Usage Access | Candidate P1 | App usage history | Settings onboarding, revocation |
+| POST_NOTIFICATIONS | Candidate | Status and monitoring notification | Permission state and required visibility |
+| Device owner | Optional managed mode | App suspension | Managed enrollment + separate review |
+| Camera | Deferred | Approved capture only | Feature not in manifest if not shipped |
+| Record audio | Deferred | Approved capture only | Feature not in manifest if not shipped |
+| Broad package visibility | Avoid by default | App discovery | Justification and Play permission form if requested |
+| Read arbitrary private files | Not supported | None | Do not request or promise |
+
+## 5. Retention and security blanks (must complete)
+
+- Default location retention: **TBD**
+- Default usage retention: **TBD**
+- Media retention and Drive copy ownership: **TBD**
+- Audit/security logs retention: **TBD**
+- Backup deletion lag: **TBD**
+- Primary hosting region: **TBD**
+- Company/controller legal name and contact: **TBD**
+- Subprocessors and DPAs: **TBD**
+- Whether encryption covers all endpoints and backups: **Requires verification**
+- Deletion request completion SLA and legal exceptions: **TBD**
+- Parent authentication and age/authority verification policy: **TBD**
+
+## 6. Final signoff record template
+
+```text
+Release version:
+Package:
+Build SHA / manifest SHA:
+All runtime permissions verified: [ ]
+SDK inventory verified: [ ]
+Data category rows reconciled with network traffic: [ ]
+Retention and deletion measured: [ ]
+Public privacy policy URL verified: [ ]
+Account deletion web URL verified: [ ]
+Play Data safety responses saved:
+Reviewer / approval:
+Date:
+```
+
+## Source
+
+https://support.google.com/googleplay/android-developer/answer/10787469
+
+https://support.google.com/googleplay/android-developer/answer/13327111
+
+https://support.google.com/googleplay/android-developer/answer/9859455
