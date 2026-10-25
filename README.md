@@ -115,3 +115,8 @@ The project owner selected **native parent Android**, **managed-device provision
 
 **Current prices:** ₹50/month or ₹500/year per child are **proposed, not verified as profitable**. [Break-even, staffing and hardware](docs/PRICE_BREAK_EVEN_STAFFING_AND_DELIVERY_CAPACITY.md) compares tax assumptions, Play fees, existing OCI reserves, additional staff/support and HA costs. Old ₹149/month cost/revenue tables remain **historical price sensitivities only**. Parent privacy/consent controls remain required even after payment.
 
+## India-first OCI region and executable M1 validation artifacts — 2026-10-26
+
+**Current primary hosting plan:** OCI **Mumbai (ap-mumbai-1)**, **Hyderabad (ap-hyderabad-1)** fallback, conditional on tenancy home region, actual capacity/cost and Indian child-data counsel review. Original Chicago financial report is now **historical**, not the preferred new infrastructure. See [India region and M0 decision gate](docs/INDIA_REGION_AND_M0_OWNER_DECISION_GATE.md).
+
+**One authoritative roadmap:** [Master M0–M9 milestones](docs/MASTER_MILESTONE_IMPLEMENTATION_AND_RELEASE_PLAN.md). **M1 artifacts:** [11-operation OpenAPI](docs/openapi-m1.yaml), [offline structural linter](backend/tests/lint_openapi_m1.py), [PostgreSQL M1 schema/RLS](backend/persistence/migrations/0001_m1_identity.sql), [two-family SQL negative test](backend/tests/m1_tenant_isolation.sql), [14 executable case definitions](backend/tests/M1_ACCEPTANCE_TEST_CASES.md) and [PostgreSQL CI workflow](.github/workflows/m1-contract-and-tenant.yml). **API structural lint checked; database execution and real Android/API tests pending**. Real minor data blocked until counsel, owner decisions and device/recovery evidence.
