@@ -4,6 +4,8 @@
 **Revision:** 1.0 · **Reviewed:** 2026-10-26 · **Status:** researched engineering/financial estimates; no external provider accounts, bills or quotas verified.  
 **Scope:** All planned **non-Oracle** service dependencies of Amar-Pola, including Google Maps/Places/Roads, Android/Google location APIs, Firebase Cloud Messaging, parent identity, Google Play Billing, optional Drive, and developer registration. **Oracle compute, Oracle block/object storage, Oracle DNS and Oracle monitoring are entirely excluded**; use the independent [OCI Hosting Financial Plan](OCI_CHICAGO_DEPLOYMENT_AND_FINANCIAL_PLAN.md) for those. Domain fees, already allowed for in that hosting plan, are also excluded to avoid double counting.
 
+**PRICING PRECEDENCE (26 October 2026):** [Subscription Plans, Hidden Charges and Play Rules](SUBSCRIPTION_PLANS_PRICING_AND_RULES_2026.md) supersedes the ₹149-per-child/month selling-price assumption below. **₹149 is now a historical sensitivity example only**; the current proposed plans are **₹50/month or ₹500/year per paying child seat**, subject to tax/Play verification. This cost report remains useful for provider service pricing and request volumes, but its Play-fee and per-child-unit-economics totals must be recalculated from the final selected plan. Oracle hosting remains excluded throughout.
+
 ## 1. Executive financial answer
 
 **Under a ₹149/child/month, India-only auto-renewing subscription example, 1,000 paying child subscriptions:**
