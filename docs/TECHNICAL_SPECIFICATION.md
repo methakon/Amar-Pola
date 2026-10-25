@@ -261,3 +261,9 @@ Authoritative references:
 - Native 16KB: https://developer.android.com/guide/practices/page-sizes
 
 **Change history:** v1.0 on 2026-10-25 replaces outdated canonical technical document while preserving prior Git history. Every future change requires an explicit design decision record for changed permissions, child data, roles, API schemas or platform capabilities.
+
+## 14. M1 detailed implementation decision — mixed Android and managed provisioning
+
+The project owner confirmed **managed-device provisioning available**, **mixed older/newer Android versions**, and **native Android parent app**. The baseline architecture keeps Kotlin Android adapters and a bounded C++ NDK core for child agent, with C++20 Drogon API and PostgreSQL; the DPC adapter is explicitly separate from normal personal phone mode. The authoritative milestone implementation contract is [M1 Android/C++ Architecture and Implementation](M1_ANDROID_CPP_ARCHITECTURE_AND_IMPLEMENTATION.md): code layout, pairing challenge/proof, guardian security, Android API29–36 candidate matrix, on-device role checks, safe package suspension/restore and 14 M1 tests.
+
+M1 requires real debug binaries and secure pairing proof, not continuous location/history or year-long usage reports. [OpenAPI](openapi.yaml) now includes explicit enrollment proof and device-pairing revoke endpoints, while generated clients/formal validation and real backend handlers remain unimplemented. [Owner decisions](BLOCKERS_AND_OWNER_DECISIONS.md) track remaining supported-device, hosting, age, retention and release concerns.
