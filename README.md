@@ -52,3 +52,8 @@ The following documents supplement the initial v0.1 baseline. They are architect
 - [Security architecture and operations](docs/SECURITY_AND_OPERATIONS.md)
 
 **Publication warning:** There are not yet release AABs, live privacy/deletion web pages, Play Console declarations, reviewer demonstration videos, or verified Android device test results. These must be created and validated before publishing either app.
+
+Additional implementation and release references:
+- [Android 10–16 compatibility test matrix](docs/ANDROID_COMPATIBILITY_MATRIX.md)
+- [Draft machine-readable OpenAPI contract](docs/openapi.yaml)
+- [Subscription and terms disclosure template](docs/TERMS_AND_SUBSCRIPTIONS_DRAFT.md)
