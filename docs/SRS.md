@@ -226,3 +226,17 @@ Before release, each feature must have a supported Android/API/device/enrollment
 See [Implementation Technical Specification](IMPLEMENTATION_TECHNICAL_SPECIFICATION.md) for module responsibilities, API contract proposals and development milestones. [Feasibility Conditions and Evidence](FEASIBILITY_CONDITIONS_AND_EVIDENCE.md) records conditions for conditional requirements (FR-003, FR-005, FR-007, FR-008, FR-009 and FR-010). [Validation and Release Plan](VALIDATION_AND_RELEASE_PLAN.md) traces requirements to acceptance tests. [Google Play Publishing Requirements](GOOGLE_PLAY_PUBLISHING_REQUIREMENTS.md) captures publication gates and necessary declarations.
 
 **Release gates:** Pass documented device tests; complete privacy/data safety and permissions review; no unsupported app blocking claims or covert media capture; ensure the release binary and its store disclosures match. The technical and publication docs do not represent implemented functionality.
+
+## 13. New location, named-place and trip requirements (2026-10-25)
+
+The full acceptance and design details for these requirements are in [Live Trip Route, Named Places and Battery Specification](LIVE_TRIP_ROUTE_NAMED_PLACES_BATTERY_SPECIFICATION.md).
+
+- **FR-015 Named places (P1):** A parent shall add, edit, title, categorize, move and delete geolocated place markers for a paired child; labels shall appear near the observed position on the Google map without extra child location requests.
+- **FR-016 Route history (P1):** The parent shall view chronological, timestamped observed location segments as Google Maps polylines. Coverage gaps and low-confidence segments shall be identified; fabricated directions routes shall not be represented as actual travelled paths.
+- **FR-017 Trip and stops (P1):** The backend shall detect movement episodes, intermediate dwell stops, and start/end of observed trips; associate qualified stops with parent-saved places using spatial and accuracy-aware checks. Passing close to a place shall not automatically count as a visit.
+- **FR-018 Adaptive battery profile (P1):** The child shall switch between stationary, movement and power-saving profiles based on available location/motion evidence and Android permission/service rules; target thresholds shall be measured on each supported device family.
+- **FR-019 Conditional road geometry (P2):** Optional road matching shall be used only for sufficiently dense reliable vehicle tracks after third-party asset-tracking license, retention, pricing and policy checks. A raw-track fallback is mandatory.
+- **FR-020 Multi-device location identity (P2):** Phone, tablet and Wear OS source observations shall retain separate device identity; no unverified stitching of tracks across devices.
+- **FR-021 Place alerts (P2):** Optional enter/exit/dwell signals may use a limited, parent-selected set of Android geofences and must disclose delayed delivery and location uncertainty.
+
+**New acceptance:** saved titled pins persist; observed route gaps are not bridged as though known; red-light pauses are not falsely counted as multi-minute stops; watch GPS absence is reported; parent map rendering does not itself increase child GPS sample frequency.
