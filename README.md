@@ -18,6 +18,7 @@ The child app's main activity does not need to remain open for every background 
 - [Software Requirements Specification (SRS)](docs/SRS.md)
 - [Technical Specification](docs/TECHNICAL_SPECIFICATION.md)
 - [Oracle Chicago Deployment, Capacity and Financial Plan](docs/OCI_CHICAGO_DEPLOYMENT_AND_FINANCIAL_PLAN.md) — planned architecture, deployment sequence, finances and OCI-01–OCI-12 blockers (not provisioned)
+- [**Proposed Subscription Plans, Fees and Play Rules**](docs/SUBSCRIPTION_PLANS_PRICING_AND_RULES_2026.md) — **₹50/month or ₹500/year per paid child seat**, family seat products, GST/refunds/auto-renew, price sensitivity and unresolved approvals
 - [Third-Party Services Cost Analysis (excluding Oracle hosting)](docs/THIRD_PARTY_SERVICES_COST_ANALYSIS_2026.md) — Maps/Places, FCM, Play Billing fees, parent auth, Drive/Roads/SMS, monthly/yearly per-child forecasts and provider blockers
 - [Audit Remediation Status](docs/AUDIT_REMEDIATION_STATUS.md) — documentation fixes versus open implementation/deployment proof
 
