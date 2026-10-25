@@ -137,3 +137,10 @@ Use one structured error format: code, message, request_id, retryable, optional 
 - Real-device permitted sound test including mute/DND and user-perceptible status.
 
 This document fills **protocol design**, not deployed function or delivery guarantees.
+
+## 8. FR-044 fallback and India child-data release qualification (2026-10-26)
+
+This contract's FCM fanout is **best-effort**, not an independently reliable SOS delivery solution. [SOS Escalation and Independent Fallback](SOS_ESCALATION_AND_INDEPENDENT_DELIVERY_DESIGN.md) defines **durable receipt → provider-submitted → authenticated guardian-acknowledged** states, timed no-ACK escalation, consented verified recipient and optional SMS, plus failure testing when OCI API/DB/worker are lost together. **An SMS request from the same failed VM is not an independent outage fallback.** Provider, India telecom sender registration/templates and pricing remain unselected.
+
+**Shipping rule:** real minor's SOS tracking/guardian recipient processing needs India DPDP purpose and US-hosting legal review; only truthful best-effort child-initiated check-in can proceed after applicable signoffs. No marketing as guaranteed emergency dispatch without independent failure-domain proof, funded provider and support. Test SOS-01–12 from the fallback document; leave FR-044 emergency-level release BLOCKED.
+
