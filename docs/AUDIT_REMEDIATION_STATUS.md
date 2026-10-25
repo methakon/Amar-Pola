@@ -17,7 +17,7 @@
 | Audit ID | Original gap | Documentation status | Added design evidence | What is STILL needed to close implementation/release |
 |---|---|---|---|---|
 | AG-001 | Canonical TSD vs SRS version | DESIGN_UPDATED | Canonical TSD v1.0 replacing v0.1 | Review/signoff still required |
-| AG-002 | Partial OpenAPI | DESIGN_EXPANDED | 39-operation OpenAPI 3.1 draft | Formal OpenAPI lint, generated code and contract tests remain |
+| AG-002 | Partial OpenAPI | DESIGN_EXPANDED | 41-operation OpenAPI 3.1 draft | Formal OpenAPI lint, generated code and contract tests remain |
 | AG-003 | Per-child guardian ACL | DESIGN_UPDATED | Data authorization annex + matrix | Implement/RLS/cross-tenant tests |
 | AG-004 | Deletion, backups, reingest | PARTIAL_DESIGN | Deletion ordering/tombstones in data annex | Retention decisions, code and backup restore exercise |
 | AG-005 | Public privacy/deletion/Play | EXTERNAL_OPEN | Release docs and blocker register | Legal entity, URLs and actual Play approval |
@@ -51,7 +51,7 @@
 | [Data, Authorization and Recovery](DATA_AUTHORIZATION_AND_RECOVERY_CONTRACT.md) | AG-003/004/008/012, versioned event writes, RLS, deletion and fencing |
 | [Android Runtime and Tracking Algorithms](TRACKING_RUNTIME_AND_ALGORITHM_CONTRACT.md) | AG-007/009/010/018/024 |
 | [Commands, SOS, Usage and Queue](COMMAND_SOS_USAGE_QUEUE_CONTRACT.md) | AG-013/017/020 and remote command correctness |
-| [Expanded OpenAPI 3.1](openapi.yaml) | AG-002/026; 39 operations; **formal validation pending** |
+| [Expanded OpenAPI 3.1](openapi.yaml) | AG-002/026; 41 operations; **formal validation pending** |
 | [Full Requirements Traceability](REQUIREMENTS_TRACEABILITY.md) | AG-006, 49 FR + 16 NFR mapped to planned tests |
 | [Project Owner/Engineering Blockers](BLOCKERS_AND_OWNER_DECISIONS.md) | AG-004/005/015/016/021/022/023 and evidence ownership |
 | [Feasibility](WHOLE_PROJECT_FEASIBILITY_GATE_2026.md) | Android/Play/DPC/media conditional gates |
