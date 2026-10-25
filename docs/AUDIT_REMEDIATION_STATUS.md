@@ -79,3 +79,24 @@ See [Blockers B-01 through B-22](BLOCKERS_AND_OWNER_DECISIONS.md); most importan
 6. Product publishes working privacy/deletion services and submits actual Play binary/declarations for review.
 
 This ledger should be updated when code commits, test results or third-party approvals exist. Do not close a production blocker with a document link alone.
+
+## 7. OCI Chicago deployment documentation coverage and outstanding proof
+
+**Reviewed:** [OCI Chicago Deployment, Capacity & Financial Plan](OCI_CHICAGO_DEPLOYMENT_AND_FINANCIAL_PLAN.md), document OCI-CHI-001. This plan predates the latest audit follow-up and **must be read alongside** the canonical TSD. It specifies the chosen us-chicago-1 region, staged Ampere A1 single-node lab/PAYG/HA options, approximate resource layout, a thirteen-step provisioning/deployment procedure (D-01 through D-13), cost/revenue sensitivity, upgrade triggers and OCI-01 through OCI-12 blockers.
+
+| Deployment concern | Design/document coverage | Actual operational evidence needed | Current status |
+|---|---|---|---|
+| Cloud region and stage topology | Chicago OCI region, 2 OCPU / 12 GB candidate, Drogon + separate C++ workers + PostgreSQL/PostGIS processes on single ARM64 VM | Real tenancy, instance availability, network rules, deployed endpoints | **PLAN ONLY** |
+| OCI account, identity and billing | Account/region, MFA, quotas, Always Free vs PAYG distinctions | Approved tenancy access, real benefit/quota and billing dashboard proof | **BLOCKED: OCI-01–03** |
+| Network, TLS and host configuration | 443 HTTPS only, no public PostgreSQL, restricted admin/Bastion, process limits | Versioned IAM/VCN/firewall/IaC, domain/certificate, OS hardening and audits | **NOT CONFIGURED** |
+| Repeatable application delivery | AArch64 build, systemd/Podman and signed build ideas | Checked-in reproducible deployment manifests, health-check gating, migration sequencing, rollback rehearsal | **NOT IMPLEMENTED** |
+| Database migration/security | PostgreSQL/PostGIS, least privilege, child/family grants and RLS | Executable migrations, migration tests, real secret store and tenant attack tests | **NOT IMPLEMENTED** |
+| Off-machine backups and deletion | Encrypted backups and restore plans, deletion tombstones | Tested restore, retention/deletion across backups, measured RPO/RTO and key recovery | **NOT TESTED** |
+| Synthetic scaling/battery | 10–1,000 initial test rollout, estimated finances/scale | Load-test results, actual storage/WAL/cost utilization, device battery and GPS evidence | **NOT MEASURED** |
+| Production availability | Single-node limitation explicitly disclosed, multi-node HA upgrade stage | Approved paid HA design, on-call, uptime/error objectives and failover/incident drills | **NOT APPROVED** |
+| Child-data legal release | US regional data location acknowledged | Publisher identity, target markets, privacy/data safety pages, cross-border legal review, Play approval | **EXTERNAL OPEN** |
+
+**Interpretation:** AG-011 (capacity/cost/RPO), AG-021 (provider licensing/fees), and AG-022 (operations) have **documentary planning coverage**, not executable deployment readiness. B-08 has a provider/region direction set but is not fully closed. Actual deployment remains blocked by OCI-01..12 and E-01..14 as applicable. Never call the service operational because an Always Free cost estimate or diagram exists.
+
+**Next deployment deliverables when source implementation starts:** parameterized OCI IAM/VCN/compute/volume definitions, hardened non-root ARM64 application delivery, secrets provisioning, database migration and rollback pipeline, encrypted Object Storage backup + external-restore exercise, observed service health/alarms, per-child cost telemetry and a signed dev → staging → limited pilot → paid-production go/no-go record.
+
