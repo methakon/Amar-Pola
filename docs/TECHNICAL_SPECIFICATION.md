@@ -273,3 +273,18 @@ M1 requires real debug binaries and secure pairing proof, not continuous locatio
 **Region planning decision:** Oracle Cloud US Midwest Chicago (us-chicago-1). Implement the initial modular C++20 Drogon API, C++ workers and PostgreSQL/PostGIS as separate processes **on one Ampere A1 ARM64 VM**, not on separately billed worker servers. Initial shape candidate 2 OCPU / 12 GB Always Free, 50 GB boot and 100 GB DB block volume with remaining quota reserved; production legality/security and backup reviews remain gates.
 
 See [OCI Chicago Deployment and Financial Plan](OCI_CHICAGO_DEPLOYMENT_AND_FINANCIAL_PLAN.md) for official free-hour and paid-account rate comparison, storage/transfer quota, ingress/backup/restore checklist, hardware and ARM64 compilation requirements, estimated throughput assumptions, one-subscription-per-child unit economics and optional PAYG/resilience topology. **Neither successful free capacity allocation nor OCI provisioning has occurred**. Do not promise 500/1,000/10,000 children from these hypothetical CPU/RAM tiers without benchmark evidence. OCI Paid account does not automatically resize VMs; source metrics and owner-approved upgrade are required.
+
+## 16. India-first legal, resilient SOS, DR and sustainable economics architecture gate
+
+**Do not turn design into collection authority.** For Indian children under 18, the DPDP Act s.9/Rules 10 and 12 real-time-safety exception cannot safely be presumed for app usage, historical routes and general parental surveillance; the child-related provisions have phased commencement about May 2027, subject to Gazette interpretation. India publisher, guardian verification, each processing purpose, OCI Chicago US transfers, data residency, consent and retention require signed independent legal review. [Primary source gate](INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md).
+
+**Default database/API policy:** deny real-child ingestion unless purpose-level legal feature flag is signed and parent authority verified; sample raw 14d/derived 90d/audit 365d/backup 30d are **not approved**; usage tracking OFF for real minors pending counsel. Child-specific guardian inviting/revocation by verified owner only is a **draft policy**, not final owner answer.
+
+**M1 login candidate:** Google Sign-In + Android Credential Manager + verified backend Google ID token; no assumption Google account proves adulthood/legal parent. Managed DPC and API/OEM acceptance blocked until real hardware and resettable owner-approved spare are available.
+
+**M2 safety:** FCM acceptance != guardian ACK. [SOS fallback](SOS_ESCALATION_AND_INDEPENDENT_DELIVERY_DESIGN.md) requires explicit acknowledgement, bounded SMS escalation when chosen/funded, failure-domain independence, no false emergency guarantee. Current safe MVP language: best-effort check-in.
+
+**Resilience:** [OCI recovery targets](OCI_CHICAGO_RECOVERY_AND_PILOT_READINESS.md) define synthetic dev 24h/48h, real-child pilot 4h/12h and paid prod 1h/4h candidate RPO/RTO **not proven**; one Always Free VM is a single point of failure.
+
+**Finances/staff:** Current proposed consumer price ₹50/month or ₹500/year (₹149 historic analysis). [Break-even and staffing](PRICE_BREAK_EVEN_STAFFING_AND_DELIVERY_CAPACITY.md) shows 1,000 child seats cannot prove sustainability or fund full professional team/HA. Assign Android parent/child, C++ backend, independent QA, security, legal, OCI operator, customer support and real cash budget before paid pilot. Blocker tracking: [owner register](BLOCKERS_AND_OWNER_DECISIONS.md).
+
