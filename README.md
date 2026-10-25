@@ -57,3 +57,7 @@ Additional implementation and release references:
 - [Android 10–16 compatibility test matrix](docs/ANDROID_COMPATIBILITY_MATRIX.md)
 - [Draft machine-readable OpenAPI contract](docs/openapi.yaml)
 - [Subscription and terms disclosure template](docs/TERMS_AND_SUBSCRIPTIONS_DRAFT.md)
+
+## Route tracking, named places and stop detection
+
+See [Live Trip Route, Named Places and Battery Specification](docs/LIVE_TRIP_ROUTE_NAMED_PLACES_BATTERY_SPECIFICATION.md) for the implementation design: parent-titled address markers, live map, raw GPS route polylines, multi-stop trip timeline, motion-aware low-battery collection, phone/tablet/Wear OS support, conditional Google Roads matching and device verification. This is a **proposed** implementation; no hardware tests have been executed.
