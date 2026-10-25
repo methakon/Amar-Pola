@@ -481,7 +481,7 @@ An annual budget is **not always 12 times the biggest final-month VM**. If the s
 | Q1 | 1,000 / PAYG 4/24 | ₹199 | ₹596 | ₹3,238 | ₹9,715 |
 | Q2 | 2,500 / PAYG 6/36 | ₹3,232 | ₹9,695 | ₹9,878 | ₹29,634 |
 | Q3 | 5,000 / PAYG 8/48 | ₹6,889 | ₹20,668 | ₹20,267 | ₹60,801 |
-| Q4 | 10,000 / PAYG 12/72 | ₹14,683 | ₹44,049 | ₹42,620 | ₹1,27,861 |
+| Q4 | 10,000 / PAYG 12/72 | ₹14,683 | ₹44,050 | ₹42,620 | ₹1,27,860 |
 | **Total first 12 months** | *Staged hypothetical growth* | — | **₹75,009** | — | **₹2,28,011** |
 
 Values are calculated using the unrounded rate formulas and rounded for display; the displayed per-quarter rounded values may differ by ₹1 on summation. The budget allocation includes **unused reserves** and is not a predicted OCI invoice. A real year may have different growth timing, partially utilized machines, retained excess backups or overlapping old/new VM deployments during migration. Those materially change the cumulative spend.
