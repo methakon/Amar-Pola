@@ -1,9 +1,9 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "Amar-Pola Parent/Device API",
+    "title": "Madalasa–Alarka Parent/Device API",
     "version": "1.0.0-draft",
-    "description": "IMPLEMENTATION DESIGN ONLY. Every parent endpoint enforces live child-scoped grants and family auth, in addition to ParentBearer. Every device endpoint binds deviceId to enrolled device credential. Deferred media and experimental corridor APIs are intentionally excluded from launch."
+    "description": "IMPLEMENTATION DESIGN ONLY. Every parent endpoint enforces live child-scoped grants and family auth, in addition to ParentBearer. Every device endpoint binds deviceId to enrolled device credential. Deferred media and experimental corridor APIs are intentionally excluded from launch.\n\nProduct display names: Madalasa (guardian Android app), Alarka (child Android companion). The GitHub repo is Madalasa-Alarka. Naming does not change API paths, auth audiences or package IDs; legal under-18 gates remain required."
   },
   "servers": [
     {
@@ -5579,5 +5579,10 @@
         ]
       }
     }
+  },
+  "x-product-apps": {
+    "guardian": "Madalasa",
+    "child": "Alarka",
+    "repo": "methakon/Madalasa-Alarka"
   }
 }

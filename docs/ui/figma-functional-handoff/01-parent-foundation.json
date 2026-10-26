@@ -4,7 +4,7 @@
     "milestone": "M1",
     "fr": "FR-001/041",
     "type": "auth",
-    "hero": "Family safety, transparently",
+    "hero": "Welcome to Madalasa: family safety with transparency",
     "ui": "Parent or Child entry; privacy, support and language links",
     "action": "Start parent setup",
     "api": "Local navigation; no API before user action",
@@ -13,14 +13,16 @@
     "accept": "Both paths available; no child record created here.",
     "id": "P-01",
     "actor": "Parent",
-    "phase": "Foundation"
+    "phase": "Foundation",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Sign in",
     "milestone": "M1",
     "fr": "FR-001",
     "type": "auth",
-    "hero": "Welcome back",
+    "hero": "Sign in to Madalasa",
     "ui": "Email sign-in area; Google identity button; recovery link",
     "action": "Continue with Google",
     "api": "Android Credential Manager then verified parent OIDC session",
@@ -29,7 +31,9 @@
     "accept": "Canceled sign-in leaves user logged out; server verifies issuer and audience.",
     "id": "P-02",
     "actor": "Parent",
-    "phase": "Foundation"
+    "phase": "Foundation",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Create account",
@@ -45,7 +49,9 @@
     "accept": "Family created only once after verified principal.",
     "id": "P-03",
     "actor": "Parent",
-    "phase": "Foundation"
+    "phase": "Foundation",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Google account handoff",
@@ -61,7 +67,9 @@
     "accept": "Separate verification pending state, no family data leaked.",
     "id": "P-04",
     "actor": "Parent",
-    "phase": "Foundation"
+    "phase": "Foundation",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Home dashboard",
@@ -77,7 +85,9 @@
     "accept": "Stale badge and unknown position shown accurately.",
     "id": "P-05",
     "actor": "Parent",
-    "phase": "Foundation"
+    "phase": "Foundation",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "My children",
@@ -93,7 +103,9 @@
     "accept": "Foreign/ungranted child never appears in list.",
     "id": "P-06",
     "actor": "Parent",
-    "phase": "Foundation"
+    "phase": "Foundation",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Child details",
@@ -109,14 +121,16 @@
     "accept": "Capability and last contact separate, no fabricated live claim.",
     "id": "P-07",
     "actor": "Parent",
-    "phase": "Foundation"
+    "phase": "Foundation",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Install child app",
     "milestone": "M1",
     "fr": "FR-001/002",
     "type": "wizard",
-    "hero": "Step 1 of 6 • Installation",
+    "hero": "Install Alarka on the child's Android phone",
     "ui": "On child's phone install app; open visible setup; check OS",
     "action": "Continue to pairing",
     "api": "Local onboarding wizard then capability precheck",
@@ -125,14 +139,16 @@
     "accept": "Instructions include clear return-to-parent step.",
     "id": "P-08",
     "actor": "Parent",
-    "phase": "Foundation"
+    "phase": "Foundation",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Pair child device",
     "milestone": "M1",
     "fr": "FR-001",
     "type": "code",
-    "hero": "Step 2 of 6 • Secure pairing",
+    "hero": "Pair the Alarka companion securely",
     "ui": "One-time code; QR optional; 10-min expiry countdown",
     "action": "Generate new code",
     "api": "POST /children/{childId}/pairing-codes; signed enrollment proof",
@@ -141,7 +157,9 @@
     "accept": "ACTIVE device only after valid Keystore proof.",
     "id": "P-09",
     "actor": "Parent",
-    "phase": "Foundation"
+    "phase": "Foundation",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Data-purpose review",
@@ -157,7 +175,9 @@
     "accept": "Checkbox never substitutes for lawful parental verification.",
     "id": "P-10",
     "actor": "Parent",
-    "phase": "Foundation"
+    "phase": "Foundation",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Parent permission coach",
@@ -173,7 +193,9 @@
     "accept": "Only fresh child report marks a permission granted.",
     "id": "P-11",
     "actor": "Parent",
-    "phase": "Foundation"
+    "phase": "Foundation",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Location permission walkthrough",
@@ -189,7 +211,9 @@
     "accept": "Never mark enabled based only on opened settings.",
     "id": "P-12",
     "actor": "Parent",
-    "phase": "Foundation"
+    "phase": "Foundation",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Battery settings walkthrough",
@@ -205,7 +229,9 @@
     "accept": "Parent shows observed setting and stale/unknown if unavailable.",
     "id": "P-13",
     "actor": "Parent",
-    "phase": "Foundation"
+    "phase": "Foundation",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Setup/device verification",
@@ -221,7 +247,9 @@
     "accept": "PASS/PENDING/FAILED shown with actual timestamps.",
     "id": "P-14",
     "actor": "Parent",
-    "phase": "Foundation"
+    "phase": "Foundation",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Travel history overview",
@@ -237,7 +265,9 @@
     "accept": "No invented paths or 'precise road' guess.",
     "id": "P-15",
     "actor": "Parent",
-    "phase": "Foundation"
+    "phase": "Foundation",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Guardian management",
@@ -253,7 +283,9 @@
     "accept": "Revoked access invalidates SSE/cache/recipient lists.",
     "id": "P-16",
     "actor": "Parent",
-    "phase": "Foundation"
+    "phase": "Foundation",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Alerts and check-ins",
@@ -269,7 +301,9 @@
     "accept": "Child and parent statuses match server evidence.",
     "id": "P-17",
     "actor": "Parent",
-    "phase": "Foundation"
+    "phase": "Foundation",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Plans and app settings",
@@ -285,6 +319,8 @@
     "accept": "No seats granted until verified paid state.",
     "id": "P-18",
     "actor": "Parent",
-    "phase": "Foundation"
+    "phase": "Foundation",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   }
 ]

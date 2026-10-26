@@ -1,4 +1,4 @@
-// Amar-Pola Figma functional handoff renderer.
+// Madalasa & Alarka Figma functional handoff renderer.
 // Used by connected Figma Plugin API, NOT ordinary browser JS.
 // __SCREEN_DATA__ replaced with JSON array; __BAND_Y__ replaced with screen start-Y.
 // Assumes active Figma file has page 6:2, reusable CTA component 8:7, status 8:9.

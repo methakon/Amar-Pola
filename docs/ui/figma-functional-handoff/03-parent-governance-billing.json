@@ -13,7 +13,9 @@
     "accept": "STANDARD remains usable and managed features disabled.",
     "id": "P-37",
     "actor": "Parent",
-    "phase": "Governance"
+    "phase": "Governance",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Device provenance and handoff",
@@ -29,7 +31,9 @@
     "accept": "Conflict visible; cannot merge sources as certainty.",
     "id": "P-38",
     "actor": "Parent",
-    "phase": "Governance"
+    "phase": "Governance",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Guardian invitation",
@@ -45,7 +49,9 @@
     "accept": "No granted access until accepted and verified.",
     "id": "P-39",
     "actor": "Parent",
-    "phase": "Governance"
+    "phase": "Governance",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Guardian grant detail",
@@ -61,7 +67,9 @@
     "accept": "Revocation blocks subsequent child-specific reads.",
     "id": "P-40",
     "actor": "Parent",
-    "phase": "Governance"
+    "phase": "Governance",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Access ledger",
@@ -77,7 +85,9 @@
     "accept": "Unauthorized principal cannot read ledger.",
     "id": "P-41",
     "actor": "Parent",
-    "phase": "Governance"
+    "phase": "Governance",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Retention settings",
@@ -93,7 +103,9 @@
     "accept": "No invented policy promises; legal signoff required.",
     "id": "P-42",
     "actor": "Parent",
-    "phase": "Governance"
+    "phase": "Governance",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Data access/export",
@@ -109,7 +121,9 @@
     "accept": "Download expires; event audited without leaking payload.",
     "id": "P-43",
     "actor": "Parent",
-    "phase": "Governance"
+    "phase": "Governance",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Account and child deletion",
@@ -125,7 +139,9 @@
     "accept": "Erasure cannot be undone by later restored database.",
     "id": "P-44",
     "actor": "Parent",
-    "phase": "Governance"
+    "phase": "Governance",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Support diagnostics",
@@ -141,7 +157,9 @@
     "accept": "Sentinel private data absent from export and logs.",
     "id": "P-45",
     "actor": "Parent",
-    "phase": "Governance"
+    "phase": "Governance",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Capability before purchase",
@@ -157,7 +175,9 @@
     "accept": "Unsupported clearly labeled before Play checkout.",
     "id": "P-46",
     "actor": "Parent",
-    "phase": "Governance"
+    "phase": "Governance",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Family seats",
@@ -173,7 +193,9 @@
     "accept": "Assignments cannot exceed verified seats.",
     "id": "P-47",
     "actor": "Parent",
-    "phase": "Governance"
+    "phase": "Governance",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Checkout review",
@@ -189,7 +211,9 @@
     "accept": "No entitlement until verified PURCHASED token.",
     "id": "P-48",
     "actor": "Parent",
-    "phase": "Governance"
+    "phase": "Governance",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Subscription status",
@@ -205,7 +229,9 @@
     "accept": "No double seats or fake renewal completion.",
     "id": "P-49",
     "actor": "Parent",
-    "phase": "Governance"
+    "phase": "Governance",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Notification and quiet hours",
@@ -221,7 +247,9 @@
     "accept": "High priority and low priority separately handled.",
     "id": "P-50",
     "actor": "Parent",
-    "phase": "Governance"
+    "phase": "Governance",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Battery/coverage profiles",
@@ -237,7 +265,9 @@
     "accept": "Last observation age stays explicit in Eco mode.",
     "id": "P-51",
     "actor": "Parent",
-    "phase": "Governance"
+    "phase": "Governance",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Server outage/recovery",
@@ -253,7 +283,9 @@
     "accept": "Shows UNAVAILABLE instead of invented online status.",
     "id": "P-52",
     "actor": "Parent",
-    "phase": "Governance"
+    "phase": "Governance",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Permission-change notice",
@@ -269,7 +301,9 @@
     "accept": "Unknown differs from DENIED, parent can recheck.",
     "id": "P-53",
     "actor": "Parent",
-    "phase": "Governance"
+    "phase": "Governance",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Cancel/manage subscription",
@@ -285,6 +319,8 @@
     "accept": "Clear separate deletion and cancellation journeys.",
     "id": "P-54",
     "actor": "Parent",
-    "phase": "Governance"
+    "phase": "Governance",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   }
 ]

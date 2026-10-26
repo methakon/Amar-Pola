@@ -4,7 +4,7 @@
     "milestone": "M1",
     "fr": "FR-002/041",
     "type": "auth",
-    "hero": "Visible child companion app",
+    "hero": "Welcome to Alarka, the transparent child companion",
     "ui": "Install disclosure; what it does; setup is not hidden",
     "action": "Begin setup",
     "api": "Local onboarding state; no sensors until legal and OS grants",
@@ -13,7 +13,9 @@
     "accept": "Accessible monitoring information always available.",
     "id": "C-01",
     "actor": "Child",
-    "phase": "Child App"
+    "phase": "Child App",
+    "app_display_name": "Alarka",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Child transparency disclosure",
@@ -29,14 +31,16 @@
     "accept": "No hidden monitoring scope and last verified snapshot indicated.",
     "id": "C-02",
     "actor": "Child",
-    "phase": "Child App"
+    "phase": "Child App",
+    "app_display_name": "Alarka",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Enter pairing code",
     "milestone": "M1",
     "fr": "FR-001",
     "type": "code",
-    "hero": "Connect to verified parent securely",
+    "hero": "Pair Alarka with the verified Madalasa guardian",
     "ui": "Code entry; QR optional; single-use notice; expiry countdown",
     "action": "Pair securely",
     "api": "POST /enrollment code, P-256 public key SPKI",
@@ -45,7 +49,9 @@
     "accept": "Rejected code cannot create active device.",
     "id": "C-03",
     "actor": "Child",
-    "phase": "Child App"
+    "phase": "Child App",
+    "app_display_name": "Alarka",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Keystore proof in progress",
@@ -61,7 +67,9 @@
     "accept": "Only valid signature yields bound device token.",
     "id": "C-04",
     "actor": "Child",
-    "phase": "Child App"
+    "phase": "Child App",
+    "app_display_name": "Alarka",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Guardian authority review",
@@ -77,7 +85,9 @@
     "accept": "No real under-18 telemetry until signed legal gate.",
     "id": "C-05",
     "actor": "Child",
-    "phase": "Child App"
+    "phase": "Child App",
+    "app_display_name": "Alarka",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Child permission overview",
@@ -93,7 +103,9 @@
     "accept": "Settings recheck onResume, no assumed success.",
     "id": "C-06",
     "actor": "Child",
-    "phase": "Child App"
+    "phase": "Child App",
+    "app_display_name": "Alarka",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Location Settings guide",
@@ -109,7 +121,9 @@
     "accept": "No GPS collected until all required gates pass.",
     "id": "C-07",
     "actor": "Child",
-    "phase": "Child App"
+    "phase": "Child App",
+    "app_display_name": "Alarka",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Notification Settings guide",
@@ -125,7 +139,9 @@
     "accept": "Reported notification status matches device truth.",
     "id": "C-08",
     "actor": "Child",
-    "phase": "Child App"
+    "phase": "Child App",
+    "app_display_name": "Alarka",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Battery & background guide",
@@ -141,7 +157,9 @@
     "accept": "Timings remain best-effort, status accurate.",
     "id": "C-09",
     "actor": "Child",
-    "phase": "Child App"
+    "phase": "Child App",
+    "app_display_name": "Alarka",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Usage Access (disabled)",
@@ -157,7 +175,9 @@
     "accept": "No actual usage data collected in initial minor pilot.",
     "id": "C-10",
     "actor": "Child",
-    "phase": "Child App"
+    "phase": "Child App",
+    "app_display_name": "Alarka",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Managed DPC setup",
@@ -173,7 +193,9 @@
     "accept": "Never mark managed without OS device owner confirmation.",
     "id": "C-11",
     "actor": "Child",
-    "phase": "Child App"
+    "phase": "Child App",
+    "app_display_name": "Alarka",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Monitoring center",
@@ -189,7 +211,9 @@
     "accept": "Disclosure correctly reflects actual enabled categories.",
     "id": "C-12",
     "actor": "Child",
-    "phase": "Child App"
+    "phase": "Child App",
+    "app_display_name": "Alarka",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Child device health",
@@ -205,7 +229,9 @@
     "accept": "No false fresh state from stale heartbeat.",
     "id": "C-13",
     "actor": "Child",
-    "phase": "Child App"
+    "phase": "Child App",
+    "app_display_name": "Alarka",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Encrypted offline queue",
@@ -221,7 +247,9 @@
     "accept": "No duplicate server record and no fake successful send.",
     "id": "C-14",
     "actor": "Child",
-    "phase": "Child App"
+    "phase": "Child App",
+    "app_display_name": "Alarka",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Child quick check-in",
@@ -237,7 +265,9 @@
     "accept": "Human ACK shown separately from server acceptance.",
     "id": "C-15",
     "actor": "Child",
-    "phase": "Child App"
+    "phase": "Child App",
+    "app_display_name": "Alarka",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "SOS status and manual call",
@@ -253,7 +283,9 @@
     "accept": "Visible honest pending state, never fake guardian notified.",
     "id": "C-16",
     "actor": "Child",
-    "phase": "Child App"
+    "phase": "Child App",
+    "app_display_name": "Alarka",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Access withdrawn",
@@ -269,7 +301,9 @@
     "accept": "Server denies revoked principal even across restore.",
     "id": "C-17",
     "actor": "Child",
-    "phase": "Child App"
+    "phase": "Child App",
+    "app_display_name": "Alarka",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Child settings & appearance",
@@ -285,7 +319,9 @@
     "accept": "Privacy notice available regardless of selected theme.",
     "id": "C-18",
     "actor": "Child",
-    "phase": "Child App"
+    "phase": "Child App",
+    "app_display_name": "Alarka",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Managed rule status",
@@ -301,7 +337,9 @@
     "accept": "UI reports actual OS outcome, not requested command status.",
     "id": "C-19",
     "actor": "Child",
-    "phase": "Child App"
+    "phase": "Child App",
+    "app_display_name": "Alarka",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Optional media capture request",
@@ -317,7 +355,9 @@
     "accept": "Default DISABLED, no automatic hidden recording.",
     "id": "C-20",
     "actor": "Child",
-    "phase": "Child App"
+    "phase": "Child App",
+    "app_display_name": "Alarka",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Secure re-enrollment",
@@ -333,6 +373,8 @@
     "accept": "New credential created only after verified new owner pairing.",
     "id": "C-21",
     "actor": "Child",
-    "phase": "Child App"
+    "phase": "Child App",
+    "app_display_name": "Alarka",
+    "project_display_name": "Madalasa & Alarka"
   }
 ]

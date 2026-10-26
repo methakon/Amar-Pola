@@ -13,7 +13,9 @@
     "accept": "Read/ack state persisted with verified actor and UTC.",
     "id": "P-19",
     "actor": "Parent",
-    "phase": "Operations"
+    "phase": "Operations",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Alert detail",
@@ -29,7 +31,9 @@
     "accept": "Confidence and staleness explicitly visible.",
     "id": "P-20",
     "actor": "Parent",
-    "phase": "Operations"
+    "phase": "Operations",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Reliability Center",
@@ -45,7 +49,9 @@
     "accept": "No false live status and actionable distinct causes.",
     "id": "P-21",
     "actor": "Parent",
-    "phase": "Operations"
+    "phase": "Operations",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Map evidence legend",
@@ -61,7 +67,9 @@
     "accept": "Accessible map colors and legend agree.",
     "id": "P-22",
     "actor": "Parent",
-    "phase": "Operations"
+    "phase": "Operations",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Travel day selector",
@@ -77,7 +85,9 @@
     "accept": "Trip boundaries match event-time processing.",
     "id": "P-23",
     "actor": "Parent",
-    "phase": "Operations"
+    "phase": "Operations",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Trip detail",
@@ -93,7 +103,9 @@
     "accept": "Renders unknown segments separately.",
     "id": "P-24",
     "actor": "Parent",
-    "phase": "Operations"
+    "phase": "Operations",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Trip revision history",
@@ -109,7 +121,9 @@
     "accept": "Revision reason and timestamp shown.",
     "id": "P-25",
     "actor": "Parent",
-    "phase": "Operations"
+    "phase": "Operations",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Named places list",
@@ -125,7 +139,9 @@
     "accept": "Saved data stored with verified family and child.",
     "id": "P-26",
     "actor": "Parent",
-    "phase": "Operations"
+    "phase": "Operations",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Add named place",
@@ -141,7 +157,9 @@
     "accept": "Place saved once; map clearly approximate.",
     "id": "P-27",
     "actor": "Parent",
-    "phase": "Operations"
+    "phase": "Operations",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Place-alert configuration",
@@ -157,7 +175,9 @@
     "accept": "No repeated alarm storm on jitter.",
     "id": "P-28",
     "actor": "Parent",
-    "phase": "Operations"
+    "phase": "Operations",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Commute planner",
@@ -173,7 +193,9 @@
     "accept": "Window and confidence gates tested.",
     "id": "P-29",
     "actor": "Parent",
-    "phase": "Operations"
+    "phase": "Operations",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Commute confidence",
@@ -189,7 +211,9 @@
     "accept": "Unknown separated from confirmed arrival.",
     "id": "P-30",
     "actor": "Parent",
-    "phase": "Operations"
+    "phase": "Operations",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Usage overview (gated)",
@@ -205,7 +229,9 @@
     "accept": "No real usage records collected by default.",
     "id": "P-31",
     "actor": "Parent",
-    "phase": "Operations"
+    "phase": "Operations",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "App usage detail (gated)",
@@ -221,7 +247,9 @@
     "accept": "Missing intervals visibly excluded.",
     "id": "P-32",
     "actor": "Parent",
-    "phase": "Operations"
+    "phase": "Operations",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Remote commands",
@@ -237,7 +265,9 @@
     "accept": "Display queued, delivered, completed separately.",
     "id": "P-33",
     "actor": "Parent",
-    "phase": "Operations"
+    "phase": "Operations",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Find device request",
@@ -253,7 +283,9 @@
     "accept": "Never show ring succeeded without device receipt.",
     "id": "P-34",
     "actor": "Parent",
-    "phase": "Operations"
+    "phase": "Operations",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Managed screen-time rules",
@@ -269,7 +301,9 @@
     "accept": "No critical app suspended; revert possible.",
     "id": "P-35",
     "actor": "Parent",
-    "phase": "Operations"
+    "phase": "Operations",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   },
   {
     "title": "Rule preview and rollback",
@@ -285,6 +319,8 @@
     "accept": "Preview matches execution; rollback restores harmless app.",
     "id": "P-36",
     "actor": "Parent",
-    "phase": "Operations"
+    "phase": "Operations",
+    "app_display_name": "Madalasa",
+    "project_display_name": "Madalasa & Alarka"
   }
 ]

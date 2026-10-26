@@ -1,9 +1,9 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "Amar-Pola M1 Secure Foundation API",
+    "title": "Madalasa–Alarka M1 Secure Foundation API",
     "version": "1.0.0-m1-draft",
-    "description": "M1 only. Synthetic test identities. All ParentOIDC operations require live family + child-specific scope. Device token must match path identity and be bound to Android Keystore key proof. A Google ID token is not legal guardian evidence."
+    "description": "M1 only. Synthetic test identities. All ParentOIDC operations require live family + child-specific scope. Device token must match path identity and be bound to Android Keystore key proof. A Google ID token is not legal guardian evidence.\n\nProduct display names: Madalasa (guardian Android app), Alarka (child Android companion). The GitHub repo is Madalasa-Alarka. Naming does not change API paths, auth audiences or package IDs; legal under-18 gates remain required."
   },
   "servers": [
     {
@@ -2067,5 +2067,10 @@
         }
       }
     }
+  },
+  "x-product-apps": {
+    "guardian": "Madalasa",
+    "child": "Alarka",
+    "repo": "methakon/Madalasa-Alarka"
   }
 }
