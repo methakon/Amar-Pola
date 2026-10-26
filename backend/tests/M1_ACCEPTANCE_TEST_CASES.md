@@ -1,4 +1,6 @@
-# Amar-Pola — M1 Executable Acceptance Cases (T-M1-01–14)
+# Madalasa–Alarka — M1 Executable Acceptance Cases (T-M1-01–14)
+
+> **Current app roles:** **Madalasa** = parent/guardian Android app; **Alarka** = child device companion. Canonical GitHub repository: https://github.com/methakon/Madalasa-Alarka. Test IDs, synthetic family names and M1 API routes are unchanged by the brand rename.
 
 **Scope:** canonical [M1 plan](../../docs/MASTER_MILESTONE_IMPLEMENTATION_AND_RELEASE_PLAN.md) and [M1-only OpenAPI](../../docs/openapi-m1.yaml). 
 **Status:** TEST CASES WRITTEN, **NOT EXECUTED on Android or running C++ APIs**; SQL isolation test runs when PostgreSQL CI is available.
