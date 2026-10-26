@@ -1,6 +1,8 @@
 # Feature Feasibility Conditions
 
-**Project:** Amar-Pola  
+> **Current product naming:** **Madalasa** parent/guardian app, **Alarka** child companion; GitHub repository [Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka). [Brand and Markandeya Purana context](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
+
+**Project:** Madalasa–Alarka  
 **Date:** 2026-10-25  
 **Status:** Documentation review; no device tests completed
 
@@ -81,7 +83,7 @@ The following paragraphs separate **why technically possible**, **why limited**,
 
 ### D. File access
 
-- **Why partially feasible:** App-private content belonging to Amar-Pola and files/documents selected through Android-approved system interfaces can be accessed.
+- **Why partially feasible:** App-private content belonging to Madalasa–Alarka and files/documents selected through Android-approved system interfaces can be accessed.
 - **Why limited:** Scoped storage isolates other applications and protected directories. A user's intent to grant access does not itself defeat the OS sandbox.
 - **Conditions:** Use Storage Access Framework/MediaStore according to the resource type; persist only permitted URI grants; handle revocation; limit listing to explicit allowed roots and minimize uploads.
 - **Fallback:** Explain “access not granted” or “protected by Android”.

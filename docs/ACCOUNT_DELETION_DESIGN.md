@@ -1,13 +1,15 @@
 # Account and Data Deletion: Functional and Technical Design
 
-**Amar-Pola | Draft 2026-10-25 | Not yet implemented**
+> **Current product naming:** **Madalasa** parent/guardian app, **Alarka** child companion; GitHub repository [Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka). [Brand and Markandeya Purana context](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
+
+**Madalasa–Alarka | Draft 2026-10-25 | Not yet implemented**
 
 This document describes **mandatory planned behavior** for the parent app's account deletion path, a public account-deletion web entry point, child unpairing, retention and optional Drive data. Do not publish a deletion URL or claim deletion capabilities until the service exists.
 
 ## 1. Product requirements
 
 - A signed-in parent can access `Settings > Account > Delete account` or a clear equivalent.
-- An unauthenticated former user can request deletion from a public, identifiable web page without reinstalling Amar-Pola.
+- An unauthenticated former user can request deletion from a public, identifiable web page without reinstalling Madalasa–Alarka.
 - The service shall provide identity verification proportional to the deletion risk, without demanding that a user restore access to the deleted app.
 - The page explains which data will be deleted, which could legally be retained and how long, and how subscriptions are canceled.
 - Deletion of an account revokes linked device credentials, stops new telemetry ingestion, revokes delegated backend integration access where feasible, deletes or schedules erasure of attached historical data, and records minimal auditable request state.
@@ -58,9 +60,9 @@ Access revocation is immediate once authorized; data deletion may be asynchronou
 
 ## 5. Public request page content — draft
 
-**Title:** Request deletion of your Amar-Pola account
+**Title:** Request deletion of your Madalasa–Alarka account
 
-“Use this page to request deletion of your Amar-Pola parent account and associated information, including paired devices, location history and app-usage reports. We may need to verify account ownership before acting. Some transaction or security records may be retained where legally required; see our Privacy Policy for the exact categories and periods.
+“Use this page to request deletion of your Madalasa–Alarka parent account and associated information, including paired devices, location history and app-usage reports. We may need to verify account ownership before acting. Some transaction or security records may be retained where legally required; see our Privacy Policy for the exact categories and periods.
 
 If you have an active subscription through Google Play, follow the Play subscription cancellation process. Account deletion and subscription cancellation are separate actions. [SUPPORT CONTACT] can help with access or deletion requests.”
 

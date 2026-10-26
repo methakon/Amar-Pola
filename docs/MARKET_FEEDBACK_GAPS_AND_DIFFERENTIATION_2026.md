@@ -1,4 +1,6 @@
-# Amar-Pola — Competitor Feedback, Product Differentiation and Feasibility Research
+# Madalasa–Alarka — Competitor Feedback, Product Differentiation and Feasibility Research
+
+> **Current product naming:** **Madalasa** parent/guardian app, **Alarka** child companion; GitHub repository [Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka). [Brand and Markandeya Purana context](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 **Date:** 2026-10-25  
 **Version:** 1.0 — research and proposals  
@@ -31,7 +33,7 @@ Sources used: official Google Play listings and selected displayed Play reviews,
 | Bark | Alert-centric content risk model | Safety alerts, app/site rules, location alerts/check-ins and driving summaries |
 | Google Family Link | Free standard baseline | App approvals/limits, school time, location alerts, device and content rules |
 
-**Correction to simplistic novelty claims:** SOS, driving summaries, geofences, rewards, co-parenting, extra-time requests and app scheduling are already represented in this competitive set. They are important **table stakes**, not stand-alone Amar-Pola innovations.
+**Correction to simplistic novelty claims:** SOS, driving summaries, geofences, rewards, co-parenting, extra-time requests and app scheduling are already represented in this competitive set. They are important **table stakes**, not stand-alone Madalasa–Alarka innovations.
 
 ## 3. Voice-of-customer evidence: pain point -> product response
 
@@ -81,7 +83,7 @@ Sources used: official Google Play listings and selected displayed Play reviews,
 
 ## 4. Product differentiation: candidate features
 
-**Main insight:** Amar-Pola may differentiate through **trustworthy outputs, quality indicators, and family privacy**, not through claims competitors definitively lack these features. This is especially defensible because Amar-Pola's C++/PostGIS route analysis is already being designed.
+**Main insight:** Madalasa–Alarka may differentiate through **trustworthy outputs, quality indicators, and family privacy**, not through claims competitors definitively lack these features. This is especially defensible because Madalasa–Alarka's C++/PostGIS route analysis is already being designed.
 
 | ID | Differentiation candidate | Presence in reviewed competitive sources | Engineering feasibility | Value | Relative difficulty |
 |---|---|---|---|---|---|
@@ -274,7 +276,7 @@ None of the above is proven unavailable in every competing app. "Unique" here me
 
 ## 7. Competitive confirmation matrix (do not claim exclusivity)
 
-| Feature class | Already clearly advertised by competitors? | Honest Amar-Pola comparison |
+| Feature class | Already clearly advertised by competitors? | Honest Madalasa–Alarka comparison |
 |---|---|---|
 | Basic location/places/route | YES | Match baseline; better transparent quality if proven |
 | SOS and check-in | YES | Table stakes; avoid calling unique |
@@ -350,13 +352,13 @@ Guard all endpoints with OIDC parent/device authentication and child-specific gr
 6. **POLICY:** Play monitoring metadata, notification identity, background-location disclosure and approved scope.
 7. **RELEASE:** ship only features with measured acceptance and accurate listing claims.
 
-## 12. Incremental effort and difficulty above the current Amar-Pola proposal
+## 12. Incremental effort and difficulty above the current Madalasa–Alarka proposal
 
 ### 12.1 Estimation basis: what we are and are NOT estimating
 
 **Baseline assumed already implemented for estimating the delta:** secure parent/child pairing and scoped family access; C++ Drogon ingestion and reconstruction workers; PostgreSQL/PostGIS with raw location events, trips, stops, named places, late event handling and basic audit; Android permission-compliant adaptive location collection plus encrypted local queue; parent Maps UI/history; usage statistics; capability reporting; and the planned subscription and supported managed-device policy foundations described in the existing SRS and architecture specifications.
 
-**Critical:** As of this report date, those baseline components are **proposed, not implemented**. The values below estimate **incremental engineering work once their baseline dependencies exist**, NOT the end-to-end cost of building Amar-Pola from its current documentation-only state. Building the baseline itself is additional work.
+**Critical:** As of this report date, those baseline components are **proposed, not implemented**. The values below estimate **incremental engineering work once their baseline dependencies exist**, NOT the end-to-end cost of building Madalasa–Alarka from its current documentation-only state. Building the baseline itself is additional work.
 
 - **Unit:** *engineering person-days* (EPD), roughly one focused 8-hour developer-day; **not elapsed calendar days** and **not a delivery commitment**.
 - **Included:** design refinement, backend/Android/parent UI coding as relevant, migrations, automated unit/integration tests, and focused functional QA.
@@ -438,7 +440,7 @@ Guard all endpoints with OIDC parent/device authentication and child-specific gr
 ### Original five Google Play products and excerpts
 1. Findmykids Google Play: https://play.google.com/store/apps/details?id=org.findmykids.app — examples of slow/no updates, place alert difficulties and subscription concerns (review dates include September 2026). Other app users report successful tracking; not a quantified failure rate.
 2. Family Locator Play: https://play.google.com/store/apps/details?id=com.sygic.familywhere.android — consent-based circle model; comments dated May 2026 about cancellation/trial friction; historical package ID no longer names Sygic publisher.
-3. Pinardin Play: https://play.google.com/store/apps/details?id=com.pinaidea.pinaguardian.parent — marketed remote media and screen claims, not Android capability proof. A review asks to conceal screen recording notification, which is not something Amar-Pola should implement.
+3. Pinardin Play: https://play.google.com/store/apps/details?id=com.pinaidea.pinaguardian.parent — marketed remote media and screen claims, not Android capability proof. A review asks to conceal screen recording notification, which is not something Madalasa–Alarka should implement.
 4. FamiSafe Play: https://play.google.com/store/apps/details?id=com.wondershare.famisafe — January 2026 example of too many YouTube alerts and missing time-used quota indicator; provider markets screen-time/location.
 5. Kids360 Play: https://play.google.com/store/apps/details?id=app.kids360.parent — August/September 2026 examples of false offline, schedule enforcement inconsistency and location map faults.
 

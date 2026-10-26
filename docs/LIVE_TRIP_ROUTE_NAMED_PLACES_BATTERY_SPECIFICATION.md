@@ -1,6 +1,8 @@
 # Live Trip Tracking, Road Route Reconstruction, Named Places and Battery Optimization
 
-**Project:** Amar-Pola  
+> **Current product naming:** **Madalasa** parent/guardian app, **Alarka** child companion; GitHub repository [Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka). [Brand and Markandeya Purana context](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
+
+**Project:** Madalasa–Alarka  
 **Revision:** 1.0 (design specification)  
 **Date:** 2026-10-25  
 **Status:** Proposed implementation; NOT device-tested or Play-approved  
@@ -203,7 +205,7 @@ Process:
 6. Fall back to raw line if match fails or quotas/policy prevent use.
 7. Draw road-matched geometry **only on a Google Map** and follow provider attribution and restrictions.
 
-**Provider legal caution:** Google Roads API content is subject to storage/caching restrictions, and **asset tracking applications may require a separate asset-tracking license**. Verify the Maps Platform terms and any necessary license *before* using road matching for Amar-Pola. Do not persist Roads-derived geometry beyond what a specific permitted agreement authorizes. The source GPS events are Amar-Pola observations with their own consent/retention obligations; keep them distinct from provider map content.
+**Provider legal caution:** Google Roads API content is subject to storage/caching restrictions, and **asset tracking applications may require a separate asset-tracking license**. Verify the Maps Platform terms and any necessary license *before* using road matching for Madalasa–Alarka. Do not persist Roads-derived geometry beyond what a specific permitted agreement authorizes. The source GPS events are Madalasa–Alarka observations with their own consent/retention obligations; keep them distinct from provider map content.
 
 ### 6.3 Do not use Google Directions/Routes as historical proof
 
@@ -335,7 +337,7 @@ Measure incremental drain relative to app-disabled baseline, not only absolute A
 - Parent map markers and polyline rendering use Maps SDK; child tracking does not use Maps tiles.
 - Places Autocomplete only when parent types; avoid unnecessary details requests.
 - Roads API only on qualified trip/segment, **not for every newly arriving point**, with quotas, cost ceilings and license review.
-- Cache Amar-Pola-owned raw observations and derived internal stop summaries according to parental retention settings, but respect provider-specific restrictions for Google Roads content.
+- Cache Madalasa–Alarka-owned raw observations and derived internal stop summaries according to parental retention settings, but respect provider-specific restrictions for Google Roads content.
 - Avoid frequent reverse geocoding. A parent's custom place title is enough for most visit labeling.
 - Perform trip/stop recalculation in incremental C++ backend workers after batched ingestion; long historical rebuild jobs run on demand.
 

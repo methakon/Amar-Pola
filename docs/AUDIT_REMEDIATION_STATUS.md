@@ -1,4 +1,6 @@
-# Amar-Pola — Audit Gap Remediation Progress
+# Madalasa–Alarka — Audit Gap Remediation Progress
+
+> **Current product naming:** **Madalasa** parent/guardian app, **Alarka** child companion; GitHub repository [Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka). [Brand and Markandeya Purana context](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 **Date:** 2026-10-25 | **Scope:** Documentation remediation only | **Original audit:** [26 findings](TECHNICAL_DOCUMENT_AUDIT_GAPS_2026.md)
 

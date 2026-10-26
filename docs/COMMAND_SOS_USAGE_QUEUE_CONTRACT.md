@@ -1,4 +1,6 @@
-# Amar-Pola — Command, SOS, Usage Reporting and Device Queue Contract
+# Madalasa–Alarka — Command, SOS, Usage Reporting and Device Queue Contract
+
+> **Current product naming:** **Madalasa** parent/guardian app, **Alarka** child companion; GitHub repository [Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka). [Brand and Markandeya Purana context](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 **Version:** 1.0 | **Date:** 2026-10-25 | **Status:** implementation design, not tested  
 **Scope:** SRS FR-005–007, FR-014, FR-023, FR-033, FR-037, FR-044–049 and NFR-003/013.

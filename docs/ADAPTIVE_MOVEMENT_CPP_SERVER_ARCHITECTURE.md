@@ -1,6 +1,8 @@
 # Adaptive Movement Tracking & Multi-Tenant C++ Trip Reconstruction — Architecture and Detailed Technical Specification
 
-**Project:** Amar-Pola  
+> **Current product naming:** **Madalasa** parent/guardian app, **Alarka** child companion; GitHub repository [Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka). [Brand and Markandeya Purana context](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
+
+**Project:** Madalasa–Alarka  
 **Document ID:** AP-ARCH-TRK-001  
 **Revision:** 1.0 — proposed design  
 **Research baseline:** 2026-10-25  
@@ -860,13 +862,13 @@ This is a **technical design** suitable for implementation planning. It does **n
 Future design revisions must record an ADR/change log: description, reason, alternative, security/privacy effect, performance cost, migration plan and device evidence. Avoid making undocumented optimizations that change tracking truthfulness or parental access control.
 
 ---
-**Document owner:** Amar-Pola project architecture  
+**Document owner:** Madalasa–Alarka project architecture  
 **Review status:** Awaiting implementation and device validation  
 **Primary references:** official Android, Google Maps Platform, PostgreSQL/PostGIS, Drogon and OWASP sources linked in section 1.
 
 ## 20. Coordinating app usage, remote operations and subscription work at scale
 
-Location is the highest-volume write path, but Amar-Pola also needs application usage summaries, limited remote control commands, guardian access, subscription checks, and possibly Drive backup. **Do not execute all these in the same priority queue or database transaction.**
+Location is the highest-volume write path, but Madalasa–Alarka also needs application usage summaries, limited remote control commands, guardian access, subscription checks, and possibly Drive backup. **Do not execute all these in the same priority queue or database transaction.**
 
 ### 20.1 Priority and workload isolation
 

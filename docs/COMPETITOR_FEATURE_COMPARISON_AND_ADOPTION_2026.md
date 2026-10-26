@@ -1,16 +1,18 @@
-# Competitive Feature Gap & Adoption Report — Amar-Pola
+# Competitive Feature Gap & Adoption Report — Madalasa–Alarka
+
+> **Current product naming:** **Madalasa** parent/guardian app, **Alarka** child companion; GitHub repository [Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka). [Brand and Markandeya Purana context](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 **Revision:** 1.0  
 **Research date:** 2026-10-25  
 **Status:** Product research and proposed backlog; **not** a confirmation that advertised competitors' features work on all phones  
 **Scope:** Five Google Play listings supplied by the project owner; cross-checked against official feature/product guides where available.  
-**Amar-Pola baseline:** [SRS](SRS.md), [Technical Architecture](IMPLEMENTATION_TECHNICAL_SPECIFICATION.md), [Adaptive Movement & C++ Server Architecture](ADAPTIVE_MOVEMENT_CPP_SERVER_ARCHITECTURE.md), [Road Tracking & Named Places](LIVE_TRIP_ROUTE_NAMED_PLACES_BATTERY_SPECIFICATION.md), [Play Requirements](GOOGLE_PLAY_PUBLISHING_REQUIREMENTS.md).
+**Madalasa–Alarka baseline:** [SRS](SRS.md), [Technical Architecture](IMPLEMENTATION_TECHNICAL_SPECIFICATION.md), [Adaptive Movement & C++ Server Architecture](ADAPTIVE_MOVEMENT_CPP_SERVER_ARCHITECTURE.md), [Road Tracking & Named Places](LIVE_TRIP_ROUTE_NAMED_PLACES_BATTERY_SPECIFICATION.md), [Play Requirements](GOOGLE_PLAY_PUBLISHING_REQUIREMENTS.md).
 
 ## Executive verdict
 
 **Build a trustworthy, efficient location-and-screen-time platform first.** Borrow the strongest *product patterns*—SOS, find-phone signal, place alerts, family invitation, child-visible limits, quick check-ins, and optional motivational task rewards—without copying any competitor's code, assets or UI.
 
-For Amar-Pola, a credible differentiator is **quality-aware multi-stop trip reconstruction** (accurate stops/gaps/provenance), **energy-adaptive tracking** on phones/tablets/watches, **family/guardian-level access controls**, optional parent-authorized Google Drive storage, and **honest Android capability/status reporting**. These are **proposed advantages**, not independently verified deficiencies in competitor products.
+For Madalasa–Alarka, a credible differentiator is **quality-aware multi-stop trip reconstruction** (accurate stops/gaps/provenance), **energy-adaptive tracking** on phones/tablets/watches, **family/guardian-level access controls**, optional parent-authorized Google Drive storage, and **honest Android capability/status reporting**. These are **proposed advantages**, not independently verified deficiencies in competitor products.
 
 **Most important qualification:** A Play listing is *marketing evidence*, not reverse engineering, device benchmarking, security audit, or proof that a claimed feature works on the latest Android. Features vary by child companion app, Android version, OEM, plan, geography and permissions. “Not listed” means **not confirmed from reviewed materials**, not “doesn't exist.”
 
@@ -34,9 +36,9 @@ For Amar-Pola, a credible differentiator is **quality-aware multi-stop trip reco
 
 ## 2. Competitor feature matrix
 
-**Legend:** **Y** = explicitly advertised in reviewed official sources; **?** = not clearly established from reviewed sources; **AP** = already proposed in Amar-Pola documents; **ADD** = candidate addition; **DEFER** = conditional/high-risk research. This is a marketed-feature comparison, not a tested feature verification.
+**Legend:** **Y** = explicitly advertised in reviewed official sources; **?** = not clearly established from reviewed sources; **AP** = already proposed in Madalasa–Alarka documents; **ADD** = candidate addition; **DEFER** = conditional/high-risk research. This is a marketed-feature comparison, not a tested feature verification.
 
-| Feature | Findmykids | Family Locator | Pinardin | FamiSafe | Kids360 | Amar-Pola assessment |
+| Feature | Findmykids | Family Locator | Pinardin | FamiSafe | Kids360 | Madalasa–Alarka assessment |
 |---|:---:|:---:|:---:|:---:|:---:|---|
 | Live/latest GPS on map | Y | Y | Y | Y | Y | AP |
 | Routes and history | Y | Y | Y | Y | Y | AP; differentiate with truthful gaps/stops |
@@ -102,7 +104,7 @@ Avoid frequent standalone battery polling and avoid assuming the child is person
 
 **Why:** all five market at least location and place features; visual and analytical quality matters more than collecting GPS every few seconds.
 
-**Amar-Pola status:** Already thoroughly specified:
+**Madalasa–Alarka status:** Already thoroughly specified:
 - Parent titles map coordinates; proximity matching on C++ server.
 - Event-time route reconstruction with raw tracks, gap segments, detected stops and real timestamp confidence.
 - Optional server/Android geofencing subset for arrival/departure; delayed and uncertain status exposed.
@@ -140,7 +142,7 @@ Avoid frequent standalone battery polling and avoid assuming the child is person
 
 ### H. Candidate: driving/movement safety insights (P1/P2)
 
-**Why:** FamiSafe promotes driving reports; Amar-Pola already captures speed, routes and trip stop data.
+**Why:** FamiSafe promotes driving reports; Madalasa–Alarka already captures speed, routes and trip stop data.
 
 **Implementation:** only if location accuracy/speed confidence is high enough: trip duration, speed range, optionally unusual rapid movement events **with confidence indicators**. Do not infer traffic offences, collisions or driver identity from sparse GPS. Vehicle motion could be bus/train/passenger. Avoid frequent sensor sampling solely for a flashy score.
 
@@ -160,20 +162,20 @@ Avoid frequent standalone battery polling and avoid assuming the child is person
 
 ### K. Do not simply copy marketed screen/audio surveillance features
 
-Pinardin and FamiSafe market camera, one-way audio and screenshots. This does not establish their technical approach, the OS/version matrix, child notification model or independent Play approval for an Amar-Pola equivalent.
+Pinardin and FamiSafe market camera, one-way audio and screenshots. This does not establish their technical approach, the OS/version matrix, child notification model or independent Play approval for an Madalasa–Alarka equivalent.
 
 **Decision:** No covert capture, hidden microphone activation, interception of other apps' private messages or continuous screen collection. If future requirements include capture, evaluate only supported, clearly authorized and visible workflows on real Android devices, respecting privacy indicators and Play monitoring rules, then publish a separate decision record. These features are **not** a core product differentiator to pursue before trustworthy location and control features.
 
 ## 4. Product fit and differentiators
 
-| Positioning dimension | Competitor inspiration | Amar-Pola opportunity |
+| Positioning dimension | Competitor inspiration | Madalasa–Alarka opportunity |
 |---|---|---|
 | Trusted location | Findmykids / Family Locator | Mark gaps, accuracy and last-seen reliably; label known stops vs proximity |
 | Family coordination | Family Locator | Granular guardian grants, check-in, acknowledgement and alert settings |
 | Responsible screen-time management | Kids360 | Visible schedules and optional rewards; safe-app exclusion; managed-mode precision |
 | Broad suite | FamiSafe / Pinardin | Avoid high-risk surveillance feature bloat, prioritize privacy, compatibility and battery |
 | Watch/phone interoperability | Findmykids | Separate source provenance, energy-aware Wear OS tracking and continuity status |
-| Storage and control | Existing Amar-Pola proposal | Parent-approved Drive backup, retention choices, secure data deletion and transparent access logs |
+| Storage and control | Existing Madalasa–Alarka proposal | Parent-approved Drive backup, retention choices, secure data deletion and transparent access logs |
 | Performance | Project architecture | C++ event-time trip reconstruction, durable batching and multi-tenant API security |
 
 **Avoid unsubstantiated competitive claims** such as “competitors have poor battery life” or “none offer secure history.” We did not test their binaries, telemetry efficiency or security.
@@ -250,7 +252,7 @@ Each request requires strict principal/device/family ownership, nonce/idempotenc
 
 ## 9. Risks and unresolved questions
 
-1. Which age group and jurisdictions will Amar-Pola support? Impacts consent, communication, child privacy and store audience.
+1. Which age group and jurisdictions will Madalasa–Alarka support? Impacts consent, communication, child privacy and store audience.
 2. Can/should multiple parent accounts share one child without granting full history? Requires fine-grained rights and a clear guardian-authorization protocol.
 3. Is a watch a first-class tracking source or only a companion? Impacts cost/battery/UX.
 4. What supported managed-device provisioning path will commercial customers tolerate? Device owner enrollment is not a normal permission wizard.
@@ -281,7 +283,7 @@ Each request requires strict principal/device/family ownership, nonce/idempotenc
 
 ## 12. Explicit conflict with the existing minimal-child-UI requirement
 
-Earlier Amar-Pola discussions require that the child agent's **main Activity normally remains closed after setup**. This does **not** prohibit an identifiable app, required monitoring notification, or an explicitly chosen child interaction.
+Earlier Madalasa–Alarka discussions require that the child agent's **main Activity normally remains closed after setup**. This does **not** prohibit an identifiable app, required monitoring notification, or an explicitly chosen child interaction.
 
 The following optional interaction modes let the parent preserve the original low-interruption design:
 

@@ -1,6 +1,8 @@
 # Android Version and Device Compatibility Matrix
 
-**Amar-Pola | 2026-10-25 | No device tests executed**
+> **Current product naming:** **Madalasa** parent/guardian app, **Alarka** child companion; GitHub repository [Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka). [Brand and Markandeya Purana context](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
+
+**Madalasa–Alarka | 2026-10-25 | No device tests executed**
 
 ## 1. Testing policy
 
