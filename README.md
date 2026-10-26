@@ -128,3 +128,7 @@ The project owner selected **native parent Android**, **managed-device provision
 ## Editable Android UI boards — tldraw
 
 [**225 editable Light / Dark / Battery Saver screen variants**](docs/ui/tldraw/README.md) for 54 parent and 21 child screens are stored in the [live tldraw board](https://www.tldraw.com/f/-IuhoGjlF7uXC5imxkaL3) with [native snapshot backup](docs/ui/tldraw/amar-pola-ui-master-snapshot.json) checked into GitHub. Covers Google Sign-In, guided child installation and permissions, location and map evidence, guardians, alerts, safety check-ins, privacy, DPC and subscription management. Visual prototypes; application implementation remains pending.
+
+## Current Android functional UI handoff — Figma (81 screens)
+
+The authoritative developer UI handoff is now [**81 editable Figma functional screens**](https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=6-2), with **60 parent** and **21 child** views in **one** visual style. Each phone screen has a detailed implementation panel directly underneath (actions, planned APIs/state, OS/legal/access gates, failure cases, acceptance checks). The [screen inventory and version-controlled implementation specifications](docs/ui/figma-functional-handoff/README.md) are in `docs/ui/figma-functional-handoff/`. Earlier light/dark/eco sketches and the tldraw boards are historic exploration; the developer implements theming from shared design tokens rather than duplicated drawings. Structure/count verified in Figma, screenshot-based visual QA blocked by Starter MCP limit; no runnable Compose app yet.
