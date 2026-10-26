@@ -11,7 +11,7 @@
 | **Parent/guardian Android application** | **Madalasa** | Family setup, verified guardians, secure child enrollment, available device observation, alerts, lawful child-purpose privacy controls, billing |
 | **Child Android companion application** | **Alarka** | Transparent enrollment, device identity, on-device Android permission instructions, honest permission/health/synchronization states and child-initiated check-ins |
 | **Connected service/product concept** | **Madalasa & Alarka** (or **Madalasa–Alarka Family Safety**) | Names of paired applications; neither app requires a religion, spiritual belief or faith assertion to use it |
-| **Repository (rename desired)** | **`Madalasa-Alarka`** | Target GitHub name. **Renamed successfully from `Amar-Pola`; old name is historical only.** Existing source history stays in same repository after an in-place GitHub rename. |
+| **Repository (rename complete)** | **`Madalasa-Alarka`** | **Verified active** at https://github.com/methakon/Madalasa-Alarka. Former name `Amar-Pola` is historical; commit and issue history preserved. |
 
 **App launcher label:** “Madalasa” on guardian phone; “Alarka” on child phone.  
 **Paired onboarding labels:** “Install Alarka on your child's Android phone”, “Open Alarka on the child phone”, “Pair Alarka with Madalasa”, “Continue with Google” in Madalasa (Google login remains a technical candidate; identity alone does not prove custody).  
@@ -69,7 +69,7 @@ Avoid “divine remote seeing”, “watch every step in secret”, “unbreakab
 
 ## 5. Developer migration checklist and unresolved public-release matters
 
-**Brand naming and repository rename preparation:** The requested user-facing names and GitHub target are specified; the actual repository rename requires GitHub admin access, and code packages have not been created/renamed as part of this update. Plan a later atomic Android implementation migration:
+**Brand naming and repository rename outcome:** The requested user-facing names and new GitHub repository name are **in effect**. Android package IDs, app binaries, signing keys and Play product IDs have not been created/renamed as part of this documentation change. Plan an independently reviewed Android implementation migration:
 1. Separate Gradle app modules \`parent-android\` and \`child-android\` (or chosen names); launcher strings use **Madalasa** and **Alarka**.
 2. Choose **two unique immutable application IDs** **before first Play upload**. Example placeholders may be \`<approved.domain>.madalasa\` and \`<approved.domain>.alarka\` only after publisher domain approval; **do not use a guessed owner domain**.
 3. Establish parent OIDC OAuth app identity, Alarka Android Keystore enrollment identity, matching package signature pinning and Google Play Console app declarations. Never assume changing display label changes authorization/crypto.
@@ -81,6 +81,6 @@ Avoid “divine remote seeing”, “watch every step in secret”, “unbreakab
 
 ## 6. Documentation precedence and scope
 
-This naming and narrative policy **supersedes older use of “Amar-Pola” as a consumer application title** in the README, SRS, technical specs, architecture diagrams, onboarding and Play/privacy drafts. **The GitHub repository itself is also to be renamed `Madalasa-Alarka`** (the rename was verified on 2026-10-26). Filenames, package IDs, database and OpenAPI identifiers remain stable unless explicitly migrated. When an old file says “Amar-Pola Parent App”, read **Madalasa**. When it says “Amar-Pola Child App”, read **Alarka**.
+This naming and narrative policy **supersedes older use of “Amar-Pola” as a consumer application title** in the README, SRS, technical specs, architecture diagrams, onboarding and Play/privacy drafts. **The GitHub repository was renamed `Madalasa-Alarka` on 2026-10-26** and is active at the verified new URL. Filenames, package IDs, database and OpenAPI identifiers remain stable unless explicitly migrated. When an old file says “Amar-Pola Parent App”, read **Madalasa**. When it says “Amar-Pola Child App”, read **Alarka**.
 
 **The design remains a transparent, legally constrained family-safety product. Naming inspired by mythology does not change the Android security model, children's consent and privacy duties, or the product's approved feature set.**
