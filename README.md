@@ -1,6 +1,6 @@
 # Madalasa & Alarka — Android Family Safety Platform
 
-> **Product names:** **Madalasa** (parent app), **Alarka** (child app). Desired repository name **Madalasa-Alarka** is **completed GitHub repository rename**. Use the verified new repository URL for all current documentation and integrations. [Naming rationale](docs/BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
+> **Product names:** **Madalasa** (parent app), **Alarka** (child app). GitHub repository **[Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka)** is the verified current name (renamed 2026-10-26). Use the verified new repository URL for all current documentation and integrations. [Naming rationale](docs/BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 **Status:** Requirements and architecture planning  
 **Documentation baseline:** SRS and canonical technical specification v1.0; deployment plan is not deployed  
@@ -8,11 +8,15 @@
 
 **Madalasa & Alarka** is an India-first family-safety project inspired by Madalasa's guidance to her son Alarka in the *Markandeya Purana*. It consists of three planned components:
 
-1. **Child Android agent** — a permission-based app with a C++ native core and Kotlin/Java integration with Android APIs.
+1. **Alarka — child Android companion** — a transparent, permission-based app with a C++ native core and Kotlin/Java integration with Android APIs.
 2. **Madalasa parent app/dashboard** — map, location history, speed when available, app-usage summaries, and supported remote controls.
 3. **C++ backend** — device pairing, authenticated synchronization, command delivery, telemetry storage, subscription checks, auditing, and optional parent-authorized Google Drive backup.
 
 The child app's main activity does not need to remain open for every background feature. However, Android may require foreground services, persistent notifications, privacy indicators, specific Settings grants, or user interaction for particular capabilities.
+
+## About the Madalasa and Alarka names
+
+**Madalasa** is named for Queen Madalasa from the *Markandeya Purana*, remembered for educating her son **Alarka**. Before leaving the palace she gives Alarka a ring containing written advice for a future crisis; when he faces hardship, the message helps guide him. Our apps interpret the story as **care, foresight and guidance across distance**: Madalasa is the authorized guardian app; Alarka is the visible companion on the child's Android phone. This is a **modern design metaphor**, not a scriptural claim of continuous supernatural remote tracking. Read the [English story, references and design principles](docs/BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 ## Documentation
 
