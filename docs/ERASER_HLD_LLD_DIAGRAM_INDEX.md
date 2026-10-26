@@ -1,4 +1,6 @@
-# Amar-Pola — Eraser.io HLD & LLD Diagram Registry
+# Madalasa–Alarka — Eraser.io HLD & LLD Diagram Registry
+
+> **Current product:** **Madalasa** (parent app) + **Alarka** (child app); the GitHub repository is now **[Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka)**. [English mythological inspiration](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 **Date:** 2026-10-26 · **Status:** 8 diagrams created and verified in connected Eraser team workspace, design diagrams only (not implemented).\n
 **Eraser project file:** https://app.eraser.io/workspace/dP8nMbuaxaFXBkBzUHCv
@@ -31,3 +33,8 @@
 - [Legal gate](INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md)
 - [OCI India selection](INDIA_REGION_AND_M0_OWNER_DECISION_GATE.md)
 - [SOS fallback](SOS_ESCALATION_AND_INDEPENDENT_DELIVERY_DESIGN.md)
+
+
+## Live branding vs existing editable drawings
+
+Architecture responsibilities are unchanged, but labels should be rebranded to **Madalasa** on parent clients and **Alarka** on child clients. The existing Eraser diagrams may retain older headings until visually edited; the new [product naming contract](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md) is authoritative. New GitHub repository is [Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka).

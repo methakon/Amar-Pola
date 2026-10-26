@@ -1,4 +1,6 @@
-# Amar-Pola — Blockers, Decisions and Resolution Register
+# Madalasa–Alarka — Blockers, Decisions and Resolution Register
+
+> **Current product:** **Madalasa** (parent app) + **Alarka** (child app); the GitHub repository is now **[Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka)**. [English mythological inspiration](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 **Date:** 2026-10-25 | **Version:** 1.0 | **State:** OPEN | **Purpose:** actionable project-owner decisions and independently verifiable engineering/release gates.
 

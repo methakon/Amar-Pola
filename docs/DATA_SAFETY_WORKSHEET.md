@@ -1,6 +1,8 @@
 # Data Safety and Permission Inventory — Working Worksheet
 
-**Amar-Pola | Draft | 2026-10-25**
+> **Current product:** **Madalasa** (parent app) + **Alarka** (child app); the GitHub repository is now **[Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka)**. [English mythological inspiration](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
+
+**Madalasa–Alarka | Draft | 2026-10-25**
 
 **Do not submit these rows verbatim to Play Console.** Final declarations must be taken from the actual compiled parent and child apps, included SDKs, endpoints, storage behavior, and third-party recipients. Fill one worksheet **per package** and **per release track**. “Potentially collected” does not mean an enabled shipped feature.
 
@@ -106,3 +108,8 @@ The India-first deployment plans OCI Chicago (United States); do not answer Goog
 
 Reference: [Indian minor privacy and Chicago legal gate](INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md), [Privacy Policy Draft](PRIVACY_POLICY_DRAFT.md). Until adult parent identity verification, lawful-processing opinion and signed product scope exist, **do not collect real child data** or claim a completed Data Safety form.
 
+
+
+## Package-specific naming
+
+Prepare separate actual Google Play Data Safety submissions for **Madalasa** (guardian Android package) and **Alarka** (child companion), matching SDK/API behavior and declared purpose. Repository rename does not change applicationIds or publisher account identifiers automatically.

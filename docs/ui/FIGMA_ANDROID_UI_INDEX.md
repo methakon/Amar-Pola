@@ -1,4 +1,6 @@
-# Amar-Pola — Editable Figma Android UI Design
+# Madalasa–Alarka — Editable Figma Android UI Design
+
+> **Current product:** **Madalasa** (parent app) + **Alarka** (child app); the GitHub repository is now **[Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka)**. [English mythological inspiration](../BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 **Live Figma Design:** https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli
 

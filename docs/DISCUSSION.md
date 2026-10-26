@@ -1,6 +1,8 @@
 # Project Discussion and Decisions
 
-- **Project:** Amar-Pola
+> **Current product:** **Madalasa** (parent app) + **Alarka** (child app); the GitHub repository is now **[Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka)**. [English mythological inspiration](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
+
+- **Project:** Madalasa–Alarka
 - **Document version:** 0.1
 - **Date:** 2026-10-25
 - **Status:** Initial baseline

@@ -1,6 +1,8 @@
 # Full Implementation Technical Specification
 
-**Amar-Pola | Revision 1.0 draft | 2026-10-25 | Architecture design (not implemented)**
+> **Current product:** **Madalasa** (parent app) + **Alarka** (child app); the GitHub repository is now **[Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka)**. [English mythological inspiration](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
+
+**Madalasa–Alarka | Revision 1.0 draft | 2026-10-25 | Architecture design (not implemented)**
 
 Related: [SRS](SRS.md), [Feasibility and conditions](FEASIBILITY_CONDITIONS_AND_EVIDENCE.md), [Google Play requirements](GOOGLE_PLAY_PUBLISHING_REQUIREMENTS.md).
 

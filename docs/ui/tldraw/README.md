@@ -1,4 +1,6 @@
-# Amar-Pola — Native tldraw Android UI Design System
+# Madalasa–Alarka — Native tldraw Android UI Design System
+
+> **Current product:** **Madalasa** (parent app) + **Alarka** (child app); the GitHub repository is now **[Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka)**. [English mythological inspiration](../BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 **Design status:** Editable UI wireframes implemented as native tldraw vector shapes, **not yet executable Android code**.  
 **Date:** 2026-10-26 · **Design board:** https://www.tldraw.com/f/-IuhoGjlF7uXC5imxkaL3  
@@ -140,3 +142,8 @@ Suggested packages/components:
 - All screens are **visual design artifacts**, not production pixel-perfect layouts, navigation-wired interactions, real App Bundle builds, or Play-compliant screens already tested.
 
 **Next implementation step:** build Compose Navigation graphs and Material 3 components from these individually editable visual specifications. Link each screen to M0–M9 and FR-001–FR-049 traceability while implementing.
+
+
+## Renamed application family
+
+**Madalasa** is the parent app; **Alarka** is the child app. tldraw's older snapshot remains an editable exploration archive with some former display-name text. The developer handoff and naming policy supersede those old captions. Repository rename to [Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka) is complete.

@@ -1,4 +1,6 @@
-# Amar-Pola — Complete Android Functional UI Developer Handoff (Figma)
+# Madalasa–Alarka — Complete Android Functional UI Developer Handoff (Figma)
+
+> **Current product:** **Madalasa** (parent app) + **Alarka** (child app); the GitHub repository is now **[Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka)**. [English mythological inspiration](../../BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 **Last updated:** 2026-10-26  
 **Main Figma file:** https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli  
@@ -77,3 +79,8 @@ Related:
 - [India child-law gate](../../INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md)
 - [SOS fallback](../../SOS_ESCALATION_AND_INDEPENDENT_DELIVERY_DESIGN.md)
 - [Original tldraw inventory](../tldraw/README.md)
+
+
+## Current app launcher names and unsynced Figma sample labels
+
+All new Android launcher/app listing work should use **Madalasa** (parent) and **Alarka** (child) as the current brand names. Screen JSON sources provide per-screen role metadata; legacy Figma headings/screenshot layers still need a separate visual-edit pass when integration rate limits allow. Do not interpret historical rendered captions as published app names. Repository is now [Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka).

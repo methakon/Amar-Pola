@@ -1,4 +1,6 @@
-# Amar-Pola — Complete Requirement-to-Design-to-Test Traceability
+# Madalasa–Alarka — Complete Requirement-to-Design-to-Test Traceability
+
+> **Current product:** **Madalasa** (parent app) + **Alarka** (child app); the GitHub repository is now **[Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka)**. [English mythological inspiration](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 **Baseline:** SRS v1.0 (FR-001–FR-049, NFR-001–NFR-016)  
 **Date:** 2026-10-25 | **State:** design mapping complete; all implementation evidence pending  

@@ -1,4 +1,6 @@
-# Amar-Pola — Subscription Plans, Hidden Charges, Compliance Rules and Revenue Model
+# Madalasa–Alarka — Subscription Plans, Hidden Charges, Compliance Rules and Revenue Model
+
+> **Current product:** **Madalasa** (parent app) + **Alarka** (child app); the GitHub repository is now **[Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka)**. [English mythological inspiration](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 **Document:** AP-SUB-PRICING-001  
 **Version:** 1.0 | **Prepared:** 2026-10-26 | **Status:** PROPOSED FOR OWNER APPROVAL — not live Play Console products, not a binding quote, and not independently signed off by tax/legal counsel.  
@@ -8,7 +10,7 @@
 
 ## 1. Decision and official product offer
 
-**Amar-Pola's NEW recommended public price point is ₹50 per paying child per month OR ₹500 per paying child per year**, subject to Google Play Console validating the India offer/total displayed payable amount, merchant/tax setup, platform compliance and implementation of family-seat checkout.
+**Madalasa–Alarka's NEW recommended public price point is ₹50 per paying child per month OR ₹500 per paying child per year**, subject to Google Play Console validating the India offer/total displayed payable amount, merchant/tax setup, platform compliance and implementation of family-seat checkout.
 
 | Term | Parent is charged | Covered service time | Renewing? | Equivalent per-child month | Effective benefit |
 |---|---:|---|---|---:|---|
@@ -79,7 +81,7 @@ Potentially confusing charge types must be disclosed distinctly:
 | Play publisher registration | Developer | One-time onboarding; not recurring per-child | Google lists US$25 account registration fee in standard setup; confirm payment/country |
 | Paid HA, audit, incident and support staffing | Developer | NOT included in cheap low-volume operating model | Production child-safety service needs separate signoff |
 
-**Customer price rule:** Amar-Pola itself should not add undisclosed "location refresh", "guardian access", "GPS", "server", "SOS", or "activation" fees to these plans. Changes or optional charged add-ons need separate opt-in checkout and truthful price display. Google Play/payment method may apply payment terms or regional tax according to final checkout; verify final amounts before marketing as all-inclusive.
+**Customer price rule:** Madalasa–Alarka itself should not add undisclosed "location refresh", "guardian access", "GPS", "server", "SOS", or "activation" fees to these plans. Changes or optional charged add-ons need separate opt-in checkout and truthful price display. Google Play/payment method may apply payment terms or regional tax according to final checkout; verify final amounts before marketing as all-inclusive.
 
 ### Tax-inclusive example — NOT a tax determination
 
@@ -246,7 +248,7 @@ All subscription plans must have an in-app **Manage / Cancel subscription** rout
 - Oracle baseline and per-child reserve at 1,000: [Hosting Financial Plan §14.10](OCI_CHICAGO_DEPLOYMENT_AND_FINANCIAL_PLAN.md)
 - External API and earlier illustrative ₹149 pricing: [Third Party Cost Analysis](THIRD_PARTY_SERVICES_COST_ANALYSIS_2026.md)
 
-**Document precedence for pricing:** THIS document is the **new proposal baseline** for Amar-Pola subscription prices. The ₹149/month figures in older cost analyses are **historical price sensitivity examples only**, not official or recommended public prices. No price, billing SKU, tax-inclusive status or merchant configuration has yet been activated in Play Console.
+**Document precedence for pricing:** THIS document is the **new proposal baseline** for Madalasa–Alarka subscription prices. The ₹149/month figures in older cost analyses are **historical price sensitivity examples only**, not official or recommended public prices. No price, billing SKU, tax-inclusive status or merchant configuration has yet been activated in Play Console.
 
 ## 12. Pre-launch India legal and full cash break-even correction
 
