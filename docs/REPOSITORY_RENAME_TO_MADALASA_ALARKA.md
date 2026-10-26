@@ -1,28 +1,23 @@
-# GitHub Repository Rename — Madalasa-Alarka
+# GitHub Repository Rename — Madalasa-Alarka (Completed)
 
-**Requested by project owner:** 2026-10-26  
-**Status:** **REQUIRES GITHUB ADMIN — NOT EXECUTED**  
-**Current working repository:** https://github.com/methakon/Amar-Pola  
-**Desired repository:** `methakon/Madalasa-Alarka`  
-**Parent Android launcher name:** **Madalasa**  
-**Child Android launcher name:** **Alarka**
+**Owner request:** 2026-10-26. **Status: COMPLETED AND VERIFIED on GitHub.**
 
-## Exact action for repository administrator
+**Current repository:** https://github.com/methakon/Madalasa-Alarka
 
-1. Open the actual repository: https://github.com/methakon/Amar-Pola.
-2. Open **Settings** → **General** → **Repository name**.
-3. Enter `Madalasa-Alarka` and select **Rename**.
-4. Verify the new repository actually exists at `https://github.com/methakon/Madalasa-Alarka`. Do not update public repo references until verification.
-5. Update local clone remotes: `git remote set-url origin https://github.com/methakon/Madalasa-Alarka.git`.
-6. Recheck GitHub Actions, GitHub App permissions and connected links for the renamed repository. Any GitHub Actions configuration containing hardcoded old repo URLs must be reviewed; same for CI badges, external integrations, webhook endpoints, issue links and docs bookmarks.
-7. Replace active GitHub links containing `github.com/methakon/Amar-Pola` with the verified new URL, including UI handoff, legal/pricing references, third-party docs and Eraser/Figma indexes. GitHub often provides redirects, but exact behavior should be verified.
-8. Do **not** automatically change Android `applicationId`, signing keys, OAuth client IDs, Play Billing product IDs, backend auth audiences, database migrations or API paths; these require independent compatibility planning.
-9. Keep a short note of the historical repository name for old citations and developer searchability.
+**Former repository:** `methakon/Amar-Pola` (historical name; GitHub may redirect old references).
 
-## Why this is not executed automatically
+**Parent Android app:** Madalasa. **Child companion:** Alarka.
 
-The currently connected GitHub app can **edit files** and commit to the repository but the confirmed repository permission set is `admin:false, push:true`; there is no available repository rename tool. The new URL has **not been confirmed**, so this document deliberately uses the existing URL for working links until an admin renames the repository.
+## Verification and post-rename checklist
 
-Brand rationale and English Markandeya Purana story: [Madalasa and Alarka product concept](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
+The GitHub repository metadata reports `repository_full_name: methakon/Madalasa-Alarka` and `clone_url: https://github.com/methakon/Madalasa-Alarka.git`. The repository was renamed externally by an authorized GitHub administrator; this connected assistant's GitHub integration has push access but no repository-administration permission.
 
-**No repository recreation or copy is an equivalent substitute for an in-place rename:** copying creates a new repo with different issue/PR/history permissions and integrations and should not be undertaken as if it were a rename.
+- [x] Owner-requested in-place GitHub repository rename completed.
+- [x] New canonical repository metadata confirmed.
+- [x] Documentation brand and title policy authored: [Madalasa and Alarka](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
+- [ ] On local developer clones, run `git remote set-url origin https://github.com/methakon/Madalasa-Alarka.git`.
+- [ ] Check existing external bookmarks, GitHub Actions badges, external webhooks, connected GitHub integrations and automated scripts that hardcode the former URL.
+- [ ] On launch, select and validate two independent Android applicationIds, Play developer name, OAuth clients, signing certificates and package-specific listings. The repo rename does **not** migrate these automatically.
+- [ ] Align saved Figma, tldraw and Eraser visual labels with new app display names; documentation source is authoritative until visual edits can be made.
+
+**Do not recreate the repository** or change stable API/database/Android signing identifiers merely because the GitHub display name changed. Preserve issue history, PRs, tags and references.

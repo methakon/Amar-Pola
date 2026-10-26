@@ -1,6 +1,6 @@
 # Madalasa–Alarka — Single Canonical Implementation and Release Milestone Plan
 
-> **Product names:** **Madalasa** (parent app), **Alarka** (child app). Desired repository name **Madalasa-Alarka** is **pending GitHub administrator rename**. Existing working GitHub URLs remain unchanged until then. [Naming rationale](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
+> **Product names:** **Madalasa** (parent app), **Alarka** (child app). Desired repository name **Madalasa-Alarka** is **completed GitHub repository rename**. Existing working GitHub URLs remain unchanged until then. [Naming rationale](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 **Document:** AP-PLAN-001 | **Date:** 2026-10-26 | **Version:** 1.0 | **Status:** plans consolidated; NO implementation/releases certified.
 **AUTHORITATIVE plan:** This milestone numbering M0–M9 replaces older inconsistent M0–M7, M0–M9 and workstream-only numbering in SRS, Technical Specification, Validation, M1 Android/C++ and Market Feedback. Older documents remain technical annexes, not parallel schedules.
