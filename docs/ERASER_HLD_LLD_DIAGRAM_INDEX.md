@@ -38,3 +38,7 @@
 ## Live branding vs existing editable drawings
 
 Architecture responsibilities are unchanged, but labels should be rebranded to **Madalasa** on parent clients and **Alarka** on child clients. The existing Eraser diagrams may retain older headings until visually edited; the new [product naming contract](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md) is authoritative. New GitHub repository is [Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka).
+
+## Media HLD/LLD addition hosted in native editable Figma — 2026-10-26
+
+The linked original **eight Eraser diagrams are unchanged**: Eraser returned "free AI credits used" when editing was attempted; the Eraser originals have **not** been silently replaced. To keep the architecture synchronized with [MA-MEDIA-ADR-001](MEDIA_CAPABILITY_PARENT_REASON_AND_RUNTIME_DECISION_2026.md), two **native editable Figma diagrams** were created instead: [Conditional media HLD](https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=21-3) (P2P, TURN, no VPS media storage, standard/managed Android trust boundaries) and [Conditional media LLD](https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=21-41) (guardian grant, runtime checks, session status/reason codes, Android screen-share consent). Eight additional parent/child research UX screens are indexed in [Figma UI handoff](ui/figma-functional-handoff/README.md). All media functionality remains RESEARCH P3 / not implemented / no commercial approval.
