@@ -1,12 +1,14 @@
 # Privacy Policy — Publication Draft (NOT READY TO PUBLISH)
 
-**Amar-Pola | draft 2026-10-25**
+> **Product names:** **Madalasa** (parent app), **Alarka** (child app). Desired repository name **Madalasa-Alarka** is **pending GitHub administrator rename**. Existing working GitHub URLs remain unchanged until then. [Naming rationale](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
+
+**Madalasa–Alarka | draft 2026-10-25**
 
 > **LEGAL/PRODUCT REVIEW REQUIRED.** Every bracketed field and TBD must be completed before hosting as a public policy. Do not claim an implemented feature, encryption measure or deletion SLA until it is actually verified. This is a template for the intended product, not the live policy of an operating service.
 
-## 1. Who operates Amar-Pola?
+## 1. Who operates Madalasa–Alarka?
 
-Amar-Pola is planned as a parental device-safety and monitoring service operated by **[LEGAL BUSINESS NAME]** (“we”). Contact us at **[PUBLIC SUPPORT EMAIL]**, **[BUSINESS ADDRESS / RELEVANT LEGAL CONTACT]**. Last effective date: **[PUBLICATION DATE]**.
+Madalasa–Alarka is planned as a parental device-safety and monitoring service operated by **[LEGAL BUSINESS NAME]** (“we”). Contact us at **[PUBLIC SUPPORT EMAIL]**, **[BUSINESS ADDRESS / RELEVANT LEGAL CONTACT]**. Last effective date: **[PUBLICATION DATE]**.
 
 The service is intended for appropriately authorized parents and guardians to supervise their children's devices. It is not intended for covert monitoring of adults or other unauthorized individuals.
 
@@ -31,7 +33,7 @@ We intend to use information to provide the parent's requested map/history and a
 
 ## 4. Background location and device indicators
 
-Where enabled and permitted, Amar-Pola can collect location **when the setup screen is closed or the app is not actively open**, to provide parent-visible location and travel history. The child device may display a persistent monitoring notification or other Android privacy indicators, which Amar-Pola will not conceal. Android settings may allow permissions to be revoked. Certain features may then stop working.
+Where enabled and permitted, Madalasa–Alarka can collect location **when the setup screen is closed or the app is not actively open**, to provide parent-visible location and travel history. The child device may display a persistent monitoring notification or other Android privacy indicators, which Madalasa–Alarka will not conceal. Android settings may allow permissions to be revoked. Certain features may then stop working.
 
 ## 5. Who receives information?
 
@@ -45,7 +47,7 @@ The planned system uses encrypted transport, authenticated access controls, revo
 
 Planned retention periods: location **[X DAYS]**, app usage **[Y DAYS]**, optional media **[Z DAYS]**, audit logs **[AUDIT RETENTION]**, backups **[BACKUP POLICY]**. Actual operations must implement and test these dates.
 
-Parents may revoke a device, disconnect Google Drive and request account/data deletion within the app or at **[PUBLIC ACCOUNT DELETION URL]**. Explain which billing/fraud/legal records are retained, for what legal basis and for how long. Deleting Amar-Pola server data may not delete independently stored files in the parent's Google Drive; clarify and offer options.
+Parents may revoke a device, disconnect Google Drive and request account/data deletion within the app or at **[PUBLIC ACCOUNT DELETION URL]**. Explain which billing/fraud/legal records are retained, for what legal basis and for how long. Deleting Madalasa–Alarka server data may not delete independently stored files in the parent's Google Drive; clarify and offer options.
 
 ## 8. Parental authority and child privacy
 
@@ -79,3 +81,8 @@ Provider wording must list **Oracle OCI Chicago, United States** *if actually de
 
 **Safe defaults:** no real child data in development; app-usage history and historical tracking disabled for minors pending signed counsel advice; owner-specific guardian invitations, purpose notices and erasure tests; never imply a Play permission or purchase proves parent authority. Publisher identity, support/grievance contact and real public deletion page remain blank until supplied. Retention 14/90/365/30 are engineering candidates, **not approved published dates**.
 
+
+
+## Explicit app identities (2026-10-26)
+
+**Madalasa** is the parent/guardian Android application and **Alarka** is the child-device companion. Final policy must disclose each app's actual information processing, monitoring permissions, third parties and rights separately. The draft is NOT approved or published; legal publisher, retention and India DPDP basis remain open.

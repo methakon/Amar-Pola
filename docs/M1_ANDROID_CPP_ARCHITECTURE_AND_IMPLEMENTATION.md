@@ -1,4 +1,6 @@
-# Amar-Pola — M1 Technical Architecture and Implementation Contract
+# Madalasa–Alarka — M1 Technical Architecture and Implementation Contract
+
+> **Product names:** **Madalasa** (parent app), **Alarka** (child app). Desired repository name **Madalasa-Alarka** is **pending GitHub administrator rename**. Existing working GitHub URLs remain unchanged until then. [Naming rationale](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 **Revision:** 1.0, 2026-10-25  
 **Status:** Design/proposed implementation, **not implemented or device-tested**  

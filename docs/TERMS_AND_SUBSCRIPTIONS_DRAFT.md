@@ -1,6 +1,8 @@
 # Terms of Service and Subscription Disclosure — Draft
 
-**Amar-Pola | 2026-10-25 | TEMPLATE — NOT A LIVE CONTRACT**
+> **Product names:** **Madalasa** (parent app), **Alarka** (child app). Desired repository name **Madalasa-Alarka** is **pending GitHub administrator rename**. Existing working GitHub URLs remain unchanged until then. [Naming rationale](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
+
+**Madalasa–Alarka | 2026-10-25 | TEMPLATE — NOT A LIVE CONTRACT**
 
 This draft is provided for legal/product review. It cannot be published until the legal publisher identity, supported features, prices, jurisdictions, service limitations and customer support are finalized.
 
@@ -8,7 +10,7 @@ This draft is provided for legal/product review. It cannot be published until th
 
 ## 1. Parties and eligible use
 
-These terms would govern the relationship between **[LEGAL PUBLISHER]** and a parent/guardian using Amar-Pola. The user represents that they have the legal authority to supervise and configure the child's device in **[SUPPORTED TERRITORIES]**. The service is for appropriately authorized parental monitoring, not covert tracking of spouses, adults or third parties.
+These terms would govern the relationship between **[LEGAL PUBLISHER]** and a parent/guardian using Madalasa–Alarka. The user represents that they have the legal authority to supervise and configure the child's device in **[SUPPORTED TERRITORIES]**. The service is for appropriately authorized parental monitoring, not covert tracking of spouses, adults or third parties.
 
 ## 2. Service description
 
@@ -53,3 +55,8 @@ Define justified suspension for nonpayment, compromised accounts or prohibited u
 - Effective date and change-notification process: **LEGAL REVIEW REQUIRED**.
 
 **Release blocker:** Do not treat this draft as legally enforceable terms or as completed Play Console disclosures.
+
+
+## Application naming
+
+These draft Terms cover **Madalasa** (parent app) and **Alarka** (child companion). Neither payment nor Google Sign-In substitutes for verified legal parenting; no parent-facing control may claim to grant Android OS permissions on a child's phone.

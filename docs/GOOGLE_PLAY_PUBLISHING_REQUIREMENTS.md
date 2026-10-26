@@ -1,6 +1,8 @@
 # Google Play Publishing and Compliance Specification
 
-**Amar-Pola | 2026-10-25 | Draft only — not a publication approval**
+> **Product names:** **Madalasa** (parent app), **Alarka** (child app). Desired repository name **Madalasa-Alarka** is **pending GitHub administrator rename**. Existing working GitHub URLs remain unchanged until then. [Naming rationale](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
+
+**Madalasa–Alarka | 2026-10-25 | Draft only — not a publication approval**
 
 Applies separately to a parent client and a child agent if distributed as separate packages. Final answers must be based on the **actual shipped manifests, SDKs, backend behavior and every active Play track**.
 
@@ -52,15 +54,15 @@ This alone does **not** certify compliance. Every version code on every active t
 ## 4. Background location permission declaration package
 
 **Core-feature rationale draft:**
-“Amar-Pola is a parent-configured child location history and safety application. Background location is needed to record journeys and update a parent's last-known location while the child-side setup screen is closed. Without background access, route history would have substantial gaps and location updates would be limited to the setup screen.”
+“Madalasa–Alarka is a parent-configured child location history and safety application. Background location is needed to record journeys and update a parent's last-known location while the child-side setup screen is closed. Without background access, route history would have substantial gaps and location updates would be limited to the setup screen.”
 
 **Draft prominent in-app disclosure** (validate exact shipped language):
-“Amar-Pola collects location data to provide your parent or guardian with your last reported position, travel history and movement alerts, including when this app is closed or not in use. Location reports are securely sent to the paired parent account. You can review monitoring information in Amar-Pola and Android settings.”
+“Madalasa–Alarka collects location data to provide your parent or guardian with your last reported position, travel history and movement alerts, including when this app is closed or not in use. Location reports are securely sent to the paired parent account. You can review monitoring information in Madalasa–Alarka and Android settings.”
 
 Review the wording with legal/policy advisers for child audience and the actual feature list. Show this disclosure in the child app **before** requesting location permission, not solely in Terms or the privacy policy.
 
 **Reviewer video storyboard** (record real device later):
-1. Show named Amar-Pola child app and prominent disclosure in normal onboarding.
+1. Show named Madalasa–Alarka child app and prominent disclosure in normal onboarding.
 2. Show Android permission and background-location setup.
 3. Show monitoring notification.
 4. Close the child setup Activity; move between test coordinates on test device.
@@ -147,3 +149,8 @@ Create screenshots only from a real release candidate. List supported device req
 - Account deletion: https://support.google.com/googleplay/android-developer/answer/13327111
 - 16 KB page sizes: https://developer.android.com/guide/practices/page-sizes
 - Closed testing: https://support.google.com/googleplay/android-developer/answer/14151465
+
+
+## Separate named Play packages
+
+**Madalasa** is the parent/guardian app and **Alarka** is the identifiable child companion. Prepare separate package IDs, launcher strings, listings, review scripts and Data Safety declarations; verify package IDs only after publisher/domain selection. Subscription or Google authentication does not prove lawful custody.

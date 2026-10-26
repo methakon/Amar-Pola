@@ -1,4 +1,6 @@
-# Amar-Pola — Consolidated Software Requirements Specification (SRS)
+# Madalasa–Alarka — Consolidated Software Requirements Specification (SRS)
+
+> **Product names:** **Madalasa** (parent app), **Alarka** (child app). Desired repository name **Madalasa-Alarka** is **pending GitHub administrator rename**. Existing working GitHub URLs remain unchanged until then. [Naming rationale](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 **Document:** AP-SRS-001  
 **Revision:** 1.0 integrated design baseline  
@@ -8,7 +10,7 @@
 
 ## 1. Purpose, scope and definitions
 
-Build a **transparent, parent-authorized Android family-safety and child-device-management platform** called Amar-Pola with:
+Build a **transparent, parent-authorized Android family-safety and child-device-management platform** with the **Madalasa parent application** and **Alarka child companion**:
 
 1. **Child Android agent** running its ordinary tracking functions after one-time parent setup without requiring the main Activity to stay open, while complying with system notifications and user-visible monitoring disclosures.
 2. **Parent Android app** showing the latest observed location, quality, routes, saved named places, multiple trips/stops, usage history, permitted controls, subscriptions and family/guardian access management.

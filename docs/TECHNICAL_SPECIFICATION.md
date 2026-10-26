@@ -1,4 +1,6 @@
-# Amar-Pola — Canonical Whole-Project Technical Specification
+# Madalasa–Alarka — Canonical Whole-Project Technical Specification
+
+> **Product names:** **Madalasa** (parent app), **Alarka** (child app). Desired repository name **Madalasa-Alarka** is **pending GitHub administrator rename**. Existing working GitHub URLs remain unchanged until then. [Naming rationale](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 **Document ID:** AP-TSD-001  
 **Revision:** 1.0; consolidates the former v0.1 technical specification into one authoritative implementation overview.  

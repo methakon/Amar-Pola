@@ -1,13 +1,15 @@
-# Amar-Pola — C++ Android Parental Monitoring
+# Madalasa & Alarka — Android Family Safety Platform
+
+> **Product names:** **Madalasa** (parent app), **Alarka** (child app). Desired repository name **Madalasa-Alarka** is **pending GitHub administrator rename**. Existing working GitHub URLs remain unchanged until then. [Naming rationale](docs/BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 **Status:** Requirements and architecture planning  
 **Documentation baseline:** SRS and canonical technical specification v1.0; deployment plan is not deployed  
 **Repository:** `methakon/Amar-Pola`
 
-Amar-Pola is a privacy-conscious parental monitoring and device-management platform planned around three components:
+**Madalasa & Alarka** is an India-first family-safety project inspired by Madalasa's guidance to her son Alarka in the *Markandeya Purana*. It consists of three planned components:
 
 1. **Child Android agent** — a permission-based app with a C++ native core and Kotlin/Java integration with Android APIs.
-2. **Parent app/dashboard** — map, location history, speed when available, app-usage summaries, and supported remote controls.
+2. **Madalasa parent app/dashboard** — map, location history, speed when available, app-usage summaries, and supported remote controls.
 3. **C++ backend** — device pairing, authenticated synchronization, command delivery, telemetry storage, subscription checks, auditing, and optional parent-authorized Google Drive backup.
 
 The child app's main activity does not need to remain open for every background feature. However, Android may require foreground services, persistent notifications, privacy indicators, specific Settings grants, or user interaction for particular capabilities.
@@ -72,7 +74,7 @@ See [Adaptive Movement and Multi-Tenant C++ Server Architecture](docs/ADAPTIVE_M
 
 ## Competitive product review (October 2026)
 
-[Comparison of Findmykids, Find my Phone – Family Locator, Pinardin, FamiSafe and Kids360](docs/COMPETITOR_FEATURE_COMPARISON_AND_ADOPTION_2026.md) documents verified advertised features, Amar-Pola gaps, conditional Android feasibility and a proposed adoption backlog. **Proposals are not automatically approved product requirements or implemented features.**
+[Comparison of Findmykids, Find my Phone – Family Locator, Pinardin, FamiSafe and Kids360](docs/COMPETITOR_FEATURE_COMPARISON_AND_ADOPTION_2026.md) documents verified advertised features, Madalasa–Alarka gaps, conditional Android feasibility and a proposed adoption backlog. **Proposals are not automatically approved product requirements or implemented features.**
 
 ## Feedback-led differentiation study (October 2026)
 
@@ -123,7 +125,7 @@ The project owner selected **native parent Android**, **managed-device provision
 
 ## Eraser.io high- and low-level design diagrams (2026-10-26)
 
-[**Eight editable HLD and LLD architecture diagrams**](docs/ERASER_HLD_LLD_DIAGRAM_INDEX.md) are available in the connected [Eraser Amar-Pola workspace](https://app.eraser.io/workspace/dP8nMbuaxaFXBkBzUHCv): context/trust boundaries, OCI Mumbai deployment, M1 pairing proof, M1 PostgreSQL ERD, GPS ingestion, guardian revocation, SOS escalation and family billing. These are planned designs; legal, device, database CI and deployment gates remain open.
+[**Eight editable HLD and LLD architecture diagrams**](docs/ERASER_HLD_LLD_DIAGRAM_INDEX.md) are available in the connected [Eraser Madalasa–Alarka workspace](https://app.eraser.io/workspace/dP8nMbuaxaFXBkBzUHCv): context/trust boundaries, OCI Mumbai deployment, M1 pairing proof, M1 PostgreSQL ERD, GPS ingestion, guardian revocation, SOS escalation and family billing. These are planned designs; legal, device, database CI and deployment gates remain open.
 
 ## Editable Android UI boards — tldraw
 

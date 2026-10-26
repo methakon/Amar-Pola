@@ -1,16 +1,18 @@
 # Play Store Listing, Reviewer Access and Submission Checklist
 
-**Amar-Pola | 2026-10-25 | Draft; must reflect actual shipped functionality**
+> **Product names:** **Madalasa** (parent app), **Alarka** (child app). Desired repository name **Madalasa-Alarka** is **pending GitHub administrator rename**. Existing working GitHub URLs remain unchanged until then. [Naming rationale](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
+
+**Madalasa–Alarka | 2026-10-25 | Draft; must reflect actual shipped functionality**
 
 ## 1. Store listing copy — parent app (candidate, unapproved)
 
-**Title candidate:** Amar-Pola Family Safety
+**Title candidate:** Madalasa — Family Safety
 
 **Short description candidate:** Child location history and app-use insights for parents.
 
 **Long description candidate:**
 
-“Amar-Pola helps parents and guardians review location history and device-usage information on a child's Android phone after it has been set up with the necessary permissions.
+“Madalasa–Alarka helps parents and guardians review location history and device-usage information on a child's Android phone after it has been set up with the necessary permissions.
 
 Available supported features may include:
 - Last reported device location on a map, with accuracy and freshness.
@@ -19,7 +21,7 @@ Available supported features may include:
 - Supported device policies on appropriately managed phones.
 - Device pairing, monitoring status and parent-controlled retention settings.
 
-Setup requires access to the child's device. Amar-Pola is an identifiable monitoring tool; the child-side app provides required disclosures and persistent monitoring notification while operating. Feature availability differs by Android version, permissions, phone manufacturer and whether the phone is managed. The app does not guarantee continuous GPS tracking, arbitrary app blocking or unannounced camera/microphone access.
+Setup requires access to the child's device. Madalasa–Alarka is an identifiable monitoring tool; the child-side app provides required disclosures and persistent monitoring notification while operating. Feature availability differs by Android version, permissions, phone manufacturer and whether the phone is managed. The app does not guarantee continuous GPS tracking, arbitrary app blocking or unannounced camera/microphone access.
 
 A paid subscription may be required for certain features. Availability, price and terms are shown in the app.”
 
@@ -84,3 +86,8 @@ Allowed marketing themes: “family location history”, “parental device supe
 - https://support.google.com/googleplay/android-developer/answer/9799150
 - https://support.google.com/googleplay/android-developer/answer/9888380
 - https://support.google.com/googleplay/android-developer/answer/14151465
+
+
+## New two-app public names (owner-approved)
+
+**Parent app:** **Madalasa — Family Safety** (candidate listing title). **Child companion:** **Alarka — Family Safety Companion** (candidate listing title). Each needs independent Play publisher and data disclosures. Alarka must display visible child-monitoring notifications and ask permissions on the child's phone. No guaranteed emergency dispatch or covert capture claims; app IDs and titles still require store verification.
