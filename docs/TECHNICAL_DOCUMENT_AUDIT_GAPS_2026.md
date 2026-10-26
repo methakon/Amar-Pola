@@ -1,4 +1,6 @@
-# Amar-Pola — Technical Specification and Whole-Project SRS Gap Audit
+# Madalasa–Alarka — Technical Specification and Whole-Project SRS Gap Audit
+
+> **Current app names:** **Madalasa** (parent), **Alarka** (child); verified [Madalasa-Alarka GitHub repository](https://github.com/methakon/Madalasa-Alarka). [Brand contract](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 **Audit ID:** AP-AUDIT-2026-10-25-01  
 **Audit date:** 2026-10-25  

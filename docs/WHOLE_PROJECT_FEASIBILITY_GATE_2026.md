@@ -1,6 +1,8 @@
 # Whole-Project Feasibility Gate and Scope Decisions
 
-**Amar-Pola · 2026-10-25 · Review FG-2026-01 · Documentation-only feasibility**
+> **Current app names:** **Madalasa** (parent), **Alarka** (child); verified [Madalasa-Alarka GitHub repository](https://github.com/methakon/Madalasa-Alarka). [Brand contract](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
+
+**Madalasa–Alarka · 2026-10-25 · Review FG-2026-01 · Documentation-only feasibility**
 
 Related sources: [Discussion](DISCUSSION.md), [original feasibility](FEASIBILITY_CONDITIONS_AND_EVIDENCE.md), [competitor comparison](COMPETITOR_FEATURE_COMPARISON_AND_ADOPTION_2026.md), [feedback research](MARKET_FEEDBACK_GAPS_AND_DIFFERENTIATION_2026.md), and [C++ architecture](ADAPTIVE_MOVEMENT_CPP_SERVER_ARCHITECTURE.md).
 

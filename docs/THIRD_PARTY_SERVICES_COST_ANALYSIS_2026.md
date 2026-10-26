@@ -1,8 +1,10 @@
-# Amar-Pola — Third-Party Services Cost Analysis (EXCLUDING Oracle Hosting)
+# Madalasa–Alarka — Third-Party Services Cost Analysis (EXCLUDING Oracle Hosting)
+
+> **Current app names:** **Madalasa** (parent), **Alarka** (child); verified [Madalasa-Alarka GitHub repository](https://github.com/methakon/Madalasa-Alarka). [Brand contract](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 **Document ID:** AP-COST-3P-001  
 **Revision:** 1.0 · **Reviewed:** 2026-10-26 · **Status:** researched engineering/financial estimates; no external provider accounts, bills or quotas verified.  
-**Scope:** All planned **non-Oracle** service dependencies of Amar-Pola, including Google Maps/Places/Roads, Android/Google location APIs, Firebase Cloud Messaging, parent identity, Google Play Billing, optional Drive, and developer registration. **Oracle compute, Oracle block/object storage, Oracle DNS and Oracle monitoring are entirely excluded**; use the independent [OCI Hosting Financial Plan](OCI_CHICAGO_DEPLOYMENT_AND_FINANCIAL_PLAN.md) for those. Domain fees, already allowed for in that hosting plan, are also excluded to avoid double counting.
+**Scope:** All planned **non-Oracle** service dependencies of Madalasa–Alarka, including Google Maps/Places/Roads, Android/Google location APIs, Firebase Cloud Messaging, parent identity, Google Play Billing, optional Drive, and developer registration. **Oracle compute, Oracle block/object storage, Oracle DNS and Oracle monitoring are entirely excluded**; use the independent [OCI Hosting Financial Plan](OCI_CHICAGO_DEPLOYMENT_AND_FINANCIAL_PLAN.md) for those. Domain fees, already allowed for in that hosting plan, are also excluded to avoid double counting.
 
 **PRICING PRECEDENCE (26 October 2026):** [Subscription Plans, Hidden Charges and Play Rules](SUBSCRIPTION_PLANS_PRICING_AND_RULES_2026.md) supersedes the ₹149-per-child/month selling-price assumption below. **₹149 is now a historical sensitivity example only**; the current proposed plans are **₹50/month or ₹500/year per paying child seat**, subject to tax/Play verification. This cost report remains useful for provider service pricing and request volumes, but its Play-fee and per-child-unit-economics totals must be recalculated from the final selected plan. Oracle hosting remains excluded throughout.
 
@@ -55,7 +57,7 @@ Assumptions: India launch, 1,000 **paying** children, ₹149 subscription per ch
 
 ## 2. Included service inventory and alternatives
 
-| Provider / service | Amar-Pola purpose | Release state | Recurring pricing model | Billing owner |
+| Provider / service | Madalasa–Alarka purpose | Release state | Recurring pricing model | Billing owner |
 |---|---|---|---|---|
 | Google Maps SDK for Android | Parent-native map, marker, polyline, trip playback | Core P1 | **No Maps SDK event charge** under current pricing; API key/billing project and terms still required | Google Maps billing project |
 | Android FusedLocationProvider, Activity Recognition, Geofencing APIs | Child's permitted location, motion and geofence evidence | Core, subject to Android grants | **No standalone provider per-observation charge**; device battery/network and Android limits apply | No external per-fix billing |
@@ -106,7 +108,7 @@ Maps_INR = sum(monthly_USD) × **95**.
 
 ### Cost and data-minimization guardrails
 
-1. Show already saved parent labels from Amar-Pola database. Do **not** geocode or call Places for every raw GPS point, map refresh, guardian or trip stop.
+1. Show already saved parent labels from Madalasa–Alarka database. Do **not** geocode or call Places for every raw GPS point, map refresh, guardian or trip stop.
 2. Cache only to the extent permitted by Google Maps Platform terms; app-owned user-entered place names are separate from storing licensed Maps content.
 3. Autocomplete after a meaningful typing threshold with 300–500 ms debounce; select API correctly with session token/termination and **identify actual billed SKU** from Cloud Billing before trusting the request-level model.
 4. Retrieve **Place IDs or permitted Essentials fields** where sufficient; extra fields can trigger Pro/Enterprise billing.

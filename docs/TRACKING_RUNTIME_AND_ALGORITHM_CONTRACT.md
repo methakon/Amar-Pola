@@ -1,4 +1,6 @@
-# Amar-Pola — Adaptive Android Runtime, Movement Algorithms and Quality Test Contract
+# Madalasa–Alarka — Adaptive Android Runtime, Movement Algorithms and Quality Test Contract
+
+> **Current app names:** **Madalasa** (parent), **Alarka** (child); verified [Madalasa-Alarka GitHub repository](https://github.com/methakon/Madalasa-Alarka). [Brand contract](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 **Version:** 1.0 | **Date:** 2026-10-25 | **Status:** Testable design; NOT proven on real devices
 **Covers:** FR-002–005, FR-015–021, FR-024, FR-028, FR-030–033, FR-036, FR-038, FR-042–043 and NFR-001/006/011.
