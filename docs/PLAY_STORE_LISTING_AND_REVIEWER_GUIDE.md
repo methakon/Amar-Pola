@@ -91,3 +91,7 @@ Allowed marketing themes: “family location history”, “parental device supe
 ## New two-app public names (owner-approved)
 
 **Parent app:** **Madalasa — Family Safety** (candidate listing title). **Child companion:** **Alarka — Family Safety Companion** (candidate listing title). Each needs independent Play publisher and data disclosures. Alarka must display visible child-monitoring notifications and ask permissions on the child's phone. No guaranteed emergency dispatch or covert capture claims; app IDs and titles still require store verification.
+
+## Conditional media features: no premature reviewer or listing claims (2026-10-26)
+
+Owner accepts media and scoped-file **R&D** with exact parent-facing failure explanations. Do not advertise/bill these features as released, pretend media works on all Android devices, claim hidden listening or suppress system camera/mic indicators. Alarka main Activity normally stays closed after initial setup but monitoring notification, app icon, sensor indicators and required child-visible prompts remain. Android MediaProjection screen viewing requires fresh system consent for each session. If the feature is ever submitted, verify every relevant Android/OEM/standard/managed-device scenario, accurate monitoring disclosure, guardian verification, manifest/FGS permissions, children/Families eligibility, privacy and recording retention. [MA-MEDIA-ADR-001](MEDIA_CAPABILITY_PARENT_REASON_AND_RUNTIME_DECISION_2026.md). Commercial feature flag stays OFF until release gates pass.

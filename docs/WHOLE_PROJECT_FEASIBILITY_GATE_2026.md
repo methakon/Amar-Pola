@@ -99,3 +99,9 @@ Stop/re-scope attempts to bypass Android privacy controls, enumerate other apps'
 - Roads snap-to-roads: https://developers.google.com/maps/documentation/roads/snap
 
 **Result:** Core additions join the specification; conditionally feasible additions require specific tests, feature flags and fallbacks; deferred/unavailable features are not silently represented as shipped capabilities.
+
+## 2026-10-26 interpretation: conditional does not mean impossible
+
+The owner accepts investigating **technically achievable under documented conditions** one-way audio/recording, remote camera snapshots/live/video, flash-off where supported, MediaProjection with fresh Android permission each session and allowed MediaStore/SAF file/media listing. These remain **RESTRICTED P3 / RELEASE-DISABLED** until security, device, India legal and Google Play evidence exists. Initial granted CAMERA/RECORD_AUDIO permissions never guarantee later STANDARD background sensor service startup; eligible on-device interaction or genuine device-owner exception requires testing. Alarka's main Activity may stay closed after setup without disguising sensor indicators or required notification.
+
+**Required parent outcome:** when an action cannot operate, Madalasa explains **verified exact cause and safe next action** using `Command.status + reason_code`, not generic failure; DEVICE_OFFLINE/UNKNOWN cannot be labeled permission denied. See [MA-MEDIA-ADR-001](MEDIA_CAPABILITY_PARENT_REASON_AND_RUNTIME_DECISION_2026.md) for scope, reason codes and T-MEDIA tests. No legal/Play release gate has been waived.

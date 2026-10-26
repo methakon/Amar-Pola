@@ -5580,6 +5580,31 @@
       }
     }
   },
+  "x-planned-media-parent-error-contract": {
+    "status": "RESEARCH_P3_NOT_RELEASED",
+    "design_reference": "docs/MEDIA_CAPABILITY_PARENT_REASON_AND_RUNTIME_DECISION_2026.md",
+    "command_shape": "Existing Command.status and nullable Command.reason_code; finalize as enum in a future versioned API change, not M1",
+    "parent_ui_rule": "Only verified Alarka reason; offline and stale state cannot be assumed to mean permission denied; no completion before capture or session proof",
+    "reason_codes_proposed": [
+      "FEATURE_NOT_RELEASED",
+      "DEVICE_NOT_REACHABLE",
+      "MICROPHONE_PERMISSION_MISSING",
+      "CAMERA_PERMISSION_MISSING",
+      "MEDIA_SCOPE_NOT_GRANTED",
+      "BACKGROUND_SENSOR_START_BLOCKED",
+      "MANAGED_ENROLLMENT_REQUIRED",
+      "CHILD_DEVICE_ACTION_REQUIRED",
+      "SCREEN_SHARE_CONSENT_REQUIRED",
+      "SENSOR_UNAVAILABLE",
+      "PROTECTED_SCREEN_CONTENT",
+      "NETWORK_OR_RELAY_UNAVAILABLE",
+      "LOCAL_STORAGE_UNAVAILABLE",
+      "SESSION_INTERRUPTED",
+      "CAPABILITY_STATUS_STALE"
+    ],
+    "android": "Alarka main Activity normally closed; required notification/indicators remain; standard and true device owner distinct; screen share needs new consent per session",
+    "release": "No media operations or release permission declared by this vendor extension"
+  },
   "x-product-apps": {
     "guardian": "Madalasa",
     "child": "Alarka",

@@ -308,3 +308,10 @@ This section is a **binding specification/release gate** for all existing FRs/NF
 
 All are mandatory go/no-go gates; implementing synthetic-data algorithms is allowed before legal signoff.
 
+## 2026-10-26 FR-008/009/010 clarification: accepted conditional media and failure reasons
+
+The product owner accepts conditional engineering research of FR-009 remote live camera/front-rear snapshots/video and flash-off where supported; FR-010 one-way live microphone listening and encrypted parent-local recording; and FR-008 scoped app-owned/shared MediaStore/SAF file listing and transfer. These are **not** current production entitlements and require execution-time permission, platform context, child transparency, guardian scope, legal and Play gating. The Alarka main Activity normally remains closed after setup; required monitoring notification and system sensor indicators remain. STANDARD and genuine MANAGED_DEVICE_OWNER must be tested separately. Android MediaProjection live screen view requires a fresh child-device system consent **per capture session** and cannot be permanently granted at installation.
+
+For every unavailable request, Madalasa **SHALL report actual command state, verified reason code, and safe next action**, including user/device permission revoked, Android background sensor-start restriction, child interaction needed, managed-only setup, device offline/unknown, unavailable sensor, file-scope rejection, network interruption, and timeout. Server delivery/FCM acceptance is not capture completion. A snapshot/recording requires real file/capture receipt; live media has authenticated session-established/streaming/stopped substates. Never infer a specific sensor defect from a stale/offline device.
+
+These are testable design requirements, not implementation evidence. FR-009/010 remain research P3 and feature-flagged off in commercial builds pending device certification, security, India legal and Play release gates. [MA-MEDIA-ADR-001](MEDIA_CAPABILITY_PARENT_REASON_AND_RUNTIME_DECISION_2026.md) defines reasons and T-MEDIA-01–18.

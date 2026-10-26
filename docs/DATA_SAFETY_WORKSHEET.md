@@ -113,3 +113,9 @@ Reference: [Indian minor privacy and Chicago legal gate](INDIA_DPDP_CHILD_PRIVAC
 ## Package-specific naming
 
 Prepare separate actual Google Play Data Safety submissions for **Madalasa** (guardian Android package) and **Alarka** (child companion), matching SDK/API behavior and declared purpose. Repository rename does not change applicationIds or publisher account identifiers automatically.
+
+## 2026-10-26 proposed P2P media flow and parent explanations (research only)
+
+The owner accepts conditionally feasible live audio/recording, remote camera/snapshots/video, MediaProjection consent per session, and scoped file/media access as **technical research**. A possible architecture encrypts capture on Alarka, sends direct P2P or via encrypted TURN, stores **no media files on VPS**, and optionally encrypts recordings on Madalasa. The **actual eventual released** Data safety inventory must still include capture/transmission, signaling/IP/session metadata, child disclosure and permission scope, device storage and backups, optional Google Drive transfers and subprocessors. No VPS media archive does **not** mean no collection or processing. Public disclosures require evidence of the delivered architecture.
+
+Parent sees actual device-verified `Command.status + reason_code` for unavailable operation, including revoked media grant, permitted sensor context absent, or child screen-share consent needed. Alarka Activity normally closes after setup but monitoring notification and OS indicators remain visible. Commercial CAMERA/RECORD_AUDIO/MediaProjection permissions remain disabled/not included unless later approved by India legal, OS/OEM, security and Google Play gates. Reference: [MA-MEDIA-ADR-001](MEDIA_CAPABILITY_PARENT_REASON_AND_RUNTIME_DECISION_2026.md).

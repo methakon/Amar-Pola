@@ -137,3 +137,9 @@ Store actual evidence in protected CI/test storage and reference hashes/IDs here
 - [Blockers](BLOCKERS_AND_OWNER_DECISIONS.md): owner decisions and engineering/external gates.
 
 **Current closure:** 49 FR + 16 NFR have planned coverage IDs. **Zero tests or release artifacts are evidenced by this document.**
+
+## Media conditional feasibility + parent reason traceability (2026-10-26)
+
+Owner-accepted research only (no production enablement): FR-008 scoped MediaStore/SAF browsing and transfer → `T-MEDIA-11`; FR-009 photo/live camera/video/flash-off → `T-MEDIA-01–04,06–08,12–18`; FR-010 one-way audio and authorized encrypted parent-local recording → `T-MEDIA-01–05,08,12–18`. MediaProjection per-session consent, secure screen and stoppage → `T-MEDIA-09–10`. Parent-specific failure explanation, runtime status and safe next action → `T-MEDIA-01,05–06,09–14,16`. India-law/Google Play/feature-gate negative tests → `T-MEDIA-18`.
+
+**NOT_IMPLEMENTED / NOT_TESTED; research P3; commercial media flag OFF**. Definitions: [MA-MEDIA-ADR-001](MEDIA_CAPABILITY_PARENT_REASON_AND_RUNTIME_DECISION_2026.md). No implication that M1 or any physical Android verification is complete.

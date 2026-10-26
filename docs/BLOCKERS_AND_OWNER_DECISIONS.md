@@ -167,3 +167,11 @@ See [MA-COMPLIANCE-001 Government/Legal/Play Risk Assessment](INDIA_GOVERNMENT_L
 | **G05 / R22** | **HIGH OPEN** | Build/API 36, 16KB native ABI, Android permissions and device-owner physical acceptance, no fake success. |
 
 These **add to**, and do not close, B-01 legal publisher, B-02 exact launch ages, B-07 retention, B-09/B-18 guardian grants, OCI-06 verifiable identity, HW-01 resettable phones, B-21 staffing/budget, SOS and disaster recovery blockers.
+
+## B-16 clarification — owner accepted media R&D and reason-specific parent UX (2026-10-26)
+
+**Owner decision:** CONDITIONAL media research is **accepted** for one-way live audio, optional authorized recording, remote live camera, front/rear photo snapshots, flash-off where possible, authorized video, per-session-consented screen view and permitted MediaStore/SAF files. Do not interpret "defer media" in B-16 as owner rejection of proof-of-concept work. **B-16 commercial release / Play inclusion remains OPEN and default OFF.** Standard installation and actual device-owner DPC mode must be tested separately. Alarka main Activity is normally closed after setup, but monitoring notification and OS sensor indicator remain visible.
+
+**Product requirement:** Madalasa reports verified `Command.status + reason_code` and safe next action when a media/file request is unavailable, specifically Android background start blocked, permission revoked, user notification/system consent required, true managed enrollment required, unavailable hardware, phone offline, expired request, or network trouble. Unknown/offline must never be misdiagnosed as missing permission. Android MediaProjection must obtain system approval for each session.
+
+**Still open:** legal publisher/guardian authority, India child-data purpose and Play/Families classification, managed-device real proof, physical OS/OEM test fleet, active session consent/retention, device encryption/key management, optional parent-local recordings, India OCI region relay bills/concurrency and funded security audits. [MA-MEDIA-ADR-001](MEDIA_CAPABILITY_PARENT_REASON_AND_RUNTIME_DECISION_2026.md).

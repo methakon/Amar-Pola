@@ -75,3 +75,9 @@ reviewer: null
 ## 6. Promotion to supported status
 
 Promote a configuration from `N/T` to `P`/ `C` only with a reproducible test, matching build hash, evidence and owner approval. Product feature flags must be computed from actual verified combination; don't infer that “Android 14 supports X” simply from an API's existence.
+
+## 7. Conditional media and reason-UX test expansion (2026-10-26)
+
+**RESEARCH / NOT TESTED:** Alarka main Activity stays closed after setup, but monitoring notification and Android camera/microphone indicators must remain discoverable. Run `T-MEDIA-01–18` from [MA-MEDIA-ADR-001](MEDIA_CAPABILITY_PARENT_REASON_AND_RUNTIME_DECISION_2026.md) independently on STANDARD and genuine MANAGED_DEVICE_OWNER physical devices across Android 10–16 candidates; normal Device Administrator cannot be treated as fully managed. Test start vs continuation of camera/microphone FGS, OS 14+ while-in-use checks, on-device notification interaction, denied/revoked permissions, camera/mic system toggle, locked/offline/killed phone, power saver, sensor busy, network switch and explicit session stop.
+
+**Parent proof:** capture `Command.status`, actual `reason_code`, parent-facing copy and safe next step for every outcome; do not infer permission failures from offline/stale capability snapshots. Validate per-session Android MediaProjection consent, FLAG_SECURE exclusion, MediaStore/SAF allowed roots/revocation, snapshot flash-off on actual devices, no VPS stored media and guardian-revocation stop. Extend every device-test record with `requested_feature`, `fgs_type`, `actual_permission_at_execution`, `enrollment_mode`, `parent_status`, `parent_reason`, `indicator_visible`, `command_receipt`, `stream_stopped`, and `evidence_id`. Remain N/T until physical proof.

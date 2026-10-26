@@ -86,3 +86,7 @@ Provider wording must list **Oracle OCI Chicago, United States** *if actually de
 ## Explicit app identities (2026-10-26)
 
 **Madalasa** is the parent/guardian Android application and **Alarka** is the child-device companion. Final policy must disclose each app's actual information processing, monitoring permissions, third parties and rights separately. The draft is NOT approved or published; legal publisher, retention and India DPDP basis remain open.
+
+## Internal media architecture option — not a published privacy policy (2026-10-26)
+
+Owner accepted research of conditionally supported audio listening/recording, live camera/snapshot/video, per-session-consented screen viewing and authorized files. Proposed encrypted P2P/TURN transfer without **VPS media-file storage**, with optional encrypted Madalasa-local recording, is **not** a representation that the service does not collect/process/transmit personal media data. Any real release policy must disclose device capture, bystanders, endpoint storage and backup, transfer, processors/IP metadata, retention, deletion, who can access, purpose-specific child/guardian authority and indicators. Alarka Activity normally stays closed after setup while monitoring notification/system privacy indicators remain. No minor-media pilot or media marketing until counsel/Play/device/security signoff. [MA-MEDIA-ADR-001](MEDIA_CAPABILITY_PARENT_REASON_AND_RUNTIME_DECISION_2026.md).

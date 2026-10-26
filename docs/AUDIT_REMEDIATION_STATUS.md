@@ -113,3 +113,6 @@ This ledger should be updated when code commits, test results or third-party app
 
 **No changes to earlier AG-001–AG-026 original finding counts.** These are additive design controls. Do not close an audit item merely because a document exists; actual owner decisions, code tests, legal memoranda, hardware trials and vendor/OCI billing verification are the evidence required.
 
+## 2026-10-26 documentation-only media design clarification
+
+New [MA-MEDIA-ADR-001](MEDIA_CAPABILITY_PARENT_REASON_AND_RUNTIME_DECISION_2026.md) records owner acceptance of **conditional media technical research** and verified, actionable Madalasa parent failure reasons. Existing compatibility, privacy, Android security, Google Play and legal release blockers **remain OPEN**. This documentation clarification does not establish implemented code, tested devices, published media features, approved child-data processing, or a closed security audit. T-MEDIA-01–18 are planned, NOT_TESTED. Audit remediation status should not be upgraded merely because these specification links exist.
