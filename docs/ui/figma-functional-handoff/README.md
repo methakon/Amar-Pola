@@ -84,3 +84,7 @@ Related:
 ## Current app launcher names and unsynced Figma sample labels
 
 All new Android launcher/app listing work should use **Madalasa** (parent) and **Alarka** (child) as the current brand names. Screen JSON sources provide per-screen role metadata; legacy Figma headings/screenshot layers still need a separate visual-edit pass when integration rate limits allow. Do not interpret historical rendered captions as published app names. Repository is now [Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka).
+
+## Legal/Google Play feature flag status from October 2026 assessment
+
+All 81 Figma screens remain useful **UX design specifications**, but the [Government / Legal / Google Play assessment](../../INDIA_GOVERNMENT_LEGAL_GOOGLE_PLAY_PROJECT_RISK_ASSESSMENT_2026.md) is the release gate. Alarka GPS/background location requires written Google Play eligibility under Families and qualified India counsel; route history, usage and behavioural insights default OFF; DPC controls lab-only; covert remote audio/video EXCLUDED; SOS only best-effort check-in until independently tested. **Do not implement a disabled mockup as a shipped permission or processing feature merely because its screen exists.**

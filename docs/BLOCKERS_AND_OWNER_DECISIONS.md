@@ -153,3 +153,17 @@ The owner has chosen **India-region preference** to avoid unnecessary primary OC
 Canonical milestones now [M0–M9](MASTER_MILESTONE_IMPLEMENTATION_AND_RELEASE_PLAN.md). M1-only [OpenAPI](openapi-m1.yaml), [RLS migration](../backend/persistence/migrations/0001_m1_identity.sql), [two-family negative test](../backend/tests/m1_tenant_isolation.sql), [14 M1 test cases](../backend/tests/M1_ACCEPTANCE_TEST_CASES.md) and [CI workflow](../.github/workflows/m1-contract-and-tenant.yml) are committed. API structural validation is green; PostgreSQL actual execution, Kotlin/C++ code, hardware and Play/legal gates **are not** proven.
 
 Owner answers still needed: legal publisher B-01; exact Indian children ages and guardian proof B-02; raw/location/history/audit/backup retention B-07; who can invite/revoke guardians and scope B-09/B-18; final login vendor/adult-verification plan OCI-06; actual test-device inventory/resettable handset HW-01; team size and monthly budget B-21. No secrets, identity scans or real child records in public GitHub.
+
+## K. New government/Google Play release gate — 2026-10-26
+
+See [MA-COMPLIANCE-001 Government/Legal/Play Risk Assessment](INDIA_GOVERNMENT_LEGAL_GOOGLE_PLAY_PROJECT_RISK_ASSESSMENT_2026.md).
+
+| ID | Status | Owner decision / evidence |
+|---|---|---|
+| **G01 / R01** | **CRITICAL OPEN** | Verify Alarka exact Google Play audience and get product-specific Google Play interpretation of Families ban on precise location collection by solely child-targeted apps vs parental monitoring policy. Never falsely label age. **No child GPS release** before this. |
+| **G02 / R02** | **CRITICAL OPEN** | Qualified India counsel confirms commercial real-time safety location Rule Part B item 4 scope separately from history, usage, behavioral inference, custody/parent verification. |
+| **G03 / R12/R17** | **HIGH OPEN** | Decide data category retention plus CERT-In 6h incident reporting/180d India logs and prospective DPDP year logs/breach notice. |
+| **G04 / R05/R19** | **HIGH OPEN** | Two accurate Play App Content/target audience/manifest/monitoring disclosure, privacy and Data Safety submissions with final package evidence. |
+| **G05 / R22** | **HIGH OPEN** | Build/API 36, 16KB native ABI, Android permissions and device-owner physical acceptance, no fake success. |
+
+These **add to**, and do not close, B-01 legal publisher, B-02 exact launch ages, B-07 retention, B-09/B-18 guardian grants, OCI-06 verifiable identity, HW-01 resettable phones, B-21 staffing/budget, SOS and disaster recovery blockers.

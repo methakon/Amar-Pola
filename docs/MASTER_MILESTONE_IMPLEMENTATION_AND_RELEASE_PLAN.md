@@ -72,3 +72,7 @@ Use [M1 Detailed Plan](M1_ANDROID_CPP_ARCHITECTURE_AND_IMPLEMENTATION.md) as tec
 | OCI Chicago plan | Historical cost/architecture annex; India Mumbai preferred for new deployment, pending actual tenancy/repriced resources |
 
 **No owner facts invented:** publisher, Indian age bands, retention policy, guardian policy, approved login provider, actual test devices and funded staffing remain pending owner decisions. These are **M0 blockers**, not reasons to simulate legal approval. Review [Blockers](BLOCKERS_AND_OWNER_DECISIONS.md).
+
+## 2026-10-26 Compliance amendment — NEW M0/M2 hard gate
+
+The [Indian Government / Legal / Google Play project assessment](INDIA_GOVERNMENT_LEGAL_GOOGLE_PLAY_PROJECT_RISK_ASSESSMENT_2026.md) is the current cross-cutting policy risk register. **M0 now explicitly requires G01:** determine the truthful Alarka target audience and obtain written product-specific Google Play policy resolution of its **solely-child-targeted app location restriction** versus eligible parental monitoring app policy. **G02:** obtain India counsel memo differentiating narrow real-time safety location from history/usage/behavioral monitoring and verifying guardian authority. **No actual child GPS on M2/M3 or Play submission** without both signed gates; no bypass via inaccurate age targeting or alternate APK. M1 synthetic secure pairing and permission instructions may continue. Cert-In 6h incident and 180d India logs and future DPDP one-year processing logs need separate privacy/retention review.

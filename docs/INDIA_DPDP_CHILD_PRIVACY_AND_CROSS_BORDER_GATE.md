@@ -105,3 +105,7 @@ Retention does **not** start automatically merely because a number appears in a 
 ## 8. India-primary region option supersedes original Chicago preference
 
 The user has selected **India OCI location as preferred** for new infrastructure: Mumbai (ap-mumbai-1), Hyderabad fallback, subject to tenancy home-region/availability/pricing. The original Chicago-specific analysis is retained as a contingency in case of US processing or third-party transfer, **not** the current recommended deployment. Domestic OCI hosting may simplify the primary storage transfer question, but Google/Firebase/identity processors, support, backup replication and any cross-border handling still need mapping. Section 9, Rule 10/12 under-18 consent/behavioral-monitoring questions and exact ages/lawful guardian proof remain open. [India region decision](INDIA_REGION_AND_M0_OWNER_DECISION_GATE.md).
+
+## 2026-10-26 Cross-policy assessment addendum
+
+The [MA-COMPLIANCE-001 official-source assessment](INDIA_GOVERNMENT_LEGAL_GOOGLE_PLAY_PROJECT_RISK_ASSESSMENT_2026.md) adds: **(1)** Google Play Families restriction on location collection by apps solely targeted to children and unresolved compatibility with the parental-monitoring-app exception; **(2)** CERT-In incident reporting six-hour and ICT-log 180-day India obligations for covered entities; **(3)** future DPDP Rule 6/8 processing/log retention reconciliation; **(4)** Android API36 and background while-in-use policy. **Narrow DPDP real-time location allowance does not override Google Play or Android security rules.**
