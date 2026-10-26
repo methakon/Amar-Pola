@@ -2,7 +2,7 @@
 
 **Date:** 2026-10-26  
 **Decision status:** Product/app display names **APPROVED BY OWNER REQUEST**; Google Play availability, trademark, Android package IDs, icon assets and publisher identity **NOT VERIFIED**.  
-**Legacy repository and planning code name:** Amar-Pola — **unchanged** to preserve GitHub links, migration history, tests, documentation cross-references and stable IDs.
+**Requested GitHub repository name:** **`methakon/Madalasa-Alarka`**. **Rename requested by owner**, but NOT yet executed because this connected GitHub app has `push: true`, `admin: false` and exposes no rename-repository action. Current live repository **remains `methakon/Amar-Pola`** until its admin performs the change. Do not assert that the new URL exists until verified. Keep low-level package IDs, authentication audiences and migrations stable independently of repository name.
 
 ## 1. Product family and app names
 
@@ -11,7 +11,7 @@
 | **Parent/guardian Android application** | **Madalasa** | Family setup, verified guardians, secure child enrollment, available device observation, alerts, lawful child-purpose privacy controls, billing |
 | **Child Android companion application** | **Alarka** | Transparent enrollment, device identity, on-device Android permission instructions, honest permission/health/synchronization states and child-initiated check-ins |
 | **Connected service/product concept** | **Madalasa & Alarka** (or **Madalasa–Alarka Family Safety**) | Names of paired applications; neither app requires a religion, spiritual belief or faith assertion to use it |
-| **Repository identifier / historical project working name** | **Amar-Pola** | Remains the actual repository path https://github.com/methakon/Amar-Pola and a legacy engineering identifier; **do not** present it as the current consumer app title |
+| **Repository (rename desired)** | **`Madalasa-Alarka`** | Target GitHub name. **Current repository `Amar-Pola` remains active until admin completes GitHub Settings → General → Repository name.** Existing source history stays in same repository after an in-place GitHub rename. |
 
 **App launcher label:** “Madalasa” on guardian phone; “Alarka” on child phone.  
 **Paired onboarding labels:** “Install Alarka on your child's Android phone”, “Open Alarka on the child phone”, “Pair Alarka with Madalasa”, “Continue with Google” in Madalasa (Google login remains a technical candidate; identity alone does not prove custody).  
@@ -69,7 +69,7 @@ Avoid “divine remote seeing”, “watch every step in secret”, “unbreakab
 
 ## 5. Developer migration checklist and unresolved public-release matters
 
-**Documentation-only rename:** User-visible names are specified; code packages have not been authored/renamed as part of this update. Plan a later atomic Android implementation migration:
+**Brand naming and repository rename preparation:** The requested user-facing names and GitHub target are specified; the actual repository rename requires GitHub admin access, and code packages have not been created/renamed as part of this update. Plan a later atomic Android implementation migration:
 1. Separate Gradle app modules \`parent-android\` and \`child-android\` (or chosen names); launcher strings use **Madalasa** and **Alarka**.
 2. Choose **two unique immutable application IDs** **before first Play upload**. Example placeholders may be \`<approved.domain>.madalasa\` and \`<approved.domain>.alarka\` only after publisher domain approval; **do not use a guessed owner domain**.
 3. Establish parent OIDC OAuth app identity, Alarka Android Keystore enrollment identity, matching package signature pinning and Google Play Console app declarations. Never assume changing display label changes authorization/crypto.
@@ -77,10 +77,10 @@ Avoid “divine remote seeing”, “watch every step in secret”, “unbreakab
 5. Update parent/child Figma screen titles and linked Eraser/tldraw visuals during next connected visual-design sync. **Existing saved visual canvases still contain legacy “Amar-Pola” text**, since documentation changes do not automatically update Figma/Eraser/tldraw. Their current links remain valid.
 6. Google Play listings and legal notices must name the correct publisher and app separately, and cover India DPDP child-age, purpose, storage/processor, deletion and grievance rules.
 7. Check name availability/trademark/IP and pronunciation; approved publishing name and support URL still open (B-01/B-02).
-8. Preserve historical citations, GitHub repository URLs and stable M1 OpenAPI data contracts. Any future consumer-domain or GitHub repo rename needs a separate migration/redirect plan.
+8. **Perform the explicitly requested GitHub rename** in repository Settings → General → Repository name → `Madalasa-Alarka` by a GitHub account with admin access. Confirm `https://github.com/methakon/Madalasa-Alarka` resolves; update `git remote set-url origin https://github.com/methakon/Madalasa-Alarka.git` on any clones and update repo-linked documentation URLs. GitHub usually redirects old URLs, but do not depend on redirects for permanent records. Keep stable M1 OpenAPI and data/crypto contracts.
 
 ## 6. Documentation precedence and scope
 
-This naming and narrative policy **supersedes older use of “Amar-Pola” as a consumer application title** in the README, SRS, technical specs, architecture diagrams, SRS labels, onboarding and Play/privacy draft descriptions. It **does not** replace repo/org names, filenames, paths, historical references, or code/SQL/OpenAPI identifiers by default. When an old file says “Amar-Pola Parent App”, read **Madalasa**. When it says “Amar-Pola Child App”, read **Alarka**.
+This naming and narrative policy **supersedes older use of “Amar-Pola” as a consumer application title** in the README, SRS, technical specs, architecture diagrams, onboarding and Play/privacy drafts. **The GitHub repository itself is also to be renamed `Madalasa-Alarka`** once an administrator performs the change. Filenames, package IDs, database and OpenAPI identifiers remain stable unless explicitly migrated. When an old file says “Amar-Pola Parent App”, read **Madalasa**. When it says “Amar-Pola Child App”, read **Alarka**.
 
 **The design remains a transparent, legally constrained family-safety product. Naming inspired by mythology does not change the Android security model, children's consent and privacy duties, or the product's approved feature set.**
