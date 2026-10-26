@@ -1,6 +1,8 @@
 # Security Architecture, Threat Model and Operations
 
-**Amar-Pola | Draft 2026-10-25**
+> **Current app names:** **Madalasa** (guardian/parent), **Alarka** (child companion). GitHub repository [Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka), renamed 2026-10-26. [Source story and naming contract](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
+
+**Madalasa–Alarka | Draft 2026-10-25**
 
 ## 1. Security priorities
 

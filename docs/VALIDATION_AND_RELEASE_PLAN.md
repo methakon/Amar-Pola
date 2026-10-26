@@ -1,6 +1,8 @@
 # Verification, Test Evidence, and Release Roadmap
 
-**Amar-Pola | 2026-10-25 | Plan — no tests executed**
+> **Current app names:** **Madalasa** (guardian/parent), **Alarka** (child companion). GitHub repository [Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka), renamed 2026-10-26. [Source story and naming contract](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
+
+**Madalasa–Alarka | 2026-10-25 | Plan — no tests executed**
 
 ## 1. Feature quality gates
 

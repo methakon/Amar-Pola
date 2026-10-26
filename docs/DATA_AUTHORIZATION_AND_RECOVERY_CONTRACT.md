@@ -1,4 +1,6 @@
-# Amar-Pola — Canonical Data, Authorization, Event Recovery and Deletion Contracts
+# Madalasa–Alarka — Canonical Data, Authorization, Event Recovery and Deletion Contracts
+
+> **Current app names:** **Madalasa** (guardian/parent), **Alarka** (child companion). GitHub repository [Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka), renamed 2026-10-26. [Source story and naming contract](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 **Version:** 1.0 (implementation design) | **Date:** 2026-10-25 | **Status:** NOT EXECUTED/NOT MIGRATED  
 **Linked SRS:** FR-001, FR-006, FR-013, FR-022–FR-027, FR-029, FR-032, FR-034, FR-035, FR-040 and all data-bearing requirements.

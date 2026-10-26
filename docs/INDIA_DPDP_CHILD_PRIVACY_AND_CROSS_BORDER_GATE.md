@@ -1,4 +1,6 @@
-# Amar-Pola — India DPDP Child Privacy, Consent and Chicago Cross-Border Legal Gate
+# Madalasa–Alarka — India DPDP Child Privacy, Consent and Chicago Cross-Border Legal Gate
+
+> **Current app names:** **Madalasa** (guardian/parent), **Alarka** (child companion). GitHub repository [Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka), renamed 2026-10-26. [Source story and naming contract](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 **Status:** ENGINEERING/LEGAL ISSUE BRIEF — NOT LEGAL ADVICE OR APPROVAL  
 **Reviewed:** 2026-10-26 | **Applies to:** India-first launch, children under 18, parent/guardian app, Oracle OCI Chicago (US)  

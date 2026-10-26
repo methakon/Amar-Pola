@@ -1,4 +1,6 @@
-# Amar-Pola — ₹50/₹500 Break-Even, Staffing and Capacity Gate
+# Madalasa–Alarka — ₹50/₹500 Break-Even, Staffing and Capacity Gate
+
+> **Current app names:** **Madalasa** (guardian/parent), **Alarka** (child companion). GitHub repository [Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka), renamed 2026-10-26. [Source story and naming contract](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 **Status:** decision model; not validated profit forecast, not a hiring plan.  
 **Date:** 2026-10-26 | **Authoritative sale-price proposal:** [Subscription Plans](SUBSCRIPTION_PLANS_PRICING_AND_RULES_2026.md).  

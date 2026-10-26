@@ -1,10 +1,12 @@
-# Amar-Pola — Oracle Cloud Chicago Deployment, Capacity and Financial Plan
+# Madalasa–Alarka — Oracle Cloud Chicago Deployment, Capacity and Financial Plan
+
+> **Current app names:** **Madalasa** (guardian/parent), **Alarka** (child companion). GitHub repository [Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka), renamed 2026-10-26. [Source story and naming contract](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 **Decision reference:** OCI-CHI-001  
 **Revision:** 1.0 · **Research/pricing checked:** 2026-10-25  
 **Selected target home region:** US Midwest Chicago, **us-chicago-1** (OCI commercial realm OC1; three availability domains).  
 **Status:** **Deployment plan committed; Oracle tenancy/VM NOT created; no cloud credentials or active instance were available in this session.**  
-**Project:** [Amar-Pola](../README.md), [Canonical Technical Specification](TECHNICAL_SPECIFICATION.md), [Secure M1 Implementation](M1_ANDROID_CPP_ARCHITECTURE_AND_IMPLEMENTATION.md), [Data/Security Contract](DATA_AUTHORIZATION_AND_RECOVERY_CONTRACT.md), [Blocker Register](BLOCKERS_AND_OWNER_DECISIONS.md).
+**Project:** [Madalasa–Alarka](../README.md), [Canonical Technical Specification](TECHNICAL_SPECIFICATION.md), [Secure M1 Implementation](M1_ANDROID_CPP_ARCHITECTURE_AND_IMPLEMENTATION.md), [Data/Security Contract](DATA_AUTHORIZATION_AND_RECOVERY_CONTRACT.md), [Blocker Register](BLOCKERS_AND_OWNER_DECISIONS.md).
 
 ## 1. Executive decision, why Chicago, and what is unverified
 
@@ -161,7 +163,7 @@ For a real 31-day month, use actual 744 hours. Free hours and GB-hours apply to 
 
 Two separate columns prevent a false “free commercial operations” claim:
 1. **A1 compute:** calculated against Oracle published allowances.
-2. **Planning reserve:** illustrative **noncompute/operational contingency** set by Amar-Pola planning for domains, independent encrypted backups, monitoring, billing reconciliation and unmeasured external charges. **Not an OCI quoted charge and NOT a sufficient staffed 24/7 support budget.** Adjust it after provider bills.
+2. **Planning reserve:** illustrative **noncompute/operational contingency** set by Madalasa–Alarka planning for domains, independent encrypted backups, monitoring, billing reconciliation and unmeasured external charges. **Not an OCI quoted charge and NOT a sufficient staffed 24/7 support budget.** Adjust it after provider bills.
 
 **Scenarios (monthly 730-hour model):**
 

@@ -1,4 +1,6 @@
-# Amar-Pola — India OCI Region and M0 Owner Decision Gate
+# Madalasa–Alarka — India OCI Region and M0 Owner Decision Gate
+
+> **Current app names:** **Madalasa** (guardian/parent), **Alarka** (child companion). GitHub repository [Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka), renamed 2026-10-26. [Source story and naming contract](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 **Decision version:** 2026-10-26 | **Status:** User indicated preference for Indian hosting to avoid unnecessary US transfer issues; engineering direction updated, legal and cloud signoffs still open.
 

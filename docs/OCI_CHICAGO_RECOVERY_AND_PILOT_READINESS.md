@@ -1,4 +1,6 @@
-# Amar-Pola — OCI Chicago Recovery, Backup and Pilot Readiness
+# Madalasa–Alarka — OCI Chicago Recovery, Backup and Pilot Readiness
+
+> **Current app names:** **Madalasa** (guardian/parent), **Alarka** (child companion). GitHub repository [Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka), renamed 2026-10-26. [Source story and naming contract](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 **Status:** Architecture decisions and test gates; no OCI tenancy, backup or failover has been deployed.  
 **Reviewed:** 2026-10-26 | **Authority:** [OCI infrastructure plan](OCI_CHICAGO_DEPLOYMENT_AND_FINANCIAL_PLAN.md), [security operations](SECURITY_AND_OPERATIONS.md), [data-erasure contract](DATA_AUTHORIZATION_AND_RECOVERY_CONTRACT.md).

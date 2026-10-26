@@ -1,4 +1,6 @@
-# Amar-Pola — SOS Delivery, Escalation and Independent Fallback Contract
+# Madalasa–Alarka — SOS Delivery, Escalation and Independent Fallback Contract
+
+> **Current app names:** **Madalasa** (guardian/parent), **Alarka** (child companion). GitHub repository [Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka), renamed 2026-10-26. [Source story and naming contract](BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 **Status:** DESIGN ONLY; **SOS emergency-grade claim is blocked** until tested.  
 **Date:** 2026-10-26 | Related: SRS FR-044/049, [Command/SOS protocol](COMMAND_SOS_USAGE_QUEUE_CONTRACT.md), [Hosting resilience](OCI_CHICAGO_RECOVERY_AND_PILOT_READINESS.md), [Third-party cost](THIRD_PARTY_SERVICES_COST_ANALYSIS_2026.md).
