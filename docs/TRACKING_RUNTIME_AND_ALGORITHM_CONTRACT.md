@@ -153,3 +153,7 @@ Device matrix should include API29–36 where genuinely supported; Pixel + selec
 - Roads Snap to Roads: https://developers.google.com/maps/documentation/roads/snap
 
 **Status:** Algorithm settings are versioned, testable hypotheses. No Android hardware test, labeled journey trial or battery improvement measurement has yet been completed.
+
+## 2026-10-27 feature-readiness and permission state runtime refresh
+
+Alarka initial scan and per-feature permission verification are specified in [MA-CAP-ADR-002](CAPABILITY_DISCOVERY_PERMISSION_SYNC_ADR_2026-10-27.md). A runtime LOCATION capability has independent `hardware_support`, `foreground_permission`, `background_permission`, `precise_vs_approximate`, `location_services`, `os_foreground_service_eligibility`, `release_policy_gate` and `last_verified` signals. No single permission bit guarantees location success or continuous background fixes. On `onResume`, relevant Android grant result and permitted tracking service start, re-evaluate actual OS state; stop/restrict tracking if necessary, maintain truthful stale/provisional status and emit new authenticated version to server when possible. Revocation may terminate the app process, so Madalasa must preserve last reported time and UNKNOWN/OFFLINE until a new device proof arrives; no invented live GPS or silent regrant. Android 11+ foreground and background location prompts are separate; all minor-data policy gates remain in place.

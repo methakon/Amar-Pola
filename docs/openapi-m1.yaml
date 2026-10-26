@@ -2072,5 +2072,11 @@
     "guardian": "Madalasa",
     "child": "Alarka",
     "repo": "methakon/Madalasa-Alarka"
+  },
+  "x-post-m1-capability-design": {
+    "status": "REFERENCE_ONLY_NO_M1_CONTRACT_CHANGE",
+    "future_specification": "docs/CAPABILITY_DISCOVERY_PERMISSION_SYNC_ADR_2026-10-27.md",
+    "future_full_api": "docs/openapi.yaml",
+    "note": "M1 11-operation contract remains narrow. Full scanned device feature inventory, revisioned permission sync and parent GET require separate implementation/migration/versioned validation. Do not claim existing M1 POST returns new rich report or that hardware grants enable P3 media."
   }
 }

@@ -99,3 +99,6 @@ The India-first plan requires consent/authority and DPDP feature-purpose review 
 
 Erasure/restoration tests must cover **offline device queue**, replicated/bucket backups, token/SSE revocation, separate Drive account responsibilities and legally necessary record retention. A recovered snapshot may not resurrect erased child GPS; see [OCI DR and restore tests](OCI_CHICAGO_RECOVERY_AND_PILOT_READINESS.md). Public deletion web page still not deployed.
 
+## 2026-10-27 capability metadata retention/deletion addition
+
+The new [MA-CAP-ADR-002](CAPABILITY_DISCOVERY_PERMISSION_SYNC_ADR_2026-10-27.md) designs server-stored child device compatibility, Android permission scopes/statuses, enrollment generation and report version, last verified/received timestamps and a bounded event history. Treat these as linked child/family personal metadata: include latest snapshot, historical changes, cache/SSE copies, support diagnostics and backup restore protection in authenticated family/device deletion and export assessments. Old Alarka offline reports must not revive deleted capability records or previously revoked grant state. Final retention TTL and legal basis remain undecided; no raw sensor media collected by a read-only scan. Do not publicly promise immediate revocation broadcasts when Android may kill the app.

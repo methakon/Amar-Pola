@@ -236,3 +236,8 @@ India's DPDP s.9/rules 10/12 may permit only a narrow real-time safety location 
 
 Retention: raw 14d, derived 90d, usage OFF, audit 365d, backup 30d are only engineering candidates, not signed processing commitments. Revocation, erasure across time-partitioned data and restored backups remain implementation testing gates.
 
+## 2026-10-27 latest capability snapshot trust/recovery contract
+
+[MA-CAP-ADR-002](CAPABILITY_DISCOVERY_PERMISSION_SYNC_ADR_2026-10-27.md) adds owner-accepted design of Alarka pairing-bound capability snapshots. Proposed DB entity `device_capability_snapshots` enforces device_id PK, enrollment generation, report version, observed_at, server received_at, schema version and allowlisted bounded feature payload; `device_capability_changes` holds minimal time/reason history with explicit TTL. Device credential self-scope is the only report writer; parent GET requires current family/child-specific authorization and safe redaction. No parent-submitted "Android granted" bit is authoritative.
+
+**Recovery invariants:** only accept a higher version within same generation, same version+digest idempotent, same version+different digest conflict, old generation or revoked device denied. Authenticated server ACK after commit, then parent update hint. Recover from retry/out-of-order/FCM loss through canonical GET; do not resurrect an old GRANTED state after revoked-version backup/restore. On family/device deletion, tombstone/report purge and cache/incremental sync invalidation must prevent offline reingest. Child force-stop/revocation may delay a report, so parent always shows last-verified time and STALE/UNKNOWN on missing fresh evidence. No raw GPS or audio/video in capability report.

@@ -405,7 +405,7 @@
     "/devices/{deviceId}/capabilities": {
       "post": {
         "operationId": "post_devices_deviceId_capabilities",
-        "summary": "Report device capability and permissions",
+        "summary": "Authenticated Alarka versioned device capability and OS permission report; no media capture",
         "tags": [
           "Devices"
         ],
@@ -427,7 +427,14 @@
         ],
         "responses": {
           "202": {
-            "description": "Queued/durable acceptance is not completion"
+            "description": "Durably accepted; parent state can refresh only after ACK, not an Android execution or streaming guarantee",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CapabilityReportReceipt"
+                }
+              }
+            }
           },
           "401": {
             "description": "Authentication failed",
@@ -450,7 +457,17 @@
             }
           },
           "409": {
-            "description": "Conflict, revision or state transition",
+            "description": "Outdated report version or same-version inconsistent digest; never roll back newest state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Report exceeds bounded feature/payload limit",
             "content": {
               "application/json": {
                 "schema": {
@@ -495,35 +512,12 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "required": [
-                  "observed_at",
-                  "android_api",
-                  "mode",
-                  "features"
-                ],
-                "properties": {
-                  "observed_at": {
-                    "type": "string",
-                    "format": "date-time"
-                  },
-                  "android_api": {
-                    "type": "integer"
-                  },
-                  "mode": {
-                    "type": "string"
-                  },
-                  "features": {
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    }
-                  }
-                }
+                "$ref": "#/components/schemas/CapabilityReport"
               }
             }
           }
-        }
+        },
+        "description": "Design-only whole-project endpoint. Accept device-bound signed/PoP authenticated state after secure pairing. Enforce monotonic version per enrollment_generation, feature allowlist, bounded payload, timestamps and idempotent receipt. Sender cannot claim server receive time; do not trust self-reported legal release override. Current M1 API remains narrower; no runtime code shipped."
       }
     },
     "/devices/{deviceId}/health": {
@@ -5030,6 +5024,111 @@
           }
         }
       }
+    },
+    "/children/{childId}/devices/{deviceId}/capabilities": {
+      "get": {
+        "operationId": "getChildDeviceVerifiedCapabilities",
+        "tags": [
+          "Devices"
+        ],
+        "summary": "Madalasa reads child-scoped last device-verified compatibility, permission and freshness state",
+        "description": "Design-only parent API. Exact guardian scope and release-flag checks mandatory; respond with safe projection and server receive timestamp, not an assertion about offline device current permission. Feature grants, legal/policy status, operational context and freshness must remain separate. Redact sensitive feature details for temporary/pickup-only viewers; no media or protected files returned.",
+        "security": [
+          {
+            "ParentBearer": []
+          }
+        ],
+        "x-required-scope": "VIEW_DEVICE_STATUS",
+        "x-implementation-status": "DESIGN_ONLY",
+        "parameters": [
+          {
+            "name": "childId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          },
+          {
+            "name": "deviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Last verified report; no guarantee child device is currently online",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GuardianCapabilityView"
+                }
+              }
+            },
+            "headers": {
+              "ETag": {
+                "description": "Server revision for conditional refresh",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Parent authentication missing/expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Child-specific feature/scope grant denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found or hidden from unauthorized guardian",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Excessive parent refreshes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary unavailable; retain stale status and last server timestamp",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -5500,7 +5599,8 @@
                 "MANAGE_PLACES",
                 "VIEW_USAGE",
                 "MANAGE_POLICY",
-                "RECEIVE_SOS"
+                "RECEIVE_SOS",
+                "VIEW_DEVICE_STATUS"
               ]
             }
           },
@@ -5577,6 +5677,244 @@
           "DEVICE_OFFLINE",
           "CANCELLED"
         ]
+      },
+      "CapabilityFeatureState": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "hardware",
+          "permission",
+          "runtime",
+          "release",
+          "checked_at"
+        ],
+        "properties": {
+          "hardware": {
+            "type": "string",
+            "enum": [
+              "SUPPORTED",
+              "UNSUPPORTED",
+              "UNKNOWN"
+            ]
+          },
+          "permission": {
+            "type": "string",
+            "enum": [
+              "NOT_REQUIRED",
+              "NOT_REQUESTED",
+              "GRANTED",
+              "DENIED",
+              "PARTIAL",
+              "TEMPORARY",
+              "REVOKED",
+              "UNKNOWN"
+            ]
+          },
+          "scope": {
+            "type": "string",
+            "enum": [
+              "NONE",
+              "WHILE_IN_USE",
+              "BACKGROUND",
+              "APPROXIMATE",
+              "PRECISE",
+              "SELECTED_ITEMS",
+              "SHARED_MEDIA",
+              "PERSISTED_URI",
+              "PER_SESSION",
+              "UNKNOWN"
+            ]
+          },
+          "runtime": {
+            "type": "string",
+            "enum": [
+              "AVAILABLE",
+              "AVAILABLE_WITHIN_SCOPE",
+              "CONDITIONAL",
+              "ACTION_REQUIRED",
+              "UNAVAILABLE",
+              "UNKNOWN"
+            ]
+          },
+          "release": {
+            "type": "string",
+            "enum": [
+              "ENABLED",
+              "RESEARCH_DISABLED",
+              "LEGAL_BLOCKED",
+              "NOT_IN_BUILD"
+            ]
+          },
+          "reason_code": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 100
+          },
+          "checked_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CapabilityReport": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_version",
+          "enrollment_generation",
+          "report_version",
+          "observed_at",
+          "android_api",
+          "mode",
+          "features"
+        ],
+        "properties": {
+          "schema_version": {
+            "type": "integer",
+            "const": 1
+          },
+          "enrollment_generation": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "report_version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "observed_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "android_api": {
+            "type": "integer",
+            "minimum": 29,
+            "maximum": 45
+          },
+          "target_sdk": {
+            "type": "integer",
+            "minimum": 29,
+            "maximum": 45
+          },
+          "app_version": {
+            "type": "string",
+            "maxLength": 60
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "STANDARD",
+              "MANAGED_DEVICE_OWNER",
+              "UNKNOWN"
+            ]
+          },
+          "features": {
+            "type": "object",
+            "maxProperties": 64,
+            "propertyNames": {
+              "pattern": "^[a-z][a-z0-9_]{1,63}$"
+            },
+            "additionalProperties": {
+              "$ref": "#/components/schemas/CapabilityFeatureState"
+            }
+          }
+        }
+      },
+      "CapabilityReportReceipt": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "state",
+          "report_version",
+          "received_at"
+        ],
+        "properties": {
+          "state": {
+            "type": "string",
+            "enum": [
+              "ACCEPTED",
+              "ALREADY_RECORDED"
+            ]
+          },
+          "report_version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "server_revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "received_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "GuardianCapabilityView": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "device_id",
+          "report_version",
+          "observed_at",
+          "received_at",
+          "freshness",
+          "features"
+        ],
+        "properties": {
+          "device_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "report_version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "observed_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "received_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "last_seen_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "freshness": {
+            "type": "string",
+            "enum": [
+              "CURRENT",
+              "STALE",
+              "OFFLINE",
+              "UNKNOWN"
+            ]
+          },
+          "device_mode": {
+            "type": "string",
+            "enum": [
+              "STANDARD",
+              "MANAGED_DEVICE_OWNER",
+              "UNKNOWN"
+            ]
+          },
+          "features": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/CapabilityFeatureState"
+            }
+          },
+          "notice": {
+            "type": "string",
+            "maxLength": 300,
+            "description": "Never represent grant as proof of unrestricted runtime access"
+          }
+        }
       }
     }
   },
@@ -5609,5 +5947,12 @@
     "guardian": "Madalasa",
     "child": "Alarka",
     "repo": "methakon/Madalasa-Alarka"
+  },
+  "x-capability-permission-onboarding-design": {
+    "status": "DESIGN_ONLY_NOT_IMPLEMENTED",
+    "specification": "docs/CAPABILITY_DISCOVERY_PERMISSION_SYNC_ADR_2026-10-27.md",
+    "flow": "first launch local scan -> verified pair -> device POST baseline -> stepwise Android grants -> OS recheck -> device POST higher revision -> parent scoped GET",
+    "green_rule": "never use hardware supported or Android GRANTED alone to claim live operational feature; require release-enabled, permitted context, fresh verification",
+    "revocation": "best effort; Android may kill child process; offline must show UNKNOWN/STALE rather than fabricated revoked"
   }
 }

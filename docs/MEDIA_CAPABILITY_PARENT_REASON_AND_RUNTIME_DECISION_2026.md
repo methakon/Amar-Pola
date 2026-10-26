@@ -92,3 +92,9 @@ Existing OCI cost documents are **non-media models**; 500-child ₹1,680/month a
 - Android shared media access: https://developer.android.com/training/data-storage/shared/media
 - Google Play monitoring policy: https://support.google.com/googleplay/android-developer/answer/9888380
 - Internal: SRS.md, TECHNICAL_SPECIFICATION.md, COMMAND_SOS_USAGE_QUEUE_CONTRACT.md, ANDROID_COMPATIBILITY_MATRIX.md, INDIA_GOVERNMENT_LEGAL_GOOGLE_PLAY_PROJECT_RISK_ASSESSMENT_2026.md.
+
+## 2026-10-27 integration with owner-accepted automatic permission scanner
+
+Media R&D preflight now receives a **device-authenticated, versioned capability profile** from first-run Alarka discovery and later Android permission rechecks; server stores a last-confirmed snapshot for Madalasa through child-scoped GET. Never interpret `CAMERA/RECORD_AUDIO=GRANTED` as actual legal release enablement or universal background start; accurate UI is "Permission granted; microphone/camera may be conditional/not released" rather than a green "Live monitoring active". Permission revocation and regrant are detected at the next OS-permitted child execution, not instantly while force-stopped/offline. Screen-sharing `PER_SESSION` consent cannot be pregranted in setup. No private app files are exposed through a generic "media access" grant.
+
+State separation, API report version, parent UX colors and T-CAP-01…24: [MA-CAP-ADR-002](CAPABILITY_DISCOVERY_PERMISSION_SYNC_ADR_2026-10-27.md). Both ADRs keep OS indicators, guardian child scopes, India legal/Google Play gate, not-implemented status, and no-VPS-media-file proposal unchanged. [Figma onboarding and parent compatibility board](https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=23-2).
