@@ -14,6 +14,32 @@
 
 The child app's main activity does not need to remain open for every background feature. However, Android may require foreground services, persistent notifications, privacy indicators, specific Settings grants, or user interaction for particular capabilities.
 
+## Developer quick-start — current repository stage (2026-10-27)
+
+**Current executable baseline:** M1 API structural contract and synthetic PostgreSQL tenant-isolation SQL tests. **Not yet available:** runnable Android apps, C++20 Drogon server, OCI deployment, admin console, Play release or real-child data processing.
+
+```bash
+git clone https://github.com/methakon/Madalasa-Alarka.git
+cd Madalasa-Alarka
+python3 backend/tests/lint_openapi_m1.py docs/openapi-m1.yaml
+```
+
+For the synthetic PostgreSQL 16 migration/RLS test, see **[Build and Run](docs/BUILD_AND_RUN.md)**; it uses an isolated disposable database, not real user information. The new `android/alarka` and `android/madalasa` directories contain **non-runnable Kotlin domain scaffolding**, with no Gradle wrapper or AndroidManifest. `.env.example` contains placeholders only; do not commit credentials.
+
+**Start here:**
+[Engineering/Legal Document Index](docs/PROJECT_DOCUMENTS_INDEX_2026.md) ·
+[Onboarding/Coding Standards](docs/DEVELOPER_ONBOARDING_AND_CODING_STANDARDS.md) ·
+[Contributing](CONTRIBUTING.md) ·
+[Issue/PR Templates](.github/) ·
+[Security Reporting](SECURITY.md) ·
+[STRIDE](docs/THREAT_MODEL_STRIDE.md) ·
+[Tests](docs/TEST_STRATEGY_UNIT_INTEGRATION_LOAD_SECURITY.md) ·
+[Deployment/Legal Gate](docs/DEPLOYMENT_RELEASE_READINESS_CHECKLIST.md).
+
+**New review drafts:** [DPIA](docs/DPIA.md), [Retention](docs/DATA_RETENTION_SCHEDULE.md), [Parental Authority](docs/VERIFIABLE_PARENTAL_CONSENT_AND_GUARDIAN_AUTHORITY.md), [Grievance](docs/GRIEVANCE_OFFICER_AND_REDRESSAL_PROCESS.md), [Vendor DPA Register](docs/VENDOR_DPA_AND_PROCESSOR_REGISTER.md), [CERT-In/DPDP Incident Procedure](docs/INCIDENT_AND_BREACH_RESPONSE_PROCEDURE.md), [Play reviewer pack](docs/PLAY_CONSOLE_DECLARATIONS_AND_REVIEWER_PACK.md), and [staged public legal pages](public/legal/README.md). Legal texts are **unapproved and not published**; publisher and contacts unassigned. Root `LICENSE` is an interim all-rights-reserved notice pending an explicit IP-owner license decision.
+
+[GitHub About description/topics owner checklist](docs/REPOSITORY_ABOUT_AND_TOPICS.md) explains settings that **must be applied in GitHub UI**; committing docs doesn't change repository metadata.
+
 ## About the Madalasa and Alarka names
 
 **Madalasa** is named for Queen Madalasa from the *Markandeya Purana*, remembered for educating her son **Alarka**. Before leaving the palace she gives Alarka a ring containing written advice for a future crisis; when he faces hardship, the message helps guide him. Our apps interpret the story as **care, foresight and guidance across distance**: Madalasa is the authorized guardian app; Alarka is the visible companion on the child's Android phone. This is a **modern design metaphor**, not a scriptural claim of continuous supernatural remote tracking. Read the [English story, references and design principles](docs/BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).

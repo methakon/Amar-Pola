@@ -1,0 +1,45 @@
+name: Documentation structure and draft status
+
+on:
+  push:
+    paths:
+      - "docs/**"
+      - "android/**"
+      - "public/legal/**"
+      - "README.md"
+      - "SECURITY.md"
+      - "CONTRIBUTING.md"
+      - "LICENSE"
+      - ".github/workflows/documentation-structure.yml"
+  pull_request:
+    paths:
+      - "docs/**"
+      - "android/**"
+      - "public/legal/**"
+      - "README.md"
+      - "SECURITY.md"
+      - "CONTRIBUTING.md"
+      - "LICENSE"
+      - ".github/workflows/documentation-structure.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  docs-structure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Confirm project documentation and prevent false signed-off blanks
+        run: |
+          set -eu
+          for f in             docs/BUILD_AND_RUN.md             docs/DPIA.md             docs/DATA_RETENTION_SCHEDULE.md             docs/INCIDENT_AND_BREACH_RESPONSE_PROCEDURE.md             docs/THREAT_MODEL_STRIDE.md             docs/VERIFIABLE_PARENTAL_CONSENT_AND_GUARDIAN_AUTHORITY.md             docs/VENDOR_DPA_AND_PROCESSOR_REGISTER.md             docs/DEPLOYMENT_RELEASE_READINESS_CHECKLIST.md             docs/PROJECT_DOCUMENTS_INDEX_2026.md             SECURITY.md LICENSE .env.example             CONTRIBUTING.md CODE_OF_CONDUCT.md CHANGELOG.md             android/README.md public/legal/terms.html             public/legal/privacy.html public/legal/refund-cancellation.html
+          do
+            test -s "$f"
+          done
+          grep -q "DRAFT" docs/DPIA.md
+          grep -q "DRAFT" docs/DATA_RETENTION_SCHEDULE.md
+          grep -qi "not published" public/legal/privacy.html
+          python3 -m json.tool docs/openapi-m1.yaml >/dev/null
+      - name: M1 structural contract smoke
+        run: python3 backend/tests/lint_openapi_m1.py docs/openapi-m1.yaml

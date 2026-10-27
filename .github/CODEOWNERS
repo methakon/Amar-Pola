@@ -1,0 +1,13 @@
+# Proposed ownership mapping. The repository owner must validate that
+# the GitHub teams/users actually exist and enable branch protection.
+* @methakon
+/docs/SRS.md @methakon
+/docs/openapi*.yaml @methakon
+/backend/persistence/ @methakon
+/backend/tests/ @methakon
+/docs/DPIA.md @methakon
+/docs/SECURITY_AND_OPERATIONS.md @methakon
+/docs/INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md @methakon
+/SECURITY.md @methakon
+/LICENSE @methakon
+/.github/ @methakon
