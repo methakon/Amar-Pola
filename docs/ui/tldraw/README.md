@@ -5,7 +5,7 @@
 **Design status:** Editable UI wireframes implemented as native tldraw vector shapes, **not yet executable Android code**.  
 **Date:** 2026-10-26 · **Design board:** https://www.tldraw.com/f/-IuhoGjlF7uXC5imxkaL3  
 **Native source backup:** [amar-pola-ui-master-snapshot.json](amar-pola-ui-master-snapshot.json) (tldraw editor snapshot with `document.store`, `document.schema`, `session`).  
-**Source of requirements:** [SRS](../../SRS.md), [master M0–M9 milestones](../../MASTER_MILESTONE_IMPLEMENTATION_AND_RELEASE_PLAN.md), [M1 Android design](../../M1_ANDROID_CPP_ARCHITECTURE_AND_IMPLEMENTATION.md), [child privacy legal gate](../../INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md).
+**Source of requirements:** [SRS](../../phases/M1-secure-platform-foundation/01-requirements-and-architecture/SRS.md), [master M0–M9 milestones](../../phases/M0-foundation-and-approvals/01-project-governance/MASTER_MILESTONE_IMPLEMENTATION_AND_RELEASE_PLAN.md), [M1 Android design](../../phases/M1-secure-platform-foundation/01-requirements-and-architecture/M1_ANDROID_CPP_ARCHITECTURE_AND_IMPLEMENTATION.md), [child privacy legal gate](../../phases/M0-foundation-and-approvals/03-legal-and-privacy/INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md).
 
 ## Deliverable inventory
 

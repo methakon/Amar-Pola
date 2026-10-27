@@ -1,6 +1,6 @@
 # Madalasa–Alarka — Editable Figma Android UI Design
 
-> **Current product:** **Madalasa** (parent app) + **Alarka** (child app); the GitHub repository is now **[Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka)**. [English mythological inspiration](../BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
+> **Current product:** **Madalasa** (parent app) + **Alarka** (child app); the GitHub repository is now **[Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka)**. [English mythological inspiration](../phases/M0-foundation-and-approvals/02-market-and-feasibility/BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 **Live Figma Design:** https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli
 
@@ -10,7 +10,7 @@ The 24 unique layouts consist of **12 parent** views (Welcome, Sign in with Goog
 
 **Themes:** LIGHT = off-white/teal; DARK = charcoal/teal; BATTERY SAVER = muted cream/olive, reduced-update semantics. The design page groups all three modes and both roles because the authenticated Figma Starter workspace limits design files to three pages.
 
-**Source traceability:** [SRS](../SRS.md), [Master milestones](../MASTER_MILESTONE_IMPLEMENTATION_AND_RELEASE_PLAN.md), [tldraw full wireframe registry](tldraw/README.md). The existing tldraw board still holds **75 unique initial wireframe screens and 225 themed instances** and remains the broader coverage source. The native Figma file currently covers a **prioritized visual foundation**, not all 225 variants; broader transfer, production components/variants, tokens, and runnable Kotlin Compose remain future implementation work.
+**Source traceability:** [SRS](../phases/M1-secure-platform-foundation/01-requirements-and-architecture/SRS.md), [Master milestones](../phases/M0-foundation-and-approvals/01-project-governance/MASTER_MILESTONE_IMPLEMENTATION_AND_RELEASE_PLAN.md), [tldraw full wireframe registry](tldraw/README.md). The existing tldraw board still holds **75 unique initial wireframe screens and 225 themed instances** and remains the broader coverage source. The native Figma file currently covers a **prioritized visual foundation**, not all 225 variants; broader transfer, production components/variants, tokens, and runnable Kotlin Compose remain future implementation work.
 
 **Safety:** parent cannot silently grant permissions on the child phone. Indian minor historical routes and app-usage remain legally gated. Google account sign-in is not proof of adult guardianship. SOS check-in is not emergency dispatch.
 
