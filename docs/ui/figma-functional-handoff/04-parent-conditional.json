@@ -51,7 +51,14 @@
     "actor": "Parent",
     "phase": "Conditional",
     "app_display_name": "Madalasa",
-    "project_display_name": "Madalasa & Alarka"
+    "project_display_name": "Madalasa & Alarka",
+    "theme_c_2026": {
+      "status": "OWNER_SELECTED_VISUAL_DIRECTION_NOT_IMPLEMENTED",
+      "style": "Original Purana/Bengali folk-art illustrations in isolated decorative panels, high-contrast parchment cards, vermilion/indigo/teal controls",
+      "story_contract": "docs/ui/MADALASA_ALARKA_THEME_C_STORY_AND_UI_CONTRACT_2026.md",
+      "display_rule": "No decorative obstruction of permissions, data confidence, alerts, purchases or map attribution.",
+      "entry": "Gated media, unsupported states, per-child trial/paid quotas; no covert mic/camera"
+    }
   },
   {
     "title": "Microphone capability request",
@@ -69,7 +76,14 @@
     "actor": "Parent",
     "phase": "Conditional",
     "app_display_name": "Madalasa",
-    "project_display_name": "Madalasa & Alarka"
+    "project_display_name": "Madalasa & Alarka",
+    "theme_c_2026": {
+      "status": "OWNER_SELECTED_VISUAL_DIRECTION_NOT_IMPLEMENTED",
+      "style": "Original Purana/Bengali folk-art illustrations in isolated decorative panels, high-contrast parchment cards, vermilion/indigo/teal controls",
+      "story_contract": "docs/ui/MADALASA_ALARKA_THEME_C_STORY_AND_UI_CONTRACT_2026.md",
+      "display_rule": "No decorative obstruction of permissions, data confidence, alerts, purchases or map attribution.",
+      "entry": "Gated media, unsupported states, per-child trial/paid quotas; no covert mic/camera"
+    }
   },
   {
     "title": "Phone and watch source handoff",
