@@ -86,3 +86,8 @@ Avoid “divine remote seeing”, “watch every step in secret”, “unbreakab
 This naming and narrative policy **supersedes older use of “Amar-Pola” as a consumer application title** in the README, SRS, technical specs, architecture diagrams, onboarding and Play/privacy drafts. **The GitHub repository was renamed `Madalasa-Alarka` on 2026-10-26** and is active at the verified new URL. Filenames, package IDs, database and OpenAPI identifiers remain stable unless explicitly migrated. When an old file says “Amar-Pola Parent App”, read **Madalasa**. When it says “Amar-Pola Child App”, read **Alarka**.
 
 **The design remains a transparent, legally constrained family-safety product. Naming inspired by mythology does not change the Android security model, children's consent and privacy duties, or the product's approved feature set.**
+
+
+## 2026-10-28 visual narrative decision: Theme C — পুরাণের চিত্রকথা
+
+Owner selected original Bengali folk-art-inspired illustrated Purāṇa style for story introduction and Madalasa parent screens. The five-page source-aware narrative follows Madalasa's teaching, Alarka's responsibilities, adult Alarka receiving the ring on becoming king, his later distress and message, and guidance from Dattatreya. See [canonical story/UI design contract](../../../ui/MADALASA_ALARKA_THEME_C_STORY_AND_UI_CONTRACT_2026.md) for wording, literary chapter references and Figma mapping. Ring is remembrance and wisdom, **not a supernatural tracking or surveillance metaphor**. Culture/religion participation cannot be required for app use, permissions or pricing. Art is interpretive, not a literal historical portrait; preserve child rights and platform safety constraints.
