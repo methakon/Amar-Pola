@@ -74,3 +74,29 @@ Server admission must check both **eligible viewer screen capacity** and **guard
 - Preserve existing P-39/P-40/P-47/P-48/P-49/P-54 contract; do not replace existing Figma handoff or imply functional UI from mockups.
 
 **Google policy references:** [Family Link parent privileges](https://support.google.com/accounts/answer/7295768), [Google family groups](https://families.google/intl/en_in/families/), [Google Play prepaid subscriptions and add-ons](https://developer.android.com/google/play/billing/subscription-with-addons), [one-time products](https://developer.android.com/google/play/billing/one-time-products), [one-time purchase lifecycle](https://developer.android.com/google/play/billing/lifecycle/one-time), [secure purchase verification](https://developer.android.com/google/play/billing/security).
+
+## G. Concrete concurrency admission algorithm (proposed; not coded)
+
+```text
+acquire_premium_viewer(adult, child, device_session, screen_kind):
+  assert personal_Google_identity_verified(adult)
+  assert guardian_child_grant_is_approved(adult, child, screen_kind)
+  assert parent_relationship_verification_is_approved(adult, child)
+  assert paid_child_prepaid_entitlement_valid(child)         // server time
+  assert screen_kind_is_permitted_and_device_capable(child)
+  begin transaction (lock entitlement capacity row FOR UPDATE)
+    cleanup_expired_leases(child)
+    existing = active_lease(child, adult, device_session)
+    if existing: heartbeat_and_return_same_lease(existing)
+    slots = 1 + COUNT(valid_extra_viewer_units_for_this_child)
+    if count_active_leases(child) >= slots:
+       rollback; return VIEWER_LIMIT_REACHED + available user-approved takeover flow
+    insert_new_lease(child, adult, device_session, expires=now+75s)
+  commit; return opaque signed lease token (bind child/adult/device/scopes)
+heartbeat: re-check verified grant, active base subscription and add-on validity; extend lease up to 75s, stop on loss.
+release: revoke single lease on app background/exit, logout, expiry or guardian revocation; do not depend on clean client disconnect.
+```
+
+**Required tests:** 2 valid parents race for 1 slot -> exactly 1 succeeds; 2 authorized viewer sessions can succeed only after 1 verified active add-on; same device switching live-map tabs returns same lease; two sessions opened by same adult on different devices count twice; verified co-parent sees only selected child; Child B cannot be inferred through error payload; revoked grant immediately invalidates lease; pending Play purchase does not grant add-on; duplicate token grants exactly once; refund disables slot/pool; stale heartbeat releases lease; free location/check-in remains accessible; failed Android capture consumes zero AV pool; purchase expiry stops premium live viewer without automatic renewal. A locally cached screenshot/static screen cannot be technically prevented from being displayed; enforcement concerns **server-backed live premium feeds**, not a guarantee that nobody could photograph an on-screen view.
+
+**Unresolved before commercialization:** confirm whether "one screen" means *per paid child* (chosen working interpretation) or *per whole paying family*, and whether ₹100 should apply for exactly 30 days vs until the underlying monthly/annual prepaid plan ends. Do not treat either assumption as a signed-off commercial offer. Confirm with parent owner before public launch.
