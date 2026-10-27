@@ -623,7 +623,7 @@
     "/devices/{deviceId}/locations:batch": {
       "post": {
         "operationId": "post_devices_deviceId_locations_batch",
-        "summary": "Durably ingest idempotent observations",
+        "summary": "Durably accept authenticated GPS batches to PostgreSQL inbox for async bulk insertion",
         "tags": [
           "Locations"
         ],
@@ -645,7 +645,7 @@
         ],
         "responses": {
           "202": {
-            "description": "Queued/durable acceptance is not completion",
+            "description": "Inbox batch durably committed; processing QUEUED indicates final GPS rows and derived route work may not yet be complete",
             "content": {
               "application/json": {
                 "schema": {
@@ -702,6 +702,15 @@
                   "$ref": "#/components/schemas/Error"
                 }
               }
+            },
+            "headers": {
+              "Retry-After": {
+                "description": "Optional recommended retry delay (seconds) during safe backpressure",
+                "schema": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
             }
           },
           "503": {
@@ -712,10 +721,19 @@
                   "$ref": "#/components/schemas/Error"
                 }
               }
+            },
+            "headers": {
+              "Retry-After": {
+                "description": "Optional recommended retry delay (seconds) during safe backpressure",
+                "schema": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
             }
           }
         },
-        "x-ack-rule": "202 after raw+dedup+outbox DB COMMIT; not route reconstruction",
+        "x-ack-rule": "202 only after PostgreSQL verified inbox batch INSERT COMMIT; processing QUEUED ≠ raw committed / trip reconstructed. Duplicate exact batch_id+digest idempotent, conflicting batch ID/digest 409. Option B direct bulk may ACK after raw+dedup+outbox COMMIT only following benchmark decision.",
         "requestBody": {
           "required": true,
           "content": {
@@ -725,13 +743,18 @@
               }
             }
           }
-        }
+        },
+        "description": "Design-only preferred flow: an authenticated child-device JSON batch is schema/identity/clock/payload validated and durably inserted as one PostgreSQL inbox row. Respond 202 QUEUED only AFTER database COMMIT. The response confirms batch durability in inbox, NOT final raw observations or trip reconstruction. Independent C++ workers lease queued batches with SKIP LOCKED and bulk insert deduplicated GPS records plus trip outbox in another atomic transaction. Compare lower-write-amplification direct raw bulk+dedup+outbox transaction as a benchmark alternative; no Redis required in phase 1. Upload 1–2min is best-effort Android execution target, 48h encrypted offline cache is a capacity target and not a capture guarantee. All child data policy gates remain.",
+        "x-ingest-store": "POSTGRES_DURABLE_INBOX_DEFAULT",
+        "x-client-sync-target": "1-2 minutes where Android lifecycle and network permit, not a periodic WorkManager guarantee",
+        "x-raw-insert": "C++ worker combines inbox batches; multirow INSERT or COPY temp staging + INSERT SELECT; dedup ledger and outbox committed with inbox PROCESSED",
+        "x-adr": "docs/POSTGRES_DURABLE_INBOX_BULK_GPS_USAGE_INGESTION_ADR_2026-10-27.md"
       }
     },
     "/devices/{deviceId}/usage:batch": {
       "post": {
         "operationId": "post_devices_deviceId_usage_batch",
-        "summary": "Store idempotent usage aggregates",
+        "summary": "Durably ingest independent app-usage session/event batches for background aggregation",
         "tags": [
           "Usage"
         ],
@@ -864,13 +887,20 @@
                           "minimum": 0
                         }
                       }
-                    }
+                    },
+                    "minItems": 1,
+                    "maxItems": 500
                   }
-                }
+                },
+                "description": "Usage event ids should be stable across retries. Future versioning will explicitly require each event_id and support dedup/device identity; M1 contract not modified."
               }
             }
           }
-        }
+        },
+        "description": "Proposed usage events/sessions are authenticated and separately collected from GPS; apply bounded batch + device event idempotency + PostgreSQL durable intake + independent usage session/daily aggregation worker where implemented. Android UsageStats events may be incomplete or delayed and are not exact real-time foreground state. This is not an authorization to profile a minor under India law or Play policies.",
+        "x-ack-rule": "202 after durable ingestion transaction (inbox or specifically direct raw usage) COMMIT; never merely queued in memory and never evidence of fully completed daily/monthly aggregates.",
+        "x-separate-usage-pipeline": true,
+        "x-adr": "docs/POSTGRES_DURABLE_INBOX_BULK_GPS_USAGE_INGESTION_ADR_2026-10-27.md"
       }
     },
     "/devices/{deviceId}/motion-events:batch": {
@@ -6107,9 +6137,11 @@
             "maxItems": 500,
             "items": {
               "$ref": "#/components/schemas/Event"
-            }
+            },
+            "minItems": 1
           }
-        }
+        },
+        "description": "Authenticated child-source GPS observation upload. Stable batch UUID and stable individual event UUIDs survive retries. Strict byte and decompression-ratio caps apply in server middleware. The current decimal RFC3339 event wire schema stays unchanged; compact integer t_ms/lat_e6/lon_e6 is a future explicitly negotiated version, never mixed implicitly."
       },
       "Receipt": {
         "type": "object",
@@ -6146,8 +6178,22 @@
             "items": {
               "$ref": "#/components/schemas/Error"
             }
+          },
+          "durable_stage": {
+            "type": "string",
+            "enum": [
+              "INBOX_COMMITTED",
+              "RAW_OBSERVATIONS_COMMITTED"
+            ],
+            "description": "Optional. Default GPS design uses INBOX_COMMITTED. If not present clients rely on durable HTTP 202 and queued state, never assume trips processed."
+          },
+          "received_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Optional authoritative server receive time for committed batch; not observed_at of a location fix"
           }
-        }
+        },
+        "description": "Durable server receipt, not device capture confirmation and not evidence of route reconstruction. For GPS default, processing=QUEUED means PostgreSQL inbox committed. Alternate lower-amplification direct bulk benchmark can commit raw+dedup+outbox before the same receipt."
       },
       "Location": {
         "type": "object",
@@ -7326,5 +7372,15 @@
     "query": "Date [from,to), stable descending (request_at,id) keyset cursor, max 100/page, authorized filter/sort",
     "truth": "Parent playback and local save receipts, OS/transport evidence; no call attribution inferred from generic mic failure.",
     "no_m1_change": true
+  },
+  "x-owner-accepted-postgres-inbox-and-bulk-ingest": {
+    "status": "DESIGN_ONLY_NOT_IMPLEMENTED",
+    "specification": "docs/POSTGRES_DURABLE_INBOX_BULK_GPS_USAGE_INGESTION_ADR_2026-10-27.md",
+    "path": "Encrypted local device queue (48-hour capacity target) → authenticated JSON batch target every 1-2min when allowed → Drogon durable Postgres inbox tx → HTTP 202 QUEUED → C++ SKIP LOCKED leases → multirow / optional COPY staging bulk insert dedup+raw+reconstruction outbox tx → trip/usage workers → child-scoped parent history",
+    "ack": "Accepted inbox COMMIT = durable reception. Worker processed & trip reconstructed are later distinct milestones.",
+    "direct_bulk_benchmark": "Direct prepared multi-row raw+dedup+outbox committed inside API transaction may lower WAL/write amplification; do not claim inbox cheaper by default.",
+    "redis": "Not required for MVP; optional non-authoritative cache or future durable broker after measured evidence.",
+    "m1_contract_unchanged": true,
+    "os_limits": "1–2min uploads not guaranteed by WorkManager; location FGS and background permissions/release gates apply."
   }
 }

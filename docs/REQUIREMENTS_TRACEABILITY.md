@@ -158,3 +158,17 @@ The former matrix's 49 functional requirement rows remain the 2026-10-25 baselin
 | FR-051 Restricted admin web panel, scoped parent/child lookups and admin access audit | Security / admin web frontend / backend / Privacy QA | [Admin panel](ADMIN_PANEL_SPECIFICATION_2026.md), admin media activity API draft, [Figma ADM-01…ADM-17](ui/figma-functional-handoff/07-media-activity-audit.json) | T-ADM-01–14, T-AUD-15–22 | P3; OFF; NOT_IMPLEMENTED / NOT_TESTED; MFA/case/privacy approvals |
 
 Cross references: FR-006 command lifecycle and truthful receipts → T-AUD-01–09; FR-009/010 media research → T-AUD-02–08,22; FR-022/034 child/guardian scope and multi-family isolation → T-AUD-10–11/15–17, T-ADM-02–05; FR-013/027 scoped retention/deletion → T-AUD-18; NFR security/logging → T-AUD-19–21 and T-ADM-08–14. No M1 acceptance pass or media-release promotion claimed.
+
+## 2026-10-27 accepted location-ingest durability and bulk-efficiency traceability
+
+**Canonical:** [MA-INGEST-ADR-004](POSTGRES_DURABLE_INBOX_BULK_GPS_USAGE_INGESTION_ADR_2026-10-27.md), [Figma HLD](https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=41-2), [Figma LLD](https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=41-60).
+
+| SRS | Function and proof | Planned tests | Status |
+|---|---|---|---|
+| FR-003 / FR-018 | Adaptive Android GPS callback separately from upload; encrypted 48-hour capacity offline buffer, graceful overflow | T-ING-01…04,21,23 | NOT_IMPLEMENTED/NOT_TESTED |
+| FR-023 / NFR-003 | One authenticated batch per inbox row, durable 202 ACK, idempotent replay, two-TX raw+outbox completion | T-ING-05…11,13,14,19,20 | NOT_IMPLEMENTED/NOT_TESTED |
+| FR-025 / NFR-002 / NFR-009 | C++ SKIP LOCKED lease + worker bulk inserts (multirow/optional COPY staging), load and direct-bulk comparative benchmark | T-ING-12,17,18,20,24 | NOT_IMPLEMENTED/NOT_TESTED |
+| FR-004 / FR-026 / FR-032 | Event-time backfill + quality-aware history, latest verified fix, no fabricated GPS route/live status | T-ING-15,21,22 | NOT_IMPLEMENTED/NOT_TESTED |
+| FR-005 | Separate usage event ingestion/aggregate pipeline, not GPS table; no claimed live current app certainty | T-ING-16,23 | NOT_IMPLEMENTED/NOT_TESTED |
+
+Do not substitute the old 300 fixes/day finance assumption as an observation maximum. T-ING-01…24, API schema changes and actual Android/OCI performance are **design only**. Existing M1 11-operation OpenAPI is not changed by the optional whole-project durable_stage field.
