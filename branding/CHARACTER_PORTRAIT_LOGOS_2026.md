@@ -13,3 +13,9 @@ Source narrative: [1904 Markandeya Purana translation by F. Eden Pargiter](https
 **Release checks:** Confirm icon 512x512 RGBA <=1MB, feature graphic 1024x500, Android adaptive safe-zone and mask with image at 432px foreground, actual Android manifests/resources/build, Google Play store tests, legal/trademark/AI-art rights and small-size readability. The completed files are artwork candidates, not a deployed application.
 
 English only for initial product UI; future localization remains planned. No camera/mic monitoring claim is conveyed by the portraits.
+
+## 2026-10-28 originality and copyright clearance gate
+
+The original portrait illustrations are AI-generated modern interpretations, **not reproductions of any authenticated ancient character portrait or manually copied modern book image**. That provenance reduces direct-source-copy risk but **does NOT guarantee freedom from copyright, trademark, trade dress or substantial-similarity claims**. Slight color changes or adding ornaments do NOT cure an otherwise infringing image; do not claim "copyright-safe" or "exclusive" without review.
+
+Before publishing: preserve generation prompts/source records and exported file hashes, perform commercial reverse-image/similarity research against prominent child-safety app icons and modern Madalasa/Alarka illustration works, check India's trademark class/name/icon similarity and applicable licensing/AI-service terms, request qualified IP/legal review, and test small-scale icon distinctiveness. If a material resemblance is identified, commission a genuinely different custom face composition/pose and background—not a token alteration—and regenerate/update **all** Play, Android, website assets and Figma. Current artwork remains **launch candidate only**, with existing abstract-logo archive available as fallback. No verified infringement has been identified by the current checks, but no exhaustive clearance was performed.
