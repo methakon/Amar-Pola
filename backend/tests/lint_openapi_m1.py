@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Offline strict structural linter for Amar-Pola M1 OpenAPI 3.1 JSON-as-YAML.
+"""Offline strict structural linter for Madalasa–Alarka M1 OpenAPI 3.1 JSON-as-YAML.
 Purpose: no network/pip required. Not a full OpenAPI conformance validator.
 CI can additionally run Redocly/Spectral/openapi-spec-validator later.
 """
@@ -84,10 +84,18 @@ def walk(value, at="root"):
                   ref.split("/")[-1] in sch, f"{at}: unresolved ref {ref}")
         if "type" in value:
             ty = value["type"]
-            allowed = {"null", "integer", "number", "boolean", "string", "array", "object"}
-            items = [ty] if isinstance(ty, str) else ty
-            check(isinstance(items, list) and all(x in allowed for x in items),
-                  f"{at}: invalid JSON Schema type {ty}")
+            # OpenAPI Security Scheme Objects have a separate 'type' vocabulary.
+            # In particular, 'http' is valid in components.securitySchemes but
+            # it is NOT a JSON Schema type inside components.schemas.
+            if at.startswith("root/components/securitySchemes/") and at.count("/") == 3:
+                security_types = {"apiKey", "http", "mutualTLS", "oauth2", "openIdConnect"}
+                check(isinstance(ty, str) and ty in security_types,
+                      f"{at}: invalid OpenAPI Security Scheme type {ty}")
+            else:
+                allowed = {"null", "integer", "number", "boolean", "string", "array", "object"}
+                items = [ty] if isinstance(ty, str) else ty
+                check(isinstance(items, list) and all(x in allowed for x in items),
+                      f"{at}: invalid JSON Schema type {ty}")
         if isinstance(value.get("required"), str):
             errors.append(f"{at}: required field must be array")
         for k, v in value.items():

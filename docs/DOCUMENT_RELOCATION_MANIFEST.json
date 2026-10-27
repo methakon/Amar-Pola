@@ -874,5 +874,19 @@
       "owner_assignment": "UNASSIGNED",
       "approver_signature": "NOT_RECORDED"
     }
-  ]
+  ],
+  "phase_dirs": {
+    "M0": "M0-foundation-and-approvals",
+    "M1": "M1-secure-platform-foundation",
+    "M2": "M2-location-collection",
+    "M3": "M3-trips-and-places",
+    "M4": "M4-usage-health-sos",
+    "M5": "M5-managed-android-controls",
+    "M6": "M6-guardian-erasure-security",
+    "M7": "M7-commercial-integrations",
+    "M8": "M8-operational-readiness",
+    "M9": "M9-play-release",
+    "P3": "P3-deferred-research",
+    "CROSS": "cross-milestone-references"
+  }
 }

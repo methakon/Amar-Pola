@@ -64,7 +64,10 @@ def main() -> int:
         check(p.is_file(), f"Missing docs control/index: {p}", failures)
         if p.is_file():
             check_local_links(p, failures)
-    phase_dirs = data["phase_dirs"]
+    phase_dirs = data.get("phase_dirs")
+    if not isinstance(phase_dirs, dict):
+        failures.append("Missing phase_dirs dictionary in document relocation manifest")
+        phase_dirs = {}
     check(set(phase_dirs) == set(EXPECTED_PHASES),
           f"Phase directory map differs from M0–M9 + P3/CROSS: {list(phase_dirs)}", failures)
     for phase, dirname in phase_dirs.items():
