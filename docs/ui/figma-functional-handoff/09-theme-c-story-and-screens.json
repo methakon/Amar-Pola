@@ -274,13 +274,16 @@
     "id": "SH-04",
     "actor": "Parent",
     "kind": "themed functional sample",
-    "theme_c_note": "₹100 candidate +1 simultaneous viewer and +30 combined AV minutes, no auto-renew",
+    "theme_c_note": "₹100 once for 100 independent calendar days, one additional concurrent premium screen; 30 total combined A/V minutes, no auto-renew; add-on dormant on base lapse but NOT deleted before own expiry",
     "figma_node_id": "84:242",
     "figma_url": "https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=84-242",
     "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
     "launch_language": "en",
     "legal_status": "GATED: Family Link role API unverified; Play add-on SKU unconfigured",
-    "product_spec": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md"
+    "product_spec": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md",
+    "addon_duration_calendar_days": 100,
+    "addon_expires_independently_of_base": true,
+    "addon_duration_status": "OWNER_SELECTED_PENDING_GOOGLE_PLAY_SKU_TEST"
   },
   {
     "id": "SH-05",
@@ -293,5 +296,18 @@
     "launch_language": "en",
     "legal_status": "GATED: Family Link role API unverified; Play add-on SKU unconfigured",
     "product_spec": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md"
+  },
+  {
+    "id": "SH-06",
+    "actor": "Parent",
+    "kind": "themed functional sample",
+    "theme_c_note": "Base child prepaid plan expired but separately purchased ₹100/100-day viewer add-on is not forfeited: dormant premium viewing resumes on base renewal before add-on expiry; no clock pause, no auto-billing",
+    "figma_node_id": "89:180",
+    "figma_url": "https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=89-180",
+    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
+    "launch_language": "en",
+    "product_spec": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md",
+    "addon_duration_calendar_days": 100,
+    "addon_expires_independently_of_base": true
   }
 ]
