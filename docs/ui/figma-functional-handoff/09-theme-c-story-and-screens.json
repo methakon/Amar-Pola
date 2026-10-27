@@ -1,0 +1,136 @@
+[
+  {
+    "id": "ST-01",
+    "page": 1,
+    "actor": "Parent",
+    "kind": "narrative",
+    "bn_heading": "মাদালসার শিক্ষা",
+    "en_heading": "A mother's wisdom",
+    "en_copy": "Madalasa raised her sons with thoughtful guidance, encouraging understanding beyond fear and pride.",
+    "illustration_direction": "Mother teaching sons in tranquil courtyard",
+    "controls": "Skip; Back; Next; progress; Source & interpretation",
+    "source": "Markandeya Purana XXVI/XXXVI/XXXVII via Pargiter 1904",
+    "rule": "Story not consent. Text editable, original illustration; religious participation optional.",
+    "figma_node_id": null
+  },
+  {
+    "id": "ST-02",
+    "page": 2,
+    "actor": "Parent",
+    "kind": "narrative",
+    "bn_heading": "অলর্কের শিক্ষা",
+    "en_heading": "Alarka grows in responsibility",
+    "en_copy": "For her youngest son Alarka, she also taught the duties of family life and just leadership.",
+    "illustration_direction": "Madalasa teaching younger Alarka in garden",
+    "controls": "Skip; Back; Next; progress; Source & interpretation",
+    "source": "Markandeya Purana XXVI/XXXVI/XXXVII via Pargiter 1904",
+    "rule": "Story not consent. Text editable, original illustration; religious participation optional.",
+    "figma_node_id": null
+  },
+  {
+    "id": "ST-03",
+    "page": 3,
+    "actor": "Parent",
+    "kind": "narrative",
+    "bn_heading": "মায়ের আংটি",
+    "en_heading": "A ring to remember",
+    "en_copy": "When Alarka became king, Madalasa entrusted him with a ring holding counsel for difficult times.",
+    "illustration_direction": "Adult Alarka receiving golden ring",
+    "controls": "Skip; Back; Next; progress; Source & interpretation",
+    "source": "Markandeya Purana XXVI/XXXVI/XXXVII via Pargiter 1904",
+    "rule": "Story not consent. Text editable, original illustration; religious participation optional.",
+    "figma_node_id": null
+  },
+  {
+    "id": "ST-04",
+    "page": 4,
+    "actor": "Parent",
+    "kind": "narrative",
+    "bn_heading": "সঙ্কটে স্মরণ",
+    "en_heading": "Remembering her counsel",
+    "en_copy": "In adversity, Alarka remembered his mother's words and read the message inside the ring.",
+    "illustration_direction": "Adult Alarka quietly reading ring inscription",
+    "controls": "Skip; Back; Next; progress; Source & interpretation",
+    "source": "Markandeya Purana XXVI/XXXVI/XXXVII via Pargiter 1904",
+    "rule": "Story not consent. Text editable, original illustration; religious participation optional.",
+    "figma_node_id": null
+  },
+  {
+    "id": "ST-05",
+    "page": 5,
+    "actor": "Parent",
+    "kind": "narrative",
+    "bn_heading": "প্রজ্ঞার পথে",
+    "en_heading": "The path to wisdom",
+    "en_copy": "Guided by that counsel, Alarka sought insight from Dattatreya and reconsidered the nature of his difficulties.",
+    "illustration_direction": "Adult Alarka consulting Dattatreya in forest",
+    "controls": "Skip; Back; Next; progress; Source & interpretation",
+    "source": "Markandeya Purana XXVI/XXXVI/XXXVII via Pargiter 1904",
+    "rule": "Story not consent. Text editable, original illustration; religious participation optional.",
+    "figma_node_id": null
+  },
+  {
+    "id": "P-05",
+    "actor": "Parent",
+    "kind": "themed functional sample",
+    "theme_c_note": "Freshness + child status + compact Super Access badge",
+    "original_handoff_id": "P-05",
+    "figma_node_id": null
+  },
+  {
+    "id": "P-15",
+    "actor": "Parent",
+    "kind": "themed functional sample",
+    "theme_c_note": "Six-hour free access and observed history gaps",
+    "original_handoff_id": "P-15",
+    "figma_node_id": null
+  },
+  {
+    "id": "P-24",
+    "actor": "Parent",
+    "kind": "themed functional sample",
+    "theme_c_note": "Observed route legs, evidence and uncertainty",
+    "original_handoff_id": "P-24",
+    "figma_node_id": null
+  },
+  {
+    "id": "P-28",
+    "actor": "Parent",
+    "kind": "themed functional sample",
+    "theme_c_note": "Per-place/per-child enter-exit toggles",
+    "original_handoff_id": "P-28",
+    "figma_node_id": null
+  },
+  {
+    "id": "P-39",
+    "actor": "Parent",
+    "kind": "themed functional sample",
+    "theme_c_note": "Child-specific scoped adult invitation",
+    "original_handoff_id": "P-39",
+    "figma_node_id": null
+  },
+  {
+    "id": "P-48",
+    "actor": "Parent",
+    "kind": "themed functional sample",
+    "theme_c_note": "Manual prepaid one-time purchase no auto-renew",
+    "original_handoff_id": "P-48",
+    "figma_node_id": null
+  },
+  {
+    "id": "P-58",
+    "actor": "Parent",
+    "kind": "themed functional sample",
+    "theme_c_note": "Media disabled unless verified; server quota state",
+    "original_handoff_id": "P-58",
+    "figma_node_id": null
+  },
+  {
+    "id": "C-02",
+    "actor": "Child",
+    "kind": "themed functional sample",
+    "theme_c_note": "Minimal story decoration and clear monitoring disclosure",
+    "original_handoff_id": "C-02",
+    "figma_node_id": null
+  }
+]
