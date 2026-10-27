@@ -4,7 +4,6 @@
     "page": 1,
     "actor": "Parent",
     "kind": "narrative",
-    "bn_heading": "মাদালসার শিক্ষা",
     "en_heading": "A mother's wisdom",
     "en_copy": "Madalasa raised her sons with thoughtful guidance, encouraging understanding beyond fear and pride.",
     "illustration_direction": "Mother teaching sons in tranquil courtyard",
@@ -13,14 +12,16 @@
     "rule": "Story not consent. Text editable, original illustration; religious participation optional.",
     "figma_node_id": "46:164",
     "figma_url": "https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=46-164",
-    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE"
+    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
+    "launch_language": "en",
+    "localization_key": "story.st01.heading",
+    "future_localization": "Externalized UI text only; no translations in initial release"
   },
   {
     "id": "ST-02",
     "page": 2,
     "actor": "Parent",
     "kind": "narrative",
-    "bn_heading": "অলর্কের শিক্ষা",
     "en_heading": "Alarka grows in responsibility",
     "en_copy": "For her youngest son Alarka, she also taught the duties of family life and just leadership.",
     "illustration_direction": "Madalasa teaching younger Alarka in garden",
@@ -29,14 +30,16 @@
     "rule": "Story not consent. Text editable, original illustration; religious participation optional.",
     "figma_node_id": "46:177",
     "figma_url": "https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=46-177",
-    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE"
+    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
+    "launch_language": "en",
+    "localization_key": "story.st02.heading",
+    "future_localization": "Externalized UI text only; no translations in initial release"
   },
   {
     "id": "ST-03",
     "page": 3,
     "actor": "Parent",
     "kind": "narrative",
-    "bn_heading": "মায়ের আংটি",
     "en_heading": "A ring to remember",
     "en_copy": "When Alarka became king, Madalasa entrusted him with a ring holding counsel for difficult times.",
     "illustration_direction": "Adult Alarka receiving golden ring",
@@ -45,14 +48,16 @@
     "rule": "Story not consent. Text editable, original illustration; religious participation optional.",
     "figma_node_id": "46:190",
     "figma_url": "https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=46-190",
-    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE"
+    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
+    "launch_language": "en",
+    "localization_key": "story.st03.heading",
+    "future_localization": "Externalized UI text only; no translations in initial release"
   },
   {
     "id": "ST-04",
     "page": 4,
     "actor": "Parent",
     "kind": "narrative",
-    "bn_heading": "সঙ্কটে স্মরণ",
     "en_heading": "Remembering her counsel",
     "en_copy": "In adversity, Alarka remembered his mother's words and read the message inside the ring.",
     "illustration_direction": "Adult Alarka quietly reading ring inscription",
@@ -61,14 +66,16 @@
     "rule": "Story not consent. Text editable, original illustration; religious participation optional.",
     "figma_node_id": "46:203",
     "figma_url": "https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=46-203",
-    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE"
+    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
+    "launch_language": "en",
+    "localization_key": "story.st04.heading",
+    "future_localization": "Externalized UI text only; no translations in initial release"
   },
   {
     "id": "ST-05",
     "page": 5,
     "actor": "Parent",
     "kind": "narrative",
-    "bn_heading": "প্রজ্ঞার পথে",
     "en_heading": "The path to wisdom",
     "en_copy": "Guided by that counsel, Alarka sought insight from Dattatreya and reconsidered the nature of his difficulties.",
     "illustration_direction": "Adult Alarka consulting Dattatreya in forest",
@@ -77,7 +84,10 @@
     "rule": "Story not consent. Text editable, original illustration; religious participation optional.",
     "figma_node_id": "46:216",
     "figma_url": "https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=46-216",
-    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE"
+    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
+    "launch_language": "en",
+    "localization_key": "story.st05.heading",
+    "future_localization": "Externalized UI text only; no translations in initial release"
   },
   {
     "id": "P-05",
@@ -87,7 +97,9 @@
     "original_handoff_id": "P-05",
     "figma_node_id": "52:164",
     "figma_url": "https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=52-164",
-    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE"
+    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
+    "launch_language": "en",
+    "future_localization": "Design for flexible future translation"
   },
   {
     "id": "P-15",
@@ -97,7 +109,9 @@
     "original_handoff_id": "P-15",
     "figma_node_id": "52:192",
     "figma_url": "https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=52-192",
-    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE"
+    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
+    "launch_language": "en",
+    "future_localization": "Design for flexible future translation"
   },
   {
     "id": "P-24",
@@ -107,7 +121,9 @@
     "original_handoff_id": "P-24",
     "figma_node_id": "52:212",
     "figma_url": "https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=52-212",
-    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE"
+    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
+    "launch_language": "en",
+    "future_localization": "Design for flexible future translation"
   },
   {
     "id": "P-28",
@@ -117,7 +133,9 @@
     "original_handoff_id": "P-28",
     "figma_node_id": "52:237",
     "figma_url": "https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=52-237",
-    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE"
+    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
+    "launch_language": "en",
+    "future_localization": "Design for flexible future translation"
   },
   {
     "id": "P-39",
@@ -127,7 +145,9 @@
     "original_handoff_id": "P-39",
     "figma_node_id": "52:263",
     "figma_url": "https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=52-263",
-    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE"
+    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
+    "launch_language": "en",
+    "future_localization": "Design for flexible future translation"
   },
   {
     "id": "P-48",
@@ -137,7 +157,9 @@
     "original_handoff_id": "P-48",
     "figma_node_id": "52:281",
     "figma_url": "https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=52-281",
-    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE"
+    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
+    "launch_language": "en",
+    "future_localization": "Design for flexible future translation"
   },
   {
     "id": "P-58",
@@ -147,7 +169,9 @@
     "original_handoff_id": "P-58",
     "figma_node_id": "52:303",
     "figma_url": "https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=52-303",
-    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE"
+    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
+    "launch_language": "en",
+    "future_localization": "Design for flexible future translation"
   },
   {
     "id": "C-02",
@@ -157,7 +181,9 @@
     "original_handoff_id": "C-02",
     "figma_node_id": "52:337",
     "figma_url": "https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=52-337",
-    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE"
+    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
+    "launch_language": "en",
+    "future_localization": "Design for flexible future translation"
   },
   {
     "id": "P-31",
@@ -167,6 +193,8 @@
     "original_handoff_id": "P-31",
     "figma_node_id": "52:317",
     "figma_url": "https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=52-317",
-    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE"
+    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
+    "launch_language": "en",
+    "future_localization": "Design for flexible future translation"
   }
 ]
