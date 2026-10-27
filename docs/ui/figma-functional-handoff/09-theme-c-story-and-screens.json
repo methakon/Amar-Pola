@@ -233,5 +233,65 @@
     "figma_url": "https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=81-201",
     "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
     "launch_language": "en"
+  },
+  {
+    "id": "SH-01",
+    "actor": "Parent",
+    "kind": "themed functional sample",
+    "theme_c_note": "Per-child separate sharing and paid-seat selection",
+    "figma_node_id": "84:179",
+    "figma_url": "https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=84-179",
+    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
+    "launch_language": "en",
+    "legal_status": "GATED: Family Link role API unverified; Play add-on SKU unconfigured",
+    "product_spec": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md"
+  },
+  {
+    "id": "SH-02",
+    "actor": "Parent",
+    "kind": "themed functional sample",
+    "theme_c_note": "Google parent-child verification unavailable; sharing locked",
+    "figma_node_id": "84:201",
+    "figma_url": "https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=84-201",
+    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
+    "launch_language": "en",
+    "legal_status": "GATED: Family Link role API unverified; Play add-on SKU unconfigured",
+    "product_spec": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md"
+  },
+  {
+    "id": "SH-03",
+    "actor": "Parent",
+    "kind": "themed functional sample",
+    "theme_c_note": "One active premium viewer screen; takeover or additional slot",
+    "figma_node_id": "84:221",
+    "figma_url": "https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=84-221",
+    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
+    "launch_language": "en",
+    "legal_status": "GATED: Family Link role API unverified; Play add-on SKU unconfigured",
+    "product_spec": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md"
+  },
+  {
+    "id": "SH-04",
+    "actor": "Parent",
+    "kind": "themed functional sample",
+    "theme_c_note": "₹100 candidate +1 simultaneous viewer and +30 combined AV minutes, no auto-renew",
+    "figma_node_id": "84:242",
+    "figma_url": "https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=84-242",
+    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
+    "launch_language": "en",
+    "legal_status": "GATED: Family Link role API unverified; Play add-on SKU unconfigured",
+    "product_spec": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md"
+  },
+  {
+    "id": "SH-05",
+    "actor": "Parent",
+    "kind": "themed functional sample",
+    "theme_c_note": "Verified co-parent sees only approved child; other child hidden",
+    "figma_node_id": "84:263",
+    "figma_url": "https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=84-263",
+    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
+    "launch_language": "en",
+    "legal_status": "GATED: Family Link role API unverified; Play add-on SKU unconfigured",
+    "product_spec": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md"
   }
 ]
