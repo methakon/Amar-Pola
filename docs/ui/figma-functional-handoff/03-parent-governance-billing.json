@@ -61,6 +61,12 @@
       "launch_language": "en",
       "localization_readiness": "Externalize future Android strings and allow longer labels; no translated interface now",
       "future_localization": "String resource keys and flexible layout, future translations pending"
+    },
+    "two_parent_family_entitlement_2026": {
+      "two_parent_rule": "Family Link may support a second adult parent, but no automatic import. Invite via verified, revocable Madalasa child-specific scope. Google account relationship never substitutes for consent.",
+      "acceptance": "Parent B independently signs in with own identity, verified parent grants only selected children; shared paid access without double purchase.",
+      "status": "DESIGN_APPROVED_NOT_IMPLEMENTED",
+      "reference": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/TWO_PARENT_SHARED_CHILD_PREPAID_ENTITLEMENTS_2026.md"
     }
   },
   {
@@ -79,7 +85,12 @@
     "actor": "Parent",
     "phase": "Governance",
     "app_display_name": "Madalasa",
-    "project_display_name": "Madalasa & Alarka"
+    "project_display_name": "Madalasa & Alarka",
+    "two_parent_family_entitlement_2026": {
+      "two_parent_rule": "Grant can authorize co-parent Child A without granting Child B or billing. Revocation invalidates access immediately but does not cancel prepaid coverage.",
+      "status": "DESIGN_APPROVED_NOT_IMPLEMENTED",
+      "reference": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/TWO_PARENT_SHARED_CHILD_PREPAID_ENTITLEMENTS_2026.md"
+    }
   },
   {
     "title": "Access ledger",
@@ -223,6 +234,13 @@
       "launch_language": "en",
       "localization_readiness": "Externalize future Android strings and allow longer labels; no translated interface now",
       "future_localization": "String resource keys and flexible layout, future translations pending"
+    },
+    "two_parent_family_entitlement_2026": {
+      "two_parent_rule": "Primary billing parent selects covered child IDs up to verified prepaid family capacity N. Parent A and Parent B share each covered child's entitlement. Show free siblings separately; shared child quota counts across guardians.",
+      "figma_theme_c": "https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=81-179",
+      "launch_language": "en",
+      "status": "DESIGN_APPROVED_NOT_IMPLEMENTED",
+      "reference": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/TWO_PARENT_SHARED_CHILD_PREPAID_ENTITLEMENTS_2026.md"
     }
   },
   {
@@ -231,7 +249,7 @@
     "fr": "FR-012",
     "type": "billing",
     "hero": "Review your one-time prepaid purchase — no auto-renew",
-    "ui": "Term; N seats; auto-renew; total; tax caveat; 2026-10-27: compact dismissible Super Access trial status; manual prepaid billing and trial/expiry states as applicable",
+    "ui": "Term; N seats; no auto-renew; total; tax caveat; 2026-10-27: compact dismissible Super Access trial status; manual prepaid billing and trial/expiry states as applicable",
     "action": "Continue to Play Billing",
     "api": "BillingClient ProductDetails + purchase token to Drogon",
     "rule": "₹50/month / ₹500/year proposed, not guaranteed final inclusive price; OWNER DECISION: no automatic renewal, no trial reset, founding first 1,008 paying families and approved retention gates",
@@ -251,6 +269,11 @@
       "launch_language": "en",
       "localization_readiness": "Externalize future Android strings and allow longer labels; no translated interface now",
       "future_localization": "String resource keys and flexible layout, future translations pending"
+    },
+    "two_parent_family_entitlement_2026": {
+      "two_parent_rule": "Show covered status to authorized co-parent; hide redundant checkout when child already covered. Only payer confirms one-time purchase; Play amount/expiry verified. Capacity changes need Play sandbox support.",
+      "status": "DESIGN_APPROVED_NOT_IMPLEMENTED",
+      "reference": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/TWO_PARENT_SHARED_CHILD_PREPAID_ENTITLEMENTS_2026.md"
     }
   },
   {
@@ -279,6 +302,13 @@
       "launch_language": "en",
       "localization_readiness": "Externalize future Android strings and allow longer labels; no translated interface now",
       "future_localization": "String resource keys and flexible layout, future translations pending"
+    },
+    "two_parent_family_entitlement_2026": {
+      "two_parent_rule": "Parent B sees 'Covered by your family's prepaid plan' on Child A, paid time remaining and their own permission scopes, without purchase token. Child B remains free if not selected.",
+      "figma_theme_c": "https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=81-201",
+      "launch_language": "en",
+      "status": "DESIGN_APPROVED_NOT_IMPLEMENTED",
+      "reference": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/TWO_PARENT_SHARED_CHILD_PREPAID_ENTITLEMENTS_2026.md"
     }
   },
   {
@@ -379,6 +409,11 @@
       "launch_language": "en",
       "localization_readiness": "Externalize future Android strings and allow longer labels; no translated interface now",
       "future_localization": "String resource keys and flexible layout, future translations pending"
+    },
+    "two_parent_family_entitlement_2026": {
+      "two_parent_rule": "Manual prepaid renewal by current payer. Payer transfer when needed requires new explicit Play purchase/restore protocol, no subscription family library or charge without consent.",
+      "status": "DESIGN_APPROVED_NOT_IMPLEMENTED",
+      "reference": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/TWO_PARENT_SHARED_CHILD_PREPAID_ENTITLEMENTS_2026.md"
     }
   }
 ]
