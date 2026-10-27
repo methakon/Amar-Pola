@@ -43,10 +43,20 @@ jobs:
         run: python3 backend/tests/lint_openapi_m1.py docs/openapi-m1.yaml
       - name: Whole OpenAPI and Figma screen-to-DB contract lint (spec only)
         run: python3 backend/tests/lint_openapi_full.py
-      - name: M1 PostgreSQL migration
+      - name: OpenAPI linter unit tests (the linter must also fail broken contracts)
+        run: python3 backend/tests/test_lint_openapi_m1.py
+      - name: M1 PostgreSQL migration 0001 (identity)
         run: psql -v ON_ERROR_STOP=1 -f backend/persistence/migrations/0001_m1_identity.sql
+      - name: M1 PostgreSQL migration 0002 (device credentials)
+        run: psql -v ON_ERROR_STOP=1 -f backend/persistence/migrations/0002_m1_device_credentials.sql
+      - name: M1 PostgreSQL migration 0003 (enrollment flow, commit-safe renewal, retention, PUBLIC lockdown)
+        run: psql -v ON_ERROR_STOP=1 -f backend/persistence/migrations/0003_m1_enrollment_and_credential_hardening.sql
       - name: Two-family and child-scope isolation regression
         run: psql -v ON_ERROR_STOP=1 -f backend/tests/m1_tenant_isolation.sql
+      - name: Device credential lifecycle and family listing regression
+        run: psql -v ON_ERROR_STOP=1 -f backend/tests/m1_credential_lifecycle.sql
+      - name: Enrollment flow, first credential and retention regression
+        run: psql -v ON_ERROR_STOP=1 -f backend/tests/m1_enrollment.sql
       - name: Verify no sensitive production fixture paths
         run: |
           test -f backend/tests/M1_ACCEPTANCE_TEST_CASES.md

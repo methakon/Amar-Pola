@@ -1,112 +1,180 @@
 #!/usr/bin/env python3
-"""Offline strict structural linter for Madalasa–Alarka M1 OpenAPI 3.1 JSON-as-YAML.
-Purpose: no network/pip required. Not a full OpenAPI conformance validator.
+"""Offline strict structural linter for the M1 OpenAPI 3.1 contract (JSON-as-YAML).
+
+Purpose: no network or pip required. Not a full OpenAPI conformance validator;
 CI can additionally run Redocly/Spectral/openapi-spec-validator later.
+
+Usage:  python3 backend/tests/lint_openapi_m1.py docs/openapi-m1.yaml
+The rules are exercised against deliberately broken contracts by
+backend/tests/test_lint_openapi_m1.py, so the linter itself is tested.
 """
 import json
 import re
 import sys
 from pathlib import Path
 
-path = Path(sys.argv[1] if len(sys.argv) > 1 else "docs/openapi-m1.yaml")
-errors = []
-try:
-    doc = json.loads(path.read_text(encoding="utf-8"))
-except Exception as exc:
-    print(f"FAIL: unreadable JSON/YAML subset {path}: {exc}", file=sys.stderr)
-    raise SystemExit(1)
-def check(cond, message):
-    if not cond:
-        errors.append(message)
-check(doc.get("openapi") == "3.1.0", "OpenAPI version must be 3.1.0")
-check(doc.get("servers") and all(
-    isinstance(s.get("url"), str) and s["url"].startswith("https://")
-    for s in doc.get("servers", [])), "M1 servers require HTTPS")
-sch = doc.get("components", {}).get("schemas", {})
-sec = doc.get("components", {}).get("securitySchemes", {})
-check("ParentOIDC" in sec and "DeviceBearer" in sec, "Missing M1 auth schemes")
-expected = {
-    "createFamily", "createChild", "listChildren", "getChild",
+EXPECTED_OPERATIONS = {
+    "createFamily", "listFamilies", "createChild", "listChildren", "getChild",
     "listChildDevices", "issuePairingCode", "redeemEnrollmentCode",
-    "finishEnrollmentProof", "recordCapabilities", "recordHealth",
-    "revokeDevice",
+    "finishEnrollmentProof", "requestCredentialChallenge", "renewDeviceCredential",
+    "recordCapabilities", "recordHealth", "revokeDevice",
 }
-ids = []
-operations = 0
-for url, verbs in doc.get("paths", {}).items():
-    check(url.startswith("/") and "?" not in url, f"Invalid route: {url}")
-    for method, op in verbs.items():
-        operations += 1
-        where = f"{method.upper()} {url}"
-        check(method in {"get", "post", "put", "patch", "delete"}, f"{where}: invalid verb")
-        oid = op.get("operationId")
-        ids.append(oid)
-        check(oid in expected, f"{where}: not a permitted M1 operation {oid}")
-        check(bool(op.get("tags")) and bool(op.get("summary")), f"{where}: tags/summary required")
-        check("x-required-scope" in op, f"{where}: missing child/action scope declaration")
-        check("security" in op, f"{where}: explicit principal security required")
-        if op.get("security"):
-            for requirement in op["security"]:
-                for name in requirement:
-                    check(name in sec, f"{where}: undefined security scheme {name}")
-        else:
-            check(url in {"/enrollment", "/enrollment/{enrollmentId}/proof"},
-                  f"{where}: anonymous route beyond narrow pairing/proof")
-        if method in {"post", "put", "patch"}:
-            check(op.get("requestBody", {}).get("required") is True,
-                  f"{where}: write operation requires typed body")
-        declared = set(re.findall(r"\{(\w+)\}", url))
-        actual = {p.get("name") for p in op.get("parameters", []) if p.get("in") == "path"}
-        check(declared == actual, f"{where}: path params {declared} != {actual}")
-        codes = op.get("responses", {})
-        check(any(x in codes for x in ("200", "201", "202", "204")), f"{where}: no success")
-        check("401" in codes and "403" in codes and "429" in codes,
-              f"{where}: missing standardized 401/403/429 responses")
-check(operations == 11, f"Expected exactly 11 M1 operations, got {operations}")
-check(set(ids) == expected and len(ids) == len(set(ids)),
-      f"Expected unique exact operationId set: {expected ^ set(ids)}")
-for name, schema in sch.items():
-    if schema.get("type") == "object":
-        req = schema.get("required")
-        check(isinstance(req, list), f"{name}: missing required[]")
-        if isinstance(req, list):
-            check(len(req) == len(set(req)), f"{name}: duplicate required")
-            check(set(req).issubset(set(schema.get("properties", {}))),
-                  f"{name}: required fields not declared")
-        check(schema.get("additionalProperties") is False,
-              f"{name}: enforce explicit fields")
-def walk(value, at="root"):
-    if isinstance(value, dict):
-        if "$ref" in value:
-            ref = value["$ref"]
-            check(isinstance(ref, str) and
-                  ref.startswith("#/components/schemas/") and
-                  ref.split("/")[-1] in sch, f"{at}: unresolved ref {ref}")
-        if "type" in value:
-            ty = value["type"]
-            # OpenAPI Security Scheme Objects have a separate 'type' vocabulary.
-            # In particular, 'http' is valid in components.securitySchemes but
-            # it is NOT a JSON Schema type inside components.schemas.
-            if at.startswith("root/components/securitySchemes/") and at.count("/") == 3:
-                security_types = {"apiKey", "http", "mutualTLS", "oauth2", "openIdConnect"}
-                check(isinstance(ty, str) and ty in security_types,
-                      f"{at}: invalid OpenAPI Security Scheme type {ty}")
+# Routes that cannot carry a bearer credential: the device has no token yet
+# (enrollment) or its short-lived token has expired (renewal). They are
+# protected by single-use proofs and rate limits instead.
+ANONYMOUS_ROUTES = {
+    "/enrollment",
+    "/enrollment/{enrollmentId}/proof",
+    "/devices/{deviceId}/credential/challenge",
+    "/devices/{deviceId}/credential/renew",
+}
+# 410 means "this one-time code or challenge is expired or already used".
+GONE_OPERATIONS = {"redeemEnrollmentCode", "finishEnrollmentProof"}
+# Status codes that cannot occur on an operation that takes no request body.
+BODYLESS_FORBIDDEN = {"410", "413", "422"}
+SECURITY_SCHEME_TYPES = {"apiKey", "http", "oauth2", "openIdConnect", "mutualTLS"}
+JSON_SCHEMA_TYPES = {"null", "integer", "number", "boolean", "string", "array", "object"}
+HTTP_VERBS = {"get", "post", "put", "patch", "delete"}
+
+
+def lint(doc):
+    """Return (errors, operation_count, operation_ids, schema_count)."""
+    errors = []
+
+    def check(cond, message):
+        if not cond:
+            errors.append(message)
+
+    check(doc.get("openapi") == "3.1.0", "OpenAPI version must be 3.1.0")
+    servers = doc.get("servers")
+    check(bool(servers) and all(
+        isinstance(s.get("url"), str) and s["url"].startswith("https://")
+        for s in servers or []), "M1 servers require HTTPS")
+    components = doc.get("components", {})
+    schemas = components.get("schemas", {})
+    security = components.get("securitySchemes", {})
+    check("ParentOIDC" in security and "DeviceBearer" in security, "Missing M1 auth schemes")
+
+    # Security schemes use OpenAPI's own vocabulary (type: http), not JSON Schema's.
+    for name, scheme in security.items():
+        stype = scheme.get("type")
+        check(stype in SECURITY_SCHEME_TYPES, f"securityScheme {name}: invalid type {stype}")
+        if stype == "http":
+            check(bool(scheme.get("scheme")), f"securityScheme {name}: http scheme required")
+
+    ids = []
+    operations = 0
+    for url, verbs in doc.get("paths", {}).items():
+        check(url.startswith("/") and "?" not in url, f"Invalid route: {url}")
+        for method, op in verbs.items():
+            operations += 1
+            where = f"{method.upper()} {url}"
+            check(method in HTTP_VERBS, f"{where}: invalid verb")
+            oid = op.get("operationId")
+            ids.append(oid)
+            check(oid in EXPECTED_OPERATIONS, f"{where}: not a permitted M1 operation {oid}")
+            check(bool(op.get("tags")) and bool(op.get("summary")), f"{where}: tags/summary required")
+            check("x-required-scope" in op, f"{where}: missing child/action scope declaration")
+            check("security" in op, f"{where}: explicit principal security required")
+            sec = op.get("security")
+            if sec:
+                for requirement in sec:
+                    for name in requirement:
+                        check(name in security, f"{where}: undefined security scheme {name}")
             else:
-                allowed = {"null", "integer", "number", "boolean", "string", "array", "object"}
+                check(url in ANONYMOUS_ROUTES,
+                      f"{where}: anonymous route beyond narrow pairing/proof/renewal")
+            has_body = "requestBody" in op
+            if method in {"post", "put", "patch"}:
+                check(op.get("requestBody", {}).get("required") is True,
+                      f"{where}: write operation requires typed body")
+            declared = set(re.findall(r"\{(\w+)\}", url))
+            actual = {p.get("name") for p in op.get("parameters", []) if p.get("in") == "path"}
+            check(declared == actual, f"{where}: path params {declared} != {actual}")
+
+            codes = op.get("responses", {})
+            check(any(x in codes for x in ("200", "201", "202", "204")), f"{where}: no success")
+            check("429" in codes, f"{where}: missing 429 response")
+            if has_body or op.get("parameters"):
+                check("400" in codes, f"{where}: operation takes input but declares no 400")
+            else:
+                check("400" not in codes, f"{where}: 400 cannot occur on an operation without input")
+            if sec:
+                check("401" in codes, f"{where}: authenticated operation must declare 401")
+            if not has_body:
+                for bad in sorted(BODYLESS_FORBIDDEN & set(codes)):
+                    errors.append(f"{where}: {bad} cannot occur on an operation without a request body")
+            if "410" in codes:
+                check(oid in GONE_OPERATIONS,
+                      f"{where}: 410 is reserved for expired/used one-time enrollment codes")
+            for code, response in codes.items():
+                if not code.startswith("2"):
+                    ref = (response.get("content", {}).get("application/json", {})
+                           .get("schema", {}).get("$ref"))
+                    check(ref == "#/components/schemas/Error",
+                          f"{where}: {code} must use the shared Error schema")
+
+    check(operations == len(EXPECTED_OPERATIONS),
+          f"Expected exactly {len(EXPECTED_OPERATIONS)} M1 operations, got {operations}")
+    check(set(ids) == EXPECTED_OPERATIONS and len(ids) == len(set(ids)),
+          f"Expected unique exact operationId set: {EXPECTED_OPERATIONS ^ set(ids)}")
+
+    for name, schema in schemas.items():
+        if schema.get("type") == "object":
+            req = schema.get("required")
+            check(isinstance(req, list), f"{name}: missing required[]")
+            if isinstance(req, list):
+                check(len(req) == len(set(req)), f"{name}: duplicate required")
+                check(set(req).issubset(set(schema.get("properties", {}))),
+                      f"{name}: required fields not declared")
+            check(schema.get("additionalProperties") is False,
+                  f"{name}: enforce explicit fields")
+
+    def walk(value, at="root"):
+        if isinstance(value, dict):
+            if "$ref" in value:
+                ref = value["$ref"]
+                check(isinstance(ref, str) and ref.startswith("#/components/schemas/")
+                      and ref.split("/")[-1] in schemas, f"{at}: unresolved ref {ref}")
+            ty = value.get("type")
+            # A property that happens to be NAMED "type" holds a dict, not a type keyword.
+            if isinstance(ty, (str, list)):
                 items = [ty] if isinstance(ty, str) else ty
-                check(isinstance(items, list) and all(x in allowed for x in items),
+                check(all(x in JSON_SCHEMA_TYPES for x in items),
                       f"{at}: invalid JSON Schema type {ty}")
-        if isinstance(value.get("required"), str):
-            errors.append(f"{at}: required field must be array")
-        for k, v in value.items():
-            walk(v, at + "/" + str(k))
-    elif isinstance(value, list):
-        for i, v in enumerate(value):
-            walk(v, at + f"/{i}")
-walk(doc)
-if errors:
-    for error in errors:
-        print("FAIL:", error, file=sys.stderr)
-    print(f"M1 OpenAPI FAIL ({len(errors)} errors; {operations} operations)", file=sys.stderr)
-    raise SystemExit(1)
-print(f"M1 OpenAPI structural lint PASS ({operations} M1 operations, {len(sch)} schemas, {len(ids)} unique operationIds)")
+            if isinstance(value.get("required"), str):
+                errors.append(f"{at}: required field must be array")
+            for k, v in value.items():
+                walk(v, at + "/" + str(k))
+        elif isinstance(value, list):
+            for i, v in enumerate(value):
+                walk(v, at + f"/{i}")
+
+    scan = dict(doc)
+    scan_components = dict(components)
+    scan_components.pop("securitySchemes", None)  # validated above with OpenAPI rules
+    scan["components"] = scan_components
+    walk(scan)
+    return errors, operations, ids, len(schemas)
+
+
+def main(argv):
+    path = Path(argv[1] if len(argv) > 1 else "docs/openapi-m1.yaml")
+    try:
+        doc = json.loads(path.read_text(encoding="utf-8"))
+    except Exception as exc:
+        print(f"FAIL: unreadable JSON/YAML subset {path}: {exc}", file=sys.stderr)
+        return 1
+    errors, operations, ids, schema_count = lint(doc)
+    if errors:
+        for error in errors:
+            print("FAIL:", error, file=sys.stderr)
+        print(f"M1 OpenAPI FAIL ({len(errors)} errors; {operations} operations)", file=sys.stderr)
+        return 1
+    print(f"M1 OpenAPI structural lint PASS ({operations} M1 operations, "
+          f"{schema_count} schemas, {len(ids)} unique operationIds)")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main(sys.argv))

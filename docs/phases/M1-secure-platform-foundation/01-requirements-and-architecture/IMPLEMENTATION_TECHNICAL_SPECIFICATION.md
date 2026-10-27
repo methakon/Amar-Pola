@@ -180,6 +180,13 @@ Parse overnight windows, reboot persistence, clock/timezone changes and next tra
 
 ## 11. Backend relational model (initial migration)
 
+> **SUPERSEDED for M1 (2026-10-27).** The authoritative M1 data model is
+> [`0001`](../../../../backend/persistence/migrations/0001_m1_identity.sql) (family-scoped, forced row-level security),
+> extended by [`0002`](../../../../backend/persistence/migrations/0002_m1_device_credentials.sql) and
+> [`0003`](../../../../backend/persistence/migrations/0003_m1_enrollment_and_credential_hardening.sql). The parent-owned model below
+> is kept as history of the original design and must not be implemented. Credential design:
+> [M1 device credential lifecycle](../../../M1_DEVICE_CREDENTIAL_LIFECYCLE.md).
+
 Tables:
 - `parent_accounts(id, auth_subject, created_at, deletion_status)`
 - `devices(id, owner_id, mode, api_level, app_version, last_seen_at, revoked_at)`

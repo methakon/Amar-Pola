@@ -55,6 +55,8 @@
 
 **Pass criteria:** Second/expired returns 409/410; no second device; rate limit repeated guessing; no code in logs
 
+**DB-level coverage:** m1_enrollment.sql (EN_01–EN_05): one-use, expired, used, exhausted and unknown codes redeem nothing; malformed input does not burn a valid code.
+
 **Negative safety checks:** Reject unauthorized object/scope/role; ensure invalid input does not mutate another child's state; redact sensitive fields. Where OS permission/role is relevant, the real device's observed system authority is decisive.
 
 **Evidence to capture:** exact source SHA, request IDs, UTC test time, environment/device model/API, status code/response, relevant redacted DB record/OS output, test executor/reviewer and PASS/FAIL.
@@ -70,6 +72,10 @@
 
 **Pass criteria:** Proof denied 401/409/410, no ACTIVE device; explicit re-enroll after lost key; no credential minted
 
+**Enrollment sub-step:** a challenge whose proof failed must stay spent (a corrected signature on the same enrollment id fails), and a lost or reinstalled key means revoke plus a new pairing code, never key rotation (decision C-06). DB-level coverage: m1_enrollment.sql (EN_06–EN_15).
+
+**Renewal sub-steps (credential lifecycle, see docs/M1_DEVICE_CREDENTIAL_LIFECYCLE.md):** on an ACTIVE device with an expired token, request POST /devices/{id}/credential/challenge, then POST .../renew with (a) a signature by keyB, (b) a stale or altered nonce, (c) a signature over the enrollment context string instead of `amar-pola-m1-device-renew-v1`, (d) a replay of an already-used challenge. Each must fail with 401/404/410/422, mint no credential, and burn the challenge (a following correct signature on the same challenge also fails). Control: keyA with a fresh challenge returns a new token and the previous token stops working. DB-level coverage: backend/tests/m1_credential_lifecycle.sql (CL_14–CL_24).
+
 **Negative safety checks:** Reject unauthorized object/scope/role; ensure invalid input does not mutate another child's state; redact sensitive fields. Where OS permission/role is relevant, the real device's observed system authority is decisive.
 
 **Evidence to capture:** exact source SHA, request IDs, UTC test time, environment/device model/API, status code/response, relevant redacted DB record/OS output, test executor/reviewer and PASS/FAIL.
@@ -84,6 +90,8 @@
 **Procedure:** A calls DELETE /devices/deviceA/pairing, then A device POST /devices/deviceA/health; try B revoke
 
 **Pass criteria:** 204 owner; revoked device 401/403 on next use; B operation 404/403; revocation reflected in audit/epochs
+
+**Renewal sub-step:** after revoke, the revoked device's still-unexpired token is refused, POST .../credential/challenge gives no challenge, and a challenge issued before revoke cannot be completed. DB-level coverage: m1_credential_lifecycle.sql (CL_25–CL_27).
 
 **Negative safety checks:** Reject unauthorized object/scope/role; ensure invalid input does not mutate another child's state; redact sensitive fields. Where OS permission/role is relevant, the real device's observed system authority is decisive.
 
@@ -174,6 +182,8 @@
 **Procedure:** POST invalid JSON, missing required fields, oversized SPKI/capability, repeated unauthorized pairing attempts
 
 **Pass criteria:** 400/413/422/429 with Error schema; no crash, bounded memory/time, redacted request logs
+
+**Starting rate limits to verify (decision C-02, docs/M1_DEVICE_CREDENTIAL_LIFECYCLE.md):** POST /enrollment 10/min/IP; credential challenge 10/min/IP and 20/hour/device; credential renew 10/min/IP and 10/hour/device; each over-limit call returns 429 with Retry-After and creates no database row.
 
 **Negative safety checks:** Reject unauthorized object/scope/role; ensure invalid input does not mutate another child's state; redact sensitive fields. Where OS permission/role is relevant, the real device's observed system authority is decisive.
 
