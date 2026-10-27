@@ -76,7 +76,9 @@
       "concurrent_viewers": "1 included per paid child, +1 per active paid add-on",
       "extra_addon_target_inr": 100,
       "extra_av_minutes_combined": 30,
-      "addon_days_assumed_not_approved": 30
+      "addon_days": 100,
+      "expiration_policy": "100 fixed calendar days from verified purchase, NEVER shortened on base prepaid expiry",
+      "base_lapse_policy": "Extra premium viewing temporarily dormant on base plan lapse; original 100-day expiry and unused 30 pooled A/V minutes preserved, resume on main prepaid renewal within 100 days"
     }
   },
   {
@@ -109,7 +111,9 @@
       "concurrent_viewers": "1 included per paid child, +1 per active paid add-on",
       "extra_addon_target_inr": 100,
       "extra_av_minutes_combined": 30,
-      "addon_days_assumed_not_approved": 30
+      "addon_days": 100,
+      "expiration_policy": "100 fixed calendar days from verified purchase, NEVER shortened on base prepaid expiry",
+      "base_lapse_policy": "Extra premium viewing temporarily dormant on base plan lapse; original 100-day expiry and unused 30 pooled A/V minutes preserved, resume on main prepaid renewal within 100 days"
     }
   },
   {
@@ -270,7 +274,9 @@
       "concurrent_viewers": "1 included per paid child, +1 per active paid add-on",
       "extra_addon_target_inr": 100,
       "extra_av_minutes_combined": 30,
-      "addon_days_assumed_not_approved": 30
+      "addon_days": 100,
+      "expiration_policy": "100 fixed calendar days from verified purchase, NEVER shortened on base prepaid expiry",
+      "base_lapse_policy": "Extra premium viewing temporarily dormant on base plan lapse; original 100-day expiry and unused 30 pooled A/V minutes preserved, resume on main prepaid renewal within 100 days"
     }
   },
   {
@@ -307,13 +313,15 @@
     },
     "child_specific_screen_sharing_2026": {
       "status": "PRODUCT_SPECIFICATION_NO_RUNTIME_IMPLEMENTATION",
-      "overview": "₹100 target one-time optional extra concurrent premium viewer for selected paid child; candidate 30-day validity, bounded by prepaid expiry; +30 combined AV min; exact Play price before purchase; add-on unsupported until store validation.",
+      "overview": "₹100 target one-time optional extra concurrent premium viewer for selected paid child; 100-day independent validity, dormant (not forfeited) on main prepaid expiry; +30 combined AV min; exact Play price before purchase; add-on unsupported until store validation.",
       "reference": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md",
       "google_relationship_gate": "HARD_DISABLED_UNTIL_TRUSTED_CHILD_PARENT_ATTESTATION",
       "concurrent_viewers": "1 included per paid child, +1 per active paid add-on",
       "extra_addon_target_inr": 100,
       "extra_av_minutes_combined": 30,
-      "addon_days_assumed_not_approved": 30
+      "addon_days": 100,
+      "expiration_policy": "100 fixed calendar days from verified purchase, NEVER shortened on base prepaid expiry",
+      "base_lapse_policy": "Extra premium viewing temporarily dormant on base plan lapse; original 100-day expiry and unused 30 pooled A/V minutes preserved, resume on main prepaid renewal within 100 days"
     }
   },
   {
@@ -358,7 +366,9 @@
       "concurrent_viewers": "1 included per paid child, +1 per active paid add-on",
       "extra_addon_target_inr": 100,
       "extra_av_minutes_combined": 30,
-      "addon_days_assumed_not_approved": 30
+      "addon_days": 100,
+      "expiration_policy": "100 fixed calendar days from verified purchase, NEVER shortened on base prepaid expiry",
+      "base_lapse_policy": "Extra premium viewing temporarily dormant on base plan lapse; original 100-day expiry and unused 30 pooled A/V minutes preserved, resume on main prepaid renewal within 100 days"
     }
   },
   {
@@ -473,7 +483,9 @@
       "concurrent_viewers": "1 included per paid child, +1 per active paid add-on",
       "extra_addon_target_inr": 100,
       "extra_av_minutes_combined": 30,
-      "addon_days_assumed_not_approved": 30
+      "addon_days": 100,
+      "expiration_policy": "100 fixed calendar days from verified purchase, NEVER shortened on base prepaid expiry",
+      "base_lapse_policy": "Extra premium viewing temporarily dormant on base plan lapse; original 100-day expiry and unused 30 pooled A/V minutes preserved, resume on main prepaid renewal within 100 days"
     }
   }
 ]
