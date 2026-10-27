@@ -51,7 +51,14 @@
     "actor": "Parent",
     "phase": "Governance",
     "app_display_name": "Madalasa",
-    "project_display_name": "Madalasa & Alarka"
+    "project_display_name": "Madalasa & Alarka",
+    "theme_c_2026": {
+      "status": "OWNER_SELECTED_VISUAL_DIRECTION_NOT_IMPLEMENTED",
+      "style": "Original Purana/Bengali folk-art illustrations in isolated decorative panels, high-contrast parchment cards, vermilion/indigo/teal controls",
+      "story_contract": "docs/ui/MADALASA_ALARKA_THEME_C_STORY_AND_UI_CONTRACT_2026.md",
+      "display_rule": "No decorative obstruction of permissions, data confidence, alerts, purchases or map attribution.",
+      "entry": "Invite verified scoped guardian (separate from referral QR and child pairing)"
+    }
   },
   {
     "title": "Guardian grant detail",
@@ -141,7 +148,13 @@
     "actor": "Parent",
     "phase": "Governance",
     "app_display_name": "Madalasa",
-    "project_display_name": "Madalasa & Alarka"
+    "project_display_name": "Madalasa & Alarka",
+    "theme_c_2026": {
+      "status": "OWNER_SELECTED_VISUAL_DIRECTION_NOT_IMPLEMENTED",
+      "style": "Original Purana/Bengali folk-art illustrations in isolated decorative panels, high-contrast parchment cards, vermilion/indigo/teal controls",
+      "story_contract": "docs/ui/MADALASA_ALARKA_THEME_C_STORY_AND_UI_CONTRACT_2026.md",
+      "display_rule": "No decorative obstruction of permissions, data confidence, alerts, purchases or map attribution."
+    }
   },
   {
     "title": "Support diagnostics",
@@ -195,7 +208,13 @@
     "actor": "Parent",
     "phase": "Governance",
     "app_display_name": "Madalasa",
-    "project_display_name": "Madalasa & Alarka"
+    "project_display_name": "Madalasa & Alarka",
+    "theme_c_2026": {
+      "status": "OWNER_SELECTED_VISUAL_DIRECTION_NOT_IMPLEMENTED",
+      "style": "Original Purana/Bengali folk-art illustrations in isolated decorative panels, high-contrast parchment cards, vermilion/indigo/teal controls",
+      "story_contract": "docs/ui/MADALASA_ALARKA_THEME_C_STORY_AND_UI_CONTRACT_2026.md",
+      "display_rule": "No decorative obstruction of permissions, data confidence, alerts, purchases or map attribution."
+    }
   },
   {
     "title": "Checkout review",
@@ -213,7 +232,14 @@
     "actor": "Parent",
     "phase": "Governance",
     "app_display_name": "Madalasa",
-    "project_display_name": "Madalasa & Alarka"
+    "project_display_name": "Madalasa & Alarka",
+    "theme_c_2026": {
+      "status": "OWNER_SELECTED_VISUAL_DIRECTION_NOT_IMPLEMENTED",
+      "style": "Original Purana/Bengali folk-art illustrations in isolated decorative panels, high-contrast parchment cards, vermilion/indigo/teal controls",
+      "story_contract": "docs/ui/MADALASA_ALARKA_THEME_C_STORY_AND_UI_CONTRACT_2026.md",
+      "display_rule": "No decorative obstruction of permissions, data confidence, alerts, purchases or map attribution.",
+      "entry": "₹99/₹999 public and ₹50/₹500 eligible founding prepaid; NO AUTO-RENEW; actual Play checkout, verified end time, expiry returns to free"
+    }
   },
   {
     "title": "Subscription status",
@@ -231,7 +257,14 @@
     "actor": "Parent",
     "phase": "Governance",
     "app_display_name": "Madalasa",
-    "project_display_name": "Madalasa & Alarka"
+    "project_display_name": "Madalasa & Alarka",
+    "theme_c_2026": {
+      "status": "OWNER_SELECTED_VISUAL_DIRECTION_NOT_IMPLEMENTED",
+      "style": "Original Purana/Bengali folk-art illustrations in isolated decorative panels, high-contrast parchment cards, vermilion/indigo/teal controls",
+      "story_contract": "docs/ui/MADALASA_ALARKA_THEME_C_STORY_AND_UI_CONTRACT_2026.md",
+      "display_rule": "No decorative obstruction of permissions, data confidence, alerts, purchases or map attribution.",
+      "entry": "₹99/₹999 public and ₹50/₹500 eligible founding prepaid; NO AUTO-RENEW; actual Play checkout, verified end time, expiry returns to free"
+    }
   },
   {
     "title": "Notification and quiet hours",
@@ -310,17 +343,24 @@
     "milestone": "M7",
     "fr": "FR-012",
     "type": "billing",
-    "hero": "Stop renewal without hiding privacy rights",
-    "ui": "Renewal date; access to expiry; cancel; receipts",
-    "action": "Open Google Play subscriptions",
+    "hero": "Manage prepaid access and view expiry",
+    "ui": "Verified current prepaid entitlement, expiry, one-time top up or purchase, receipts; no auto-renew toggle",
+    "action": "Purchase another prepaid term only with explicit confirmation",
     "api": "Deep link to store management and verified expiry receipt",
-    "rule": "Canceling payment ≠ deleting child data automatically",
+    "rule": "No automatic renewal; deletion and billing verification separate; legacy auto-renew (if ever issued) needs explicit cancellation check",
     "error": "Play unavailable; mismatch; paid until date",
-    "accept": "Clear separate deletion and cancellation journeys.",
+    "accept": "Never charge at expiry or on feature access; free status after expiry.",
     "id": "P-54",
     "actor": "Parent",
     "phase": "Governance",
     "app_display_name": "Madalasa",
-    "project_display_name": "Madalasa & Alarka"
+    "project_display_name": "Madalasa & Alarka",
+    "theme_c_2026": {
+      "status": "OWNER_SELECTED_VISUAL_DIRECTION_NOT_IMPLEMENTED",
+      "style": "Original Purana/Bengali folk-art illustrations in isolated decorative panels, high-contrast parchment cards, vermilion/indigo/teal controls",
+      "story_contract": "docs/ui/MADALASA_ALARKA_THEME_C_STORY_AND_UI_CONTRACT_2026.md",
+      "display_rule": "No decorative obstruction of permissions, data confidence, alerts, purchases or map attribution.",
+      "entry": "₹99/₹999 public and ₹50/₹500 eligible founding prepaid; NO AUTO-RENEW; actual Play checkout, verified end time, expiry returns to free"
+    }
   }
 ]
