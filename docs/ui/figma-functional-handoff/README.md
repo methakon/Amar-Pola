@@ -121,3 +121,8 @@ Three native **editable** Figma system designs were added to the existing [archi
 3. [Architecture tradeoff · durable inbox vs direct raw bulk INSERT / WAL & p95 benchmarks / no MVP Redis](https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=41-126)
 
 [Machine-readable node/coverage index](08-postgres-gps-batch-system-design.json) and [canonical owner acceptance ADR](../../phases/M2-location-collection/01-location-collection-and-ingestion/POSTGRES_DURABLE_INBOX_BULK_GPS_USAGE_INGESTION_ADR_2026-10-27.md). These are **new diagrams**; pre-existing 81 functional app screens, 46 capability screens, 28 audit screens and eight Eraser diagrams were not overwritten. **NOT_IMPLEMENTED / NOT_TESTED / NOT PLAY OR INDIA CHILD-DATA APPROVED.**
+
+
+## Theme C selected by owner (2026-10-28)
+
+Use [Theme C storybook & UI contract](../MADALASA_ALARKA_THEME_C_STORY_AND_UI_CONTRACT_2026.md) and [machine-readable Theme C mapping](09-theme-c-story-and-screens.json) for ST-01–ST-05 and P-05/P-15/P-24/P-28/P-39/P-48/P-58 samples. The existing 81 functional screen IDs, developer implementation descriptions and safety gates remain the legacy baseline; do not delete or replace them with flattened generative art. Introduce original folktale illustrations only as cropped decorative story assets; all UI text, buttons and cards must remain editable. Keep compact closable trial badge, prepaid-only billing, six-hour free visible history and conditional media release flags. Subsequent 81-screen migration needs coverage/visual verification; sample screens alone do not complete that migration.
