@@ -26,15 +26,15 @@ Primary narrative: Mārkaṇḍeya Purāṇa, Madālasā/Alarka episodes, especi
 
 ## 3. Five-page story introduction (ST-01 to ST-05)
 
-User can Skip, move Back/Next, choose language, and later find "Our inspiration" under About. No collection or child device registration merely from reading. Each passage is **short original paraphrase**, not a direct Purāṇa quotation.
+User can Skip, move Back/Next, and later find "Our inspiration" under About. **English only for the initial release; no language picker yet.** No collection or child device registration merely from reading. Each passage is **short original paraphrase**, not a direct Purāṇa quotation.
 
 | Page | English heading | On-screen short copy (English) | Original illustrative subject |
 |---|---|---|---|
-| ST-01 | A mother's wisdom | Madalasa raised her sons with thoughtful guidance, encouraging understanding beyond fear and pride. | Mother Madalasa speaking to her children in a tranquil royal courtyard; warm dawn and lotus vines |
-| ST-02 | Alarka grows in responsibility | For her youngest son Alarka, she also taught the duties of family life and just leadership. | Madalasa instructing young Alarka beside a palm-leaf manuscript and garden |
-| ST-03 | A ring to remember | When Alarka became king, Madalasa entrusted him with a ring holding counsel for difficult times. | Adult royal Alarka receiving small gold ring from Madalasa; clear distinction from magical artifact |
-| ST-04 | Remembering her counsel | In adversity, Alarka remembered his mother's words and read the message inside the ring. | Adult Alarka quietly reading a small written note during a solemn night; nonviolent illustration |
-| ST-05 | The path to wisdom | Guided by that counsel, Alarka sought insight from Dattatreya and reconsidered the nature of his difficulties. | Adult Alarka respectfully consulting Dattatreya in a quiet woodland teaching setting |
+| ST-01 | A Mother's Wisdom | Madalasa raised her sons with thoughtful guidance, encouraging understanding beyond fear and pride. | Mother Madalasa speaking to her children in a tranquil royal courtyard; warm dawn and lotus vines |
+| ST-02 | Alarka's Responsibility | For her youngest son Alarka, she also taught the duties of family life and just leadership. | Madalasa instructing young Alarka beside a palm-leaf manuscript and garden |
+| ST-03 | The Ring of Counsel | When Alarka became king, Madalasa entrusted him with a ring holding counsel for difficult times. | Adult royal Alarka receiving small gold ring from Madalasa; clear distinction from magical artifact |
+| ST-04 | Remembering Her Words | In adversity, Alarka remembered his mother's words and read the message inside the ring. | Adult Alarka quietly reading a small written note during a solemn night; nonviolent illustration |
+| ST-05 | The Path to Wisdom | Guided by that counsel, Alarka sought insight from Dattatreya and reconsidered the nature of his difficulties. | Adult Alarka respectfully consulting Dattatreya in a quiet woodland teaching setting |
 
 Controls: progress 1/5…5/5, Skip (do not block enrollment), Back, Next, Finish → parent setup. Optional "Source & interpretation" link opens literary references above, avoiding invented quotations. No coercive push to subscribe.
 
@@ -96,4 +96,4 @@ Controls: progress 1/5…5/5, Skip (do not block enrollment), Back, Next, Finish
 
 ## Superseding design clarification — 2026-10-28
 
-Theme C now means an **original, pan-Indian Markandeya Purana–inspired illustrated storybook**, NOT a Bengali regional folk theme. **English-only screens at launch**: story headings/body, trial notices, map, family, billing, child transparency and controls. No Bengali text or language chooser in current UI; plan future internationalization using external strings, flexible layout, Unicode/font fallback and professionally reviewed translations. Screenshot workflow requirements remain retained in [Reference Screenshot Functional Workflow Register](/docs/ui/REFERENCE_SCREENSHOTS_FEATURE_WORKFLOWS_2026.md): live map/map style, collapsible quick actions, family enrollment, per-place toggles, route and activity timelines, usage reporting, quota media UI and gated managed controls. The user-supplied screenshots inform behavior, never copied art/icons/layout or promises of restricted capabilities. Existing legal/Android/Play and prepaid gates unchanged.
+Theme C now means an **original, pan-Indian Markandeya Purana–inspired illustrated storybook**, NOT a Bengali regional folk theme. **English-only screens at launch**: story headings/body, trial notices, map, family, billing, child transparency and controls. No Bengali text or language chooser in current UI; plan future internationalization using external strings, flexible layout, Unicode/font fallback and professionally reviewed translations. Screenshot workflow requirements remain retained in [Reference Screenshot Functional Workflow Register](https://github.com/methakon/Madalasa-Alarka/blob/main/docs/ui/REFERENCE_SCREENSHOTS_FEATURE_WORKFLOWS_2026.md): live map/map style, collapsible quick actions, family enrollment, per-place toggles, route and activity timelines, usage reporting, quota media UI and gated managed controls. The user-supplied screenshots inform behavior, never copied art/icons/layout or promises of restricted capabilities. Existing legal/Android/Play and prepaid gates unchanged.
