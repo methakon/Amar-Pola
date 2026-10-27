@@ -43,3 +43,6 @@ The owner supplied **BUILD_AND_RUN.md, DATA_RETENTION_SCHEDULE.md, DPIA.md, INCI
 
 All six are saved **inside docs/**. Open owner decisions: legal publisher/licensing, reachable researcher intake, child-data collection lawfulness, 14/30-day GPS retention, security exercises, tested code/backups and Play Store approval. An unsigned document does not close a release gate.
 
+## Current checklist audit and Android source-build handoff — 2026-10-27
+
+This index is complemented by the [verified repository gap/delivery assessment](REPOSITORY_GAP_AND_DELIVERY_AUDIT_2026-10-27.md), which checks each of the user's root, engineering, operations and legal document requests against actual GitHub paths and distinguishes **file existence** from **implementation and formal sign-off**. The [Android Kotlin source-to-build plan](ANDROID_M1_SOURCE_BOOTSTRAP_AND_BUILD_GATE_2026-10-27.md) explains why existing Kotlin `domain/` files are **not** buildable Android apps, and sets explicit safe A0–A5 milestones. The [governance issue form](../.github/ISSUE_TEMPLATE/governance_gap.yml) tracks missing evidence, with no sensitive user data in public GitHub issues. GitHub About topics and branch-protection changes remain an admin-owner task and are not accomplished by CODEOWNERS alone.
