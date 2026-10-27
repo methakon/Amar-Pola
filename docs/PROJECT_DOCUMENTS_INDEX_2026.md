@@ -27,3 +27,19 @@
 
 ## Document hygiene
 All drafts remain subject to change and cannot be used to claim child-data processing authority, Android permission exceptions, Google Play approval, implemented features, or actual SLO/SLA. Update this index when modules or approval statuses change.
+
+## Six uploaded governance documents — reviewed and reconciled (2026-10-27)
+
+The owner supplied **BUILD_AND_RUN.md, DATA_RETENTION_SCHEDULE.md, DPIA.md, INCIDENT_AND_BREACH_RESPONSE_PROCEDURE-1.md, SECURITY.md and LICENSE** for verification, correction and placement in \`docs/\`. **They were NOT blindly overwritten.** The comparison, destinations, decisions and open blockers are documented in [Uploaded Governance Documents Review](UPLOADED_GOVERNANCE_DOCUMENTS_REVIEW_2026-10-27.md).
+
+| Document under docs/ | Governing source / read status |
+|---|---|
+| [BUILD_AND_RUN.md](BUILD_AND_RUN.md) | Reconciled with actually runnable M1 CI, Python JSON linter and PostgreSQL 16; Android/Drogon commands future only |
+| [DATA_RETENTION_SCHEDULE.md](DATA_RETENTION_SCHEDULE.md) | Owner/counsel **DRAFT**, candidate R-01…R-18 and 14-vs-30-day GPS conflict unresolved |
+| [DPIA.md](DPIA.md) | **DRAFT/NO-GO**, uploaded P1…P12/K-01…K-18 reviewed against phased India DPDP, history and admin |
+| [INCIDENT_AND_BREACH_RESPONSE_PROCEDURE.md](INCIDENT_AND_BREACH_RESPONSE_PROCEDURE.md) | Canonical normalized filename for uploaded \`-1\`; CERT-In and phased DPDP duties separated |
+| [SECURITY.md](SECURITY.md) | Reviewed security-reporting *companion*; root [SECURITY.md](../SECURITY.md) controls |
+| [LICENSE](LICENSE) | **Non-operative** review of uploaded proprietary candidate; effective interim root [LICENSE](../LICENSE) controls |
+
+All six are saved **inside docs/**. Open owner decisions: legal publisher/licensing, reachable researcher intake, child-data collection lawfulness, 14/30-day GPS retention, security exercises, tested code/backups and Play Store approval. An unsigned document does not close a release gate.
+

@@ -61,3 +61,50 @@ Alarka's encrypted up-to-48h offline capacity queue + adaptive GPS captures orig
 Current workflow `.github/workflows/m1-contract-and-tenant.yml` runs structural API lint, synthetic SQL migration and family/sibling grants. It does **not** run Android OEM instrumentation, C++ builds, SAST, penetration tests, release signing, backup tests or real DPDP/Play approval. Do not put real child data, credentials, GPS or recordings in GitHub; `.env.example` contains placeholders only.
 
 **Legal and operational go/no-go:** [DPIA](DPIA.md), [Retention](DATA_RETENTION_SCHEDULE.md), [Incident Response](INCIDENT_AND_BREACH_RESPONSE_PROCEDURE.md), [Security](../SECURITY.md), [Signoff](DEPLOYMENT_RELEASE_READINESS_CHECKLIST.md). Verify exact Android/Play target API and India phased DPDP law at actual release.
+
+## Uploaded developer guide reconciliation — 2026-10-27
+
+The accompanying uploaded \`BUILD_AND_RUN.md\` was reviewed against the **actual repository CI**, M1 SQL files and current scaffolds rather than copied over this reviewed guide. The following corrections are intentional:
+
+| Uploaded draft instruction | Verified repository state and change |
+|---|---|
+| \`pip install pyyaml\` may be needed | **Not needed** for the current linter: \`backend/tests/lint_openapi_m1.py\` uses Python's \`json.loads\`; \`openapi-m1.yaml\` contains JSON-formatted OpenAPI. |
+| Local Docker uses \`postgis/postgis:16-3.4\` | The **existing CI uses \`postgres:16\`**, not PostGIS, and the M1 identity migration does not require PostGIS. Use PostGIS for **future** spatial migrations. |
+| Database in example is \`madalasa_test\` | Current CI environment names it **\`amar_pola_m1\`** despite the repository's Madalasa–Alarka branding. Renaming test DB is optional and is **not** an app rename or a change to the M1 identity contract. |
+| Run \`./gradlew :alarka...\` from repository root | **Not yet runnable.** The Android directory contains scaffolds; the eventual wrapper location/module names must be verified after implementation. |
+| CMake command assumes a \`backend/CMakeLists.txt\` | **Not present**. Commands under "Planned" are illustrative only. |
+| Failure of tenant SQL test | Treat as **blocking high-severity security regression** and investigate; never paper over with broad superuser/RLS bypass. |
+
+### Current CI-equivalent quick verification
+
+Run after clone with only synthetic records:
+
+~~~bash
+python3 backend/tests/lint_openapi_m1.py docs/openapi-m1.yaml
+docker run -d --name ma-m1-pg \
+  -e POSTGRES_PASSWORD=synthetic_test_only_password \
+  -e POSTGRES_DB=amar_pola_m1 \
+  -p 127.0.0.1:5432:5432 postgres:16
+export PGHOST=127.0.0.1 PGPORT=5432 PGUSER=postgres
+export PGPASSWORD=synthetic_test_only_password PGDATABASE=amar_pola_m1
+# Wait for readiness; do not assume container boot has finished.
+until pg_isready -h "$PGHOST" -U "$PGUSER" -d "$PGDATABASE"; do sleep 1; done
+psql -v ON_ERROR_STOP=1 -f backend/persistence/migrations/0001_m1_identity.sql
+psql -v ON_ERROR_STOP=1 -f backend/tests/m1_tenant_isolation.sql
+docker rm -f ma-m1-pg
+unset PGPASSWORD
+~~~
+
+The password is for a disposable local-only container; do not reuse or commit real secrets. Avoid a localhost port collision and remove container on test failures as well. In CI, source of truth is \`.github/workflows/m1-contract-and-tenant.yml\`. **No command above builds a runnable location tracker, C++ Drogon API, Android app, PostGIS GPS worker or admin console.**
+
+### Deferred build/run acceptance checklist
+
+- [ ] Actual Android module source, Gradle wrapper, Android SDK/NDK and permissions/visible-notification tests created.
+- [ ] Actual C++20 Drogon CMake source and tests with synthetic device tokens.
+- [ ] M2+ PostGIS \`location_ingest_inbox\` migration and two-transaction durable \`202 QUEUED\` receipt implemented and tested.
+- [ ] C++ \`SKIP LOCKED\` lease/fencing, dedup and multi-row/\`COPY\` staging bulk-insert tests built; direct-bulk comparison measured.
+- [ ] 48-hour offline **capacity** queue, not always-on location-capture guarantee, tested on physical Android/Wear devices.
+- [ ] Evidence filed for T-ING-01…24, T-CAP-01…24, T-AUD-01…22 and T-ADM-01…14; no real-minor test fixtures before India/Play gates.
+
+Further references: [Deployment Readiness](DEPLOYMENT_RELEASE_READINESS_CHECKLIST.md), [M1 Scope](M1_ANDROID_CPP_ARCHITECTURE_AND_IMPLEMENTATION.md), [GPS Ingest ADR](POSTGRES_DURABLE_INBOX_BULK_GPS_USAGE_INGESTION_ADR_2026-10-27.md).
+

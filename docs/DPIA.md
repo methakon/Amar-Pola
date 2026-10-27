@@ -66,3 +66,58 @@ Alarka OS → encrypted local queue → authenticated child-bound HTTPS → Drog
 - [ ] Product owner, security lead, legal officer, grievance lead sign a GO decision with date/version.
 
 **Risk disposition:** real-minor pilot **NO-GO** and commercial Play release **NO-GO**. Assessment to be revised on new feature/vendor/law, and annually after full ownership assigned.
+
+## 2026-10-27 comparison with uploaded MA-DPIA-001: extended processing inventory and risk disposition
+
+The uploaded 146-line assessment enumerated 12 processing activities and risks **K-01…K-18**. The existing project DPIA above is more current on **2025 DPDP phased commencement**, the unverified OCI region, device-local encrypted 48h-capacity buffer, PostgreSQL temporary GPS inbox/WAL, and no verified app deployment. Those safeguards and NO-GO gates remain authoritative. This appendix preserves useful uploaded assessment categories not otherwise explicit while avoiding unsupported legal conclusions or pretending residual risk is mitigated.
+
+### Additional data-subject and purpose questions to sign off
+
+| Activity originally identified | Review before processing | Less intrusive/default treatment |
+|---|---|---|
+| P1 Adult sign-in, Google identity, guardian/child pairing | Verified parent/legal guardian authority, safety of disputed custody and child consent/transparency; no assumption any signed-in adult can see GPS | **Only paired child-scoped owner roles**, incident-safe revocation and no default admin viewer |
+| P2 Current location and speed | Real-time safety exemption eligibility must be legally **proved for this product**, not presumed from Android permission | On-demand/limited precision and age of last observation; release OFF until counsel |
+| P3 Trip history, route stops and named places | Home/school inference, other family members, multi-day profiling; risk independent of current-location view | Separate purpose switch and shorter raw/derived retention; observed route not invented |
+| P4 App UsageStats/managed app controls | Behavior monitoring prohibition/exemptions, special Android permission and truly provisioned device-owner controls | **Default OFF**; consider device-local aggregate only if independently lawful |
+| P5 Capabilities and permission audits | Device metadata may identify a child; avoid immutable/unlimited hardware fingerprint | Store minimal allowlisted and versioned statuses with freshness |
+| P6 SOS/safety checks | Misleading delivered/accepted vs received by humans; SMS/FCM reliability | Explicit qualified acknowledgment and external emergency advice |
+| P7 Remote audio/camera/screen and file browsing | Bystanders, consent each screen session, OS sensor startup prohibition, guardian misuse | **Research P3 OFF**; no covert operation, persistent identification/indicators |
+| P8 Media **activity** metadata (not binary media) | Who observed a child, duration, verified failure; this is child-related personal data even without files | Scaled-minimal events, nullable size, no file content; parent and case-scoped admin |
+| P9 Guardian-authorized Drive backup | Independent third-party retention, regional transfer and deletion | Optional and revocable; no universal deletion promise for copies |
+| P10 Subscription, billing and tax | Controller/merchant legal entity unknown; receipts/tax law need accountant | Minimal billing reference; no card numbers |
+| P11 Administrator panel | Broad child-name/ID autocomplete is an enumeration surface | Case/purpose/MFA + separate audited read, fail-closed if audit fails |
+| P12 Security/auth/operational logs | CERT-In covered ICT logs, not an excuse to retain raw GPS for 180d | 180-day India secured **ICT log** obligation assessment separate from GPS TTL |
+
+### Uploaded risk crosswalk and additional risks to own
+
+| Uploaded ID | Concern | Action incorporated here |
+|---|---|---|
+| K-01, K-02 | Child location leak; cross-family access | Existing R1/R2/R4/R6 CRITICAL/HIGH; add child-vs-device and wrong-sibling checks |
+| K-03, K-04 | Stalking by non-guardian; custody and abusive adults | R1 and admin/guardian protection; confidential abuse escalation without alerting accused person |
+| K-05, K-06 | DPDP child monitoring and Google Play/Families rejection | **Blocker still CRITICAL**, not reduced by permission grants or India hosting |
+| K-07, K-13 | Retention creep, erasure and rights | No valid 14/30-day GPS choice; require backup/offline queue/inbox/tombstone tests |
+| K-08 | Support/insider browsing | Case-specific MFA, expiry, independent admin read audit; no universal root |
+| K-09, K-10 | Vendors and offshore transfers | OCI region and FCM/Maps/TURN/Drive processors to be confirmed |
+| K-11 | SOS failure as safety risk | Add negative end-to-end acknowledged delivery test and honest status |
+| K-12 | Media misuse | Feature OFF; no raw VPS media but parent-local captures may exist |
+| K-14 | Single-VM / no verified restore | Verify offsite backup, RPO/RTO, DNS/TLS, deleted-child nonresurrection |
+| K-15 | Child reaches age 18 | Age transition, withdrawal/authority reset and delete/limit workflow remains unsigned |
+| K-16 | Incident notice late | Named IC/legal, CERT-In 6h covered categories; phased DPDP Rule 7 review |
+| K-17 | False privacy notices or Google Play Data Safety entries | Reconcile policy to actual code/telemetry pre-launch |
+| K-18 | Child unaware of monitoring | Plain-language child-app onboarding, visible identity/notifications and clear permission changes |
+
+**Residual-risk rule:** uploaded draft listed some residual risks as Low/Medium assuming mitigations. These are **predicted only, not evidenced**. Until hardware, law, RLS, security, deletion and incident controls are actually tested, high-risk rows must remain **unaccepted**. No DPIA sign-off by writing an appendix.
+
+### Controller/assessor sign-off and alternatives record (blank by design)
+
+- Legal publisher/controller: **UNDECIDED**; privacy lead: **UNASSIGNED**; India counsel: **UNASSIGNED**; date/signature: **PENDING**.
+- Actual deployment region/processors/India log residency: **UNVERIFIED**; previous Chicago cost plan not a live deployment.
+- Feature-by-feature basis: real-time location [PENDING counsel]; historical GPS [PENDING counsel]; app usage [PENDING counsel]; media [OFF]; case-scoped admin [PENDING owner/security/privacy].
+- Data deletion categories: [Retention Draft](DATA_RETENTION_SCHEDULE.md) has conflicting **14 vs 30 days** raw GPS and no adopted period.
+- Data-subject consultation, age/guardian evidence, information security test, physical device/OEM, policy gate and signed GO/NO-GO record: **NOT EXECUTED**.
+- Re-evaluate this DPIA after materially changed backend ingest (inbox/backup), new admin access, device/age policy, Google Play policy, legislation or any SEV-1/2 incident; annual review if an owner has been assigned.
+
+**Verified external source pointers** (re-check official texts and commencement on actual launch): DPDP Act 2023; Gazette G.S.R. 843(E) 13 Nov 2025 (phased commencement): https://egazette.gov.in/WriteReadData/2025/267647.pdf ; DPDP Rules G.S.R. 846(E) 2025; Google Play monitoring policy: https://support.google.com/googleplay/android-developer/answer/9888380 .
+
+**Position:** Synthetic development may proceed. NO real child GPS, usage, media or admin named-child logs and NO Play release until the actual M0 release gate is signed.
+

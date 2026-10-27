@@ -122,3 +122,63 @@ Incident record captures ID, T0 UTC+IST, classifications, reporter, impacted sys
 - [ ] Reliable confidential user/child-safety grievance address and publication/legal review.
 
 **Until those are completed: status DRAFT; only synthetic data environments.**
+
+## 10. Uploaded MA-IR-001 procedure review — operational detail incorporated, statutory clocks remain conditional
+
+The uploaded 222-line MA-IR-001 template was reconciled with this newer project-specific procedure. Its staged response, formal role ownership, evidence record and specific notification fields are retained below. **The uploaded blanket claim that DPDP breach notices applied immediately in October 2026 was not adopted:** the 13 November 2025 Gazette provides phased commencement (many substantive duties scheduled for May 2027, subject to amendments). **CERT-In covered incidents have a distinct 6-hour reporting direction that must be assessed now.** The legal lead shall verify applicable law as of incident date; this document is not legal advice.
+
+### Operational checklist — first awareness and next 60 minutes (planned)
+
+1. **T0:** person receiving alert opens a protected incident ticket with UTC+IST awareness time, reporter, private return contact, alleged child(s)/tenants/region only as necessary; do not create a public GitHub issue.
+2. Immediately page the named Incident Commander, security lead and legal/privacy backup, ideally through a **pretested 24×7 confidential contact method**. No such method has been verified in this repository.
+3. Classify SEV-1…4; activate the **6-hour CERT-In reportability investigation** for covered Annexure I categories without waiting for full root cause; record exact decision and known facts.
+4. Contain unauthorized family/child/guardian access and administrative misuse; may disable sensitive parent/API routes, revoke tokens and stop sensor/media feature flags. Keep SOS safe and do not claim a request was delivered.
+5. Preserve logs and affected artifact hashes with chain-of-custody and least access. A child GPS inbox row, private route, parent-local media or secret **must not be pasted** into ordinary incident tickets or public documents.
+6. Contact actual OCI/Play/FCM/TURN/Google DPA contacts using internally verified methods; legal determines any additional applicable sector/contract notices.
+7. Issue accurate, limited updates to affected guardians in understandable language where warranted; do not reveal protected abuse reporter or another child/family.
+8. Assign independent owner, ETA and regression test for root cause; **no live service restart** until security sign-off of family-scoped permissions, state recovery and deletion/consent tombstones.
+
+### Additional playbooks from uploaded draft
+
+**A. Guardian device takeover / custody threat:** Revoke affected account and device sessions; list last child-scoped access in redacted form. Do **not** automatically notify an alleged abusive guardian of the reporter identity or precise location; route through safeguarded grievance/counsel procedure.
+
+**B. Hidden surveillance / sensor activation discrepancy:** Immediately turn off affected P3 media feature, inspect OS grant/indicator/notification on safe synthetic device, verify whether child audio/camera ever started and whether any parent-local recording/relay was involved. **Never** try to prove the incident by secretly starting a new recording.
+
+**C. Compromised signing/Play developer account:** Freeze publication and CI deployment; revoke CI/Cloud secrets; collect artifact signature/digest provenance; use official Google Play signing recovery instructions. No unreleased APK side-loading workaround for policy violations.
+
+**D. SOS, FCM or relay delivery silently fails:** Stop claiming SOS sent/delivered/received until verified; advise authorized guardians that the service cannot substitute for local emergency services; keep delivery receipts and sequence of timeouts.
+
+**E. Vendor processor data breach:** Record vendor/incident clock and disclosed incident category; do not copy a full child's route, saved media filename or raw phone number into a generic vendor escalation. Legal determines whether our own covered reporting/notice is triggered.
+
+### Incident record template (private controlled form; not GitHub customer-data issue)
+
+~~~text
+Incident ID: MA-IR-YYYY-NNN
+T0 first awareness (UTC and IST):
+Reporter/source and trusted return channel:
+Incident Commander / backup / scribe:
+Initial and final severity; rationale:
+Affected services, environments, tenant count, subject count (method):
+Affected data classes (current GPS, historical route, UsageStats, media METADATA,
+  parent-local media, inbox/WAL, credential, billing, admin access log, etc.):
+Identity/grant and API request/correlation IDs (minimized):
+Containment ordered timeline and approving owner:
+Evidence locations (restricted), hashes, chain-of-custody and legal hold:
+CERT-In Annexure I/reportability decision, 6-hour clock, submission reference:
+DPDP applicability/commencement check by India counsel, any principal/Board notice:
+Other sector/vendor/Google Play notices and exact audience:
+Guardian/child-safety communication approval and contact method:
+Root cause / fixes / verification (RLS wrong-family and wrong-child tests):
+Backup/restore and device queue replay/deletion-tombstone outcomes:
+Follow-up control owners, deadlines and incident retrospective:
+Closure authorizer/date; retention classification and legal hold review:
+~~~
+
+### Preparedness and rehearsal
+
+The source document suggested twice-yearly exercises; retain a **semiannual synthetic tabletop target**, especially cross-tenant GPS disclosure, app guardian misuse, admin audit bypass, data delete/restore, SOS false-delivery and signing-key compromise. Verify incident role roster, CERT-In portal/contact, off-hours escalation, six-hour clock, India-held ICT logs, evidence storage, and customer grievance method **before real-data pilot**. Record each rehearsal build/date/tester/evidence and failures; do not claim it happened merely because a written playbook exists.
+
+**Legal references:** CERT-In Directions https://www.cert-in.org.in/PDF/CERT-In_Directions_70B_28.04.2022.pdf ; CERT-In FAQ https://www.cert-in.org.in/PDF/FAQs_on_CyberSecurityDirections_May2022.pdf ; DPDP Act phased commencement Gazette https://egazette.gov.in/WriteReadData/2025/267647.pdf .
+
+**Do not publish actual staff phone lists, security findings, raw GPS, or incident details in this repo.**
+
