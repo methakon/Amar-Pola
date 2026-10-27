@@ -4,7 +4,7 @@
     "page": 1,
     "actor": "Parent",
     "kind": "narrative",
-    "en_heading": "A mother's wisdom",
+    "en_heading": "A Mother's Wisdom",
     "en_copy": "Madalasa raised her sons with thoughtful guidance, encouraging understanding beyond fear and pride.",
     "illustration_direction": "Mother teaching sons in tranquil courtyard",
     "controls": "Skip; Back; Next; progress; Source & interpretation",
@@ -15,14 +15,17 @@
     "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
     "launch_language": "en",
     "localization_key": "story.st01.heading",
-    "future_localization": "Externalized UI text only; no translations in initial release"
+    "future_localization": "Externalized text after content approval; not yet translated",
+    "en_subheading": "Her lessons shaped their lives",
+    "figma_art_asset_node_id": "58:2",
+    "illustration_style": "Original pan-Indian Markandeya Purana inspired, not a regional folk-art treatment"
   },
   {
     "id": "ST-02",
     "page": 2,
     "actor": "Parent",
     "kind": "narrative",
-    "en_heading": "Alarka grows in responsibility",
+    "en_heading": "Alarka's Responsibility",
     "en_copy": "For her youngest son Alarka, she also taught the duties of family life and just leadership.",
     "illustration_direction": "Madalasa teaching younger Alarka in garden",
     "controls": "Skip; Back; Next; progress; Source & interpretation",
@@ -33,14 +36,17 @@
     "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
     "launch_language": "en",
     "localization_key": "story.st02.heading",
-    "future_localization": "Externalized UI text only; no translations in initial release"
+    "future_localization": "Externalized text after content approval; not yet translated",
+    "en_subheading": "Duty, courage and compassion",
+    "figma_art_asset_node_id": "62:2",
+    "illustration_style": "Original pan-Indian Markandeya Purana inspired, not a regional folk-art treatment"
   },
   {
     "id": "ST-03",
     "page": 3,
     "actor": "Parent",
     "kind": "narrative",
-    "en_heading": "A ring to remember",
+    "en_heading": "The Ring of Counsel",
     "en_copy": "When Alarka became king, Madalasa entrusted him with a ring holding counsel for difficult times.",
     "illustration_direction": "Adult Alarka receiving golden ring",
     "controls": "Skip; Back; Next; progress; Source & interpretation",
@@ -51,14 +57,17 @@
     "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
     "launch_language": "en",
     "localization_key": "story.st03.heading",
-    "future_localization": "Externalized UI text only; no translations in initial release"
+    "future_localization": "Externalized text after content approval; not yet translated",
+    "en_subheading": "A mother's parting guidance",
+    "figma_art_asset_node_id": "59:2",
+    "illustration_style": "Original pan-Indian Markandeya Purana inspired, not a regional folk-art treatment"
   },
   {
     "id": "ST-04",
     "page": 4,
     "actor": "Parent",
     "kind": "narrative",
-    "en_heading": "Remembering her counsel",
+    "en_heading": "Remembering Her Words",
     "en_copy": "In adversity, Alarka remembered his mother's words and read the message inside the ring.",
     "illustration_direction": "Adult Alarka quietly reading ring inscription",
     "controls": "Skip; Back; Next; progress; Source & interpretation",
@@ -69,14 +78,17 @@
     "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
     "launch_language": "en",
     "localization_key": "story.st04.heading",
-    "future_localization": "Externalized UI text only; no translations in initial release"
+    "future_localization": "Externalized text after content approval; not yet translated",
+    "en_subheading": "Wisdom in difficult times",
+    "figma_art_asset_node_id": "63:2",
+    "illustration_style": "Original pan-Indian Markandeya Purana inspired, not a regional folk-art treatment"
   },
   {
     "id": "ST-05",
     "page": 5,
     "actor": "Parent",
     "kind": "narrative",
-    "en_heading": "The path to wisdom",
+    "en_heading": "The Path to Wisdom",
     "en_copy": "Guided by that counsel, Alarka sought insight from Dattatreya and reconsidered the nature of his difficulties.",
     "illustration_direction": "Adult Alarka consulting Dattatreya in forest",
     "controls": "Skip; Back; Next; progress; Source & interpretation",
@@ -87,7 +99,10 @@
     "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
     "launch_language": "en",
     "localization_key": "story.st05.heading",
-    "future_localization": "Externalized UI text only; no translations in initial release"
+    "future_localization": "Externalized text after content approval; not yet translated",
+    "en_subheading": "A journey toward understanding",
+    "figma_art_asset_node_id": "60:2",
+    "illustration_style": "Original pan-Indian Markandeya Purana inspired, not a regional folk-art treatment"
   },
   {
     "id": "P-05",
