@@ -90,11 +90,12 @@
     "project_display_name": "Madalasa & Alarka",
     "theme_c_2026": {
       "status": "OWNER_SELECTED_VISUAL_DIRECTION_NOT_IMPLEMENTED",
-      "style": "Original pan-Indian Markandeya Purana-inspired story art in dedicated illustration regions; readable neutral functional controls",
+      "style": "Original pan-Indian Markandeya Purana-inspired illustrations confined to decorative art regions; high-contrast modern controls",
       "story_contract": "docs/ui/MADALASA_ALARKA_THEME_C_STORY_AND_UI_CONTRACT_2026.md",
       "display_rule": "No decorative obstruction of permissions, data confidence, alerts, purchases or map attribution.",
       "launch_language": "en",
-      "localization_readiness": "Externalize future Android strings and allow longer labels; no translated interface now"
+      "localization_readiness": "Externalize future Android strings and allow longer labels; no translated interface now",
+      "future_localization": "Resource-keyed translations later, none shipped"
     }
   },
   {
@@ -116,12 +117,13 @@
     "project_display_name": "Madalasa & Alarka",
     "theme_c_2026": {
       "status": "OWNER_SELECTED_VISUAL_DIRECTION_NOT_IMPLEMENTED",
-      "style": "Original pan-Indian Markandeya Purana-inspired story art in dedicated illustration regions; readable neutral functional controls",
+      "style": "Original pan-Indian Markandeya Purana-inspired illustrations confined to decorative art regions; high-contrast modern controls",
       "story_contract": "docs/ui/MADALASA_ALARKA_THEME_C_STORY_AND_UI_CONTRACT_2026.md",
       "display_rule": "No decorative obstruction of permissions, data confidence, alerts, purchases or map attribution.",
       "entry": "Mode-coded leg map with confidence/gap and parent feedback",
       "launch_language": "en",
-      "localization_readiness": "Externalize future Android strings and allow longer labels; no translated interface now"
+      "localization_readiness": "Externalize future Android strings and allow longer labels; no translated interface now",
+      "future_localization": "Resource-keyed translations later, none shipped"
     }
   },
   {
@@ -161,11 +163,12 @@
     "project_display_name": "Madalasa & Alarka",
     "theme_c_2026": {
       "status": "OWNER_SELECTED_VISUAL_DIRECTION_NOT_IMPLEMENTED",
-      "style": "Original pan-Indian Markandeya Purana-inspired story art in dedicated illustration regions; readable neutral functional controls",
+      "style": "Original pan-Indian Markandeya Purana-inspired illustrations confined to decorative art regions; high-contrast modern controls",
       "story_contract": "docs/ui/MADALASA_ALARKA_THEME_C_STORY_AND_UI_CONTRACT_2026.md",
       "display_rule": "No decorative obstruction of permissions, data confidence, alerts, purchases or map attribution.",
       "launch_language": "en",
-      "localization_readiness": "Externalize future Android strings and allow longer labels; no translated interface now"
+      "localization_readiness": "Externalize future Android strings and allow longer labels; no translated interface now",
+      "future_localization": "Resource-keyed translations later, none shipped"
     }
   },
   {
@@ -205,12 +208,13 @@
     "project_display_name": "Madalasa & Alarka",
     "theme_c_2026": {
       "status": "OWNER_SELECTED_VISUAL_DIRECTION_NOT_IMPLEMENTED",
-      "style": "Original pan-Indian Markandeya Purana-inspired story art in dedicated illustration regions; readable neutral functional controls",
+      "style": "Original pan-Indian Markandeya Purana-inspired illustrations confined to decorative art regions; high-contrast modern controls",
       "story_contract": "docs/ui/MADALASA_ALARKA_THEME_C_STORY_AND_UI_CONTRACT_2026.md",
       "display_rule": "No decorative obstruction of permissions, data confidence, alerts, purchases or map attribution.",
       "entry": "Per-place notification toggles and child scope",
       "launch_language": "en",
-      "localization_readiness": "Externalize future Android strings and allow longer labels; no translated interface now"
+      "localization_readiness": "Externalize future Android strings and allow longer labels; no translated interface now",
+      "future_localization": "Resource-keyed translations later, none shipped"
     }
   },
   {
@@ -268,11 +272,12 @@
     "project_display_name": "Madalasa & Alarka",
     "theme_c_2026": {
       "status": "OWNER_SELECTED_VISUAL_DIRECTION_NOT_IMPLEMENTED",
-      "style": "Original pan-Indian Markandeya Purana-inspired story art in dedicated illustration regions; readable neutral functional controls",
+      "style": "Original pan-Indian Markandeya Purana-inspired illustrations confined to decorative art regions; high-contrast modern controls",
       "story_contract": "docs/ui/MADALASA_ALARKA_THEME_C_STORY_AND_UI_CONTRACT_2026.md",
       "display_rule": "No decorative obstruction of permissions, data confidence, alerts, purchases or map attribution.",
       "launch_language": "en",
-      "localization_readiness": "Externalize future Android strings and allow longer labels; no translated interface now"
+      "localization_readiness": "Externalize future Android strings and allow longer labels; no translated interface now",
+      "future_localization": "Resource-keyed translations later, none shipped"
     }
   },
   {
@@ -348,11 +353,12 @@
     "project_display_name": "Madalasa & Alarka",
     "theme_c_2026": {
       "status": "OWNER_SELECTED_VISUAL_DIRECTION_NOT_IMPLEMENTED",
-      "style": "Original pan-Indian Markandeya Purana-inspired story art in dedicated illustration regions; readable neutral functional controls",
+      "style": "Original pan-Indian Markandeya Purana-inspired illustrations confined to decorative art regions; high-contrast modern controls",
       "story_contract": "docs/ui/MADALASA_ALARKA_THEME_C_STORY_AND_UI_CONTRACT_2026.md",
       "display_rule": "No decorative obstruction of permissions, data confidence, alerts, purchases or map attribution.",
       "launch_language": "en",
-      "localization_readiness": "Externalize future Android strings and allow longer labels; no translated interface now"
+      "localization_readiness": "Externalize future Android strings and allow longer labels; no translated interface now",
+      "future_localization": "Resource-keyed translations later, none shipped"
     }
   },
   {
