@@ -67,6 +67,16 @@
       "acceptance": "Parent B independently signs in with own identity, verified parent grants only selected children; shared paid access without double purchase.",
       "status": "DESIGN_APPROVED_NOT_IMPLEMENTED",
       "reference": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/TWO_PARENT_SHARED_CHILD_PREPAID_ENTITLEMENTS_2026.md"
+    },
+    "child_specific_screen_sharing_2026": {
+      "status": "PRODUCT_SPECIFICATION_NO_RUNTIME_IMPLEMENTATION",
+      "overview": "Share ONLY separately selected Child A with eligible Google-supported co-parent; Family Link relationship attestation missing -> disable until verified; no automatic spouse/family sharing.",
+      "reference": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md",
+      "google_relationship_gate": "HARD_DISABLED_UNTIL_TRUSTED_CHILD_PARENT_ATTESTATION",
+      "concurrent_viewers": "1 included per paid child, +1 per active paid add-on",
+      "extra_addon_target_inr": 100,
+      "extra_av_minutes_combined": 30,
+      "addon_days_assumed_not_approved": 30
     }
   },
   {
@@ -90,6 +100,16 @@
       "two_parent_rule": "Grant can authorize co-parent Child A without granting Child B or billing. Revocation invalidates access immediately but does not cancel prepaid coverage.",
       "status": "DESIGN_APPROVED_NOT_IMPLEMENTED",
       "reference": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/TWO_PARENT_SHARED_CHILD_PREPAID_ENTITLEMENTS_2026.md"
+    },
+    "child_specific_screen_sharing_2026": {
+      "status": "PRODUCT_SPECIFICATION_NO_RUNTIME_IMPLEMENTATION",
+      "overview": "Adult-child scopes independent for each child, with revocation + lease cancellation + no sibling metadata.",
+      "reference": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md",
+      "google_relationship_gate": "HARD_DISABLED_UNTIL_TRUSTED_CHILD_PARENT_ATTESTATION",
+      "concurrent_viewers": "1 included per paid child, +1 per active paid add-on",
+      "extra_addon_target_inr": 100,
+      "extra_av_minutes_combined": 30,
+      "addon_days_assumed_not_approved": 30
     }
   },
   {
@@ -241,6 +261,16 @@
       "launch_language": "en",
       "status": "DESIGN_APPROVED_NOT_IMPLEMENTED",
       "reference": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/TWO_PARENT_SHARED_CHILD_PREPAID_ENTITLEMENTS_2026.md"
+    },
+    "child_specific_screen_sharing_2026": {
+      "status": "PRODUCT_SPECIFICATION_NO_RUNTIME_IMPLEMENTATION",
+      "overview": "Main payer selects N paid children and child-specific co-parent separately. One premium live viewer per paid child included; extra viewer requires optional verified purchase.",
+      "reference": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md",
+      "google_relationship_gate": "HARD_DISABLED_UNTIL_TRUSTED_CHILD_PARENT_ATTESTATION",
+      "concurrent_viewers": "1 included per paid child, +1 per active paid add-on",
+      "extra_addon_target_inr": 100,
+      "extra_av_minutes_combined": 30,
+      "addon_days_assumed_not_approved": 30
     }
   },
   {
@@ -274,6 +304,16 @@
       "two_parent_rule": "Show covered status to authorized co-parent; hide redundant checkout when child already covered. Only payer confirms one-time purchase; Play amount/expiry verified. Capacity changes need Play sandbox support.",
       "status": "DESIGN_APPROVED_NOT_IMPLEMENTED",
       "reference": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/TWO_PARENT_SHARED_CHILD_PREPAID_ENTITLEMENTS_2026.md"
+    },
+    "child_specific_screen_sharing_2026": {
+      "status": "PRODUCT_SPECIFICATION_NO_RUNTIME_IMPLEMENTATION",
+      "overview": "₹100 target one-time optional extra concurrent premium viewer for selected paid child; candidate 30-day validity, bounded by prepaid expiry; +30 combined AV min; exact Play price before purchase; add-on unsupported until store validation.",
+      "reference": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md",
+      "google_relationship_gate": "HARD_DISABLED_UNTIL_TRUSTED_CHILD_PARENT_ATTESTATION",
+      "concurrent_viewers": "1 included per paid child, +1 per active paid add-on",
+      "extra_addon_target_inr": 100,
+      "extra_av_minutes_combined": 30,
+      "addon_days_assumed_not_approved": 30
     }
   },
   {
@@ -309,6 +349,16 @@
       "launch_language": "en",
       "status": "DESIGN_APPROVED_NOT_IMPLEMENTED",
       "reference": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/TWO_PARENT_SHARED_CHILD_PREPAID_ENTITLEMENTS_2026.md"
+    },
+    "child_specific_screen_sharing_2026": {
+      "status": "PRODUCT_SPECIFICATION_NO_RUNTIME_IMPLEMENTATION",
+      "overview": "Only already approved co-parent gets Child A paid coverage, shared per-child quotas and one viewer capacity; never list unshared siblings.",
+      "reference": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md",
+      "google_relationship_gate": "HARD_DISABLED_UNTIL_TRUSTED_CHILD_PARENT_ATTESTATION",
+      "concurrent_viewers": "1 included per paid child, +1 per active paid add-on",
+      "extra_addon_target_inr": 100,
+      "extra_av_minutes_combined": 30,
+      "addon_days_assumed_not_approved": 30
     }
   },
   {
@@ -414,6 +464,16 @@
       "two_parent_rule": "Manual prepaid renewal by current payer. Payer transfer when needed requires new explicit Play purchase/restore protocol, no subscription family library or charge without consent.",
       "status": "DESIGN_APPROVED_NOT_IMPLEMENTED",
       "reference": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/TWO_PARENT_SHARED_CHILD_PREPAID_ENTITLEMENTS_2026.md"
+    },
+    "child_specific_screen_sharing_2026": {
+      "status": "PRODUCT_SPECIFICATION_NO_RUNTIME_IMPLEMENTATION",
+      "overview": "No auto renewal for base or +1 screen add-on; refund/expiry removes viewer leases and unused extra AV minutes.",
+      "reference": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md",
+      "google_relationship_gate": "HARD_DISABLED_UNTIL_TRUSTED_CHILD_PARENT_ATTESTATION",
+      "concurrent_viewers": "1 included per paid child, +1 per active paid add-on",
+      "extra_addon_target_inr": 100,
+      "extra_av_minutes_combined": 30,
+      "addon_days_assumed_not_approved": 30
     }
   }
 ]
