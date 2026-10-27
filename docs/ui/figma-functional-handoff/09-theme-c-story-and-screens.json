@@ -211,5 +211,27 @@
     "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
     "launch_language": "en",
     "future_localization": "Design for flexible future translation"
+  },
+  {
+    "id": "P-47",
+    "actor": "Parent",
+    "kind": "themed functional sample",
+    "theme_c_note": "1 prepaid family seat may cover Child A selected by payer and be shared by Parent A & Parent B with separate accounts and child-specific guardian permissions. Child B stays free until selected for an eligible capacity.",
+    "original_handoff_id": "P-47",
+    "figma_node_id": "81:179",
+    "figma_url": "https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=81-179",
+    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
+    "launch_language": "en"
+  },
+  {
+    "id": "P-49",
+    "actor": "Parent",
+    "kind": "themed functional sample",
+    "theme_c_note": "Co-parent views covered child's paid status without purchasing again; payer manages prepaid billing, child-scoped authorizations and confirmed expiry.",
+    "original_handoff_id": "P-49",
+    "figma_node_id": "81:201",
+    "figma_url": "https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=81-201",
+    "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
+    "launch_language": "en"
   }
 ]
