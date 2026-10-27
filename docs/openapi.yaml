@@ -5129,6 +5129,861 @@
           }
         }
       }
+    },
+    "/parents/me/media-activity/children": {
+      "get": {
+        "operationId": "listParentAuthorizedMediaActivityChildren",
+        "summary": "List own authorized children for media activity dropdown",
+        "tags": [
+          "MediaActivity"
+        ],
+        "security": [
+          {
+            "ParentBearer": []
+          }
+        ],
+        "x-required-scope": "MEDIA_AUDIT_READ_OWN",
+        "x-implementation-status": "DESIGN_ONLY_RESEARCH_NOT_RELEASED",
+        "description": "Sensitive child-related media metadata only; no files, thumbnails, media URLs, filenames or transcript. Source Android/parent receipts verified. No live media service is activated by read.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Authorized metadata response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaActivityChildren"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid syntax / query"
+          },
+          "401": {
+            "description": "Authentication or MFA expired"
+          },
+          "403": {
+            "description": "Child-specific guardian scope denied"
+          },
+          "404": {
+            "description": "Not found or subject existence hidden"
+          },
+          "422": {
+            "description": "Invalid date range, page size, filter or expired cursor"
+          },
+          "429": {
+            "description": "Rate limit / search budget exceeded"
+          },
+          "503": {
+            "description": "Service or audit writer unavailable; sensitive read must fail closed"
+          }
+        }
+      }
+    },
+    "/parents/me/media-activity": {
+      "get": {
+        "operationId": "listParentMediaActivity",
+        "summary": "Parent media activity metadata, filters and cursor pagination",
+        "tags": [
+          "MediaActivity"
+        ],
+        "security": [
+          {
+            "ParentBearer": []
+          }
+        ],
+        "x-required-scope": "MEDIA_AUDIT_READ_OWN",
+        "x-implementation-status": "DESIGN_ONLY_RESEARCH_NOT_RELEASED",
+        "description": "Sensitive child-related media metadata only; no files, thumbnails, media URLs, filenames or transcript. Source Android/parent receipts verified. No live media service is activated by read.",
+        "parameters": [
+          {
+            "name": "child_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            },
+            "description": "Optional one child, omitted means all currently authorized children"
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "Inclusive UTC lower bound"
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "Exclusive UTC upper bound"
+          },
+          {
+            "name": "media_kind",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "AUDIO",
+                "IMAGE",
+                "VIDEO_AV",
+                "SCREEN_SHARE"
+              ]
+            }
+          },
+          {
+            "name": "action_kind",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "LIVE_VIEW",
+                "SNAPSHOT",
+                "RECORD",
+                "SAVE",
+                "REQUEST"
+              ]
+            }
+          },
+          {
+            "name": "outcome",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "REQUESTED",
+                "QUEUED",
+                "ACTIVE",
+                "VIEWED_ONLY",
+                "SAVED_PARENT_LOCAL",
+                "SAVE_FAILED",
+                "FAILED",
+                "CANCELLED",
+                "EXPIRED",
+                "DENIED",
+                "UNKNOWN"
+              ]
+            }
+          },
+          {
+            "name": "reason_code",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 100
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 1500
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Authorized metadata response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaActivityPage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid syntax / query"
+          },
+          "401": {
+            "description": "Authentication or MFA expired"
+          },
+          "403": {
+            "description": "Child-specific guardian scope denied"
+          },
+          "404": {
+            "description": "Not found or subject existence hidden"
+          },
+          "422": {
+            "description": "Invalid date range, page size, filter or expired cursor"
+          },
+          "429": {
+            "description": "Rate limit / search budget exceeded"
+          },
+          "503": {
+            "description": "Service or audit writer unavailable; sensitive read must fail closed"
+          }
+        }
+      }
+    },
+    "/parents/me/media-activity/{activityId}": {
+      "get": {
+        "operationId": "getParentMediaActivityDetail",
+        "summary": "Read own authorized media lifecycle and evidence",
+        "tags": [
+          "MediaActivity"
+        ],
+        "security": [
+          {
+            "ParentBearer": []
+          }
+        ],
+        "x-required-scope": "MEDIA_AUDIT_READ_OWN",
+        "x-implementation-status": "DESIGN_ONLY_RESEARCH_NOT_RELEASED",
+        "description": "Sensitive child-related media metadata only; no files, thumbnails, media URLs, filenames or transcript. Source Android/parent receipts verified. No live media service is activated by read.",
+        "parameters": [
+          {
+            "name": "activityId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Authorized metadata response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaActivityDetail"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid syntax / query"
+          },
+          "401": {
+            "description": "Authentication or MFA expired"
+          },
+          "403": {
+            "description": "Child-specific guardian scope denied"
+          },
+          "404": {
+            "description": "Not found or subject existence hidden"
+          },
+          "422": {
+            "description": "Invalid date range, page size, filter or expired cursor"
+          },
+          "429": {
+            "description": "Rate limit / search budget exceeded"
+          },
+          "503": {
+            "description": "Service or audit writer unavailable; sensitive read must fail closed"
+          }
+        }
+      }
+    },
+    "/admin/media-activity": {
+      "get": {
+        "operationId": "listAdminCaseScopedMediaActivity",
+        "summary": "Restricted admin media activity search across authorized parent/child scope",
+        "tags": [
+          "AdminMediaAudit"
+        ],
+        "security": [
+          {
+            "AdminBearer": []
+          }
+        ],
+        "x-required-scope": "MEDIA_AUDIT_READ_CASE",
+        "x-implementation-status": "DESIGN_ONLY_RESEARCH_NOT_RELEASED",
+        "description": "Requires MFA/step-up, case-issued grant and audit-write success before any child-linked rows. Parent or child name/ID are resolved through audited case-restricted autocomplete. Never global unrestricted root access.",
+        "parameters": [
+          {
+            "name": "X-Case-Reference",
+            "in": "header",
+            "required": true,
+            "description": "Case lookup key only; server checks approved, unexpired scope and purpose independent of this untrusted header",
+            "schema": {
+              "type": "string",
+              "minLength": 4,
+              "maxLength": 100
+            }
+          },
+          {
+            "name": "X-Access-Purpose",
+            "in": "header",
+            "required": true,
+            "description": "Purpose code checked against server case, does not itself confer access",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "SUPPORT_CASE",
+                "SECURITY_INCIDENT",
+                "PRIVACY_REQUEST"
+              ]
+            }
+          },
+          {
+            "name": "parent_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          },
+          {
+            "name": "child_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "Inclusive UTC lower bound"
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "Exclusive UTC upper bound"
+          },
+          {
+            "name": "media_kind",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "AUDIO",
+                "IMAGE",
+                "VIDEO_AV",
+                "SCREEN_SHARE"
+              ]
+            }
+          },
+          {
+            "name": "action_kind",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "LIVE_VIEW",
+                "SNAPSHOT",
+                "RECORD",
+                "SAVE",
+                "REQUEST"
+              ]
+            }
+          },
+          {
+            "name": "outcome",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "REQUESTED",
+                "QUEUED",
+                "ACTIVE",
+                "VIEWED_ONLY",
+                "SAVED_PARENT_LOCAL",
+                "SAVE_FAILED",
+                "FAILED",
+                "CANCELLED",
+                "EXPIRED",
+                "DENIED",
+                "UNKNOWN"
+              ]
+            }
+          },
+          {
+            "name": "reason_code",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 100
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 1500
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Authorized metadata response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaActivityPage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid syntax / query"
+          },
+          "401": {
+            "description": "Authentication or MFA expired"
+          },
+          "403": {
+            "description": "Scope, case or purpose denied"
+          },
+          "404": {
+            "description": "Not found or subject existence hidden"
+          },
+          "422": {
+            "description": "Invalid date range, page size, filter or expired cursor"
+          },
+          "429": {
+            "description": "Rate limit / search budget exceeded"
+          },
+          "503": {
+            "description": "Service or audit writer unavailable; sensitive read must fail closed"
+          }
+        }
+      }
+    },
+    "/admin/media-activity/{activityId}": {
+      "get": {
+        "operationId": "getAdminMediaActivityDetail",
+        "summary": "Case-authorized redacted event details",
+        "tags": [
+          "AdminMediaAudit"
+        ],
+        "security": [
+          {
+            "AdminBearer": []
+          }
+        ],
+        "x-required-scope": "MEDIA_AUDIT_READ_CASE",
+        "x-implementation-status": "DESIGN_ONLY_RESEARCH_NOT_RELEASED",
+        "description": "Sensitive child-related media metadata only; no files, thumbnails, media URLs, filenames or transcript. Source Android/parent receipts verified. No live media service is activated by read.",
+        "parameters": [
+          {
+            "name": "X-Case-Reference",
+            "in": "header",
+            "required": true,
+            "description": "Case lookup key only; server checks approved, unexpired scope and purpose independent of this untrusted header",
+            "schema": {
+              "type": "string",
+              "minLength": 4,
+              "maxLength": 100
+            }
+          },
+          {
+            "name": "X-Access-Purpose",
+            "in": "header",
+            "required": true,
+            "description": "Purpose code checked against server case, does not itself confer access",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "SUPPORT_CASE",
+                "SECURITY_INCIDENT",
+                "PRIVACY_REQUEST"
+              ]
+            }
+          },
+          {
+            "name": "activityId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Authorized metadata response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaActivityDetail"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid syntax / query"
+          },
+          "401": {
+            "description": "Authentication or MFA expired"
+          },
+          "403": {
+            "description": "Scope, case or purpose denied"
+          },
+          "404": {
+            "description": "Not found or subject existence hidden"
+          },
+          "422": {
+            "description": "Invalid date range, page size, filter or expired cursor"
+          },
+          "429": {
+            "description": "Rate limit / search budget exceeded"
+          },
+          "503": {
+            "description": "Service or audit writer unavailable; sensitive read must fail closed"
+          }
+        }
+      }
+    },
+    "/admin/media-activity/parents/suggest": {
+      "get": {
+        "operationId": "suggestCaseScopedParent",
+        "summary": "Audited parent name or ID autocomplete within active case",
+        "tags": [
+          "AdminMediaAudit"
+        ],
+        "security": [
+          {
+            "AdminBearer": []
+          }
+        ],
+        "x-required-scope": "MEDIA_AUDIT_READ_CASE",
+        "x-implementation-status": "DESIGN_ONLY_RESEARCH_NOT_RELEASED",
+        "description": "Maximum 10 results; minimum 2-character names or safe exact ID; case-bound results and audit entry for lookup. No global parent directory.",
+        "parameters": [
+          {
+            "name": "X-Case-Reference",
+            "in": "header",
+            "required": true,
+            "description": "Case lookup key only; server checks approved, unexpired scope and purpose independent of this untrusted header",
+            "schema": {
+              "type": "string",
+              "minLength": 4,
+              "maxLength": 100
+            }
+          },
+          {
+            "name": "X-Access-Purpose",
+            "in": "header",
+            "required": true,
+            "description": "Purpose code checked against server case, does not itself confer access",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "SUPPORT_CASE",
+                "SECURITY_INCIDENT",
+                "PRIVACY_REQUEST"
+              ]
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Authorized metadata response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminSuggestions"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid syntax / query"
+          },
+          "401": {
+            "description": "Authentication or MFA expired"
+          },
+          "403": {
+            "description": "Scope, case or purpose denied"
+          },
+          "404": {
+            "description": "Not found or subject existence hidden"
+          },
+          "422": {
+            "description": "Invalid date range, page size, filter or expired cursor"
+          },
+          "429": {
+            "description": "Rate limit / search budget exceeded"
+          },
+          "503": {
+            "description": "Service or audit writer unavailable; sensitive read must fail closed"
+          }
+        }
+      }
+    },
+    "/admin/media-activity/children/suggest": {
+      "get": {
+        "operationId": "suggestCaseScopedChild",
+        "summary": "Audited child name/ID autocomplete filtered by approved parent",
+        "tags": [
+          "AdminMediaAudit"
+        ],
+        "security": [
+          {
+            "AdminBearer": []
+          }
+        ],
+        "x-required-scope": "MEDIA_AUDIT_READ_CASE",
+        "x-implementation-status": "DESIGN_ONLY_RESEARCH_NOT_RELEASED",
+        "description": "Backend validates selected parent and child within case; no sibling or cross-family enumeration; audit access.",
+        "parameters": [
+          {
+            "name": "X-Case-Reference",
+            "in": "header",
+            "required": true,
+            "description": "Case lookup key only; server checks approved, unexpired scope and purpose independent of this untrusted header",
+            "schema": {
+              "type": "string",
+              "minLength": 4,
+              "maxLength": 100
+            }
+          },
+          {
+            "name": "X-Access-Purpose",
+            "in": "header",
+            "required": true,
+            "description": "Purpose code checked against server case, does not itself confer access",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "SUPPORT_CASE",
+                "SECURITY_INCIDENT",
+                "PRIVACY_REQUEST"
+              ]
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 100
+            }
+          },
+          {
+            "name": "parent_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Authorized metadata response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminSuggestions"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid syntax / query"
+          },
+          "401": {
+            "description": "Authentication or MFA expired"
+          },
+          "403": {
+            "description": "Scope, case or purpose denied"
+          },
+          "404": {
+            "description": "Not found or subject existence hidden"
+          },
+          "422": {
+            "description": "Invalid date range, page size, filter or expired cursor"
+          },
+          "429": {
+            "description": "Rate limit / search budget exceeded"
+          },
+          "503": {
+            "description": "Service or audit writer unavailable; sensitive read must fail closed"
+          }
+        }
+      }
+    },
+    "/admin/media-activity/access-audit": {
+      "get": {
+        "operationId": "listAdminMediaAccessAudit",
+        "summary": "Restricted view of audits of privileged search and detailed reads",
+        "tags": [
+          "AdminMediaAudit"
+        ],
+        "security": [
+          {
+            "AdminBearer": []
+          }
+        ],
+        "x-required-scope": "MEDIA_AUDIT_ACCESS_LOG_READ",
+        "x-implementation-status": "DESIGN_ONLY_RESEARCH_NOT_RELEASED",
+        "description": "Separate security/privacy audit scope; lookup of the admin-access log is itself recorded. Fail closed when access logging not durable.",
+        "parameters": [
+          {
+            "name": "X-Case-Reference",
+            "in": "header",
+            "required": true,
+            "description": "Case lookup key only; server checks approved, unexpired scope and purpose independent of this untrusted header",
+            "schema": {
+              "type": "string",
+              "minLength": 4,
+              "maxLength": 100
+            }
+          },
+          {
+            "name": "X-Access-Purpose",
+            "in": "header",
+            "required": true,
+            "description": "Purpose code checked against server case, does not itself confer access",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "SUPPORT_CASE",
+                "SECURITY_INCIDENT",
+                "PRIVACY_REQUEST"
+              ]
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "Inclusive UTC lower bound"
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "Exclusive UTC upper bound"
+          },
+          {
+            "name": "actor_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 1500
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Authorized metadata response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminAuditPage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid syntax / query"
+          },
+          "401": {
+            "description": "Authentication or MFA expired"
+          },
+          "403": {
+            "description": "Scope, case or purpose denied"
+          },
+          "404": {
+            "description": "Not found or subject existence hidden"
+          },
+          "422": {
+            "description": "Invalid date range, page size, filter or expired cursor"
+          },
+          "429": {
+            "description": "Rate limit / search budget exceeded"
+          },
+          "503": {
+            "description": "Service or audit writer unavailable; sensitive read must fail closed"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -5142,6 +5997,11 @@
         "type": "http",
         "scheme": "bearer",
         "bearerFormat": "Bound device credential"
+      },
+      "AdminBearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "OIDC JWT audience=madalasa-admin, MFA and case scoped"
       }
     },
     "schemas": {
@@ -5915,6 +6775,507 @@
             "description": "Never represent grant as proof of unrestricted runtime access"
           }
         }
+      },
+      "MediaActivityRecord": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Metadata-only: no filenames/media/content URLs/recording links",
+        "required": [
+          "id",
+          "request_at",
+          "child_id",
+          "requesting_guardian_id",
+          "media_kind",
+          "action_kind",
+          "outcome",
+          "storage_outcome",
+          "reason_evidence"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/Uuid"
+          },
+          "child_id": {
+            "$ref": "#/components/schemas/Uuid"
+          },
+          "requesting_guardian_id": {
+            "$ref": "#/components/schemas/Uuid"
+          },
+          "device_id": {
+            "$ref": "#/components/schemas/Uuid"
+          },
+          "command_id": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "session_id": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "child_display_name": {
+            "type": "string",
+            "maxLength": 120,
+            "description": "Authorized read-time projection only; not replicated in event store"
+          },
+          "parent_display_name": {
+            "type": "string",
+            "maxLength": 120,
+            "description": "Only present if case permits"
+          },
+          "request_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "capture_started_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "capture_ended_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "active_duration_ms": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "file_size_bytes": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "bytes_transferred": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "media_kind": {
+            "type": "string",
+            "enum": [
+              "AUDIO",
+              "IMAGE",
+              "VIDEO_AV",
+              "SCREEN_SHARE"
+            ]
+          },
+          "action_kind": {
+            "type": "string",
+            "enum": [
+              "LIVE_VIEW",
+              "SNAPSHOT",
+              "RECORD",
+              "SAVE",
+              "REQUEST"
+            ]
+          },
+          "outcome": {
+            "type": "string",
+            "enum": [
+              "REQUESTED",
+              "QUEUED",
+              "ACTIVE",
+              "VIEWED_ONLY",
+              "SAVED_PARENT_LOCAL",
+              "SAVE_FAILED",
+              "FAILED",
+              "CANCELLED",
+              "EXPIRED",
+              "DENIED",
+              "UNKNOWN"
+            ]
+          },
+          "storage_outcome": {
+            "type": "string",
+            "enum": [
+              "NOT_APPLICABLE",
+              "VIEWED_ONLY",
+              "PARENT_LOCAL_CONFIRMED",
+              "SAVE_FAILED",
+              "UNKNOWN"
+            ]
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "reason_evidence": {
+            "type": "string",
+            "enum": [
+              "DEVICE_OS",
+              "PARENT_RECEIPT",
+              "SERVER_TRANSPORT",
+              "POLICY_GATE",
+              "UNKNOWN"
+            ]
+          },
+          "last_verified_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "MediaActivityPage": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items",
+          "page_size",
+          "has_more"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MediaActivityRecord"
+            },
+            "maxItems": 100
+          },
+          "page_size": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "has_more": {
+            "type": "boolean"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 1500
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "previous_cursor": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 1500
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "total_count": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Authorized bounded count if computed; never cross-family"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "MediaActivityChildOption": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "child_id",
+          "display_name",
+          "masked_child_id"
+        ],
+        "properties": {
+          "child_id": {
+            "$ref": "#/components/schemas/Uuid"
+          },
+          "display_name": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "masked_child_id": {
+            "type": "string",
+            "maxLength": 32
+          }
+        }
+      },
+      "MediaActivityChildren": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MediaActivityChildOption"
+            },
+            "maxItems": 100
+          }
+        }
+      },
+      "AdminIdentitySuggestion": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "display_name",
+          "masked_id"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/Uuid"
+          },
+          "display_name": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "masked_id": {
+            "type": "string",
+            "maxLength": 40
+          },
+          "parent_id": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "AdminSuggestions": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "maxItems": 10,
+            "items": {
+              "$ref": "#/components/schemas/AdminIdentitySuggestion"
+            }
+          }
+        }
+      },
+      "AdminAuditReadEntry": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "occurred_at",
+          "actor_id",
+          "case_reference",
+          "action",
+          "result"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/Uuid"
+          },
+          "occurred_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "actor_id": {
+            "$ref": "#/components/schemas/Uuid"
+          },
+          "case_reference": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "purpose": {
+            "type": "string",
+            "enum": [
+              "SUPPORT_CASE",
+              "SECURITY_INCIDENT",
+              "PRIVACY_REQUEST",
+              "BREAK_GLASS_REVIEW"
+            ]
+          },
+          "action": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "result": {
+            "type": "string",
+            "enum": [
+              "AUTHORIZED",
+              "DENIED",
+              "ERROR"
+            ]
+          },
+          "result_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "request_id": {
+            "type": "string",
+            "maxLength": 100
+          }
+        }
+      },
+      "AdminAuditPage": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items",
+          "page_size"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "maxItems": 100,
+            "items": {
+              "$ref": "#/components/schemas/AdminAuditReadEntry"
+            }
+          },
+          "page_size": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 1500
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "MediaActivityDetail": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "activity"
+        ],
+        "properties": {
+          "activity": {
+            "$ref": "#/components/schemas/MediaActivityRecord"
+          },
+          "events": {
+            "type": "array",
+            "maxItems": 150,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "event_kind",
+                "occurred_at",
+                "source_type",
+                "evidence_kind"
+              ],
+              "properties": {
+                "id": {
+                  "$ref": "#/components/schemas/Uuid"
+                },
+                "event_kind": {
+                  "type": "string",
+                  "maxLength": 80
+                },
+                "occurred_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "source_type": {
+                  "type": "string",
+                  "enum": [
+                    "ALARKA",
+                    "MADALASA",
+                    "SERVER"
+                  ]
+                },
+                "evidence_kind": {
+                  "type": "string",
+                  "enum": [
+                    "DEVICE_OS",
+                    "PARENT_RECEIPT",
+                    "SERVER_TRANSPORT",
+                    "POLICY_GATE",
+                    "UNKNOWN"
+                  ]
+                },
+                "reason_code": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "maxLength": 100
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
@@ -5954,5 +7315,16 @@
     "flow": "first launch local scan -> verified pair -> device POST baseline -> stepwise Android grants -> OS recheck -> device POST higher revision -> parent scoped GET",
     "green_rule": "never use hardware supported or Android GRANTED alone to claim live operational feature; require release-enabled, permitted context, fresh verification",
     "revocation": "best effort; Android may kill child process; offline must show UNKNOWN/STALE rather than fabricated revoked"
+  },
+  "x-media-activity-audit-design": {
+    "status": "DESIGN_ONLY_RESEARCH_P3_OFF",
+    "specification": "docs/MEDIA_ACTIVITY_AUDIT_LOGGING_AND_REPORTING_2026.md",
+    "admin_panel_specification": "docs/ADMIN_PANEL_SPECIFICATION_2026.md",
+    "confidentiality": "No media bytes/files/transcripts/thumbnails or file paths in VPS audit store; optional parent-local save only.",
+    "parent_scope": "MEDIA_AUDIT_READ_OWN child-linked guardian grants",
+    "admin_scope": "Separate AdminBearer, server-approved time-limited case/purpose/MFA, audited every detailed read/autocomplete, no blanket superadmin access",
+    "query": "Date [from,to), stable descending (request_at,id) keyset cursor, max 100/page, authorized filter/sort",
+    "truth": "Parent playback and local save receipts, OS/transport evidence; no call attribution inferred from generic mic failure.",
+    "no_m1_change": true
   }
 }

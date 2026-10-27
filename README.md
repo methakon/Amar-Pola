@@ -156,3 +156,16 @@ Eight additional editable parent/child conditional-media R&D screens, [native Fi
 **Owner-accepted, not implemented:** At first launch, Alarka performs a read-only hardware/OS capability scan, pairs with the approved family/device identity, then uploads a versioned authenticated compatibility report to the C++ API. Its stepwise, disclosed Android permission wizard verifies the **actual OS grant** after each prompt/Settings screen, sends a newer device report, waits for server ACK and allows Madalasa to retrieve the **child-scoped verified feature list**. Revocation and regrant cause a fresh report when Android next allows execution; no instant/offline delivery is guaranteed. Madalasa distinguishes hardware supported, permission granted, actual execution context, legal/release eligibility, and last-confirmed freshness before showing green/amber/red/grey.
 
 **[Full device-capability & permission-sync ADR](docs/CAPABILITY_DISCOVERY_PERMISSION_SYNC_ADR_2026-10-27.md)** · [46 additional editable Figma setup and parent status screens](https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=23-2) · [Capability HLD](https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=27-2) · [Permission lifecycle LLD](https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=27-40). The original 81 functional handoff screens remain distinct; no production or Play approval is implied.
+
+## 2026-10-27 Media activity logs and new administrator console — design only
+
+The product owner accepted FR-050/051 design: **no user media file storage on VPS**, but minimal metadata for verified audio/image/AV-video/screen media requests and sessions (actor/child IDs, real duration, nullable file-size, viewed-only vs historically saved on Madalasa, evidence-grounded camera/audio/OS failure reasons). Parent Madalasa can filter its authorized children by child **name+ID**, date range, media/result/failure and cursor pagination. A **new separately authenticated administrator browser console** offers case-authorized parent/child name+ID autocomplete, date range and pagination, plus an independent read-access audit. **Administrators do not automatically get blanket child log access, nor playback or download of media.**
+
+- [Media metadata audit ADR](docs/MEDIA_ACTIVITY_AUDIT_LOGGING_AND_REPORTING_2026.md)
+- [New Admin Panel specification](docs/ADMIN_PANEL_SPECIFICATION_2026.md)
+- [Whole-project OpenAPI design](docs/openapi.yaml) — 8 additional design-only parent/admin endpoints and separate AdminBearer; M1-only API unchanged.
+- [28 editable Figma media-audit screens](https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=32-2) — 11 Madalasa mobile and 17 admin desktop frames, each with developer note.
+- [Media audit system HLD](https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=35-2) and [media audit event/query LLD](https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=35-56).
+- [Exact screen/node/behavior inventory](docs/ui/figma-functional-handoff/07-media-activity-audit.json).
+
+**All are planned / NOT_IMPLEMENTED / NOT_TESTED; P3 media capture and real-minor media remain Play/India legal/release gated.** Historical Alarka media files are never accessible through the admin panel because VPS stores none.

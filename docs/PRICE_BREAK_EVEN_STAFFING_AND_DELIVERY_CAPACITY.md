@@ -116,3 +116,7 @@ No real phone inventory has been supplied to the repo. Accept **emulators/synthe
 **Recommended gate order:** decide legal entity/India purpose/Chicago; approve limited child/guardian/retention scope and login; list hardware and owner/QA engineers; implement synthetic-data vertical slice; fund independent security/Android/device testing and real backup recovery; pilot with written consent/counsel; reprice only after measured invoices and churn.
 
 This document answers the specific gap: **₹50/month and ₹500/year are proposed product prices, not demonstrated sustainable all-in costs.**
+
+## 2026-10-27 media event history and restricted admin UI new scope cost reminder
+
+Owner-added FR-050/051 (parent media audit + new case-gated administrator panel) are **not included** in the historical hosting/engineering break-even plan. Estimate C++ Drogon event ingest, PostgreSQL indexed metadata and admin access-audit growth, Android parent audit screens, admin web frontend, SSO/MFA, case approval, QA/penetration testing, legal/privacy, retention/delete, support operations and audit infrastructure as separate engineering/run-cost workstream before treating ₹50/month or ₹500/year as sufficient. No binary media archive on VPS, but operations/metadata cost and privacy duties remain. See [Media Activity Audit ADR](MEDIA_ACTIVITY_AUDIT_LOGGING_AND_REPORTING_2026.md), [Administrator Console Specification](ADMIN_PANEL_SPECIFICATION_2026.md).

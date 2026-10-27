@@ -147,3 +147,14 @@ Owner-accepted research only (no production enablement): FR-008 scoped MediaStor
 ## 2026-10-27 capability/permission lifecycle traceability supplement
 
 **FR-001:** T-CAP-03/04/05 pairing/child identity before report. **FR-002:** T-CAP-01/02, 06–12, 16–20 OS hardware scanning, wizard, selected/temporary grant, revocation, regrant and authenticated sync. **FR-006:** T-CAP-13/14/15/23 execution-time OS eligibility, managed DPC, MediaProjection fresh session consent. **FR-014:** T-CAP-17/19/21/23 parent offline/freshness/reporting uncertainty. **FR-039:** T-CAP-02/05/20/22/23/24 child-scoped capability-before-purchase, malicious report/version, parent labels and screen accessibility. P3 FR-009/010 remain explicitly release-disabled regardless of grant. Complete [MA-CAP-ADR-002 test catalog](CAPABILITY_DISCOVERY_PERMISSION_SYNC_ADR_2026-10-27.md) and [46 Figma screen inventory](ui/figma-functional-handoff/06-capability-onboarding.json). No old FR/NFR test statuses are upgraded: all T-CAP-01…24 `NOT_IMPLEMENTED / NOT_TESTED`. No original M1 14 test cases are claimed as executed.
+
+## 2026-10-27 SRS extension — FR-050/FR-051 and audit/admin test mapping
+
+The former matrix's 49 functional requirement rows remain the 2026-10-25 baseline. **Add two explicit additional PLANNED/NOT_IMPLEMENTED rows**, not fictitious passed tests:
+
+| Requirement | Owner | Design/API | Tests | Release / evidence |
+|---|---|---|---|---|
+| FR-050 Media activity metadata, parent child-filtered history | C++ backend / PostgreSQL / Android parent+child / Security QA | [Media audit ADR](MEDIA_ACTIVITY_AUDIT_LOGGING_AND_REPORTING_2026.md), parent media-activity GET draft, [Figma PA-01…PA-11](ui/figma-functional-handoff/07-media-activity-audit.json) | T-AUD-01–14,18–22 | P3; OFF; NOT_IMPLEMENTED / NOT_TESTED; child law + Play + android proof |
+| FR-051 Restricted admin web panel, scoped parent/child lookups and admin access audit | Security / admin web frontend / backend / Privacy QA | [Admin panel](ADMIN_PANEL_SPECIFICATION_2026.md), admin media activity API draft, [Figma ADM-01…ADM-17](ui/figma-functional-handoff/07-media-activity-audit.json) | T-ADM-01–14, T-AUD-15–22 | P3; OFF; NOT_IMPLEMENTED / NOT_TESTED; MFA/case/privacy approvals |
+
+Cross references: FR-006 command lifecycle and truthful receipts → T-AUD-01–09; FR-009/010 media research → T-AUD-02–08,22; FR-022/034 child/guardian scope and multi-family isolation → T-AUD-10–11/15–17, T-ADM-02–05; FR-013/027 scoped retention/deletion → T-AUD-18; NFR security/logging → T-AUD-19–21 and T-ADM-08–14. No M1 acceptance pass or media-release promotion claimed.

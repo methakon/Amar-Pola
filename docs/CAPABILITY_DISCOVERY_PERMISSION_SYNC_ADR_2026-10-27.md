@@ -155,3 +155,7 @@ Other outcomes: `OS_DENIED`, `PARTIAL_SCOPE`, `TEMPORARY_GRANT`, `FEATURE_NOT_RE
 - Google Play monitoring apps: https://support.google.com/googleplay/android-developer/answer/9888380
 
 **Rule:** This ADR updates the **design target** and does not close previous legal, India DPDP, Google Play, managed-device, security, device compatibility or release blockers.
+
+## 2026-10-27 separated media activity-event logging versus OS permission capability reports
+
+Permission/hardware capability reports and **media activity history** remain independent data systems. Capability snapshot can say microphone grant/release runtime is conditional; a media_activity event records **an actual authenticated media request/attempt/verified result**, not the device capability itself. Both are child-scoped, minimally stored and UTC-stamped. Denied or offline requests have reason evidence and no fictitious duration/file size; P3 camera/mic research flag OFF still prohibits real-minor capture. Parent screens for media event history and admin case-access browser: [07 media audit Figma inventory](ui/figma-functional-handoff/07-media-activity-audit.json); source [media audit ADR](MEDIA_ACTIVITY_AUDIT_LOGGING_AND_REPORTING_2026.md), [admin console](ADMIN_PANEL_SPECIFICATION_2026.md).
