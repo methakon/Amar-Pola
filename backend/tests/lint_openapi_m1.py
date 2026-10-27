@@ -35,6 +35,15 @@ BODYLESS_FORBIDDEN = {"410", "413", "422"}
 SECURITY_SCHEME_TYPES = {"apiKey", "http", "oauth2", "openIdConnect", "mutualTLS"}
 JSON_SCHEMA_TYPES = {"null", "integer", "number", "boolean", "string", "array", "object"}
 HTTP_VERBS = {"get", "post", "put", "patch", "delete"}
+# Must equal Error.code's enum and the catalog in docs/API_CONVENTIONS_AND_ERROR_CATALOG.md.
+ERROR_CODES = {
+    "INVALID_REQUEST", "UNAUTHENTICATED", "FORBIDDEN", "NOT_FOUND", "CONFLICT",
+    "IDEMPOTENCY_KEY_REUSED", "CODE_EXPIRED_OR_USED", "PAYLOAD_TOO_LARGE",
+    "VALIDATION_FAILED", "RATE_LIMITED", "INTERNAL_ERROR", "SERVICE_UNAVAILABLE",
+}
+# Creates that a mobile client may retry after a lost response: a retry must not create a duplicate.
+IDEMPOTENT_CREATES = {"createFamily", "createChild", "issuePairingCode"}
+REF_KINDS = {"schemas", "headers", "parameters"}
 
 
 def lint(doc):
@@ -95,6 +104,15 @@ def lint(doc):
             codes = op.get("responses", {})
             check(any(x in codes for x in ("200", "201", "202", "204")), f"{where}: no success")
             check("429" in codes, f"{where}: missing 429 response")
+            for code, response in codes.items():
+                hdrs = response.get("headers", {})
+                check("X-Request-Id" in hdrs, f"{where}: {code} must declare the X-Request-Id header")
+                if code == "429":
+                    check("Retry-After" in hdrs, f"{where}: 429 must declare the Retry-After header")
+            if oid in IDEMPOTENT_CREATES:
+                refs = [p.get("$ref") for p in op.get("parameters", [])]
+                check("#/components/parameters/IdempotencyKey" in refs,
+                      f"{where}: retryable create must take the Idempotency-Key header")
             if has_body or op.get("parameters"):
                 check("400" in codes, f"{where}: operation takes input but declares no 400")
             else:
@@ -119,6 +137,10 @@ def lint(doc):
     check(set(ids) == EXPECTED_OPERATIONS and len(ids) == len(set(ids)),
           f"Expected unique exact operationId set: {EXPECTED_OPERATIONS ^ set(ids)}")
 
+    err_codes = schemas.get("Error", {}).get("properties", {}).get("code", {}).get("enum")
+    check(isinstance(err_codes, list) and set(err_codes) == ERROR_CODES and len(err_codes) == len(set(err_codes)),
+          f"Error.code enum must equal the documented catalog: {sorted(ERROR_CODES)}")
+
     for name, schema in schemas.items():
         if schema.get("type") == "object":
             req = schema.get("required")
@@ -134,8 +156,10 @@ def lint(doc):
         if isinstance(value, dict):
             if "$ref" in value:
                 ref = value["$ref"]
-                check(isinstance(ref, str) and ref.startswith("#/components/schemas/")
-                      and ref.split("/")[-1] in schemas, f"{at}: unresolved ref {ref}")
+                parts = ref.split("/") if isinstance(ref, str) else []
+                ok = (len(parts) == 4 and parts[:2] == ["#", "components"] and parts[2] in REF_KINDS
+                      and parts[3] in components.get(parts[2], {}))
+                check(ok, f"{at}: unresolved ref {ref}")
             ty = value.get("type")
             # A property that happens to be NAMED "type" holds a dict, not a type keyword.
             if isinstance(ty, (str, list)):

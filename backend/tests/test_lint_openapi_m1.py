@@ -128,6 +128,42 @@ class BrokenContractsFail(unittest.TestCase):
             d["components"]["schemas"]["Receipt"]["properties"]["type"] = {"type": "string"}
         self.assertEqual(self.mutate(go), [])
 
+    def test_every_response_needs_request_id_header(self):
+        self.assertFails(lambda d: op(d, "getChild")["responses"]["404"]["headers"].pop("X-Request-Id"),
+                         "X-Request-Id")
+
+    def test_429_needs_retry_after(self):
+        self.assertFails(lambda d: op(d, "getChild")["responses"]["429"]["headers"].pop("Retry-After"),
+                         "Retry-After")
+
+    def test_error_code_enum_must_match_catalog(self):
+        self.assertFails(lambda d: d["components"]["schemas"]["Error"]["properties"]["code"]["enum"].append("MADE_UP"),
+                         "Error.code enum")
+
+    def test_error_code_must_be_an_enum(self):
+        self.assertFails(lambda d: d["components"]["schemas"]["Error"]["properties"]["code"].pop("enum"),
+                         "Error.code enum")
+
+    def test_retryable_create_needs_idempotency_key(self):
+        self.assertFails(lambda d: op(d, "createChild").update(parameters=[
+            p for p in op(d, "createChild")["parameters"] if "$ref" not in p]), "Idempotency-Key")
+
+    def test_unresolved_header_ref(self):
+        def go(d):
+            op(d, "getChild")["responses"]["404"]["headers"]["X-Request-Id"] = {"$ref": "#/components/headers/Nope"}
+        self.assertFails(go, "unresolved ref")
+
+class DocumentationInSync(unittest.TestCase):
+    def test_error_catalog_document_lists_exactly_the_linted_codes(self):
+        text = (HERE.parent.parent / "docs" / "API_CONVENTIONS_AND_ERROR_CATALOG.md").read_text(encoding="utf-8")
+        table = text.split("### 5.2 Catalog")[1].split("### 5.3")[0]
+        documented = set()
+        for line in table.splitlines():
+            cells = [c.strip() for c in line.split("|")]
+            if len(cells) > 3 and cells[1].isdigit():
+                documented.add(cells[2].strip("`"))
+        self.assertEqual(documented, linter.ERROR_CODES)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
