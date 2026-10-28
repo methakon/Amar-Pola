@@ -198,3 +198,8 @@ Each SHA below is the **Git blob ID at the inventory snapshot**, not a verified 
 ## Audit usage
 
 This register identifies the source of each feature, not a legal certification. A coding agent must read the latest linked document when executing its task, report discrepancies as ADRs and never treat proposed data retention, parent verification, Play account testing, government exception or local build as approved/completed. Deployment has its own separate plan.
+
+## 2026-10-28 owner decisions superseding C-01 and C-03
+
+- C-01 (**hosting region and actual egress cost**) is **DEFERRED_TO_DEPLOYMENT**, not a local code blocker. Local benchmark tests must still measure synthetic resource use. Don't use an OCI region selection as dependency for C++/Android/Admin build.
+- C-03 (**Google Family Link parent-role API**) is **REMOVED as an app dependency**. Use Google account authentication and child-specific invite/acceptance + revocable permission grants independent of billing-family membership. Separate statutory parent/guardian consent and legal authority gates remain mandatory, see [V2 ADR](https://github.com/methakon/Madalasa-Alarka/blob/main/docs/phases/M1-secure-platform-foundation/03-security-and-permissions/ADR_2026_10_28_BLEND_FAMILY_V2_AND_NO_FAMILY_LINK_DEPENDENCY.md). Older 'Google role verification required' notes retained for historical traceability are now superseded.
