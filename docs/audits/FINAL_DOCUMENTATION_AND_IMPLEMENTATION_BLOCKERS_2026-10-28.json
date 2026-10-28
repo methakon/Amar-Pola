@@ -308,16 +308,18 @@
     {
       "id": "AUD-P1-22",
       "priority": "P1",
-      "issue": "Local CI full contract check created but not executed",
+      "issue": "OpenAPI/Figma/M1 CI contract checks passed, but executable handler/UI/physical DB coverage still absent",
       "category": "TEST_EVIDENCE",
-      "closure_criterion": "Run Python full lint in CI, replay physical DB tests, store actual commit/exit logs",
+      "closure_criterion": "Actual 146 handlers, new migrations, full Android/admin E2E and physical-device tests remain blocked/untested",
       "tasks": [
         "GAP-001",
         "GAP-026"
       ],
-      "state": "OPEN_NOT_IMPLEMENTED",
+      "state": "SPECIFICATION_CI_VERIFIED_IMPLEMENTATION_OPEN",
       "documentation_remediation": "New Figma/API/DB screen audit 2026-10-28",
-      "evidence_required": true
+      "evidence_required": true,
+      "evidence_url": "https://github.com/methakon/Madalasa-Alarka/actions/runs/40661843914",
+      "verified_at_commit": "a1030586f80e"
     },
     {
       "id": "AUD-P1-23",
@@ -361,5 +363,23 @@
       "documentation_remediation": "New Figma/API/DB screen audit 2026-10-28",
       "evidence_required": true
     }
-  ]
+  ],
+  "verification_update": {
+    "date": "2026-10-28",
+    "ci_run": "https://github.com/methakon/Madalasa-Alarka/actions/runs/40661843914",
+    "results": [
+      "OpenAPI M1 structural lint PASS",
+      "OpenAPI whole-project and 187 Figma screens +120 conceptual table static checker PASS",
+      "M1 PostgreSQL migration PASS",
+      "Existing M1 two-family SQL regression PASS"
+    ],
+    "does_not_verify": [
+      "new SQL migrations for 8 candidates",
+      "running Drogon handlers",
+      "Gradle Android apps",
+      "admin web server",
+      "Play legal approval",
+      "real child permission OS behavior"
+    ]
+  }
 }
