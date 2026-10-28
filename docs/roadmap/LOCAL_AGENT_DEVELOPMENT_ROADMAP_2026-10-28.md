@@ -97,7 +97,7 @@ The tables below are an **execution backlog**. All statuses start NOT_STARTED un
 | `L00-004` | **Define owner decision template and approval signatures** · `docs/roadmap/OWNER_APPROVALS.md` | `L00-003` | Unresolved blocking decisions recorded as BLOCKED not guessed |
 | `L00-005` | **Register India controller and age-band UNKNOWN** · `docs/roadmap/LEGAL_PENDING.md` | `L00-004` | No real-data pilot allowed until verifiable approval |
 | `L00-006` | **Record retention contradiction as unresolved gate** · `docs/roadmap/RETENTION_PENDING.md` | `L00-005` | Six-hour access window not conflated with storage lifetime |
-| `L00-007` | **Record Google Family Link role attestation as unsupported** · `docs/roadmap/PARENT_VERIFICATION_GATE.md` | `L00-006` | Second-parent sharing denies if relationship proof is absent |
+| `L00-007` | **Record removal of unsupported Google Family Link relationship API requirement** · `docs/phases/M1-secure-platform-foundation/03-security-and-permissions/ADR_2026_10_28_BLEND_FAMILY_V2_AND_NO_FAMILY_LINK_DEPENDENCY.md` | `L00-006` | No consumer Google parent-role API dependency remains; legal authority/consent remains a separate review |
 | `L00-008` | **Record base prepaid and 100-day add-on invariants** · `docs/roadmap/COMMERCE_INVARIANTS.md` | `L00-007` | Expired base suspends extra viewing but does not erase addon until own end |
 | `L00-009` | **Record personal Play account as active unverified console status** · `docs/roadmap/PLAY_ACCOUNT_NONSECRET.md` | `L00-008` | No account ID, emails, tokens or keys committed |
 | `L00-010` | **Define release approval authority and RACI** · `docs/roadmap/RESPONSIBILITIES.md` | `L00-009` | No agent self-approves counsel/platform/owner decisions |
@@ -187,8 +187,8 @@ The tables below are an **execution backlog**. All statuses start NOT_STARTED un
 | `L04-003` | **Implement family creation and owner membership** · `backend/src/identity/families.cc` | `L04-002` | Family membership alone gives zero child rights |
 | `L04-004` | **Implement child record creation and exact-family ownership checks** · `backend/src/identity/children.cc` | `L04-003` | Cross-family child creation/lookup fails |
 | `L04-005` | **Implement explicit child-specific guardian invitation draft** · `backend/src/identity/invitations.cc` | `L04-004` | Single-use hashed token and expiry enforced |
-| `L04-006` | **Implement Google-parent relationship verification fail-closed adapter** · `backend/src/identity/parent_verification.cc` | `L04-005` | Unverified relationship blocks every share path |
-| `L04-007` | **Implement child-specific grant management/revocation** · `backend/src/identity/grants.cc` | `L04-006` | Parent A grant on Child A never unlocks Child B |
+| `L04-006` | **Implement child-specific invitation acceptance, consent and authority-gate interface (NOT Family Link)** · `backend/src/identity/child_authority_and_invite.cc` | `L04-005` | Synthetic exact-child invite/accept/revoke works; real-data authority/consent unknown denies; Google Sign-In alone never grants child scope |
+| `L04-007` | **Implement V2 cross-family child-specific grants and revocation with RLS** · `backend/src/identity/grants.cc` | `L04-006` | Parent B can access explicitly authorized Child A in a different billing family, never Child B; revoke closes leases |
 | `L04-008` | **Implement auth scope cache with child revocation epochs** · `backend/src/identity/grant_cache.cc` | `L04-007` | Revocation kills old sessions and signed URLs |
 | `L04-009` | **Implement guardianship disputes and safe denial states** · `backend/src/identity/guardianship_cases.cc` | `L04-008` | No arbitrary staff override or sibling metadata leaks |
 | `L04-010` | **Implement parent login refresh/logout session rotation** · `backend/src/identity/session_manager.cc` | `L04-009` | Replay and refresh reuse rejected |
@@ -476,7 +476,7 @@ The tables below are an **execution backlog**. All statuses start NOT_STARTED un
 | `L17-006` | **Run auth revocation against open viewers and signed links** · `backend/tests/revocation_chaos.cc` | `L17-005` | Tokens/streams revoked within tested bound |
 | `L17-007` | **Run privacy deletion vs offline sync race/failure tests** · `backend/tests/erase_race.cc` | `L17-006` | No resurrection |
 | `L17-008` | **Benchmark GPS 1k/10k/100k synthetic child scenarios** · `bench/gps_ingestion` | `L17-007` | p50/p95/throughput/CPU recorded; no real data |
-| `L17-009` | **Benchmark 1/2/3 viewers and TURN fanout with fake media** · `bench/viewer_cost` | `L17-008` | ₹100/100day marginal costs estimated with limits |
+| `L17-009` | **Benchmark local synthetic viewer fanout, report bytes/CPU without choosing hosting region** · `bench/viewer_cost` | `L17-008` | Measured 1/2/3 viewer throughput, CPU and bytes recorded; cloud tariff/region deferred to deployment |
 | `L17-010` | **Assess DB partitions, slow queries and backups locally** · `backend/tests/postgres_perf.sql` | `L17-009` | Query plans and restore evidence saved |
 | `L17-011` | **Run dependency vulnerabilities and license scan** · `tools/security-scan.sh` | `L17-010` | No unresolved Critical or High without owner exception |
 | `L17-012` | **Run Android 16KB native page size and targetSdk QA** · `android/build-audit` | `L17-011` | AAB native libraries compatible; target API 36 |
@@ -495,7 +495,7 @@ The tables below are an **execution backlog**. All statuses start NOT_STARTED un
 | `L18-001` | **Freeze local build and Figma/API/database traceability snapshot** · `evidence/local/TRACEABILITY_SNAPSHOT.md` | `L17-015`, `L12-014`, `L13-012`, `L14-018`, `L15-012` | No unresolved required path missing |
 | `L18-002` | **Run new-family → 48h trial → free downgrade end-to-end** · `evidence/local/E2E_TRIAL.md` | `L18-001` | No trial reset after account recreation attempt |
 | `L18-003` | **Run child pairing → GPS → parent map → stale/offline path** · `evidence/local/E2E_GPS.md` | `L18-002` | Durable and truthful status all the way |
-| `L18-004` | **Run Child A only co-parent invite blocked pending verification** · `evidence/local/E2E_PARENT_SCOPE.md` | `L18-003` | Child B never visible to unrelated parent |
+| `L18-004` | **End-to-end child-specific cross-family invite acceptance and legal-gate denial** · `evidence/local/E2E_PARENT_SCOPE.md` | `L18-003` | Child A grant isolated, Child B hidden; unapproved legal authority cannot enable real child processing |
 | `L18-005` | **Run 2 children distinct prepaid seats and two guardians** · `evidence/local/E2E_SEATS.md` | `L18-004` | One child seat never pays twice for parents |
 | `L18-006` | **Run base expiry → dormant 100-day addon → renewal** · `evidence/local/E2E_ADDON.md` | `L18-005` | 100-day timestamp unchanged; extra 1800s pool remains |
 | `L18-007` | **Run one-viewer race, takeover and add-slot authorization** · `evidence/local/E2E_VIEWER.md` | `L18-006` | Strict single premium session without paid addon |
@@ -569,3 +569,11 @@ The agent must issue a clear **LOCAL_READY / LOCAL_BLOCKED / NOT_READY** result 
 ## 2026-10-28 Screen/API/DB audit addendum — supersedes earlier snapshot counts
 
 The original 262-task local plan and acceptance gates remain as-is. A [screen-by-screen Figma audit](../audits/FINAL_FIGMA_SCREEN_BY_SCREEN_API_DB_REPORT_2026-10-28.md) found 187 editable screen references, 58 absent original API paths, and an 8-entity persistence gap. The extended [whole-project OpenAPI](../openapi.yaml) now defines **146 draft operations (96 newly specified, zero new handlers proven)**. The conceptual database registry now lists **120 candidate tables across 11 ERD domains** (112 previously documented + eight proposed), **not 120 executable migrations**. There are [28 extra dependency-checked remediation tasks](FIGMA_SCREEN_API_DB_REMEDIATION_TASKS_2026-10-28.json) in addition to the base 262, including an exact-child external-parent RLS fix. Coding agents MUST read/implement this addendum before LOCAL_READY. The original screen examples are still developer handoffs/Theme C samples, not production-complete UI. External Play/legal gates are unchanged.
+
+
+## 2026-10-28 owner correction — execution gate removals
+
+- DROP Google Family Link parent-role API as a technical prerequisite. Use [V2 cross-family child access ADR](https://github.com/methakon/Madalasa-Alarka/blob/main/docs/phases/M1-secure-platform-foundation/03-security-and-permissions/ADR_2026_10_28_BLEND_FAMILY_V2_AND_NO_FAMILY_LINK_DEPENDENCY.md): verified Google adult identity, specific-child invite + acceptance + scoped grant. Applicable statutory parent/guardian legal authority and consent review are **still required** before real child data; do not conflate with Family Link.
+- Current M1 FK to same-family `guardian_memberships` cannot express cross-household allowed co-parents. Keep `0001` immutable; implement separately tested versioned V2 grant migration and RLS semantics.
+- PROD hosting region (India/Chicago) and FINAL cloud bandwidth economics are **deployment decisions, not local coding blockers**. Local backend must be configurable and synthetic load benchmarks still run. [Separate deployment plan](https://github.com/methakon/Madalasa-Alarka/blob/main/docs/roadmap/DEPLOYMENT_AND_PLAY_RELEASE_PLAN_SEPARATE_2026-10-28.md).
+- Play sandbox setup is separate from secrets in chat; local fake billing tests need no credentials. [Implementation and Play sandbox checklist](https://github.com/methakon/Madalasa-Alarka/blob/main/docs/roadmap/IMPLEMENTATION_PROOF_AND_PLAY_SANDBOX_HANDOFF_2026-10-28.md).
