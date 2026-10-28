@@ -1,0 +1,463 @@
+{
+  "title": "2026-10-28 Figma/API/DB GAP REMEDIATION TASK ADDENDUM",
+  "description": "28 additional dependency-checked task contracts for the existing 262-task local plan. Does not auto-complete or reorder original graph. Related tasks must be incorporated by coding agent before LOCAL_READY.",
+  "base_graph": "docs/roadmap/LOCAL_TASK_GRAPH_2026-10-28.json",
+  "base_tasks": 262,
+  "additional_tasks": 28,
+  "combined_backlog": 290,
+  "all_initial_status": "NOT_STARTED",
+  "statuses": {
+    "NOT_STARTED": 28
+  },
+  "tasks": [
+    {
+      "id": "GAP-001",
+      "title": "Full OpenAPI/Figma contract lint in local and CI",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L03-014"
+      ],
+      "target_artifact": "backend/tests/lint_openapi_full.py",
+      "acceptance": "Validator runs against 146 operations, 187 screen rows, 120 logical tables; record actual CI result.",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_api": "docs/openapi.yaml",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "evidence": "evidence/local/tasks/GAP-001.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-002",
+      "title": "DB physical-to-conceptual mapping and duplicate entity avoidance",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L02-001"
+      ],
+      "target_artifact": "backend/persistence/SCHEMA_NAME_COMPATIBILITY.md",
+      "acceptance": "Map all ap_m1 and Figma table identities, preserving existing RLS without duplicate source of truth.",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_api": "docs/openapi.yaml",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "evidence": "evidence/local/tasks/GAP-002.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-003",
+      "title": "Design explicit external-parent child scoped authority without family membership",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "GAP-002",
+        "L04-006"
+      ],
+      "target_artifact": "backend/persistence/migrations/0012_external_child_authorities.sql",
+      "acceptance": "Fail closed if parent proof unavailable; external parent A1 not A2; no family owner grant; RLS tested on disposable DB.",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_api": "docs/openapi.yaml",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "evidence": "evidence/local/tasks/GAP-003.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-004",
+      "title": "Prove child-specific parent verification source or retain hard block",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L04-006"
+      ],
+      "target_artifact": "evidence/legal/PARENT_ATTESTATION_GATE.md",
+      "acceptance": "Official supported relationship method with privacy signoff OR documented BLOCKED; never infer from OIDC or surname.",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_api": "docs/openapi.yaml",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "evidence": "evidence/local/tasks/GAP-004.md",
+      "release_gate": "HUMAN_EXTERNAL_SIGNOFF"
+    },
+    {
+      "id": "GAP-005",
+      "title": "Implement parent OIDC sessions and logout tokens",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L04-001",
+        "GAP-002"
+      ],
+      "target_artifact": "backend/src/identity/session.cc",
+      "acceptance": "Expired/reused/forged token fails; parent logout revokes sessions with hash-only persistence.",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_api": "docs/openapi.yaml",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "evidence": "evidence/local/tasks/GAP-005.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-006",
+      "title": "Implement permission changed event persistence and replay protection",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L05-007",
+        "GAP-002"
+      ],
+      "target_artifact": "backend/src/devices/permission_events.cc",
+      "acceptance": "Device signed revision monotonic; revoked permission visible to authorized parent; wrong child denied.",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_api": "docs/openapi.yaml",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "evidence": "evidence/local/tasks/GAP-006.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-007",
+      "title": "Implement notification inbox and per-parent read receipts",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L09-004",
+        "GAP-002"
+      ],
+      "target_artifact": "backend/src/notifications/inbox.cc",
+      "acceptance": "Parent A read does not mark Parent B read; no raw location in push.",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_api": "docs/openapi.yaml",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "evidence": "evidence/local/tasks/GAP-007.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-008",
+      "title": "Implement commute plan versioned API/DB and conflict test",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L08-006",
+        "GAP-002"
+      ],
+      "target_artifact": "backend/src/commute/plans.cc",
+      "acceptance": "GET/POST/PATCH plan, immutable revision, optimistic lock and child scope.",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_api": "docs/openapi.yaml",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "evidence": "evidence/local/tasks/GAP-008.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-009",
+      "title": "Implement tracking policy revisions and device ack",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L06-011",
+        "GAP-002"
+      ],
+      "target_artifact": "backend/src/tracking/policies.cc",
+      "acceptance": "Free reduced cadence / paid transition verified by device receipt; stale status not displayed as applied.",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_api": "docs/openapi.yaml",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "evidence": "evidence/local/tasks/GAP-009.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-010",
+      "title": "Implement public sanitized outage status without child telemetry",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L17-014"
+      ],
+      "target_artifact": "backend/src/operations/service_status.cc",
+      "acceptance": "Public status only health enum, timestamps, safe message; no internal secrets/child data.",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_api": "docs/openapi.yaml",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "evidence": "evidence/local/tasks/GAP-010.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-011",
+      "title": "Backend admin OIDC owner bootstrap plus applicant-only bearer",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L14-003",
+        "L03-014"
+      ],
+      "target_artifact": "backend/src/admin/owner_bootstrap.cc",
+      "acceptance": "Only verified OIDC sub becomes ROOT_OWNER; unapproved applicant gets zero admin data.",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_api": "docs/openapi.yaml",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "evidence": "evidence/local/tasks/GAP-011.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-012",
+      "title": "Admin profile input ignores client verified flag; challenge replay tests",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L14-006",
+        "GAP-011"
+      ],
+      "target_artifact": "backend/tests/admin_profile_trust_boundary.cc",
+      "acceptance": "Tampered contact_verified/role ignored; hashed expiring email challenge and nonce confirmed.",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_api": "docs/openapi.yaml",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "evidence": "evidence/local/tasks/GAP-012.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-013",
+      "title": "Owner Approve/Reject atomically and revoke sessions",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L14-009",
+        "GAP-012"
+      ],
+      "target_artifact": "backend/tests/admin_approval_race.cc",
+      "acceptance": "Owner MFA and audit success preconditions; double decision and self role escalation denied.",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_api": "docs/openapi.yaml",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "evidence": "evidence/local/tasks/GAP-013.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-014",
+      "title": "API/admin minimal child seat and masked payment projections",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L14-014",
+        "GAP-011"
+      ],
+      "target_artifact": "backend/src/admin/minimal_roster.cc",
+      "acceptance": "Admin never receives raw children row, route, device health, private media or token; field allowlist enforced.",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_api": "docs/openapi.yaml",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "evidence": "evidence/local/tasks/GAP-014.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-015",
+      "title": "Implement FAQ revision drafting/publishing with sanitized Markdown",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L14-011",
+        "GAP-011"
+      ],
+      "target_artifact": "backend/tests/faq_revision_xss.cc",
+      "acceptance": "Payload XSS and public unpublished revision denied; rollback audited.",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_api": "docs/openapi.yaml",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "evidence": "evidence/local/tasks/GAP-015.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-016",
+      "title": "Implement parent ticket and admin response end-to-end",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L14-012",
+        "GAP-011"
+      ],
+      "target_artifact": "backend/tests/support_tickets_isolation.cc",
+      "acceptance": "Parent ticket isolation; admin response by scoped staff; delivery state not misreported.",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_api": "docs/openapi.yaml",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "evidence": "evidence/local/tasks/GAP-016.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-017",
+      "title": "Correct billing checkout trust boundary before fake Play tests",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L10-008",
+        "L03-014"
+      ],
+      "target_artifact": "backend/tests/billing_untrusted_price.cc",
+      "acceptance": "Client amount, verified flag, refund status rejected; backend independently verifies Play token and offer.",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_api": "docs/openapi.yaml",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "evidence": "evidence/local/tasks/GAP-017.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-018",
+      "title": "Enforce paid child viewer slot + independent 100-day expiry",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L11-006",
+        "GAP-017"
+      ],
+      "target_artifact": "backend/tests/viewer_expiry_concurrency.cc",
+      "acceptance": "One premium screen, +1 one-time add-on, 100d unchanged by base lapse, 1800 pooled AV seconds.",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_api": "docs/openapi.yaml",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "evidence": "evidence/local/tasks/GAP-018.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-019",
+      "title": "Media request device-visible OS approval per session or deny",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L16-002",
+        "GAP-006"
+      ],
+      "target_artifact": "research/media/OS_APPROVAL_POLICY.md",
+      "acceptance": "No capture without verified device/OS approval where required; Android/Play/legal release OFF while unresolved.",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_api": "docs/openapi.yaml",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "evidence": "evidence/local/tasks/GAP-019.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-020",
+      "title": "Close six-hour history visibility vs retention legality gap",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L15-002"
+      ],
+      "target_artifact": "docs/roadmap/RETENTION_OWNER_COUNSEL_GATE.md",
+      "acceptance": "Free history <=6h; raw/backup lifetime remains blocked until actual approved policy; delete vs retry tested.",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_api": "docs/openapi.yaml",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "evidence": "evidence/local/tasks/GAP-020.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-021",
+      "title": "Apply Theme C consistently to all 81 base parent/child screens",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L12-014",
+        "L13-012"
+      ],
+      "target_artifact": "android/FIGMA_THEME_C_SCREEN_MATRIX.md",
+      "acceptance": "Per-screen design token, privacy state, screenshot diff and language key; originals not overwritten.",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_api": "docs/openapi.yaml",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "evidence": "evidence/local/tasks/GAP-021.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-022",
+      "title": "Review 46 capability and 28 media handoff states for Android truth",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L05-011",
+        "L16-011"
+      ],
+      "target_artifact": "android/FIGMA_CAPABILITY_MEDIA_SCREEN_MATRIX.md",
+      "acceptance": "Every conditional state visually marks unsupported/permission denied; real device evidence required before release.",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_api": "docs/openapi.yaml",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "evidence": "evidence/local/tasks/GAP-022.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-023",
+      "title": "Implement 10 admin web Figma screens and accessible state transitions",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L14-016",
+        "GAP-013"
+      ],
+      "target_artifact": "admin-web/e2e/admin_access.spec.ts",
+      "acceptance": "NO_ACCESS → verified profile → owner approval roles → permitted modules; unauthorized direct URLs fail.",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_api": "docs/openapi.yaml",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "evidence": "evidence/local/tasks/GAP-023.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-024",
+      "title": "Run 187-screen traceability and app E2E smoke suite",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "GAP-021",
+        "GAP-022",
+        "GAP-023",
+        "GAP-018"
+      ],
+      "target_artifact": "evidence/local/E2E_FIGMA_187.md",
+      "acceptance": "Pass/fail/blocked recorded per screen and relevant OS device; no claimed pass without execution.",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_api": "docs/openapi.yaml",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "evidence": "evidence/local/tasks/GAP-024.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-025",
+      "title": "Document all 146 API handler registrations and contract test coverage",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "GAP-007",
+        "GAP-008",
+        "GAP-011",
+        "GAP-017",
+        "GAP-018"
+      ],
+      "target_artifact": "docs/api/HANDLER_COVERAGE_146.md",
+      "acceptance": "Every nonconditional endpoint has real router+unit/integration negative tests or explicitly BLOCKED status.",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_api": "docs/openapi.yaml",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "evidence": "evidence/local/tasks/GAP-025.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-026",
+      "title": "Run new full contract lint and migration/RLS regression in CI",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "GAP-001",
+        "GAP-003",
+        "GAP-025"
+      ],
+      "target_artifact": "evidence/local/API_DB_CI_GATES.md",
+      "acceptance": "Clean checkout test logs and failures; no bypass superuser for tenant tests.",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_api": "docs/openapi.yaml",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "evidence": "evidence/local/tasks/GAP-026.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-027",
+      "title": "Close personal Play account, Android physical-test and legal gates in separate stream",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L19-008"
+      ],
+      "target_artifact": "docs/roadmap/EXTERNAL_PLAY_AND_LEGAL_GATES.md",
+      "acceptance": "Only owner/counsel/Play can approve; local agent records evidence or BLOCKED, no auto publication.",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_api": "docs/openapi.yaml",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "evidence": "evidence/local/tasks/GAP-027.md",
+      "release_gate": "HUMAN_EXTERNAL_SIGNOFF"
+    },
+    {
+      "id": "GAP-028",
+      "title": "Final signed local screen/API/DB implementation reconciliation",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "GAP-024",
+        "GAP-025",
+        "GAP-026"
+      ],
+      "target_artifact": "docs/roadmap/FINAL_AUDIT_GAP_CLOSURE.md",
+      "acceptance": "187 screens and 146 draft ops reconciled with real handlers, SQL migration, tests, missing physical/device evidence and reviewer.",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_api": "docs/openapi.yaml",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "evidence": "evidence/local/tasks/GAP-028.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    }
+  ]
+}
