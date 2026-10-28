@@ -1,0 +1,1855 @@
+{
+  "name": "Madalasa–Alarka Local Agent Execution Status",
+  "as_of": "2026-10-28",
+  "note": "PLANNING INITIALIZATION ONLY. Not proof that any task ran. All tasks intentionally NOT_STARTED.",
+  "dependencies_source": "docs/roadmap/LOCAL_TASK_GRAPH_2026-10-28.json",
+  "allowed_states": [
+    "NOT_STARTED",
+    "IN_PROGRESS",
+    "PASS",
+    "FAILED_TEST",
+    "BLOCKED_ENVIRONMENT",
+    "BLOCKED_EXTERNAL",
+    "SKIPPED_CONDITIONAL",
+    "REVIEW_REQUIRED"
+  ],
+  "counts": {
+    "NOT_STARTED": 262
+  },
+  "task_statuses": {
+    "L00-001": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L00-002": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L00-003": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L00-004": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L00-005": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L00-006": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L00-007": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L00-008": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L00-009": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L00-010": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L00-011": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L00-012": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L01-001": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L01-002": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L01-003": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L01-004": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L01-005": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L01-006": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L01-007": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L01-008": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L01-009": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L01-010": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L01-011": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L01-012": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L01-013": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L01-014": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L02-001": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L02-002": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L02-003": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L02-004": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L02-005": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L02-006": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L02-007": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L02-008": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L02-009": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L02-010": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L02-011": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L02-012": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L02-013": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L02-014": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L02-015": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L03-001": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L03-002": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L03-003": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L03-004": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L03-005": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L03-006": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L03-007": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L03-008": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L03-009": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L03-010": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L03-011": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L03-012": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L03-013": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L03-014": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L04-001": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L04-002": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L04-003": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L04-004": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L04-005": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L04-006": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L04-007": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L04-008": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L04-009": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L04-010": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L04-011": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L04-012": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L05-001": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L05-002": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L05-003": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L05-004": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L05-005": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L05-006": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L05-007": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L05-008": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L05-009": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L05-010": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L05-011": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L05-012": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L06-001": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L06-002": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L06-003": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L06-004": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L06-005": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L06-006": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L06-007": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L06-008": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L06-009": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L06-010": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L06-011": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L06-012": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L06-013": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L07-001": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L07-002": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L07-003": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L07-004": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L07-005": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L07-006": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L07-007": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L07-008": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L07-009": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L07-010": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L07-011": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L07-012": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L08-001": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L08-002": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L08-003": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L08-004": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L08-005": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L08-006": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L08-007": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L08-008": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L08-009": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L08-010": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L08-011": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L08-012": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L09-001": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L09-002": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L09-003": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L09-004": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L09-005": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L09-006": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L09-007": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L09-008": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L09-009": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L09-010": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L09-011": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L09-012": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L10-001": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L10-002": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L10-003": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L10-004": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L10-005": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L10-006": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L10-007": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L10-008": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L10-009": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L10-010": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L10-011": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L10-012": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L10-013": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L10-014": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L11-001": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L11-002": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L11-003": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L11-004": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L11-005": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L11-006": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L11-007": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L11-008": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L11-009": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L11-010": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L11-011": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L11-012": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L11-013": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L11-014": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L12-001": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L12-002": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L12-003": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L12-004": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L12-005": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L12-006": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L12-007": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L12-008": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L12-009": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L12-010": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L12-011": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L12-012": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L12-013": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L12-014": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L13-001": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L13-002": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L13-003": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L13-004": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L13-005": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L13-006": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L13-007": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L13-008": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L13-009": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L13-010": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L13-011": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L13-012": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L14-001": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L14-002": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L14-003": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L14-004": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L14-005": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L14-006": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L14-007": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L14-008": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L14-009": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L14-010": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L14-011": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L14-012": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L14-013": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L14-014": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L14-015": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L14-016": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L14-017": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L14-018": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L15-001": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L15-002": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L15-003": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L15-004": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L15-005": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L15-006": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L15-007": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L15-008": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L15-009": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L15-010": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L15-011": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L15-012": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L16-001": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L16-002": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L16-003": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L16-004": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L16-005": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L16-006": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L16-007": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L16-008": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L16-009": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L16-010": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L16-011": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L16-012": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L17-001": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L17-002": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L17-003": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L17-004": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L17-005": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L17-006": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L17-007": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L17-008": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L17-009": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L17-010": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L17-011": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L17-012": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L17-013": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L17-014": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L17-015": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L18-001": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L18-002": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L18-003": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L18-004": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L18-005": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L18-006": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L18-007": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L18-008": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L18-009": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L18-010": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L18-011": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L18-012": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L18-013": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L18-014": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L18-015": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L19-001": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L19-002": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L19-003": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L19-004": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L19-005": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L19-006": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L19-007": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    },
+    "L19-008": {
+      "status": "NOT_STARTED",
+      "evidence_path": null,
+      "commit_sha": null,
+      "verified_at_utc": null,
+      "verified_by": null
+    }
+  }
+}
