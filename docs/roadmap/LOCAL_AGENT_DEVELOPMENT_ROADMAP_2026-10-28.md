@@ -26,9 +26,9 @@
 
 ## 2. Dependencies, gates and agent orchestration
 
-Each `LNN-NNN` is the smallest independently reviewable implementation slice. `depends_on` in JSON is a validated acyclic graph; the default ordering conservatively serializes tasks within each phase to reduce merge/race risk. A knowledgeable agent can propose parallel sub-branches, but may not remove privacy prerequisites. **Do not run a successor just because predecessor code exists: predecessor acceptance TESTS must PASS, with evidence.**
+Each `LNN-NNN` is the smallest independently reviewable implementation slice. `depends_on` in JSON is a validated acyclic graph; the graph conservatively serializes within each phase but explicitly permits independent domain lanes to proceed in parallel after their true prerequisites pass. Conditional media research and missing physical-device evidence do NOT block unrelated local coding; they still block claims of release readiness. A knowledgeable agent may propose further parallel sub-branches, but may not remove privacy prerequisites. **Do not run a successor just because predecessor code exists: predecessor acceptance TESTS must PASS, with evidence.**
 
-Task states: `NOT_STARTED → IN_PROGRESS → PASS`; also `BLOCKED_EXTERNAL`, `BLOCKED_ENVIRONMENT`, `FAILED_TEST`, `REVIEW_REQUIRED` and `SKIPPED_CONDITIONAL`. **Only PASS satisfies a dependency.** Conditional investigation may be SKIPPED_CONDITIONAL after recorded scope decision; a blocked feature remains disabled in builds.
+Task states: `NOT_STARTED → IN_PROGRESS → PASS`; also `BLOCKED_EXTERNAL`, `BLOCKED_ENVIRONMENT`, `FAILED_TEST`, `REVIEW_REQUIRED` and `SKIPPED_CONDITIONAL`. **Only PASS satisfies a dependency.** Conditional investigation may be SKIPPED_CONDITIONAL after a recorded scope decision and explicitly bypassed by graph edges; a blocked feature remains disabled in builds. A blocked physical-device proof must be reported in final local readiness, not hidden.
 
 Before each task: check dependency evidence, inspect exact referenced docs, `git status --short`, create task branch, write minimal patch, tests including unauthorized/negative cases, record environment + commit SHA + command/exit code, submit PR/small atomic change. Do not commit secrets or personally identifying customer records. No free-form write access to external family Google accounts. A coding agent cannot click Play Console approval, falsely verify parent-child links or issue legal signoff.
 
@@ -159,7 +159,7 @@ The tables below are an **execution backlog**. All statuses start NOT_STARTED un
 
 | Task | Atomic deliverable | Depends on | Proof required |
 |---|---|---|---|
-| `L03-001` | **Preserve narrow M1 API and review whole-project draft divergences** · `docs/api/CONTRACT_DELTA.md` | `L02-015` | 47 paths reconciled without claiming live handlers |
+| `L03-001` | **Preserve narrow M1 API and review whole-project draft divergences** · `docs/api/CONTRACT_DELTA.md` | `L02-015`, `L01-014` | 47 paths reconciled without claiming live handlers |
 | `L03-002` | **Split public parent/device/admin paths by audience** · `docs/api/v1/openapi.yaml` | `L03-001` | No route grants wrong issuer token access |
 | `L03-003` | **Define error envelope/correlation and retry taxonomy** · `docs/api/v1/errors.yaml` | `L03-002` | All failures have typed code and request ID |
 | `L03-004` | **Write parent identity family/child/guardian schemas** · `docs/api/v1/parent.yaml` | `L03-003` | Google identity only and child grant proof fail-closed |
@@ -182,7 +182,7 @@ The tables below are an **execution backlog**. All statuses start NOT_STARTED un
 
 | Task | Atomic deliverable | Depends on | Proof required |
 |---|---|---|---|
-| `L04-001` | **Implement OIDC verifier with issuer audience expiry sub and nonce** · `backend/src/identity/oidc_verifier.cc` | `L03-014` | Wrong tokens/expired/forged aud all fail |
+| `L04-001` | **Implement OIDC verifier with issuer audience expiry sub and nonce** · `backend/src/identity/oidc_verifier.cc` | `L03-014`, `L02-015` | Wrong tokens/expired/forged aud all fail |
 | `L04-002` | **Implement adult account signup/revocation endpoints** · `backend/src/identity/adults.cc` | `L04-001` | Revoked adult tokens lose access immediately |
 | `L04-003` | **Implement family creation and owner membership** · `backend/src/identity/families.cc` | `L04-002` | Family membership alone gives zero child rights |
 | `L04-004` | **Implement child record creation and exact-family ownership checks** · `backend/src/identity/children.cc` | `L04-003` | Cross-family child creation/lookup fails |
@@ -214,7 +214,7 @@ The tables below are an **execution backlog**. All statuses start NOT_STARTED un
 | `L05-009` | **Implement visible monitoring notification+identifying app icon** · `android/alarka/src/main/kotlin` | `L05-008` | Persistent notification and tracking disclosure QA |
 | `L05-010` | **Implement secure local config and queue encryption** · `android/alarka/src/main/kotlin` | `L05-009` | No plaintext child GPS in backups/logcat |
 | `L05-011` | **Test Android 10..16/OEM permission matrix with fake and physical fixtures** · `android/alarka/src/androidTest` | `L05-010` | Unsupported mode returns reason; no bypass |
-| `L05-012` | **Implement enrollment stop/revoke/uninstall guidance** · `android/alarka/src/main/kotlin` | `L05-011` | Guardian revoke halts uploads; child app shows status |
+| `L05-012` | **Implement enrollment stop/revoke/uninstall guidance** · `android/alarka/src/main/kotlin` | `L05-010` | Guardian revoke halts uploads; child app shows status |
 
 **Exit gate:** all required tasks in this phase have actual passing evidence; conditional feature tasks may be BLOCKED_EXTERNAL only with retained OFF flag, negative denial tests and recorded approval owner. No phase is completed by documenting intended behavior.
 
@@ -224,7 +224,7 @@ The tables below are an **execution backlog**. All statuses start NOT_STARTED un
 
 | Task | Atomic deliverable | Depends on | Proof required |
 |---|---|---|---|
-| `L06-001` | **Implement sensor-fused Android GPS observation model** · `android/alarka/src/main/kotlin` | `L05-012` | Observed timestamp/accuracy/provenance retained |
+| `L06-001` | **Implement sensor-fused Android GPS observation model** · `android/alarka/src/main/kotlin` | `L05-012`, `L02-015` | Observed timestamp/accuracy/provenance retained |
 | `L06-002` | **Implement power-aware tracking frequency policy** · `android/alarka/src/main/kotlin` | `L06-001` | Free cadence lower but OS permitted; no location guarantees |
 | `L06-003` | **Implement offline 48h bounded encrypted device queue** · `android/alarka/src/main/kotlin` | `L06-002` | Airplane-mode then reconnect without event loss or plaintext |
 | `L06-004` | **Implement Android foreground service start restrictions** · `android/alarka/src/main/kotlin` | `L06-003` | FGS denial handled; never silently run hidden |
@@ -246,7 +246,7 @@ The tables below are an **execution backlog**. All statuses start NOT_STARTED un
 
 | Task | Atomic deliverable | Depends on | Proof required |
 |---|---|---|---|
-| `L07-001` | **Implement child selector with only authorized child IDs** · `android/madalasa/src/main/kotlin` | `L06-013` | Unshared siblings do not appear or infer counts |
+| `L07-001` | **Implement child selector with only authorized child IDs** · `android/madalasa/src/main/kotlin` | `L06-013`, `L04-012` | Unshared siblings do not appear or infer counts |
 | `L07-002` | **Implement latest observed child location endpoint and DTO** · `backend/src/location/read_api.cc` | `L07-001` | Wrong guardian denied; stale state truthful |
 | `L07-003` | **Implement parent map with map provider interface** · `android/madalasa/src/main/kotlin` | `L07-002` | No provider API key checked into Git |
 | `L07-004` | **Implement location age/accuracy/status chips** · `android/madalasa/src/main/kotlin` | `L07-003` | Unknown/unavailable location clearly shown |
@@ -267,7 +267,7 @@ The tables below are an **execution backlog**. All statuses start NOT_STARTED un
 
 | Task | Atomic deliverable | Depends on | Proof required |
 |---|---|---|---|
-| `L08-001` | **Implement event-time trip segmentation candidate** · `backend/src/trips/segmenter.cc` | `L07-012` | Labeled datasets yield measurable precision recall |
+| `L08-001` | **Implement event-time trip segmentation candidate** · `backend/src/trips/segmenter.cc` | `L07-012`, `L06-013` | Labeled datasets yield measurable precision recall |
 | `L08-002` | **Implement stop detection with confidence and unknown gaps** · `backend/src/trips/stops.cc` | `L08-001` | No false exact stop when fixes missing |
 | `L08-003` | **Implement motion kind hypothesis with confidence** · `backend/src/trips/mode_classifier.cc` | `L08-002` | Walk/ride only labeled as inferred |
 | `L08-004` | **Implement trip revision and late-event recompute** · `backend/src/trips/revision.cc` | `L08-003` | Out-of-order event revises derived trip immutably |
@@ -288,7 +288,7 @@ The tables below are an **execution backlog**. All statuses start NOT_STARTED un
 
 | Task | Atomic deliverable | Depends on | Proof required |
 |---|---|---|---|
-| `L09-001` | **Implement child initiated SOS/check-in UI** · `android/alarka/src/main/kotlin` | `L08-012` | Safety action clearly accessible and tested |
+| `L09-001` | **Implement child initiated SOS/check-in UI** · `android/alarka/src/main/kotlin` | `L05-012`, `L04-012` | Safety action clearly accessible and tested |
 | `L09-002` | **Implement SOS durable acceptance/ACK protocol** · `backend/src/safety/sos.cc` | `L09-001` | Device receipt not confused with guardian acknowledgement |
 | `L09-003` | **Implement SOS fanout to authorized guardian set** · `backend/src/safety/notifier.cc` | `L09-002` | No notification to unrelated parent |
 | `L09-004` | **Implement best-effort retry and explicit failed delivery** · `backend/src/safety/delivery.cc` | `L09-003` | Offline/FCM failure surfaces non-guarantee |
@@ -297,7 +297,7 @@ The tables below are an **execution backlog**. All statuses start NOT_STARTED un
 | `L09-007` | **Implement usage aggregation with unknown coverage quality** · `backend/src/usage/aggregates.cc` | `L09-006` | Missing time never counted as zero |
 | `L09-008` | **Implement conditional app control policy preview** · `backend/src/controls/policy.cc` | `L09-007` | Standard phone never claims broad app blocking |
 | `L09-009` | **Implement real Device Owner DPC lab-only controls** · `android/alarka/src/androidTest` | `L09-008` | Only factory-reset test phone and actual DPC provisioning |
-| `L09-010` | **Implement remote command state machine and timeout statuses** · `backend/src/commands/dispatcher.cc` | `L09-009` | OS refusal returns named failure and audit |
+| `L09-010` | **Implement remote command state machine and timeout statuses** · `backend/src/commands/dispatcher.cc` | `L09-008` | OS refusal returns named failure and audit |
 | `L09-011` | **Implement app usage/health/SOS parent Figma screens** · `android/madalasa/src/main/kotlin` | `L09-010` | Feature flags hide unavailable modules honestly |
 | `L09-012` | **Test SOS duplicates, device offline and revocation** · `backend/tests/safety_test.cc` | `L09-011` | No duplicate unauthorized alert nor false delivered claim |
 
@@ -309,7 +309,7 @@ The tables below are an **execution backlog**. All statuses start NOT_STARTED un
 
 | Task | Atomic deliverable | Depends on | Proof required |
 |---|---|---|---|
-| `L10-001` | **Define family trial abuse/privacy policy test fixture** · `backend/tests/trial_policy_test.cc` | `L09-012` | Second signup attempt restricted without invasive persistent ID |
+| `L10-001` | **Define family trial abuse/privacy policy test fixture** · `backend/tests/trial_policy_test.cc` | `L04-012`, `L03-014`, `L02-015` | Second signup attempt restricted without invasive persistent ID |
 | `L10-002` | **Implement server 48-hour trial state and expiry** · `backend/src/billing/trial.cc` | `L10-001` | Clock spoof doesn't extend 48h once |
 | `L10-003` | **Implement separate 6-hour free history entitlement** · `backend/src/billing/free_tier.cc` | `L10-002` | Expired paid reverts free with reduced cadence |
 | `L10-004` | **Implement founding family 1008 distinct paid counter** · `backend/src/billing/founding.cc` | `L10-003` | Exactly 1008 distinct families; child added later eligible |
@@ -332,7 +332,7 @@ The tables below are an **execution backlog**. All statuses start NOT_STARTED un
 
 | Task | Atomic deliverable | Depends on | Proof required |
 |---|---|---|---|
-| `L11-001` | **Create server-side viewer lease policy 1 slot per paid child** · `backend/src/viewers/lease.cc` | `L10-014` | Second simultaneous viewer rejected atomically |
+| `L11-001` | **Create server-side viewer lease policy 1 slot per paid child** · `backend/src/viewers/lease.cc` | `L10-014`, `L04-012` | Second simultaneous viewer rejected atomically |
 | `L11-002` | **Implement device-session lease heartbeat and expiry** · `backend/src/viewers/heartbeat.cc` | `L11-001` | Background/disconnect TTL releases slot |
 | `L11-003` | **Implement voluntary ask-to-takeover workflow** · `backend/src/viewers/takeover.cc` | `L11-002` | Never silently eject other guardian |
 | `L11-004` | **Implement ₹100 one-time extra slot Play purchase adapter** · `backend/src/viewers/addon_purchase.cc` | `L11-003` | Only verified one-time purchase creates capacity |
@@ -355,7 +355,7 @@ The tables below are an **execution backlog**. All statuses start NOT_STARTED un
 
 | Task | Atomic deliverable | Depends on | Proof required |
 |---|---|---|---|
-| `L12-001` | **Create Theme C design tokens, fonts, icon resources** · `android/madalasa/src/main/res` | `L11-014` | Screens visually consistent and English-only initially |
+| `L12-001` | **Create Theme C design tokens, fonts, icon resources** · `android/madalasa/src/main/res` | `L07-012`, `L08-012`, `L09-012`, `L11-014` | Screens visually consistent and English-only initially |
 | `L12-002` | **Implement launcher+signed-in parent navigation** · `android/madalasa/src/main/kotlin` | `L12-001` | Deep links require auth and child grants |
 | `L12-003` | **Implement home dashboard child activity cards** · `android/madalasa/src/main/kotlin` | `L12-002` | Privacy and unavailable states accurate |
 | `L12-004` | **Implement add-child / family / scoped co-parent screens** · `android/madalasa/src/main/kotlin` | `L12-003` | Other siblings never auto-shared |
@@ -378,7 +378,7 @@ The tables below are an **execution backlog**. All statuses start NOT_STARTED un
 
 | Task | Atomic deliverable | Depends on | Proof required |
 |---|---|---|---|
-| `L13-001` | **Create Alarka Theme C child-appropriate launcher** · `android/alarka/src/main/res` | `L12-014` | Portrait branding and accessibility pass |
+| `L13-001` | **Create Alarka Theme C child-appropriate launcher** · `android/alarka/src/main/res` | `L05-012`, `L09-012` | Portrait branding and accessibility pass |
 | `L13-002` | **Implement parent-guided setup and consent disclosures** · `android/alarka/src/main/kotlin` | `L13-001` | Monitoring never hidden; child-visible notice |
 | `L13-003` | **Implement capability scan and permission checklist page** · `android/alarka/src/main/kotlin` | `L13-002` | Actual OS state only |
 | `L13-004` | **Implement pairing and guardian access roster screen** · `android/alarka/src/main/kotlin` | `L13-003` | Shows only truly approved guardians |
@@ -399,7 +399,7 @@ The tables below are an **execution backlog**. All statuses start NOT_STARTED un
 
 | Task | Atomic deliverable | Depends on | Proof required |
 |---|---|---|---|
-| `L14-001` | **Build separate admin web project and local dev shell** · `admin-web/package.json` | `L13-012` | Serves locally with fake account only |
+| `L14-001` | **Build separate admin web project and local dev shell** · `admin-web/package.json` | `L04-012`, `L03-014`, `L02-015` | Serves locally with fake account only |
 | `L14-002` | **Implement secure Google ID-token verifier backend** · `backend/src/admin/google_oidc.cc` | `L14-001` | Wrong iss/aud/sub/email claim denied |
 | `L14-003` | **Implement owner bootstrap bound to verified Google sub** · `backend/src/admin/bootstrap.cc` | `L14-002` | Only configured owner can grant roles |
 | `L14-004` | **Implement NO_ACCESS self profile/status endpoint** · `backend/src/admin/access_state.cc` | `L14-003` | Unapproved login cannot query admin APIs |
@@ -426,7 +426,7 @@ The tables below are an **execution backlog**. All statuses start NOT_STARTED un
 
 | Task | Atomic deliverable | Depends on | Proof required |
 |---|---|---|---|
-| `L15-001` | **Create retention categories with DRAFT disabled scheduling** · `backend/src/privacy/retention_policy.cc` | `L14-018` | No accidental forever retain or silent 14/30 day guess |
+| `L15-001` | **Create retention categories with DRAFT disabled scheduling** · `backend/src/privacy/retention_policy.cc` | `L02-015`, `L06-013`, `L04-012` | No accidental forever retain or silent 14/30 day guess |
 | `L15-002` | **Implement free 6-hour visibility separate from TTL** · `backend/src/privacy/history_visibility.cc` | `L15-001` | Free endpoint cannot exceed 6h while storage gate remains distinct |
 | `L15-003` | **Implement authenticated deletion workflow and notices** · `backend/src/privacy/deletion.cc` | `L15-002` | Delete request not mistaken for immediate completion |
 | `L15-004` | **Implement parent/child device revocation before erasure** · `backend/src/privacy/tombstones.cc` | `L15-003` | No offline GPS replay after deletion |
@@ -447,7 +447,7 @@ The tables below are an **execution backlog**. All statuses start NOT_STARTED un
 
 | Task | Atomic deliverable | Depends on | Proof required |
 |---|---|---|---|
-| `L16-001` | **Design capability-by-OS matrix and false-success tests** · `research/media/FEATURE_GATES.md` | `L15-012`, `L05-011` | No unsupported camera/mic promises |
+| `L16-001` | **Design capability-by-OS matrix and false-success tests** · `research/media/FEATURE_GATES.md` | `L05-012`, `L11-014` | No unsupported camera/mic promises |
 | `L16-002` | **Prove visible user-authorized MediaProjection lab flow** · `research/media/screen_demo` | `L16-001` | Consent each session; no background bypass |
 | `L16-003` | **Prove foreground microphone lifecycle limitations on Android 14+** · `research/media/audio_demo` | `L16-002` | OS rejection reported, not circumvented |
 | `L16-004` | **Prove camera/photo/video availability with explicit child-visible UI** · `research/media/camera_demo` | `L16-003` | No covert captures and proper privacy indicators |
@@ -468,7 +468,7 @@ The tables below are an **execution backlog**. All statuses start NOT_STARTED un
 
 | Task | Atomic deliverable | Depends on | Proof required |
 |---|---|---|---|
-| `L17-001` | **Run STRIDE threat scenarios per API and actor** · `backend/tests/security_threat_matrix.md` | `L16-012` | High-severity mitigations tested |
+| `L17-001` | **Run STRIDE threat scenarios per API and actor** · `backend/tests/security_threat_matrix.md` | `L08-012`, `L09-012`, `L10-014`, `L11-014`, `L12-014`, `L13-012`, `L14-018`, `L15-012` | High-severity mitigations tested |
 | `L17-002` | **Automate OIDC token abuse, CSRF and session fixation tests** · `backend/tests/auth_adversarial.cc` | `L17-001` | No admin/parent impersonation |
 | `L17-003` | **Run cross-tenant RLS and child-scoped authorization fuzz tests** · `backend/tests/tenant_fuzz.cc` | `L17-002` | No sibling/private child leaks |
 | `L17-004` | **Run payment/webhook replay and refund chaos** · `backend/tests/payments_chaos.cc` | `L17-003` | No duplicate entitlement or negative quota |
@@ -492,7 +492,7 @@ The tables below are an **execution backlog**. All statuses start NOT_STARTED un
 
 | Task | Atomic deliverable | Depends on | Proof required |
 |---|---|---|---|
-| `L18-001` | **Freeze local build and Figma/API/database traceability snapshot** · `evidence/local/TRACEABILITY_SNAPSHOT.md` | `L17-015` | No unresolved required path missing |
+| `L18-001` | **Freeze local build and Figma/API/database traceability snapshot** · `evidence/local/TRACEABILITY_SNAPSHOT.md` | `L17-015`, `L12-014`, `L13-012`, `L14-018`, `L15-012` | No unresolved required path missing |
 | `L18-002` | **Run new-family → 48h trial → free downgrade end-to-end** · `evidence/local/E2E_TRIAL.md` | `L18-001` | No trial reset after account recreation attempt |
 | `L18-003` | **Run child pairing → GPS → parent map → stale/offline path** · `evidence/local/E2E_GPS.md` | `L18-002` | Durable and truthful status all the way |
 | `L18-004` | **Run Child A only co-parent invite blocked pending verification** · `evidence/local/E2E_PARENT_SCOPE.md` | `L18-003` | Child B never visible to unrelated parent |
@@ -504,7 +504,7 @@ The tables below are an **execution backlog**. All statuses start NOT_STARTED un
 | `L18-010` | **Run FAQ publish and support reply isolation** · `evidence/local/E2E_SUPPORT.md` | `L18-009` | XSS and cross-ticket access denied |
 | `L18-011` | **Run account deletion plus offline queue and restored backup** · `evidence/local/E2E_ERASURE.md` | `L18-010` | No child-data revival |
 | `L18-012` | **Run mixed API29..36 Android physical/OEM acceptance** · `evidence/local/DEVICE_MATRIX.md` | `L18-011` | No green pass without actual tested device |
-| `L18-013` | **Run accessibility, localization-readiness and screenshot diff** · `evidence/local/UI_ACCEPTANCE.md` | `L18-012` | Theme C, English now, translated resources ready |
+| `L18-013` | **Run accessibility, localization-readiness and screenshot diff** · `evidence/local/UI_ACCEPTANCE.md` | `L18-011` | Theme C, English now, translated resources ready |
 | `L18-014` | **Run contract drift, migration replay and local CI from clean clone** · `evidence/local/CLEAN_BUILD.md` | `L18-013` | All executable tests green with full commands |
 | `L18-015` | **Compile unresolved blockers and recommend go/no-go for LOCAL artifact** · `evidence/local/LOCAL_EXIT_REVIEW.md` | `L18-014` | Status honest: READY/NOT_READY/BLOCKED; no Play claim |
 
