@@ -41,3 +41,8 @@ End local development with evidence-based LOCAL_READY / LOCAL_BLOCKED / NOT_READ
 ## Mandatory 2026-10-28 Figma/API/DB audit addendum
 
 Before declaring LOCAL_READY, read [187-screen final audit](docs/audits/FINAL_FIGMA_SCREEN_BY_SCREEN_API_DB_REPORT_2026-10-28.md), [28 atomic gap remediation tasks](docs/roadmap/FIGMA_SCREEN_API_DB_REMEDIATION_TASKS_2026-10-28.json), [120 conceptual Figma database tables](docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json), and [real ap_m1 external co-parent FK/RLS blocker](docs/data-model/FIGMA_SCREEN_GAP_PHYSICAL_SCHEMA_REVIEW_2026-10-28.md). The original 262 tasks remain unchanged; 28 additional audit tasks apply before final local signoff. Run `python3 backend/tests/lint_openapi_full.py` after checking out the latest specification. The full OpenAPI contains **146 draft operations**, not 146 working handlers. No Figma screen is a verified Android build.
+
+
+## 2026-10-28 187-screen API/database audit addendum
+
+Before coding, read [post-remediation report](docs/audits/POST_REMEDIATION_SCREEN_API_DB_REPORT_2026-10-28.md), [187-row coverage registry](docs/audits/POST_REMEDIATION_SCREEN_API_DB_COVERAGE_2026-10-28.json) and [54-item GAP task addendum](docs/roadmap/FIGMA_SCREEN_API_DB_REMEDIATION_TASKS_2026-10-28.json) in addition to the existing 262-task graph. Current master `docs/openapi.yaml` includes **171 proposed HTTP operations** but zero independently certified handlers. New generic request-body constraints and conditional feature gates are part of test scope. Base roadmap total 262 is preserved; combined open development backlog **316** tasks. Never mark gaps closed based on OpenAPI alone or force unverified cross-family membership for parent access.
