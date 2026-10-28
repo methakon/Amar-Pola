@@ -21599,6 +21599,850 @@
           }
         }
       }
+    },
+    "/children/{childId}/screen-time-rules/{ruleId}": {
+      "patch": {
+        "operationId": "patch__screen_audit_remainder_children_childId_screen_time_rules_ruleId",
+        "summary": "Feature must be disabled on ordinary unmanaged Android. Update policy needs device confirmed receipt, otherwise return REQUESTED or OS_REJECTED.",
+        "description": "DESIGN ONLY; no code or legal authorization. Feature must be disabled on ordinary unmanaged Android. Update policy needs device confirmed receipt, otherwise return REQUESTED or OS_REJECTED.",
+        "tags": [
+          "Policies"
+        ],
+        "security": [
+          {
+            "ParentBearer": []
+          }
+        ],
+        "x-implementation-status": "RESEARCH_OR_PROPOSED_NOT_IMPLEMENTED",
+        "x-required-scope": "MANAGED_DEVICE_AND_CHILD_SCOPE",
+        "x-screen-ids": [
+          "P-35",
+          "P-36"
+        ],
+        "x-db-entities": [
+          "screen_time_rules",
+          "rule_assignments",
+          "policy_execution_receipts"
+        ],
+        "x-release-gate": "OFF_UNTIL_INDEPENDENT_LEGAL_PLAY_OS_APPROVAL",
+        "parameters": [
+          {
+            "name": "childId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "ruleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Proposed state, NOT live implementation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagedRuleState"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ManagedRuleChangeIntent"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "delete__screen_audit_remainder_children_childId_screen_time_rules_ruleId",
+        "summary": "Do not claim OS policy removed until device receipt. Disabled by default.",
+        "description": "DESIGN ONLY; no code or legal authorization. Do not claim OS policy removed until device receipt. Disabled by default.",
+        "tags": [
+          "Policies"
+        ],
+        "security": [
+          {
+            "ParentBearer": []
+          }
+        ],
+        "x-implementation-status": "RESEARCH_OR_PROPOSED_NOT_IMPLEMENTED",
+        "x-required-scope": "MANAGED_DEVICE_AND_CHILD_SCOPE",
+        "x-screen-ids": [
+          "P-35",
+          "P-36"
+        ],
+        "x-db-entities": [
+          "screen_time_rules",
+          "rule_assignments",
+          "policy_execution_receipts"
+        ],
+        "x-release-gate": "OFF_UNTIL_INDEPENDENT_LEGAL_PLAY_OS_APPROVAL",
+        "parameters": [
+          {
+            "name": "childId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "ruleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Proposed state, NOT live implementation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagedRuleState"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/parents/me/media-activity/export-requests/{id}": {
+      "get": {
+        "operationId": "get__screen_audit_remainder_parents_me_media_activity_export_requests_id",
+        "summary": "Metadata-only export lifecycle, research-only; default deny until policy and secure delivery.",
+        "description": "DESIGN ONLY; no code or legal authorization. Metadata-only export lifecycle, research-only; default deny until policy and secure delivery.",
+        "tags": [
+          "Policies"
+        ],
+        "security": [
+          {
+            "ParentBearer": []
+          }
+        ],
+        "x-implementation-status": "RESEARCH_OR_PROPOSED_NOT_IMPLEMENTED",
+        "x-required-scope": "MEDIA_EXPORT_APPROVED_POLICY_REQUIRED",
+        "x-screen-ids": [
+          "PA-06",
+          "PA-10"
+        ],
+        "x-db-entities": [
+          "media_access_audit"
+        ],
+        "x-release-gate": "OFF_UNTIL_INDEPENDENT_LEGAL_PLAY_OS_APPROVAL",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Proposed state, NOT live implementation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaExportRequestStatus"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/children/{childId}/usage/coverage": {
+      "get": {
+        "operationId": "get__screen_audit_remainder_children_childId_usage_coverage",
+        "summary": "Coverage quality only; legal OFF means NOT_COLLECTED, never a false zero app-usage report.",
+        "description": "DESIGN ONLY; no code or legal authorization. Coverage quality only; legal OFF means NOT_COLLECTED, never a false zero app-usage report.",
+        "tags": [
+          "Policies"
+        ],
+        "security": [
+          {
+            "ParentBearer": []
+          }
+        ],
+        "x-implementation-status": "RESEARCH_OR_PROPOSED_NOT_IMPLEMENTED",
+        "x-required-scope": "CHILD_BEHAVIOR_MONITORING_LEGAL_GATE",
+        "x-screen-ids": [
+          "P-31",
+          "P-32"
+        ],
+        "x-db-entities": [
+          "usage_permission_checks",
+          "usage_period_summaries"
+        ],
+        "x-release-gate": "OFF_UNTIL_INDEPENDENT_LEGAL_PLAY_OS_APPROVAL",
+        "parameters": [
+          {
+            "name": "childId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Proposed state, NOT live implementation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsageCoverageState"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/children/{childId}/guardian-invitations/{inviteId}/cancel": {
+      "post": {
+        "operationId": "post__screen_audit_remainder_children_childId_guardian_invitations_inviteId_cancel",
+        "summary": "Cancel a draft pending guardian invitation; must not grant authority or automatically reveal sibling information.",
+        "description": "DESIGN ONLY; no code or legal authorization. Cancel a draft pending guardian invitation; must not grant authority or automatically reveal sibling information.",
+        "tags": [
+          "Policies"
+        ],
+        "security": [
+          {
+            "ParentBearer": []
+          }
+        ],
+        "x-implementation-status": "RESEARCH_OR_PROPOSED_NOT_IMPLEMENTED",
+        "x-required-scope": "INVITER_EXACT_CHILD_SCOPE",
+        "x-screen-ids": [
+          "P-39"
+        ],
+        "x-db-entities": [
+          "guardian_invitations"
+        ],
+        "x-release-gate": "LOCAL_SYNTHETIC_ONLY",
+        "parameters": [
+          {
+            "name": "childId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "inviteId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Proposed state, NOT live implementation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GuardianInvitationCancelIntent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuardianInvitationCancelIntent"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/children/{childId}/notification-rules": {
+      "get": {
+        "operationId": "get__screen_audit_remainder_children_childId_notification_rules",
+        "summary": "Read only current adult recipient's notification settings; never disclose place names of another child.",
+        "description": "DESIGN ONLY; no code or legal authorization. Read only current adult recipient's notification settings; never disclose place names of another child.",
+        "tags": [
+          "Policies"
+        ],
+        "security": [
+          {
+            "ParentBearer": []
+          }
+        ],
+        "x-implementation-status": "RESEARCH_OR_PROPOSED_NOT_IMPLEMENTED",
+        "x-required-scope": "EXACT_CHILD_NOTIFICATION_SCOPE",
+        "x-screen-ids": [
+          "P-28",
+          "P-50"
+        ],
+        "x-db-entities": [
+          "place_notification_rules"
+        ],
+        "x-release-gate": "LOCAL_SYNTHETIC_ONLY",
+        "parameters": [
+          {
+            "name": "childId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Proposed state, NOT live implementation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChildNotificationRuleFeed"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Typed denial; no child private data leaked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -26072,6 +26916,195 @@
           "does_not_grant_child_access": {
             "type": "boolean",
             "const": true
+          }
+        }
+      },
+      "ManagedRuleChangeIntent": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_revision",
+          "proposed_rule"
+        ],
+        "properties": {
+          "expected_revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "proposed_rule": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schedule",
+              "daily_limit_seconds"
+            ],
+            "properties": {
+              "schedule": {
+                "type": "string",
+                "maxLength": 512
+              },
+              "daily_limit_seconds": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 86400
+              }
+            }
+          }
+        }
+      },
+      "ManagedRuleState": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "rule_id",
+          "state",
+          "revision"
+        ],
+        "properties": {
+          "rule_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "REQUESTED",
+              "OS_APPLIED",
+              "OS_REJECTED",
+              "DISABLED"
+            ]
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "device_receipt_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        }
+      },
+      "MediaExportRequestStatus": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "request_id",
+          "state"
+        ],
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "DISABLED",
+              "REQUIRES_APPROVED_CASE",
+              "PENDING",
+              "REDACTED_READY",
+              "EXPIRED",
+              "DENIED"
+            ]
+          },
+          "expires_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "scope": {
+            "type": "string",
+            "enum": [
+              "METADATA_ONLY"
+            ]
+          }
+        }
+      },
+      "UsageCoverageState": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "coverage_quality",
+          "as_of"
+        ],
+        "properties": {
+          "coverage_quality": {
+            "type": "string",
+            "enum": [
+              "UNKNOWN",
+              "NOT_COLLECTED",
+              "PARTIAL",
+              "COMPLETE"
+            ]
+          },
+          "as_of": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "can_display_behavioral_usage": {
+            "type": "boolean",
+            "const": false
+          }
+        }
+      },
+      "GuardianInvitationCancelIntent": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "reason"
+        ],
+        "properties": {
+          "reason": {
+            "type": "string",
+            "enum": [
+              "INVITER_CANCELLED",
+              "WRONG_RECIPIENT",
+              "AUTHORITY_CHANGED"
+            ]
+          }
+        }
+      },
+      "ChildNotificationRuleFeed": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "place_ref",
+                "arrival_enabled",
+                "exit_enabled"
+              ],
+              "properties": {
+                "place_ref": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "arrival_enabled": {
+                  "type": "boolean"
+                },
+                "exit_enabled": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "next_cursor": {
+            "type": [
+              "string",
+              "null"
+            ]
           }
         }
       }
