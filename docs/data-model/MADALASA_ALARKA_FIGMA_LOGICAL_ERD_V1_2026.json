@@ -1,8 +1,8 @@
 {
   "fileKey": "TKiZXwjkWdkponF1zNsfli",
   "pageId": "92:2",
-  "domainCount": 10,
-  "tableCount": 112,
+  "domainCount": 11,
+  "tableCount": 120,
   "domains": [
     {
       "id": "93:2",
@@ -1477,10 +1477,135 @@
         "support_tickets → admin_support_read_audit",
         "admin_accounts → parent_service_usage_events"
       ]
+    },
+    {
+      "id": "121:2",
+      "title": "ERD 11 / Figma API gap closure additional persistence (CONCEPT ONLY)",
+      "notes": [
+        "MADALASA · ALARKA / SCREEN & API GAP DB ADDENDUM",
+        "11    Missing screen-backed persistence candidates",
+        "8 additional logical entities; 112 existing + 8 proposed = 120. NOT APPROVED SQL; reuse existing tables where possible.",
+        "MISSING STATE: parent logout • permission audit • per-guardian read • commute plans • cadence policies • outages • device-approved media",
+        "RELATIONSHIPS · parent referenced entity → dependent entity"
+      ],
+      "tables": [
+        {
+          "name": "parent_auth_sessions",
+          "label": "AUTH LOGOUT/REVOKE",
+          "columns": [
+            "PK id : uuid",
+            "FK adult_id → adult_accounts.id",
+            "token_hash : bytea unique",
+            "issued_at, expires_at : timestamp",
+            "revoked_at, revocation_epoch",
+            "client_audience : PARENT"
+          ]
+        },
+        {
+          "name": "device_permission_change_events",
+          "label": "REVOCATION HISTORY",
+          "columns": [
+            "PK id : uuid",
+            "FK device_id → child_devices.id",
+            "FK child_id → children.id",
+            "permission_key, old_state, new_state",
+            "observed_at, received_at : timestamp",
+            "device_state_revision : bigint"
+          ]
+        },
+        {
+          "name": "parent_notification_read_receipts",
+          "label": "ONE GUARDIAN READ",
+          "columns": [
+            "PK (delivery_id, adult_id)",
+            "FK delivery_id → notification_deliveries.id",
+            "FK adult_id → adult_accounts.id",
+            "read_at : timestamptz",
+            "is_read : boolean",
+            "source_revision : bigint"
+          ]
+        },
+        {
+          "name": "commute_plans",
+          "label": "M3 ROUTE PLAN",
+          "columns": [
+            "PK plan_id : uuid",
+            "FK child_id → children.id",
+            "start_place_id, end_place_id : uuid?",
+            "schedule_json : validated",
+            "version, created_by_adult_id",
+            "legal_history_gate : enum"
+          ]
+        },
+        {
+          "name": "commute_plan_revisions",
+          "label": "REVISIONS / NO FAKE ARRIVAL",
+          "columns": [
+            "PK (plan_id, revision)",
+            "FK plan_id → commute_plans.plan_id",
+            "expected_window : tstzrange",
+            "change_reason, edited_by : uuid",
+            "created_at, supersedes_revision"
+          ]
+        },
+        {
+          "name": "tracking_policy_revisions",
+          "label": "FREE / PAID CADENCE",
+          "columns": [
+            "PK id : uuid",
+            "FK child_id → children.id",
+            "FK device_id → child_devices.id",
+            "policy_version : bigint",
+            "frequency_class : enum",
+            "effective_at, device_ack_at"
+          ]
+        },
+        {
+          "name": "service_incidents",
+          "label": "NO PRIVATE TELEMETRY",
+          "columns": [
+            "PK id : uuid",
+            "component, status : enum",
+            "public_message : sanitized text",
+            "began_at, resolved_at",
+            "severity, release_stage",
+            "no child data or coordinates"
+          ]
+        },
+        {
+          "name": "media_request_device_approvals",
+          "label": "EXPLICIT USER-AUTHORIZED",
+          "columns": [
+            "PK id : uuid",
+            "FK command_id → media_command_requests.id",
+            "FK device_id → child_devices.id",
+            "device_ui_consent_state : enum",
+            "requested_at, decided_at",
+            "os_decision_reason : enum"
+          ]
+        }
+      ],
+      "relationships": [
+        "adult_accounts.id → parent_auth_sessions.adult_id",
+        "child_devices.id → device_permission_change_events.device_id",
+        "notification_deliveries.id → parent_notification_read_receipts.delivery_id",
+        "children.id → commute_plans.child_id",
+        "commute_plans.plan_id → commute_plan_revisions.plan_id",
+        "child_devices.id → tracking_policy_revisions.device_id",
+        "media_command_requests.id → media_request_device_approvals.command_id",
+        "child_devices.id → media_request_device_approvals.device_id"
+      ],
+      "source_status": "CONCEPTUAL_NOT_MIGRATED"
     }
   ],
   "stage": "CONCEPTUAL_NOT_MIGRATED",
   "generatedFrom": "Figma editable text layers",
   "exportDate": "2026-10-28",
-  "adminRevision": "2026-10-28: Owner-controlled Google admin auth, FAQ, support and parent service metadata; design only"
+  "adminRevision": "2026-10-28: Owner-controlled Google admin auth, FAQ, support and parent service metadata; design only",
+  "screenAuditAddendum": {
+    "date": "2026-10-28",
+    "new_domain_id": "121:2",
+    "new_tables": 8,
+    "rationale": "Only 8 missing state-bearing logical tables; 112 prior conceptual entities preserved; proposals are not executable migrations."
+  }
 }
