@@ -117,3 +117,9 @@ No coding agent may prefill `COMPLETE` without independently verified evidence.
 - [DPDP Act 2023](https://www.meity.gov.in/static/uploads/2024/02/Digital-Personal-Data-Protection-Act-2023.pdf) and [2025 phased Rule commencement Gazette](https://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf).
 
 **END: no server/domain/Play change authorized from this document alone.**
+
+## Owner update (2026-10-28): hosting and bandwidth decisions reserved for deployment
+
+**DEFERRED_TO_DEPLOYMENT, NOT A CODING BLOCKER:** choosing between OCI Chicago, OCI Mumbai/other India locations, final data transfer pricing, provider bandwidth/TURN architecture, quotas and cash margin estimates. Local engineering is environment-agnostic, uses local PostgreSQL/PostGIS, fake Play/FCM and synthetic GPS/AV benchmark loads and records real CPU/bytes/latencies only. Final region/cloud costs, transfer legality, processor inventory/agreements, domains, TLS, production backups and actual rollout topology are owner/legal/SRE deployment actions. **Child-data consent remains mandatory before any actual child data**, regardless of where a later server is hosted. No live OCI provisioning required in development.
+
+**Owner also removed Google Family Link parent-role API dependency**, replaced by own exact-child invite/accept/approval and separately lawful authority/consent verification; see [V2 ADR](https://github.com/methakon/Madalasa-Alarka/blob/main/docs/phases/M1-secure-platform-foundation/03-security-and-permissions/ADR_2026_10_28_BLEND_FAMILY_V2_AND_NO_FAMILY_LINK_DEPENDENCY.md). Google login alone does not prove parenthood.
