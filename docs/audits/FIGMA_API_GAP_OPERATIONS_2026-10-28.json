@@ -1,9 +1,9 @@
 {
   "date": "2026-10-28",
-  "status": "PLANNED_NOT_IMPLEMENTED",
+  "status": "ALL_NEW_OPERATIONS_DESIGN_ONLY_NO_HANDLERS",
   "base_operations": 50,
-  "added": 95,
-  "total_operations": 145,
+  "added": 96,
+  "total_operations": 146,
   "unique_paths": 134,
   "operations": [
     {
@@ -1079,6 +1079,19 @@
       "response_schema": "DevicePermissionEvent",
       "gate": [],
       "body_schema": "GenericCommandRequest"
+    },
+    {
+      "method": "GET",
+      "path": "/children/{childId}/commute-plans",
+      "operationId": "get_children_childId_commute_plans",
+      "screen_ids": [
+        "P-30"
+      ],
+      "response_schema": "CommutePlan",
+      "gate": [],
+      "body_schema": null,
+      "added_after_first_pass": true
     }
-  ]
+  ],
+  "verified_at": "2026-10-28"
 }
