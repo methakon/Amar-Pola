@@ -29,3 +29,7 @@ This is a design/traceability audit. No new backend implementation, real-device 
 ## Post-development-plan Figma/API audit supplement
 
 [Final 187-screen post-remediation report](https://github.com/methakon/Madalasa-Alarka/blob/main/docs/audits/POST_REMEDIATION_SCREEN_API_DB_REPORT_2026-10-28.md) · [187-screen machine coverage](https://github.com/methakon/Madalasa-Alarka/blob/main/docs/audits/POST_REMEDIATION_SCREEN_API_DB_COVERAGE_2026-10-28.json) · [54-task gap implementation addendum](FIGMA_SCREEN_API_DB_REMEDIATION_TASKS_2026-10-28.json). The combined *planned* backlog is 262 base + 54 gap tasks = **316**, all remain unverified. Current OpenAPI master: 171 proposed methods, 155 paths, 130 schemas. `GAP-054` is the final local traceability reconciliation, NOT a Play release signoff.
+
+## Owner clarification — 28 October 2026
+
+[Blended-family V2 authorization and Google Family Link dependency removal](https://github.com/methakon/Madalasa-Alarka/blob/main/docs/phases/M1-secure-platform-foundation/03-security-and-permissions/ADR_2026_10_28_BLEND_FAMILY_V2_AND_NO_FAMILY_LINK_DEPENDENCY.md) · [Implementation proof and secure Google Play sandbox setup](IMPLEMENTATION_PROOF_AND_PLAY_SANDBOX_HANDOFF_2026-10-28.md) · [India child-data privacy action brief](https://github.com/methakon/Madalasa-Alarka/blob/main/docs/phases/M0-foundation-and-approvals/03-legal-and-privacy/INDIA_CHILD_CONSENT_RETENTION_DELETION_ACTION_BRIEF_2026-10-28.md). Hosting region and final cloud costs are deferred to separate deployment planning, not local coding blockers.
