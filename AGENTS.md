@@ -37,3 +37,7 @@ Parent app: Madalasa (Kotlin Android); child app: Alarka (Kotlin Android); backe
 Business: 48h first trial once; free live location + last 6h visible history; prepaid per selected child without auto-renew; first 1,008 distinct paid families founding price target; exact child-specific co-parent sharing, no automatic siblings; one premium concurrent viewer per paid child and optional ₹100 once for 100 days +30 pooled audio/video minutes, dormant during base-plan lapse.
 
 End local development with evidence-based LOCAL_READY / LOCAL_BLOCKED / NOT_READY. **Deployment is separate.**
+
+## Mandatory 2026-10-28 Figma/API/DB audit addendum
+
+Before declaring LOCAL_READY, read [187-screen final audit](docs/audits/FINAL_FIGMA_SCREEN_BY_SCREEN_API_DB_REPORT_2026-10-28.md), [28 atomic gap remediation tasks](docs/roadmap/FIGMA_SCREEN_API_DB_REMEDIATION_TASKS_2026-10-28.json), [120 conceptual Figma database tables](docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json), and [real ap_m1 external co-parent FK/RLS blocker](docs/data-model/FIGMA_SCREEN_GAP_PHYSICAL_SCHEMA_REVIEW_2026-10-28.md). The original 262 tasks remain unchanged; 28 additional audit tasks apply before final local signoff. Run `python3 backend/tests/lint_openapi_full.py` after checking out the latest specification. The full OpenAPI contains **146 draft operations**, not 146 working handlers. No Figma screen is a verified Android build.
