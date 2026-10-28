@@ -160,7 +160,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "PARENT",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/enrollment": {
@@ -283,7 +285,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "PARENT",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/devices": {
@@ -402,7 +406,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "PARENT",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/devices/{deviceId}/capabilities": {
@@ -520,7 +526,9 @@
             }
           }
         },
-        "description": "Design-only whole-project endpoint. Accept device-bound signed/PoP authenticated state after secure pairing. Enforce monotonic version per enrollment_generation, feature allowlist, bounded payload, timestamps and idempotent receipt. Sender cannot claim server receive time; do not trust self-reported legal release override. Current M1 API remains narrower; no runtime code shipped."
+        "description": "Design-only whole-project endpoint. Accept device-bound signed/PoP authenticated state after secure pairing. Enforce monotonic version per enrollment_generation, feature allowlist, bounded payload, timestamps and idempotent receipt. Sender cannot claim server receive time; do not trust self-reported legal release override. Current M1 API remains narrower; no runtime code shipped.",
+        "x-actor-boundary": "DEVICE",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/devices/{deviceId}/health": {
@@ -621,7 +629,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "DEVICE",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/devices/{deviceId}/locations:batch": {
@@ -752,7 +762,9 @@
         "x-ingest-store": "POSTGRES_DURABLE_INBOX_DEFAULT",
         "x-client-sync-target": "1-2 minutes where Android lifecycle and network permit, not a periodic WorkManager guarantee",
         "x-raw-insert": "C++ worker combines inbox batches; multirow INSERT or COPY temp staging + INSERT SELECT; dedup ledger and outbox committed with inbox PROCESSED",
-        "x-adr": "docs/POSTGRES_DURABLE_INBOX_BULK_GPS_USAGE_INGESTION_ADR_2026-10-27.md"
+        "x-adr": "docs/POSTGRES_DURABLE_INBOX_BULK_GPS_USAGE_INGESTION_ADR_2026-10-27.md",
+        "x-actor-boundary": "DEVICE",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/devices/{deviceId}/usage:batch": {
@@ -904,7 +916,9 @@
         "description": "Proposed usage events/sessions are authenticated and separately collected from GPS; apply bounded batch + device event idempotency + PostgreSQL durable intake + independent usage session/daily aggregation worker where implemented. Android UsageStats events may be incomplete or delayed and are not exact real-time foreground state. This is not an authorization to profile a minor under India law or Play policies.",
         "x-ack-rule": "202 after durable ingestion transaction (inbox or specifically direct raw usage) COMMIT; never merely queued in memory and never evidence of fully completed daily/monthly aggregates.",
         "x-separate-usage-pipeline": true,
-        "x-adr": "docs/POSTGRES_DURABLE_INBOX_BULK_GPS_USAGE_INGESTION_ADR_2026-10-27.md"
+        "x-adr": "docs/POSTGRES_DURABLE_INBOX_BULK_GPS_USAGE_INGESTION_ADR_2026-10-27.md",
+        "x-actor-boundary": "DEVICE",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/devices/{deviceId}/motion-events:batch": {
@@ -1042,7 +1056,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "DEVICE",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/devices/{deviceId}/commands": {
@@ -1165,7 +1181,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "DEVICE",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/devices/{deviceId}/commands/{commandId}:result": {
@@ -1289,7 +1307,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "DEVICE",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/devices/{deviceId}/sos": {
@@ -1436,7 +1456,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "DEVICE",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/devices/{deviceId}/checkins": {
@@ -1574,7 +1596,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "DEVICE",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/devices/{deviceId}/tracking-policy": {
@@ -1688,7 +1712,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "DEVICE",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/children/{childId}/position": {
@@ -1786,7 +1812,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "PARENT",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/children/{childId}/locations": {
@@ -1927,7 +1955,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "PARENT",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/children/{childId}/trips": {
@@ -2068,7 +2098,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "PARENT",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/trips/{tripId}/segments": {
@@ -2200,7 +2232,9 @@
           }
         },
         "x-object-authorization": "Resolve trip→child grant before responding",
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "PARENT",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/trips/{tripId}/stops": {
@@ -2316,7 +2350,9 @@
           }
         },
         "x-object-authorization": "Resolve trip→child grant before responding",
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "PARENT",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/trips/{tripId}/revisions": {
@@ -2450,7 +2486,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "PARENT",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/children/{childId}/places": {
@@ -2573,7 +2611,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "PARENT",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       },
       "post": {
         "operationId": "post_children_childId_places",
@@ -2707,7 +2747,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "PARENT",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/children/{childId}/places/{placeId}": {
@@ -2843,7 +2885,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "PARENT",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       },
       "delete": {
         "operationId": "delete_children_childId_places_placeId_",
@@ -2940,7 +2984,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "PARENT",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/children/{childId}/usage": {
@@ -3103,7 +3149,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "PARENT",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/children/{childId}/health": {
@@ -3201,7 +3249,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "PARENT",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/children/{childId}/tracking-trust": {
@@ -3332,7 +3382,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "PARENT",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/children/{childId}/guardian-grants": {
@@ -3447,7 +3499,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "PARENT",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       },
       "post": {
         "operationId": "post_children_childId_guardian_grants",
@@ -3589,7 +3643,8 @@
           "CHILD_SPECIFIC_GRANT",
           "REVOCATION"
         ],
-        "description": "BLOCKED: Google Sign-In verifies an adult identity, not parental relation to this specific child. Invitations and intent records may be created, but child-scoped access grants MUST NOT activate until an approved authoritative relationship proof is verified. No bulk sibling sharing."
+        "description": "BLOCKED: Google Sign-In verifies an adult identity, not parental relation to this specific child. Invitations and intent records may be created, but child-scoped access grants MUST NOT activate until an approved authoritative relationship proof is verified. No bulk sibling sharing.",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/children/{childId}/guardian-grants/{grantId}": {
@@ -3688,7 +3743,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "PARENT",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/children/{childId}/access-history": {
@@ -3823,7 +3880,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "PARENT",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/children/{childId}/commute-plans": {
@@ -3971,7 +4030,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "PARENT",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       },
       "get": {
         "operationId": "get_children_childId_commute_plans",
@@ -4110,7 +4171,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "EXACT_CHILD_GUARDIAN_SCOPE",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/children/{childId}/policy-preview": {
@@ -4261,7 +4324,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "PARENT",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/children/{childId}/commands": {
@@ -4406,7 +4471,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "PARENT",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/children/{childId}/commands/{commandId}": {
@@ -4512,7 +4579,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "PARENT",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/children/{childId}/sos/{eventId}/ack": {
@@ -4626,7 +4695,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "PARENT",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/account/deletion-request": {
@@ -4750,7 +4821,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "PARENT",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/account/deletion-request/{requestId}": {
@@ -4863,7 +4936,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "PARENT",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/billing/entitlement": {
@@ -4971,7 +5046,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "PARENT",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/support/diagnostics": {
@@ -5100,7 +5177,9 @@
             }
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "PARENT",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/enrollment/{enrollmentId}/proof": {
@@ -5198,7 +5277,10 @@
             "description": "Rate limited"
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-required-scope": "AUTHENTICATED_PARENT",
+        "x-actor-boundary": "PARENT",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/devices/{deviceId}/pairing": {
@@ -5245,7 +5327,9 @@
             "description": "Rate limited"
           }
         },
-        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success."
+        "description": "Draft contract only. Server must enforce the documented principal audience, exact child/guardian authorization, device capability and release/retention gates. Do not infer that a handler exists or return fabricated success.",
+        "x-actor-boundary": "DEVICE",
+        "x-implementation-status": "DRAFT_NOT_IMPLEMENTED"
       }
     },
     "/children/{childId}/devices/{deviceId}/capabilities": {
@@ -5350,7 +5434,8 @@
               }
             }
           }
-        }
+        },
+        "x-actor-boundary": "PARENT"
       }
     },
     "/parents/me/media-activity/children": {
@@ -5401,7 +5486,8 @@
           "503": {
             "description": "Service or audit writer unavailable; sensitive read must fail closed"
           }
-        }
+        },
+        "x-actor-boundary": "PARENT"
       }
     },
     "/parents/me/media-activity": {
@@ -5561,7 +5647,8 @@
           "503": {
             "description": "Service or audit writer unavailable; sensitive read must fail closed"
           }
-        }
+        },
+        "x-actor-boundary": "PARENT"
       }
     },
     "/parents/me/media-activity/{activityId}": {
@@ -5621,7 +5708,8 @@
           "503": {
             "description": "Service or audit writer unavailable; sensitive read must fail closed"
           }
-        }
+        },
+        "x-actor-boundary": "PARENT"
       }
     },
     "/admin/media-activity": {
@@ -5813,7 +5901,8 @@
           "503": {
             "description": "Service or audit writer unavailable; sensitive read must fail closed"
           }
-        }
+        },
+        "x-actor-boundary": "ADMIN"
       }
     },
     "/admin/media-activity/{activityId}": {
@@ -5898,7 +5987,8 @@
           "503": {
             "description": "Service or audit writer unavailable; sensitive read must fail closed"
           }
-        }
+        },
+        "x-actor-boundary": "ADMIN"
       }
     },
     "/admin/media-activity/parents/suggest": {
@@ -5985,7 +6075,8 @@
           "503": {
             "description": "Service or audit writer unavailable; sensitive read must fail closed"
           }
-        }
+        },
+        "x-actor-boundary": "ADMIN"
       }
     },
     "/admin/media-activity/children/suggest": {
@@ -6080,7 +6171,8 @@
           "503": {
             "description": "Service or audit writer unavailable; sensitive read must fail closed"
           }
-        }
+        },
+        "x-actor-boundary": "ADMIN"
       }
     },
     "/admin/media-activity/access-audit": {
@@ -6205,7 +6297,8 @@
           "503": {
             "description": "Service or audit writer unavailable; sensitive read must fail closed"
           }
-        }
+        },
+        "x-actor-boundary": "ADMIN"
       }
     },
     "/admin/access/me": {
@@ -6318,7 +6411,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "OWN_APPLICANT_PROFILE_ONLY",
+        "x-actor-boundary": "APPLICANT_ONLY"
       }
     },
     "/admin/access/requests/me": {
@@ -6431,7 +6526,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "OWN_APPLICANT_PROFILE_ONLY",
+        "x-actor-boundary": "APPLICANT_ONLY"
       }
     },
     "/admin/faqs": {
@@ -6587,7 +6684,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "FAQ_READ",
+        "x-actor-boundary": "ADMIN"
       },
       "post": {
         "operationId": "post__admin_faqs",
@@ -6709,7 +6808,9 @@
             }
           }
         },
-        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload."
+        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload.",
+        "x-required-scope": "FAQ_EDITOR",
+        "x-actor-boundary": "ADMIN"
       }
     },
     "/admin/owner/access-requests": {
@@ -6825,7 +6926,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "ROOT_OWNER_MFA_STEP_UP",
+        "x-actor-boundary": "ADMIN"
       }
     },
     "/admin/security/audit": {
@@ -6853,7 +6956,25 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AccessStatus"
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "items"
+                  ],
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/AuditRecord"
+                      }
+                    },
+                    "next_cursor": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
                 }
               }
             }
@@ -6938,7 +7059,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "SECURITY_AUDITOR",
+        "x-actor-boundary": "ADMIN"
       }
     },
     "/admin/subscribers": {
@@ -7096,7 +7219,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "BILLING_VIEWER_MINIMIZED",
+        "x-actor-boundary": "ADMIN"
       }
     },
     "/admin/subscribers/{familyId}/children": {
@@ -7165,7 +7290,7 @@
                     "items": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/ChildSummary"
+                        "$ref": "#/components/schemas/AdminChildSeatAlias"
                       }
                     },
                     "next_cursor": {
@@ -7173,10 +7298,6 @@
                         "string",
                         "null"
                       ]
-                    },
-                    "as_of": {
-                      "type": "string",
-                      "format": "date-time"
                     }
                   }
                 }
@@ -7263,7 +7384,18 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "BILLING_VIEWER_MINIMIZED",
+        "x-actor-boundary": "ADMIN",
+        "x-forbidden-fields": [
+          "precise_gps",
+          "route",
+          "device_telemetry",
+          "raw_child_usage",
+          "media",
+          "message",
+          "child_birth_date"
+        ]
       }
     },
     "/admin/subscribers/{familyId}/payments": {
@@ -7430,7 +7562,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "BILLING_VIEWER_MINIMIZED",
+        "x-actor-boundary": "ADMIN"
       }
     },
     "/admin/support/tickets": {
@@ -7586,7 +7720,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "SUPPORT_AGENT_TICKET_SCOPED",
+        "x-actor-boundary": "ADMIN"
       }
     },
     "/admin/usage/parents": {
@@ -7701,7 +7837,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "PARENT_SERVICE_USAGE_AUDITOR",
+        "x-actor-boundary": "ADMIN"
       }
     },
     "/billing/catalog": {
@@ -7814,7 +7952,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "BILLING_OWNER_EXACT_CHILD",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/children/{childId}": {
@@ -7937,7 +8077,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "EXACT_CHILD_GUARDIAN_SCOPE",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/children/{childId}/consents": {
@@ -8102,7 +8244,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "EXACT_CHILD_GUARDIAN_SCOPE",
+        "x-actor-boundary": "PARENT"
       },
       "post": {
         "operationId": "post__children_childId_consents",
@@ -8234,7 +8378,9 @@
             }
           }
         },
-        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload."
+        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload.",
+        "x-required-scope": "EXACT_CHILD_GUARDIAN_SCOPE",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/children/{childId}/devices": {
@@ -8357,7 +8503,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "EXACT_CHILD_GUARDIAN_SCOPE",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/children/{childId}/guardian-verification": {
@@ -8492,7 +8640,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "MANAGE_EXACT_CHILD_GUARDIAN",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/children/{childId}/paid-entitlement": {
@@ -8617,7 +8767,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "BILLING_OWNER_EXACT_CHILD",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/children/{childId}/provenance": {
@@ -8656,7 +8808,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ChildSummary"
+                  "$ref": "#/components/schemas/DeviceProvenanceView"
                 }
               }
             }
@@ -8741,7 +8893,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "EXACT_CHILD_GUARDIAN_SCOPE",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/children/{childId}/screen-time-rules": {
@@ -8810,7 +8964,7 @@
                     "items": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/ChildSummary"
+                        "$ref": "#/components/schemas/ScreenTimeRuleView"
                       }
                     },
                     "next_cursor": {
@@ -8818,10 +8972,6 @@
                         "string",
                         "null"
                       ]
-                    },
-                    "as_of": {
-                      "type": "string",
-                      "format": "date-time"
                     }
                   }
                 }
@@ -8908,7 +9058,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "EXACT_CHILD_GUARDIAN_SCOPE",
+        "x-actor-boundary": "PARENT"
       },
       "post": {
         "operationId": "post__children_childId_screen_time_rules",
@@ -8946,7 +9098,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ChildSummary"
+                  "$ref": "#/components/schemas/ScreenTimeRuleView"
                 }
               }
             }
@@ -9042,7 +9194,9 @@
             }
           }
         },
-        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload."
+        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload.",
+        "x-required-scope": "EXACT_CHILD_GUARDIAN_SCOPE",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/children/{childId}/sos-events": {
@@ -9207,7 +9361,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "EXACT_CHILD_GUARDIAN_SCOPE",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/children/{childId}/tracking-policy": {
@@ -9246,7 +9402,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ChildSummary"
+                  "$ref": "#/components/schemas/TrackingPolicyView"
                 }
               }
             }
@@ -9331,7 +9487,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "EXACT_CHILD_GUARDIAN_SCOPE",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/children/{childId}/usage/apps": {
@@ -9371,7 +9529,25 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ChildSummary"
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "items"
+                  ],
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/AppUsageSummary"
+                      }
+                    },
+                    "next_cursor": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
                 }
               }
             }
@@ -9456,7 +9632,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "EXACT_CHILD_GUARDIAN_SCOPE",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/children/{childId}/viewer-leases": {
@@ -9621,7 +9799,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "AUTHORIZED_PAID_CHILD_VIEWER",
+        "x-actor-boundary": "PARENT"
       },
       "post": {
         "operationId": "post__children_childId_viewer_leases",
@@ -9788,7 +9968,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "AUTHORIZED_PAID_CHILD_VIEWER",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/devices/{deviceId}/consent-status": {
@@ -9913,7 +10095,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "KEY_BOUND_DEVICE_ONLY",
+        "x-actor-boundary": "DEVICE"
       }
     },
     "/devices/{deviceId}/permission-events": {
@@ -10097,7 +10281,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "AUTHENTICATED_PARENT",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/devices/{deviceId}/state": {
@@ -10221,7 +10407,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "KEY_BOUND_DEVICE_ONLY",
+        "x-actor-boundary": "DEVICE"
       }
     },
     "/families/{familyId}/children": {
@@ -10386,7 +10574,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "AUTHENTICATED_PARENT",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/families/{familyId}/entitlements": {
@@ -10553,7 +10743,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "BILLING_OWNER_EXACT_CHILD",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/parents/me": {
@@ -10581,7 +10773,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AccessStatus"
+                  "$ref": "#/components/schemas/ParentProfile"
                 }
               }
             }
@@ -10666,7 +10858,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "AUTHENTICATED_PARENT",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/parents/me/authorized-children": {
@@ -10781,7 +10975,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "AUTHENTICATED_PARENT",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/parents/me/notification-preferences": {
@@ -10894,7 +11090,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "AUTHENTICATED_PARENT",
+        "x-actor-boundary": "PARENT"
       },
       "put": {
         "operationId": "put__parents_me_notification_preferences",
@@ -11015,7 +11213,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "AUTHENTICATED_PARENT",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/parents/me/notifications": {
@@ -11174,7 +11374,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "AUTHENTICATED_PARENT",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/parents/me/notifications/{notificationId}": {
@@ -11297,7 +11499,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "AUTHENTICATED_PARENT",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/parents/me/retention-policy": {
@@ -11412,7 +11616,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "AUTHENTICATED_PARENT",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/service/status": {
@@ -11521,7 +11727,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "PUBLIC_READ_ONLY",
+        "x-actor-boundary": "PUBLIC"
       }
     },
     "/account/export-requests": {
@@ -11549,7 +11757,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AccessStatus"
+                  "$ref": "#/components/schemas/ExportJob"
                 }
               }
             }
@@ -11671,7 +11879,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "AUTHENTICATED_PARENT",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/admin/access/confirm-email": {
@@ -11795,7 +12005,9 @@
             }
           }
         },
-        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload."
+        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload.",
+        "x-required-scope": "OWN_APPLICANT_PROFILE_ONLY",
+        "x-actor-boundary": "APPLICANT_ONLY"
       }
     },
     "/admin/access/requests": {
@@ -11919,7 +12131,9 @@
             }
           }
         },
-        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload."
+        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload.",
+        "x-required-scope": "OWN_APPLICANT_PROFILE_ONLY",
+        "x-actor-boundary": "APPLICANT_ONLY"
       }
     },
     "/admin/access/verify-email": {
@@ -12043,7 +12257,9 @@
             }
           }
         },
-        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload."
+        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload.",
+        "x-required-scope": "OWN_APPLICANT_PROFILE_ONLY",
+        "x-actor-boundary": "APPLICANT_ONLY"
       }
     },
     "/admin/auth/google": {
@@ -12067,7 +12283,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AccessStatus"
+                  "$ref": "#/components/schemas/AdminLoginResult"
                 }
               }
             }
@@ -12163,7 +12379,9 @@
             }
           }
         },
-        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload."
+        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload.",
+        "x-required-scope": "PUBLIC_OIDC_TOKEN_EXCHANGE",
+        "x-actor-boundary": "PUBLIC"
       }
     },
     "/admin/faqs/{faqId}/publish": {
@@ -12297,7 +12515,9 @@
             }
           }
         },
-        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload."
+        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload.",
+        "x-required-scope": "FAQ_EDITOR",
+        "x-actor-boundary": "ADMIN"
       }
     },
     "/admin/media-activity/cases": {
@@ -12328,7 +12548,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/MediaRequest"
+                  "$ref": "#/components/schemas/AdminCase"
                 }
               }
             }
@@ -12450,7 +12670,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "MEDIA_AUDIT_READ_CASE",
+        "x-actor-boundary": "ADMIN"
       }
     },
     "/admin/media-activity/exports": {
@@ -12481,7 +12703,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/MediaRequest"
+                  "$ref": "#/components/schemas/ExportJob"
                 }
               }
             }
@@ -12603,7 +12825,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "MEDIA_AUDIT_READ_CASE",
+        "x-actor-boundary": "ADMIN"
       }
     },
     "/admin/owner/access-requests/{requestId}/decision": {
@@ -12747,7 +12971,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "ROOT_OWNER_MFA_STEP_UP",
+        "x-actor-boundary": "ADMIN"
       }
     },
     "/admin/support/tickets/{ticketId}/reply": {
@@ -12881,7 +13107,9 @@
             }
           }
         },
-        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload."
+        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload.",
+        "x-required-scope": "SUPPORT_AGENT_TICKET_SCOPED",
+        "x-actor-boundary": "ADMIN"
       }
     },
     "/auth/parent/google": {
@@ -12911,7 +13139,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AccessStatus"
+                  "$ref": "#/components/schemas/PrincipalSession"
                 }
               }
             }
@@ -13007,7 +13235,9 @@
             }
           }
         },
-        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload."
+        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload.",
+        "x-required-scope": "PUBLIC_OIDC_TOKEN_EXCHANGE",
+        "x-actor-boundary": "PUBLIC"
       }
     },
     "/children/{childId}/extra-viewer-purchase-intents": {
@@ -13047,7 +13277,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ViewerLease"
+                  "$ref": "#/components/schemas/CheckoutIntent"
                 }
               }
             }
@@ -13143,7 +13373,9 @@
             }
           }
         },
-        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload."
+        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload.",
+        "x-required-scope": "AUTHORIZED_PAID_CHILD_VIEWER",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/children/{childId}/guardian-invitations": {
@@ -13185,7 +13417,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ChildSummary"
+                  "$ref": "#/components/schemas/GuardianInvitationState"
                 }
               }
             }
@@ -13281,7 +13513,9 @@
             }
           }
         },
-        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload."
+        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload.",
+        "x-required-scope": "MANAGE_EXACT_CHILD_GUARDIAN",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/children/{childId}/media/requests": {
@@ -13428,7 +13662,9 @@
             }
           }
         },
-        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload."
+        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload.",
+        "x-required-scope": "CHILD_SCOPE_PLUS_MEDIA_CONSENT_OS_GATE",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/children/{childId}/pairing-codes": {
@@ -13588,7 +13824,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "EXACT_CHILD_GUARDIAN_SCOPE",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/families": {
@@ -13738,7 +13976,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "AUTHENTICATED_PARENT",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/families/{familyId}/checkout-intents": {
@@ -13885,7 +14125,9 @@
             }
           }
         },
-        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload."
+        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload.",
+        "x-required-scope": "BILLING_OWNER_EXACT_CHILD",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/admin/access/profile": {
@@ -14009,7 +14251,9 @@
             }
           }
         },
-        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload."
+        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload.",
+        "x-required-scope": "OWN_APPLICANT_PROFILE_ONLY",
+        "x-actor-boundary": "APPLICANT_ONLY"
       }
     },
     "/admin/faqs/{faqId}": {
@@ -14143,7 +14387,9 @@
             }
           }
         },
-        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload."
+        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload.",
+        "x-required-scope": "FAQ_EDITOR",
+        "x-actor-boundary": "ADMIN"
       },
       "get": {
         "operationId": "get__admin_faqs_faqId",
@@ -14264,7 +14510,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "FAQ_READ",
+        "x-actor-boundary": "ADMIN"
       }
     },
     "/children/{childId}/places/{placeId}/notifications": {
@@ -14408,7 +14656,9 @@
             }
           }
         },
-        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload."
+        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload.",
+        "x-required-scope": "EXACT_CHILD_GUARDIAN_SCOPE",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/parents/me/sessions": {
@@ -14434,118 +14684,25 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AccessStatus"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Missing/expired authentication",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Denied by exact-child scope, staff role or release gate",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found or hidden to avoid enumeration",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "State/lease/version conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation or unsupported device state",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Rate limit or quota exceeded",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "503": {
-            "description": "Dependency unavailable, fail closed",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/parents/me/logout": {
-      "post": {
-        "operationId": "post__parents_me_logout",
-        "tags": [
-          "ParentWorkflow"
-        ],
-        "summary": "POST /parents/me/logout",
-        "description": "PLANNED ONLY. Request authorization must bind to the correct account, exact child/grant or owner role on the server; this OpenAPI contract is not proof of implementation. No child-private telemetry in staff or public outputs.",
-        "security": [
-          {
-            "ParentBearer": []
-          }
-        ],
-        "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
-        "x-fail-closed-gates": [],
-        "x-screen-ids": [],
-        "parameters": [],
-        "responses": {
-          "201": {
-            "description": "Draft contract; not an implemented handler",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AccessStatus"
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "items"
+                  ],
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PrincipalSession"
+                      }
+                    },
+                    "next_cursor": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
                 }
               }
             }
@@ -14631,43 +14788,44 @@
             }
           }
         },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "additionalProperties": false,
-                "required": [],
-                "properties": {
-                  "request_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "revision": {
-                    "type": "integer",
-                    "minimum": 0
-                  },
-                  "purpose_code": {
-                    "type": "string",
-                    "maxLength": 80
-                  },
-                  "subject_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "confirmation": {
-                    "type": "boolean"
-                  },
-                  "payload": {
-                    "type": "object",
-                    "additionalProperties": true
-                  }
+        "x-required-scope": "AUTHENTICATED_PARENT",
+        "x-actor-boundary": "PARENT"
+      }
+    },
+    "/parents/me/logout": {
+      "post": {
+        "operationId": "post__parents_me_logout",
+        "tags": [
+          "ParentWorkflow"
+        ],
+        "summary": "POST /parents/me/logout",
+        "description": "PLANNED ONLY. Request authorization must bind to the correct account, exact child/grant or owner role on the server; this OpenAPI contract is not proof of implementation. No child-private telemetry in staff or public outputs.",
+        "security": [
+          {
+            "ParentBearer": []
+          }
+        ],
+        "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
+        "x-fail-closed-gates": [],
+        "x-screen-ids": [],
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": "Logged out; refresh and access tokens revoked. No body."
+          },
+          "401": {
+            "description": "Not authenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
           }
-        }
+        },
+        "x-required-scope": "AUTHENTICATED_PARENT",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/children/{childId}/guardian-verification/requests": {
@@ -14837,7 +14995,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "MANAGE_EXACT_CHILD_GUARDIAN",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/children/{childId}/commute-plans/{planId}": {
@@ -14967,7 +15127,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "EXACT_CHILD_GUARDIAN_SCOPE",
+        "x-actor-boundary": "PARENT"
       },
       "patch": {
         "operationId": "patch__children_childId_commute_plans_planId",
@@ -15105,7 +15267,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "EXACT_CHILD_GUARDIAN_SCOPE",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/children/{childId}/sos-events/{eventId}": {
@@ -15235,7 +15399,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "EXACT_CHILD_GUARDIAN_SCOPE",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/children/{childId}/device-state": {
@@ -15356,7 +15522,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "EXACT_CHILD_GUARDIAN_SCOPE",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/parents/me/notifications/preferences": {
@@ -15467,7 +15635,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "AUTHENTICATED_PARENT",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/parents/me/notifications/{notificationId}/read": {
@@ -15625,7 +15795,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "AUTHENTICATED_PARENT",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/families/{familyId}/trial/eligibility": {
@@ -15746,7 +15918,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "BILLING_OWNER_EXACT_CHILD",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/families/{familyId}/trial/start": {
@@ -15904,7 +16078,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "BILLING_OWNER_EXACT_CHILD",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/families/{familyId}/founding-status": {
@@ -15940,7 +16116,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ChildSummary"
+                  "$ref": "#/components/schemas/FoundingEligibility"
                 }
               }
             }
@@ -16025,7 +16201,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "AUTHENTICATED_PARENT",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/billing/purchases/verify": {
@@ -16159,7 +16337,9 @@
             }
           }
         },
-        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload."
+        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload.",
+        "x-required-scope": "BILLING_OWNER_EXACT_CHILD",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/billing/purchases/{purchaseId}": {
@@ -16282,7 +16462,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "BILLING_OWNER_EXACT_CHILD",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/children/{childId}/media-quota": {
@@ -16405,7 +16587,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "CHILD_SCOPE_PLUS_MEDIA_CONSENT_OS_GATE",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/children/{childId}/viewer-leases/{leaseId}/heartbeat": {
@@ -16572,7 +16756,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "AUTHORIZED_PAID_CHILD_VIEWER",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/children/{childId}/viewer-leases/{leaseId}": {
@@ -16695,7 +16881,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "AUTHORIZED_PAID_CHILD_VIEWER",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/children/{childId}/viewer-takeover-requests": {
@@ -16853,7 +17041,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "AUTHORIZED_PAID_CHILD_VIEWER",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/children/{childId}/media/requests/{requestId}": {
@@ -16985,7 +17175,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "CHILD_SCOPE_PLUS_MEDIA_CONSENT_OS_GATE",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/devices/{deviceId}/media/requests/{requestId}/result": {
@@ -17128,7 +17320,9 @@
             }
           }
         },
-        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload."
+        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload.",
+        "x-required-scope": "KEY_BOUND_DEVICE_ONLY",
+        "x-actor-boundary": "DEVICE"
       }
     },
     "/account/export-requests/{exportId}": {
@@ -17249,7 +17443,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "AUTHENTICATED_PARENT",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/faqs": {
@@ -17399,7 +17595,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "PUBLIC_READ_ONLY",
+        "x-actor-boundary": "PUBLIC"
       }
     },
     "/faqs/{slug}": {
@@ -17516,7 +17714,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "PUBLIC_READ_ONLY",
+        "x-actor-boundary": "PUBLIC"
       }
     },
     "/support/tickets": {
@@ -17638,7 +17838,9 @@
             }
           }
         },
-        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload."
+        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload.",
+        "x-required-scope": "AUTHENTICATED_PARENT",
+        "x-actor-boundary": "PARENT"
       },
       "get": {
         "operationId": "get__support_tickets",
@@ -17790,7 +17992,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "AUTHENTICATED_PARENT",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/support/tickets/{ticketId}": {
@@ -17911,7 +18115,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "AUTHENTICATED_PARENT",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/support/tickets/{ticketId}/messages": {
@@ -18043,7 +18249,9 @@
             }
           }
         },
-        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload."
+        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload.",
+        "x-required-scope": "AUTHENTICATED_PARENT",
+        "x-actor-boundary": "PARENT"
       }
     },
     "/admin/owner/access-requests/{requestId}": {
@@ -18166,7 +18374,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "ROOT_OWNER_MFA_STEP_UP",
+        "x-actor-boundary": "ADMIN"
       }
     },
     "/admin/owner/staff": {
@@ -18224,7 +18434,7 @@
                     "items": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/AdminAccessRequest"
+                        "$ref": "#/components/schemas/AdminStaffSummary"
                       }
                     },
                     "next_cursor": {
@@ -18232,10 +18442,6 @@
                         "string",
                         "null"
                       ]
-                    },
-                    "as_of": {
-                      "type": "string",
-                      "format": "date-time"
                     }
                   }
                 }
@@ -18322,7 +18528,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "ROOT_OWNER_MFA_STEP_UP",
+        "x-actor-boundary": "ADMIN"
       }
     },
     "/admin/owner/grants/{grantId}/revoke": {
@@ -18465,7 +18673,9 @@
             }
           }
         },
-        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload."
+        "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload.",
+        "x-required-scope": "ROOT_OWNER_MFA_STEP_UP",
+        "x-actor-boundary": "ADMIN"
       }
     },
     "/admin/faqs/{faqId}/revisions": {
@@ -18586,7 +18796,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "FAQ_READ",
+        "x-actor-boundary": "ADMIN"
       }
     },
     "/admin/support/tickets/{ticketId}": {
@@ -18744,7 +18956,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "SUPPORT_AGENT_TICKET_SCOPED",
+        "x-actor-boundary": "ADMIN"
       }
     },
     "/admin/subscribers/{familyId}": {
@@ -18867,7 +19081,9 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "BILLING_VIEWER_MINIMIZED",
+        "x-actor-boundary": "ADMIN"
       }
     },
     "/admin/security/access-audit": {
@@ -18893,147 +19109,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AccessStatus"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Missing/expired authentication",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Denied by exact-child scope, staff role or release gate",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found or hidden to avoid enumeration",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "State/lease/version conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation or unsupported device state",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Rate limit or quota exceeded",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "503": {
-            "description": "Dependency unavailable, fail closed",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/devices/{deviceId}/permission-snapshots": {
-      "get": {
-        "operationId": "get__devices_deviceId_permission_snapshots",
-        "tags": [
-          "Devices"
-        ],
-        "summary": "GET /devices/{deviceId}/permission-snapshots",
-        "description": "PLANNED ONLY. Request authorization must bind to the correct account, exact child/grant or owner role on the server; this OpenAPI contract is not proof of implementation. No child-private telemetry in staff or public outputs.",
-        "security": [
-          {
-            "ParentBearer": []
-          }
-        ],
-        "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
-        "x-fail-closed-gates": [],
-        "x-screen-ids": [],
-        "parameters": [
-          {
-            "name": "deviceId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "name": "cursor",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "maxLength": 256
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 100,
-              "default": 25
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Draft contract; not an implemented handler",
-            "content": {
-              "application/json": {
-                "schema": {
                   "type": "object",
                   "additionalProperties": false,
                   "required": [
@@ -19043,7 +19118,7 @@
                     "items": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/DevicePermissionEvent"
+                        "$ref": "#/components/schemas/AuditRecord"
                       }
                     },
                     "next_cursor": {
@@ -19051,10 +19126,6 @@
                         "string",
                         "null"
                       ]
-                    },
-                    "as_of": {
-                      "type": "string",
-                      "format": "date-time"
                     }
                   }
                 }
@@ -19141,7 +19212,170 @@
               }
             }
           }
-        }
+        },
+        "x-required-scope": "SECURITY_AUDITOR",
+        "x-actor-boundary": "ADMIN"
+      }
+    },
+    "/devices/{deviceId}/permission-snapshots": {
+      "get": {
+        "operationId": "get__devices_deviceId_permission_snapshots",
+        "tags": [
+          "Devices"
+        ],
+        "summary": "GET /devices/{deviceId}/permission-snapshots",
+        "description": "PLANNED ONLY. Request authorization must bind to the correct account, exact child/grant or owner role on the server; this OpenAPI contract is not proof of implementation. No child-private telemetry in staff or public outputs.",
+        "security": [
+          {
+            "ParentBearer": []
+          }
+        ],
+        "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
+        "x-fail-closed-gates": [],
+        "x-screen-ids": [],
+        "parameters": [
+          {
+            "name": "deviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 256
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Draft contract; not an implemented handler",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "items"
+                  ],
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/DevicePermissionSnapshot"
+                      }
+                    },
+                    "next_cursor": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing/expired authentication",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Denied by exact-child scope, staff role or release gate",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found or hidden to avoid enumeration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "State/lease/version conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation or unsupported device state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit or quota exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Dependency unavailable, fail closed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "x-required-scope": "AUTHENTICATED_PARENT",
+        "x-actor-boundary": "PARENT"
       }
     }
   },
@@ -22257,6 +22491,413 @@
           "delivered_seconds": {
             "type": "integer",
             "minimum": 0
+          }
+        }
+      },
+      "ParentProfile": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "adult_id",
+          "family_ids"
+        ],
+        "properties": {
+          "adult_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "display_name": {
+            "type": "string"
+          },
+          "family_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "verified_email": {
+            "type": "string",
+            "format": "email"
+          }
+        }
+      },
+      "DeviceProvenanceView": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "child_id",
+          "device_id",
+          "source_kind",
+          "observed_at",
+          "quality",
+          "is_child_body_location"
+        ],
+        "properties": {
+          "child_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "device_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "source_kind": {
+            "type": "string"
+          },
+          "observed_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "quality": {
+            "type": "string"
+          },
+          "is_child_body_location": {
+            "type": "boolean"
+          }
+        }
+      },
+      "TrackingPolicyView": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "child_id",
+          "policy_version",
+          "cadence_class",
+          "device_acknowledged"
+        ],
+        "properties": {
+          "child_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "policy_version": {
+            "type": "integer"
+          },
+          "cadence_class": {
+            "type": "string",
+            "enum": [
+              "FREE_REDUCED",
+              "PAID",
+              "ADAPTIVE",
+              "UNKNOWN"
+            ]
+          },
+          "device_acknowledged": {
+            "type": "boolean"
+          },
+          "effective_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FoundingEligibility": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "family_id",
+          "eligible"
+        ],
+        "properties": {
+          "family_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "eligible": {
+            "type": "boolean"
+          },
+          "qualifying_rank": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "first_paid_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        }
+      },
+      "AdminChildSeatAlias": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "masked_child_id",
+          "seat_state"
+        ],
+        "properties": {
+          "masked_child_id": {
+            "type": "string"
+          },
+          "alias": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "seat_state": {
+            "type": "string"
+          },
+          "paid_until": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        }
+      },
+      "AdminStaffSummary": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "admin_id",
+          "state",
+          "roles"
+        ],
+        "properties": {
+          "admin_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "masked_contact": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "last_seen_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        }
+      },
+      "DevicePermissionSnapshot": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "device_id",
+          "observed_at",
+          "revision"
+        ],
+        "properties": {
+          "device_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "observed_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "revision": {
+            "type": "integer"
+          },
+          "permissions": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "AppUsageSummary": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "package_ref",
+          "category",
+          "observed_seconds",
+          "coverage_quality"
+        ],
+        "properties": {
+          "package_ref": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "observed_seconds": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "coverage_quality": {
+            "type": "string"
+          },
+          "period_start": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ScreenTimeRuleView": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "rule_id",
+          "child_id",
+          "device_id",
+          "state"
+        ],
+        "properties": {
+          "rule_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "child_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "device_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "revision": {
+            "type": "integer"
+          },
+          "state": {
+            "type": "string"
+          },
+          "os_execution_status": {
+            "type": "string"
+          }
+        }
+      },
+      "AdminCase": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "case_id",
+          "purpose",
+          "status",
+          "scope_approved"
+        ],
+        "properties": {
+          "case_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "purpose": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "scope_approved": {
+            "type": "boolean"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "AuditRecord": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "action",
+          "outcome",
+          "occurred_at"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "actor_ref": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "outcome": {
+            "type": "string"
+          },
+          "occurred_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "GuardianInvitationState": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "invitation_id",
+          "child_id",
+          "state"
+        ],
+        "properties": {
+          "invitation_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "child_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "PENDING_VERIFICATION",
+              "EXPIRED",
+              "REVOKED"
+            ]
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "AdminLoginResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "state",
+          "session_expires_at",
+          "contact_email_verified"
+        ],
+        "properties": {
+          "state": {
+            "type": "string",
+            "enum": [
+              "NO_ACCESS",
+              "ACTIVE",
+              "PENDING_REVIEW",
+              "SUSPENDED"
+            ]
+          },
+          "session_expires_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "role_codes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "contact_email_verified": {
+            "type": "boolean"
           }
         }
       }
