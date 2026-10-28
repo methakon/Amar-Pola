@@ -58,6 +58,38 @@
     },
     {
       "name": "Support"
+    },
+    {
+      "name": "ParentWorkflow",
+      "description": "Planned screen-derived domain. External privacy and Play gates may remain blocking."
+    },
+    {
+      "name": "MediaActivity",
+      "description": "Planned screen-derived domain. External privacy and Play gates may remain blocking."
+    },
+    {
+      "name": "AdminMediaAudit",
+      "description": "Planned screen-derived domain. External privacy and Play gates may remain blocking."
+    },
+    {
+      "name": "AdminAccess",
+      "description": "Planned screen-derived domain. External privacy and Play gates may remain blocking."
+    },
+    {
+      "name": "PrepaidCommerce",
+      "description": "Planned screen-derived domain. External privacy and Play gates may remain blocking."
+    },
+    {
+      "name": "Notifications",
+      "description": "Planned screen-derived domain. External privacy and Play gates may remain blocking."
+    },
+    {
+      "name": "MediaResearch",
+      "description": "Planned screen-derived domain. External privacy and Play gates may remain blocking."
+    },
+    {
+      "name": "FAQ",
+      "description": "Planned screen-derived domain. External privacy and Play gates may remain blocking."
     }
   ],
   "paths": {
