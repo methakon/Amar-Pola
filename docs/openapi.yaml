@@ -3,7 +3,7 @@
   "info": {
     "title": "Madalasa–Alarka Parent/Device API",
     "version": "1.0.0-draft",
-    "description": "IMPLEMENTATION DESIGN ONLY. Every parent endpoint enforces live child-scoped grants and family auth, in addition to ParentBearer. Every device endpoint binds deviceId to enrolled device credential. Deferred media and experimental corridor APIs are intentionally excluded from launch.\n\nProduct display names: Madalasa (guardian Android app), Alarka (child Android companion). The GitHub repo is Madalasa-Alarka. Naming does not change API paths, auth audiences or package IDs; legal under-18 gates remain required.\n2026-10-28 Figma screen audit addendum: 96 new planned (NOT IMPLEMENTED) operations; M1 narrow contract remains frozen. Real child/privacy and Play gates still apply."
+    "description": "IMPLEMENTATION DESIGN ONLY. Every parent endpoint enforces live child-scoped grants and family auth, in addition to ParentBearer. Every device endpoint binds deviceId to enrolled device credential. Deferred media and experimental corridor APIs are intentionally excluded from launch.\n\nProduct display names: Madalasa (guardian Android app), Alarka (child Android companion). The GitHub repo is Madalasa-Alarka. Naming does not change API paths, auth audiences or package IDs; legal under-18 gates remain required.\n2026-10-28 Figma screen audit addendum: 96 new planned (NOT IMPLEMENTED) operations; M1 narrow contract remains frozen. Real child/privacy and Play gates still apply.\nContract hardening 2026-10-28: 11 high-risk mutation bodies replaced with closed typed schemas; no handler implementation or provider authorization implied."
   },
   "servers": [
     {
@@ -9969,40 +9969,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "additionalProperties": false,
-                "required": [],
-                "properties": {
-                  "request_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "revision": {
-                    "type": "integer",
-                    "minimum": 0
-                  },
-                  "purpose_code": {
-                    "type": "string",
-                    "maxLength": 80
-                  },
-                  "subject_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "confirmation": {
-                    "type": "boolean"
-                  },
-                  "payload": {
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                }
+                "$ref": "#/components/schemas/ViewerLeaseAcquireRequest"
               }
             }
           }
         },
         "x-required-scope": "AUTHORIZED_PAID_CHILD_VIEWER",
-        "x-actor-boundary": "PARENT"
+        "x-actor-boundary": "PARENT",
+        "x-contract-review": "SCOPED_REQUEST_REPLACES_GENERIC_PAYLOAD"
       }
     },
     "/devices/{deviceId}/consent-status": {
@@ -11880,40 +11854,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "additionalProperties": false,
-                "required": [],
-                "properties": {
-                  "request_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "revision": {
-                    "type": "integer",
-                    "minimum": 0
-                  },
-                  "purpose_code": {
-                    "type": "string",
-                    "maxLength": 80
-                  },
-                  "subject_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "confirmation": {
-                    "type": "boolean"
-                  },
-                  "payload": {
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                }
+                "$ref": "#/components/schemas/LocationExportIntent"
               }
             }
           }
         },
         "x-required-scope": "AUTHENTICATED_PARENT",
-        "x-actor-boundary": "PARENT"
+        "x-actor-boundary": "PARENT",
+        "x-contract-review": "SCOPED_REQUEST_REPLACES_GENERIC_PAYLOAD"
       }
     },
     "/admin/access/confirm-email": {
@@ -12671,40 +12619,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "additionalProperties": false,
-                "required": [],
-                "properties": {
-                  "request_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "revision": {
-                    "type": "integer",
-                    "minimum": 0
-                  },
-                  "purpose_code": {
-                    "type": "string",
-                    "maxLength": 80
-                  },
-                  "subject_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "confirmation": {
-                    "type": "boolean"
-                  },
-                  "payload": {
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                }
+                "$ref": "#/components/schemas/AdminMediaCaseIntent"
               }
             }
           }
         },
         "x-required-scope": "MEDIA_AUDIT_READ_CASE",
-        "x-actor-boundary": "ADMIN"
+        "x-actor-boundary": "ADMIN",
+        "x-contract-review": "SCOPED_REQUEST_REPLACES_GENERIC_PAYLOAD"
       }
     },
     "/admin/media-activity/exports": {
@@ -12826,40 +12748,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "additionalProperties": false,
-                "required": [],
-                "properties": {
-                  "request_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "revision": {
-                    "type": "integer",
-                    "minimum": 0
-                  },
-                  "purpose_code": {
-                    "type": "string",
-                    "maxLength": 80
-                  },
-                  "subject_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "confirmation": {
-                    "type": "boolean"
-                  },
-                  "payload": {
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                }
+                "$ref": "#/components/schemas/AdminMediaExportIntent"
               }
             }
           }
         },
         "x-required-scope": "MEDIA_AUDIT_READ_CASE",
-        "x-actor-boundary": "ADMIN"
+        "x-actor-boundary": "ADMIN",
+        "x-contract-review": "SCOPED_REQUEST_REPLACES_GENERIC_PAYLOAD"
       }
     },
     "/admin/owner/access-requests/{requestId}/decision": {
@@ -13825,40 +13721,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "additionalProperties": false,
-                "required": [],
-                "properties": {
-                  "request_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "revision": {
-                    "type": "integer",
-                    "minimum": 0
-                  },
-                  "purpose_code": {
-                    "type": "string",
-                    "maxLength": 80
-                  },
-                  "subject_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "confirmation": {
-                    "type": "boolean"
-                  },
-                  "payload": {
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                }
+                "$ref": "#/components/schemas/PairingCodeIntent"
               }
             }
           }
         },
         "x-required-scope": "EXACT_CHILD_GUARDIAN_SCOPE",
-        "x-actor-boundary": "PARENT"
+        "x-actor-boundary": "PARENT",
+        "x-contract-review": "SCOPED_REQUEST_REPLACES_GENERIC_PAYLOAD"
       }
     },
     "/families": {
@@ -13977,40 +13847,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "additionalProperties": false,
-                "required": [],
-                "properties": {
-                  "request_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "revision": {
-                    "type": "integer",
-                    "minimum": 0
-                  },
-                  "purpose_code": {
-                    "type": "string",
-                    "maxLength": 80
-                  },
-                  "subject_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "confirmation": {
-                    "type": "boolean"
-                  },
-                  "payload": {
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                }
+                "$ref": "#/components/schemas/FamilyCreateIntent"
               }
             }
           }
         },
         "x-required-scope": "AUTHENTICATED_PARENT",
-        "x-actor-boundary": "PARENT"
+        "x-actor-boundary": "PARENT",
+        "x-contract-review": "SCOPED_REQUEST_REPLACES_GENERIC_PAYLOAD"
       }
     },
     "/families/{familyId}/checkout-intents": {
@@ -14867,7 +14711,7 @@
           "Guardians"
         ],
         "summary": "POST /children/{childId}/guardian-verification/requests",
-        "description": "PLANNED ONLY. Hard gates: VERIFIED_GOOGLE_PARENT_ROLE_METHOD_NOT_AVAILABLE. Request authorization must bind to the correct account, exact child/grant or owner role on the server; this OpenAPI contract is not proof of implementation. No child-private telemetry in staff or public outputs.",
+        "description": "PLANNED ONLY. Hard gates: VERIFIED_GOOGLE_PARENT_ROLE_METHOD_NOT_AVAILABLE. Request authorization must bind to the correct account, exact child/grant or owner role on the server; this OpenAPI contract is not proof of implementation. No child-private telemetry in staff or public outputs. Provider enum is a placeholder; actual attestation is not currently available; always deny authorization while pending.",
         "security": [
           {
             "ParentBearer": []
@@ -14875,7 +14719,7 @@
         ],
         "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
         "x-fail-closed-gates": [
-          "VERIFIED_GOOGLE_PARENT_ROLE_METHOD_NOT_AVAILABLE"
+          "OFFICIAL_CHILD_SPECIFIC_GOOGLE_PARENT_ROLE_VERIFIER_NOT_AVAILABLE"
         ],
         "x-screen-ids": [],
         "parameters": [
@@ -14996,40 +14840,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "additionalProperties": false,
-                "required": [],
-                "properties": {
-                  "request_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "revision": {
-                    "type": "integer",
-                    "minimum": 0
-                  },
-                  "purpose_code": {
-                    "type": "string",
-                    "maxLength": 80
-                  },
-                  "subject_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "confirmation": {
-                    "type": "boolean"
-                  },
-                  "payload": {
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                }
+                "$ref": "#/components/schemas/GuardianRelationshipVerificationIntent"
               }
             }
           }
         },
         "x-required-scope": "MANAGE_EXACT_CHILD_GUARDIAN",
-        "x-actor-boundary": "PARENT"
+        "x-actor-boundary": "PARENT",
+        "x-contract-review": "SCOPED_REQUEST_REPLACES_GENERIC_PAYLOAD"
       }
     },
     "/children/{childId}/commute-plans/{planId}": {
@@ -15792,44 +15610,21 @@
           }
         },
         "requestBody": {
-          "required": true,
+          "required": false,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "additionalProperties": false,
                 "required": [],
-                "properties": {
-                  "request_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "revision": {
-                    "type": "integer",
-                    "minimum": 0
-                  },
-                  "purpose_code": {
-                    "type": "string",
-                    "maxLength": 80
-                  },
-                  "subject_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "confirmation": {
-                    "type": "boolean"
-                  },
-                  "payload": {
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                }
+                "properties": {}
               }
             }
           }
         },
         "x-required-scope": "AUTHENTICATED_PARENT",
-        "x-actor-boundary": "PARENT"
+        "x-actor-boundary": "PARENT",
+        "x-contract-review": "BODY_NOT_REQUIRED; parent derived from bearer; exact notification ownership check."
       }
     },
     "/families/{familyId}/trial/eligibility": {
@@ -16079,40 +15874,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "additionalProperties": false,
-                "required": [],
-                "properties": {
-                  "request_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "revision": {
-                    "type": "integer",
-                    "minimum": 0
-                  },
-                  "purpose_code": {
-                    "type": "string",
-                    "maxLength": 80
-                  },
-                  "subject_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "confirmation": {
-                    "type": "boolean"
-                  },
-                  "payload": {
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                }
+                "$ref": "#/components/schemas/TrialStartIntent"
               }
             }
           }
         },
         "x-required-scope": "BILLING_OWNER_EXACT_CHILD",
-        "x-actor-boundary": "PARENT"
+        "x-actor-boundary": "PARENT",
+        "x-contract-review": "SCOPED_REQUEST_REPLACES_GENERIC_PAYLOAD"
       }
     },
     "/families/{familyId}/founding-status": {
@@ -16757,40 +16526,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "additionalProperties": false,
-                "required": [],
-                "properties": {
-                  "request_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "revision": {
-                    "type": "integer",
-                    "minimum": 0
-                  },
-                  "purpose_code": {
-                    "type": "string",
-                    "maxLength": 80
-                  },
-                  "subject_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "confirmation": {
-                    "type": "boolean"
-                  },
-                  "payload": {
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                }
+                "$ref": "#/components/schemas/ViewerLeaseHeartbeatRequest"
               }
             }
           }
         },
         "x-required-scope": "AUTHORIZED_PAID_CHILD_VIEWER",
-        "x-actor-boundary": "PARENT"
+        "x-actor-boundary": "PARENT",
+        "x-contract-review": "SCOPED_REQUEST_REPLACES_GENERIC_PAYLOAD"
       }
     },
     "/children/{childId}/viewer-leases/{leaseId}": {
@@ -17042,40 +16785,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "additionalProperties": false,
-                "required": [],
-                "properties": {
-                  "request_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "revision": {
-                    "type": "integer",
-                    "minimum": 0
-                  },
-                  "purpose_code": {
-                    "type": "string",
-                    "maxLength": 80
-                  },
-                  "subject_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "confirmation": {
-                    "type": "boolean"
-                  },
-                  "payload": {
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                }
+                "$ref": "#/components/schemas/ViewerTakeoverCreateRequest"
               }
             }
           }
         },
         "x-required-scope": "AUTHORIZED_PAID_CHILD_VIEWER",
-        "x-actor-boundary": "PARENT"
+        "x-actor-boundary": "PARENT",
+        "x-contract-review": "SCOPED_REQUEST_REPLACES_GENERIC_PAYLOAD"
       }
     },
     "/children/{childId}/media/requests/{requestId}": {
@@ -18957,40 +18674,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "additionalProperties": false,
-                "required": [],
-                "properties": {
-                  "request_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "revision": {
-                    "type": "integer",
-                    "minimum": 0
-                  },
-                  "purpose_code": {
-                    "type": "string",
-                    "maxLength": 80
-                  },
-                  "subject_id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "confirmation": {
-                    "type": "boolean"
-                  },
-                  "payload": {
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                }
+                "$ref": "#/components/schemas/AdminSupportUpdateIntent"
               }
             }
           }
         },
         "x-required-scope": "SUPPORT_AGENT_TICKET_SCOPED",
-        "x-actor-boundary": "ADMIN"
+        "x-actor-boundary": "ADMIN",
+        "x-contract-review": "SCOPED_REQUEST_REPLACES_GENERIC_PAYLOAD"
       }
     },
     "/admin/subscribers/{familyId}": {
@@ -22930,6 +22621,265 @@
           },
           "contact_email_verified": {
             "type": "boolean"
+          }
+        }
+      },
+      "ViewerLeaseAcquireRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "device_session_id",
+          "screen_kind"
+        ],
+        "properties": {
+          "device_session_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "screen_kind": {
+            "type": "string",
+            "enum": [
+              "PREMIUM_MAP",
+              "AUTHORIZED_MEDIA"
+            ]
+          },
+          "client_request_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "ViewerLeaseHeartbeatRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "device_session_id"
+        ],
+        "properties": {
+          "device_session_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "ViewerTakeoverCreateRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "active_lease_id"
+        ],
+        "properties": {
+          "active_lease_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "reason_code": {
+            "type": "string",
+            "enum": [
+              "OTHER_APPROVED_GUARDIAN_REQUESTED",
+              "SWITCH_DEVICE"
+            ]
+          }
+        }
+      },
+      "GuardianRelationshipVerificationIntent": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "candidate_adult_account_id",
+          "verification_provider"
+        ],
+        "properties": {
+          "candidate_adult_account_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "verification_provider": {
+            "type": "string",
+            "enum": [
+              "SUPPORTED_GOOGLE_PARENT_ATTESTATION_PENDING"
+            ]
+          },
+          "request_note": {
+            "type": "string",
+            "maxLength": 200
+          }
+        }
+      },
+      "TrialStartIntent": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "acknowledge_one_time_trial"
+        ],
+        "properties": {
+          "acknowledge_one_time_trial": {
+            "type": "boolean",
+            "const": true
+          }
+        }
+      },
+      "LocationExportIntent": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "selected_child_ids",
+          "purpose",
+          "confirmation"
+        ],
+        "properties": {
+          "selected_child_ids": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 20,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "purpose": {
+            "type": "string",
+            "enum": [
+              "AUTHORIZED_PARENT_DATA_EXPORT"
+            ]
+          },
+          "confirmation": {
+            "type": "boolean",
+            "const": true
+          }
+        }
+      },
+      "AdminMediaCaseIntent": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "purpose",
+          "scope",
+          "retention_days"
+        ],
+        "properties": {
+          "purpose": {
+            "type": "string",
+            "enum": [
+              "SUPPORT_INCIDENT",
+              "SECURITY_INVESTIGATION",
+              "LEGAL_COMPLIANCE"
+            ]
+          },
+          "scope": {
+            "type": "string",
+            "enum": [
+              "REDACTED_METADATA_ONLY"
+            ]
+          },
+          "retention_days": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 30
+          },
+          "ticket_ref": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "AdminMediaExportIntent": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "case_id",
+          "scope"
+        ],
+        "properties": {
+          "case_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "scope": {
+            "type": "string",
+            "enum": [
+              "REDACTED_METADATA_ONLY"
+            ]
+          },
+          "from_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "to_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "PairingCodeIntent": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "child_setup_intended"
+        ],
+        "properties": {
+          "child_setup_intended": {
+            "type": "boolean",
+            "const": true
+          },
+          "expires_in_minutes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 15,
+            "default": 10
+          }
+        }
+      },
+      "FamilyCreateIntent": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "owner_acknowledgement"
+        ],
+        "properties": {
+          "owner_acknowledgement": {
+            "type": "boolean",
+            "const": true
+          },
+          "optional_display_label": {
+            "type": "string",
+            "maxLength": 80
+          }
+        }
+      },
+      "AdminSupportUpdateIntent": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_revision"
+        ],
+        "properties": {
+          "expected_revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "OPEN",
+              "IN_PROGRESS",
+              "WAITING_FOR_PARENT",
+              "RESOLVED",
+              "CLOSED"
+            ]
+          },
+          "assigned_admin_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "LOW",
+              "NORMAL",
+              "HIGH"
+            ]
           }
         }
       }
