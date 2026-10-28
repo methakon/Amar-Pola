@@ -72,13 +72,14 @@
       "status": "PRODUCT_SPECIFICATION_NO_RUNTIME_IMPLEMENTATION",
       "overview": "Share ONLY separately selected Child A with eligible Google-supported co-parent; Family Link relationship attestation missing -> disable until verified; no automatic spouse/family sharing.",
       "reference": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md",
-      "google_relationship_gate": "HARD_DISABLED_UNTIL_TRUSTED_CHILD_PARENT_ATTESTATION",
+      "google_relationship_gate": "NOT_REQUIRED_OWNER_DROPPED_GOOGLE_FAMILY_LINK_DEPENDENCY",
       "concurrent_viewers": "1 included per paid child, +1 per active paid add-on",
       "extra_addon_target_inr": 100,
       "extra_av_minutes_combined": 30,
       "addon_days": 100,
       "expiration_policy": "100 fixed calendar days from verified purchase, NEVER shortened on base prepaid expiry",
-      "base_lapse_policy": "Extra premium viewing temporarily dormant on base plan lapse; original 100-day expiry and unused 30 pooled A/V minutes preserved, resume on main prepaid renewal within 100 days"
+      "base_lapse_policy": "Extra premium viewing temporarily dormant on base plan lapse; original 100-day expiry and unused 30 pooled A/V minutes preserved, resume on main prepaid renewal within 100 days",
+      "access_gate": "Google account identity + exact-child invite/acceptance + scoped grant; separate applicable legal authority and consent review"
     }
   },
   {
@@ -107,13 +108,14 @@
       "status": "PRODUCT_SPECIFICATION_NO_RUNTIME_IMPLEMENTATION",
       "overview": "Adult-child scopes independent for each child, with revocation + lease cancellation + no sibling metadata.",
       "reference": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md",
-      "google_relationship_gate": "HARD_DISABLED_UNTIL_TRUSTED_CHILD_PARENT_ATTESTATION",
+      "google_relationship_gate": "NOT_REQUIRED_OWNER_DROPPED_GOOGLE_FAMILY_LINK_DEPENDENCY",
       "concurrent_viewers": "1 included per paid child, +1 per active paid add-on",
       "extra_addon_target_inr": 100,
       "extra_av_minutes_combined": 30,
       "addon_days": 100,
       "expiration_policy": "100 fixed calendar days from verified purchase, NEVER shortened on base prepaid expiry",
-      "base_lapse_policy": "Extra premium viewing temporarily dormant on base plan lapse; original 100-day expiry and unused 30 pooled A/V minutes preserved, resume on main prepaid renewal within 100 days"
+      "base_lapse_policy": "Extra premium viewing temporarily dormant on base plan lapse; original 100-day expiry and unused 30 pooled A/V minutes preserved, resume on main prepaid renewal within 100 days",
+      "access_gate": "Google account identity + exact-child invite/acceptance + scoped grant; separate applicable legal authority and consent review"
     }
   },
   {
@@ -270,13 +272,14 @@
       "status": "PRODUCT_SPECIFICATION_NO_RUNTIME_IMPLEMENTATION",
       "overview": "Main payer selects N paid children and child-specific co-parent separately. One premium live viewer per paid child included; extra viewer requires optional verified purchase.",
       "reference": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md",
-      "google_relationship_gate": "HARD_DISABLED_UNTIL_TRUSTED_CHILD_PARENT_ATTESTATION",
+      "google_relationship_gate": "NOT_REQUIRED_OWNER_DROPPED_GOOGLE_FAMILY_LINK_DEPENDENCY",
       "concurrent_viewers": "1 included per paid child, +1 per active paid add-on",
       "extra_addon_target_inr": 100,
       "extra_av_minutes_combined": 30,
       "addon_days": 100,
       "expiration_policy": "100 fixed calendar days from verified purchase, NEVER shortened on base prepaid expiry",
-      "base_lapse_policy": "Extra premium viewing temporarily dormant on base plan lapse; original 100-day expiry and unused 30 pooled A/V minutes preserved, resume on main prepaid renewal within 100 days"
+      "base_lapse_policy": "Extra premium viewing temporarily dormant on base plan lapse; original 100-day expiry and unused 30 pooled A/V minutes preserved, resume on main prepaid renewal within 100 days",
+      "access_gate": "Google account identity + exact-child invite/acceptance + scoped grant; separate applicable legal authority and consent review"
     }
   },
   {
@@ -315,13 +318,14 @@
       "status": "PRODUCT_SPECIFICATION_NO_RUNTIME_IMPLEMENTATION",
       "overview": "₹100 target one-time optional extra concurrent premium viewer for selected paid child; 100-day independent validity, dormant (not forfeited) on main prepaid expiry; +30 combined AV min; exact Play price before purchase; add-on unsupported until store validation.",
       "reference": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md",
-      "google_relationship_gate": "HARD_DISABLED_UNTIL_TRUSTED_CHILD_PARENT_ATTESTATION",
+      "google_relationship_gate": "NOT_REQUIRED_OWNER_DROPPED_GOOGLE_FAMILY_LINK_DEPENDENCY",
       "concurrent_viewers": "1 included per paid child, +1 per active paid add-on",
       "extra_addon_target_inr": 100,
       "extra_av_minutes_combined": 30,
       "addon_days": 100,
       "expiration_policy": "100 fixed calendar days from verified purchase, NEVER shortened on base prepaid expiry",
-      "base_lapse_policy": "Extra premium viewing temporarily dormant on base plan lapse; original 100-day expiry and unused 30 pooled A/V minutes preserved, resume on main prepaid renewal within 100 days"
+      "base_lapse_policy": "Extra premium viewing temporarily dormant on base plan lapse; original 100-day expiry and unused 30 pooled A/V minutes preserved, resume on main prepaid renewal within 100 days",
+      "access_gate": "Google account identity + exact-child invite/acceptance + scoped grant; separate applicable legal authority and consent review"
     }
   },
   {
@@ -362,13 +366,14 @@
       "status": "PRODUCT_SPECIFICATION_NO_RUNTIME_IMPLEMENTATION",
       "overview": "Only already approved co-parent gets Child A paid coverage, shared per-child quotas and one viewer capacity; never list unshared siblings.",
       "reference": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md",
-      "google_relationship_gate": "HARD_DISABLED_UNTIL_TRUSTED_CHILD_PARENT_ATTESTATION",
+      "google_relationship_gate": "NOT_REQUIRED_OWNER_DROPPED_GOOGLE_FAMILY_LINK_DEPENDENCY",
       "concurrent_viewers": "1 included per paid child, +1 per active paid add-on",
       "extra_addon_target_inr": 100,
       "extra_av_minutes_combined": 30,
       "addon_days": 100,
       "expiration_policy": "100 fixed calendar days from verified purchase, NEVER shortened on base prepaid expiry",
-      "base_lapse_policy": "Extra premium viewing temporarily dormant on base plan lapse; original 100-day expiry and unused 30 pooled A/V minutes preserved, resume on main prepaid renewal within 100 days"
+      "base_lapse_policy": "Extra premium viewing temporarily dormant on base plan lapse; original 100-day expiry and unused 30 pooled A/V minutes preserved, resume on main prepaid renewal within 100 days",
+      "access_gate": "Google account identity + exact-child invite/acceptance + scoped grant; separate applicable legal authority and consent review"
     }
   },
   {
@@ -479,13 +484,14 @@
       "status": "PRODUCT_SPECIFICATION_NO_RUNTIME_IMPLEMENTATION",
       "overview": "No auto renewal for base or +1 screen add-on; refund/expiry removes viewer leases and unused extra AV minutes.",
       "reference": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md",
-      "google_relationship_gate": "HARD_DISABLED_UNTIL_TRUSTED_CHILD_PARENT_ATTESTATION",
+      "google_relationship_gate": "NOT_REQUIRED_OWNER_DROPPED_GOOGLE_FAMILY_LINK_DEPENDENCY",
       "concurrent_viewers": "1 included per paid child, +1 per active paid add-on",
       "extra_addon_target_inr": 100,
       "extra_av_minutes_combined": 30,
       "addon_days": 100,
       "expiration_policy": "100 fixed calendar days from verified purchase, NEVER shortened on base prepaid expiry",
-      "base_lapse_policy": "Extra premium viewing temporarily dormant on base plan lapse; original 100-day expiry and unused 30 pooled A/V minutes preserved, resume on main prepaid renewal within 100 days"
+      "base_lapse_policy": "Extra premium viewing temporarily dormant on base plan lapse; original 100-day expiry and unused 30 pooled A/V minutes preserved, resume on main prepaid renewal within 100 days",
+      "access_gate": "Google account identity + exact-child invite/acceptance + scoped grant; separate applicable legal authority and consent review"
     }
   }
 ]
