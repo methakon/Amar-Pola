@@ -3,7 +3,7 @@
   "info": {
     "title": "Madalasa–Alarka Parent/Device API",
     "version": "1.0.0-draft",
-    "description": "IMPLEMENTATION DESIGN ONLY. Every parent endpoint enforces live child-scoped grants and family auth, in addition to ParentBearer. Every device endpoint binds deviceId to enrolled device credential. Deferred media and experimental corridor APIs are intentionally excluded from launch.\n\nProduct display names: Madalasa (guardian Android app), Alarka (child Android companion). The GitHub repo is Madalasa-Alarka. Naming does not change API paths, auth audiences or package IDs; legal under-18 gates remain required.\n2026-10-28 Figma screen audit addendum: 96 new planned (NOT IMPLEMENTED) operations; M1 narrow contract remains frozen. Real child/privacy and Play gates still apply.\nContract hardening 2026-10-28: 11 high-risk mutation bodies replaced with closed typed schemas; no handler implementation or provider authorization implied."
+    "description": "IMPLEMENTATION DESIGN ONLY. Every parent endpoint enforces live child-scoped grants and family auth, in addition to ParentBearer. Every device endpoint binds deviceId to enrolled device credential. Deferred media and experimental corridor APIs are intentionally excluded from launch.\n\nProduct display names: Madalasa (guardian Android app), Alarka (child Android companion). The GitHub repo is Madalasa-Alarka. Naming does not change API paths, auth audiences or package IDs; legal under-18 gates remain required.\n2026-10-28 Figma screen audit addendum: 96 new planned (NOT IMPLEMENTED) operations; M1 narrow contract remains frozen. Real child/privacy and Play gates still apply.\nContract hardening 2026-10-28: 11 high-risk mutation bodies replaced with closed typed schemas; no handler implementation or provider authorization implied.\nPost-screen-audit hardening 2026-10-28: 19 additional carefully scoped design-only operations; updated typed schemas; no handler is claimed implemented."
   },
   "servers": [
     {
@@ -14130,6 +14130,124 @@
         "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload.",
         "x-required-scope": "OWN_APPLICANT_PROFILE_ONLY",
         "x-actor-boundary": "APPLICANT_ONLY"
+      },
+      "get": {
+        "operationId": "get__screen_audit_admin_access_profile",
+        "summary": "Applicant reads own limited profile/verification state; no staff/customer data.",
+        "description": "DESIGN ONLY; no Drogon handler exists. Applicant reads own limited profile/verification state; no staff/customer data.",
+        "tags": [
+          "AdminAccess"
+        ],
+        "security": [
+          {
+            "AdminApplicantBearer": []
+          }
+        ],
+        "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
+        "x-screen-ids": [
+          "BO-02",
+          "BO-02V"
+        ],
+        "x-db-entities": [
+          "admin_profiles",
+          "admin_accounts"
+        ],
+        "x-required-scope": "SELF_PROFILE_ONLY",
+        "x-actor-boundary": "APPLICANT",
+        "x-server-enforced-authorization": true,
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Design response only; not evidence of implementation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminSelfProfileState"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/admin/faqs/{faqId}": {
@@ -14535,6 +14653,141 @@
         "x-server-trust-boundary": "Identity/role/price/verification/response success must be computed by backend or trusted provider, never taken from client payload.",
         "x-required-scope": "EXACT_CHILD_GUARDIAN_SCOPE",
         "x-actor-boundary": "PARENT"
+      },
+      "get": {
+        "operationId": "get__screen_audit_children_childId_places_placeId_notifications",
+        "summary": "Actual parent recipient preference for this child and place.",
+        "description": "DESIGN ONLY; no Drogon handler exists. Actual parent recipient preference for this child and place.",
+        "tags": [
+          "Places"
+        ],
+        "security": [
+          {
+            "ParentBearer": []
+          }
+        ],
+        "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
+        "x-screen-ids": [
+          "P-28"
+        ],
+        "x-db-entities": [
+          "place_notification_rules"
+        ],
+        "x-required-scope": "EXACT_CHILD_PLACE_ALERT_SETTINGS",
+        "x-actor-boundary": "PARENT",
+        "x-server-enforced-authorization": true,
+        "parameters": [
+          {
+            "name": "childId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "placeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Design response only; not evidence of implementation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChildPlaceAlertPrefs"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/parents/me/sessions": {
@@ -18682,6 +18935,133 @@
         "x-required-scope": "SUPPORT_AGENT_TICKET_SCOPED",
         "x-actor-boundary": "ADMIN",
         "x-contract-review": "SCOPED_REQUEST_REPLACES_GENERIC_PAYLOAD"
+      },
+      "get": {
+        "operationId": "get__screen_audit_admin_support_tickets_ticketId",
+        "summary": "Ticket-scoped summary; no privileged child sensor data.",
+        "description": "DESIGN ONLY; no Drogon handler exists. Ticket-scoped summary; no privileged child sensor data.",
+        "tags": [
+          "Support"
+        ],
+        "security": [
+          {
+            "AdminBearer": []
+          }
+        ],
+        "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
+        "x-screen-ids": [
+          "BO-06"
+        ],
+        "x-db-entities": [
+          "support_tickets",
+          "admin_support_read_audit"
+        ],
+        "x-required-scope": "TICKET_ASSIGNMENT_OR_OWNER",
+        "x-actor-boundary": "ADMIN",
+        "x-server-enforced-authorization": true,
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Design response only; not evidence of implementation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminSupportTicketDetail"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/admin/subscribers/{familyId}": {
@@ -19099,6 +19479,2125 @@
         },
         "x-required-scope": "AUTHENTICATED_PARENT",
         "x-actor-boundary": "PARENT"
+      }
+    },
+    "/admin/access/email-verification/status": {
+      "get": {
+        "operationId": "get__screen_audit_admin_access_email_verification_status",
+        "summary": "Own contact verification status; never expose OTP/token.",
+        "description": "DESIGN ONLY; no Drogon handler exists. Own contact verification status; never expose OTP/token.",
+        "tags": [
+          "AdminAccess"
+        ],
+        "security": [
+          {
+            "AdminApplicantBearer": []
+          }
+        ],
+        "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
+        "x-screen-ids": [
+          "BO-02",
+          "BO-02V"
+        ],
+        "x-db-entities": [
+          "admin_email_verification_challenges",
+          "admin_profiles"
+        ],
+        "x-required-scope": "SELF_EMAIL_STATUS_ONLY",
+        "x-actor-boundary": "APPLICANT",
+        "x-server-enforced-authorization": true,
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Design response only; not evidence of implementation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminEmailStatus"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/owner/roles": {
+      "get": {
+        "operationId": "get__screen_audit_admin_owner_roles",
+        "summary": "Assignable least privilege role catalog; no client-defined role.",
+        "description": "DESIGN ONLY; no Drogon handler exists. Assignable least privilege role catalog; no client-defined role.",
+        "tags": [
+          "AdminAccess"
+        ],
+        "security": [
+          {
+            "AdminBearer": []
+          }
+        ],
+        "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
+        "x-screen-ids": [
+          "BO-04"
+        ],
+        "x-db-entities": [
+          "admin_roles",
+          "admin_role_permissions"
+        ],
+        "x-required-scope": "ROOT_OWNER_MFA_STEP_UP",
+        "x-actor-boundary": "ADMIN",
+        "x-server-enforced-authorization": true,
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Design response only; not evidence of implementation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminRoleCatalog"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/owner/staff/{adminId}": {
+      "get": {
+        "operationId": "get__screen_audit_admin_owner_staff_adminId",
+        "summary": "Owner-only staff role and revocation view; no child records.",
+        "description": "DESIGN ONLY; no Drogon handler exists. Owner-only staff role and revocation view; no child records.",
+        "tags": [
+          "AdminAccess"
+        ],
+        "security": [
+          {
+            "AdminBearer": []
+          }
+        ],
+        "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
+        "x-screen-ids": [
+          "BO-04",
+          "BO-09"
+        ],
+        "x-db-entities": [
+          "admin_accounts",
+          "admin_role_grants"
+        ],
+        "x-required-scope": "ROOT_OWNER_MFA_STEP_UP",
+        "x-actor-boundary": "ADMIN",
+        "x-server-enforced-authorization": true,
+        "parameters": [
+          {
+            "name": "adminId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Design response only; not evidence of implementation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminStaffDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/owner/access-requests/summary": {
+      "get": {
+        "operationId": "get__screen_audit_admin_owner_access_requests_summary",
+        "summary": "Owner-only aggregate pending/rejected/approved; no profiles in dashboard counters.",
+        "description": "DESIGN ONLY; no Drogon handler exists. Owner-only aggregate pending/rejected/approved; no profiles in dashboard counters.",
+        "tags": [
+          "AdminAccess"
+        ],
+        "security": [
+          {
+            "AdminBearer": []
+          }
+        ],
+        "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
+        "x-screen-ids": [
+          "BO-09"
+        ],
+        "x-db-entities": [
+          "admin_access_requests"
+        ],
+        "x-required-scope": "ROOT_OWNER_MFA_STEP_UP",
+        "x-actor-boundary": "ADMIN",
+        "x-server-enforced-authorization": true,
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Design response only; not evidence of implementation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminAccessSummary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/support/tickets/{ticketId}/messages": {
+      "get": {
+        "operationId": "get__screen_audit_admin_support_tickets_ticketId_messages",
+        "summary": "Paginated sanitized support messages; append sensitive read audit.",
+        "description": "DESIGN ONLY; no Drogon handler exists. Paginated sanitized support messages; append sensitive read audit.",
+        "tags": [
+          "Support"
+        ],
+        "security": [
+          {
+            "AdminBearer": []
+          }
+        ],
+        "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
+        "x-screen-ids": [
+          "BO-06"
+        ],
+        "x-db-entities": [
+          "support_messages",
+          "admin_support_read_audit"
+        ],
+        "x-required-scope": "TICKET_ASSIGNMENT_OR_OWNER",
+        "x-actor-boundary": "ADMIN",
+        "x-server-enforced-authorization": true,
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 256
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Design response only; not evidence of implementation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminSupportMessageFeed"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/usage/parents/summary": {
+      "get": {
+        "operationId": "get__screen_audit_admin_usage_parents_summary",
+        "summary": "Parent's own app service usage totals; NOT child behavioral or precise GPS.",
+        "description": "DESIGN ONLY; no Drogon handler exists. Parent's own app service usage totals; NOT child behavioral or precise GPS.",
+        "tags": [
+          "AdminAccess"
+        ],
+        "security": [
+          {
+            "AdminBearer": []
+          }
+        ],
+        "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
+        "x-screen-ids": [
+          "BO-08",
+          "BO-09"
+        ],
+        "x-db-entities": [
+          "parent_service_usage_events"
+        ],
+        "x-required-scope": "USAGE_AUDITOR_OR_OWNER",
+        "x-actor-boundary": "ADMIN",
+        "x-server-enforced-authorization": true,
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Design response only; not evidence of implementation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParentServiceUsageTotals"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/subscribers/{familyId}/entitlements": {
+      "get": {
+        "operationId": "get__screen_audit_admin_subscribers_familyId_entitlements",
+        "summary": "Masked child reference and paid-seat status only, never a child's location.",
+        "description": "DESIGN ONLY; no Drogon handler exists. Masked child reference and paid-seat status only, never a child's location.",
+        "tags": [
+          "PrepaidCommerce"
+        ],
+        "security": [
+          {
+            "AdminBearer": []
+          }
+        ],
+        "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
+        "x-screen-ids": [
+          "BO-07",
+          "BO-08"
+        ],
+        "x-db-entities": [
+          "child_paid_entitlements",
+          "child_seat_assignments"
+        ],
+        "x-required-scope": "BILLING_VIEWER_MINIMAL_CHILD_ROSTER",
+        "x-actor-boundary": "ADMIN",
+        "x-server-enforced-authorization": true,
+        "parameters": [
+          {
+            "name": "familyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Design response only; not evidence of implementation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminChildPaidSummary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/billing/reconciliation-status": {
+      "get": {
+        "operationId": "get__screen_audit_admin_billing_reconciliation_status",
+        "summary": "Verified store reconciliation aggregate; no purchase token, card numbers, or customer media.",
+        "description": "DESIGN ONLY; no Drogon handler exists. Verified store reconciliation aggregate; no purchase token, card numbers, or customer media.",
+        "tags": [
+          "PrepaidCommerce"
+        ],
+        "security": [
+          {
+            "AdminBearer": []
+          }
+        ],
+        "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
+        "x-screen-ids": [
+          "BO-07",
+          "BO-09"
+        ],
+        "x-db-entities": [
+          "payment_reconciliation_inbox"
+        ],
+        "x-required-scope": "BILLING_VIEWER_OR_OWNER",
+        "x-actor-boundary": "ADMIN",
+        "x-server-enforced-authorization": true,
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Design response only; not evidence of implementation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminBillingReconciliationState"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/children/{childId}/extra-viewer-addons": {
+      "get": {
+        "operationId": "get__screen_audit_children_childId_extra_viewer_addons",
+        "summary": "Independent 100-day expiry never shortened on base prepaid lapse; addon dormant until renewal.",
+        "description": "DESIGN ONLY; no Drogon handler exists. Independent 100-day expiry never shortened on base prepaid lapse; addon dormant until renewal.",
+        "tags": [
+          "PrepaidCommerce"
+        ],
+        "security": [
+          {
+            "ParentBearer": []
+          }
+        ],
+        "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
+        "x-screen-ids": [
+          "SH-04",
+          "SH-06"
+        ],
+        "x-db-entities": [
+          "extra_viewer_purchases",
+          "child_paid_entitlements"
+        ],
+        "x-required-scope": "AUTHORIZED_PAID_CHILD_VIEWER",
+        "x-actor-boundary": "PARENT",
+        "x-server-enforced-authorization": true,
+        "parameters": [
+          {
+            "name": "childId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Design response only; not evidence of implementation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChildAddonList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/children/{childId}/viewer-takeover-requests/{requestId}": {
+      "get": {
+        "operationId": "get__screen_audit_children_childId_viewer_takeover_requests_requestId",
+        "summary": "Takeover request status visible only to requesting or active approved guardian.",
+        "description": "DESIGN ONLY; no Drogon handler exists. Takeover request status visible only to requesting or active approved guardian.",
+        "tags": [
+          "PrepaidCommerce"
+        ],
+        "security": [
+          {
+            "ParentBearer": []
+          }
+        ],
+        "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
+        "x-screen-ids": [
+          "SH-03"
+        ],
+        "x-db-entities": [
+          "viewer_takeover_requests"
+        ],
+        "x-required-scope": "EXACT_CHILD_VIEWER_LEASE_OWNER",
+        "x-actor-boundary": "PARENT",
+        "x-server-enforced-authorization": true,
+        "parameters": [
+          {
+            "name": "childId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "requestId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Design response only; not evidence of implementation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ViewerTakeoverStatus"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/children/{childId}/viewer-takeover-requests/{requestId}/decision": {
+      "post": {
+        "operationId": "post__screen_audit_children_childId_viewer_takeover_requests_requestId_decision",
+        "summary": "Consent required; never forcibly evict other viewer; atomically release on accepted decision.",
+        "description": "DESIGN ONLY; no Drogon handler exists. Consent required; never forcibly evict other viewer; atomically release on accepted decision.",
+        "tags": [
+          "PrepaidCommerce"
+        ],
+        "security": [
+          {
+            "ParentBearer": []
+          }
+        ],
+        "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
+        "x-screen-ids": [
+          "SH-03"
+        ],
+        "x-db-entities": [
+          "viewer_takeover_requests",
+          "premium_viewer_leases"
+        ],
+        "x-required-scope": "EXACT_CHILD_ACTIVE_LEASE_OWNER",
+        "x-actor-boundary": "PARENT",
+        "x-server-enforced-authorization": true,
+        "parameters": [
+          {
+            "name": "childId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "requestId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Design response only; not evidence of implementation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ViewerTakeoverStatus"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ViewerTakeoverDecisionIntent"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/children/{childId}/checkins": {
+      "get": {
+        "operationId": "get__screen_audit_children_childId_checkins",
+        "summary": "Child checkin receipts with delivery status, without inferred coordinates.",
+        "description": "DESIGN ONLY; no Drogon handler exists. Child checkin receipts with delivery status, without inferred coordinates.",
+        "tags": [
+          "SOS"
+        ],
+        "security": [
+          {
+            "ParentBearer": []
+          }
+        ],
+        "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
+        "x-screen-ids": [
+          "C-15",
+          "P-17"
+        ],
+        "x-db-entities": [
+          "child_checkins"
+        ],
+        "x-required-scope": "AUTHORIZED_EXACT_CHILD_SAFETY_READ",
+        "x-actor-boundary": "PARENT",
+        "x-server-enforced-authorization": true,
+        "parameters": [
+          {
+            "name": "childId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 256
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Design response only; not evidence of implementation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChildCheckinFeed"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/faqs/{faqId}/unpublish": {
+      "post": {
+        "operationId": "post__screen_audit_admin_faqs_faqId_unpublish",
+        "summary": "Unpublish with expected revision, audited, sanitized, not silently deleted.",
+        "description": "DESIGN ONLY; no Drogon handler exists. Unpublish with expected revision, audited, sanitized, not silently deleted.",
+        "tags": [
+          "FAQ"
+        ],
+        "security": [
+          {
+            "AdminBearer": []
+          }
+        ],
+        "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
+        "x-screen-ids": [
+          "BO-05"
+        ],
+        "x-db-entities": [
+          "faq_entries",
+          "faq_revisions",
+          "admin_action_audit"
+        ],
+        "x-required-scope": "FAQ_PUBLISH_PERMISSION",
+        "x-actor-boundary": "ADMIN",
+        "x-server-enforced-authorization": true,
+        "parameters": [
+          {
+            "name": "faqId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Design response only; not evidence of implementation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FaqEntry"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FAQRevisionIntent"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/faqs/{faqId}/restore": {
+      "post": {
+        "operationId": "post__screen_audit_admin_faqs_faqId_restore",
+        "summary": "Restore immutable revision via optimistic lock, before publishing.",
+        "description": "DESIGN ONLY; no Drogon handler exists. Restore immutable revision via optimistic lock, before publishing.",
+        "tags": [
+          "FAQ"
+        ],
+        "security": [
+          {
+            "AdminBearer": []
+          }
+        ],
+        "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
+        "x-screen-ids": [
+          "BO-05"
+        ],
+        "x-db-entities": [
+          "faq_entries",
+          "faq_revisions",
+          "admin_action_audit"
+        ],
+        "x-required-scope": "FAQ_PUBLISH_PERMISSION",
+        "x-actor-boundary": "ADMIN",
+        "x-server-enforced-authorization": true,
+        "parameters": [
+          {
+            "name": "faqId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Design response only; not evidence of implementation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FaqEntry"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FAQRevisionIntent"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/faqs/{faqId}/preview": {
+      "get": {
+        "operationId": "get__screen_audit_admin_faqs_faqId_preview",
+        "summary": "Safe draft preview; never publicly expose unapproved FAQ revision.",
+        "description": "DESIGN ONLY; no Drogon handler exists. Safe draft preview; never publicly expose unapproved FAQ revision.",
+        "tags": [
+          "FAQ"
+        ],
+        "security": [
+          {
+            "AdminBearer": []
+          }
+        ],
+        "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
+        "x-screen-ids": [
+          "BO-05"
+        ],
+        "x-db-entities": [
+          "faq_revisions"
+        ],
+        "x-required-scope": "FAQ_EDITOR_OR_OWNER",
+        "x-actor-boundary": "ADMIN",
+        "x-server-enforced-authorization": true,
+        "parameters": [
+          {
+            "name": "faqId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Design response only; not evidence of implementation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FAQPreview"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/families/{familyId}/members": {
+      "get": {
+        "operationId": "get__screen_audit_families_familyId_members",
+        "summary": "Show verified billing-family adult members only; does not authorize exact child access.",
+        "description": "DESIGN ONLY; no Drogon handler exists. Show verified billing-family adult members only; does not authorize exact child access.",
+        "tags": [
+          "Guardians"
+        ],
+        "security": [
+          {
+            "ParentBearer": []
+          }
+        ],
+        "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
+        "x-screen-ids": [
+          "P-16",
+          "P-39"
+        ],
+        "x-db-entities": [
+          "family_memberships"
+        ],
+        "x-required-scope": "BILLING_OWNER_NO_CHILD_GRANTS",
+        "x-actor-boundary": "PARENT",
+        "x-server-enforced-authorization": true,
+        "parameters": [
+          {
+            "name": "familyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 256
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Design response only; not evidence of implementation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FamilyMembershipList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Denied/invalid/concurrency/rate/dependency error; no cross-child information disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
@@ -22880,6 +25379,699 @@
               "NORMAL",
               "HIGH"
             ]
+          }
+        }
+      },
+      "AdminSelfProfileState": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "status",
+          "email_verified",
+          "profile_complete"
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "NO_ACCESS",
+              "PROFILE_DRAFT",
+              "PENDING_REVIEW",
+              "APPROVED",
+              "REJECTED"
+            ]
+          },
+          "full_name": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 160
+          },
+          "contact_email": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "email"
+          },
+          "postal_address": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 500
+          },
+          "date_of_birth": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          },
+          "gender": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 80
+          },
+          "email_verified": {
+            "type": "boolean"
+          },
+          "profile_complete": {
+            "type": "boolean"
+          },
+          "notice_version": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      },
+      "AdminEmailStatus": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "verified"
+        ],
+        "properties": {
+          "verified": {
+            "type": "boolean"
+          },
+          "contact_email_masked": {
+            "type": "string"
+          },
+          "resend_after": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "attempts_remaining": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      },
+      "AdminRoleCatalog": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "roles"
+        ],
+        "properties": {
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "code",
+                "description"
+              ],
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    "FAQ_EDITOR",
+                    "SUPPORT_AGENT",
+                    "BILLING_VIEWER",
+                    "USAGE_AUDITOR"
+                  ]
+                },
+                "description": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "AdminStaffDetails": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "admin_id",
+          "status",
+          "roles"
+        ],
+        "properties": {
+          "admin_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "verified_email": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ACTIVE",
+              "SUSPENDED",
+              "REVOKED"
+            ]
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "last_login_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "revocation_epoch": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      },
+      "AdminAccessSummary": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "pending",
+          "approved",
+          "rejected"
+        ],
+        "properties": {
+          "pending": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "approved": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "rejected": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "as_of": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "AdminSupportTicketDetail": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "ticket_id",
+          "status",
+          "subject",
+          "revision"
+        ],
+        "properties": {
+          "ticket_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "priority": {
+            "type": "string"
+          },
+          "assigned_to": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "AdminSupportMessageFeed": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "messages"
+        ],
+        "properties": {
+          "messages": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "message",
+                "author_kind",
+                "created_at"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "message": {
+                  "type": "string",
+                  "maxLength": 5000
+                },
+                "author_kind": {
+                  "type": "string",
+                  "enum": [
+                    "PARENT",
+                    "ADMIN"
+                  ]
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          "next_cursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      },
+      "ParentServiceUsageTotals": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "period_start",
+          "period_end",
+          "by_service"
+        ],
+        "properties": {
+          "period_start": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "period_end": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "by_service": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "service_code",
+                "events",
+                "delivered_seconds"
+              ],
+              "properties": {
+                "service_code": {
+                  "type": "string"
+                },
+                "events": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "delivered_seconds": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            }
+          },
+          "no_child_private_data": {
+            "type": "boolean",
+            "const": true
+          }
+        }
+      },
+      "AdminChildPaidSummary": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "children"
+        ],
+        "properties": {
+          "children": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "child_ref_masked",
+                "paid_status"
+              ],
+              "properties": {
+                "child_ref_masked": {
+                  "type": "string"
+                },
+                "paid_status": {
+                  "type": "string",
+                  "enum": [
+                    "TRIAL",
+                    "FREE",
+                    "ACTIVE",
+                    "EXPIRED"
+                  ]
+                },
+                "paid_through": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "format": "date-time"
+                },
+                "viewer_slot_addons": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            }
+          },
+          "as_of": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "AdminBillingReconciliationState": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "as_of",
+          "pending_count",
+          "failed_count"
+        ],
+        "properties": {
+          "as_of": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "pending_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "failed_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "validated_store_only": {
+            "type": "boolean",
+            "const": true
+          }
+        }
+      },
+      "ChildPlaceAlertPrefs": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "place_id",
+          "arrival_enabled",
+          "exit_enabled"
+        ],
+        "properties": {
+          "place_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "arrival_enabled": {
+            "type": "boolean"
+          },
+          "exit_enabled": {
+            "type": "boolean"
+          },
+          "quiet_hours_state": {
+            "type": "string",
+            "enum": [
+              "NONE",
+              "ENABLED",
+              "UNKNOWN"
+            ]
+          }
+        }
+      },
+      "ChildAddonList": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "addon_id",
+                "state",
+                "activated_at",
+                "expires_at",
+                "extra_viewers",
+                "extra_av_total_seconds",
+                "extra_av_remaining_seconds"
+              ],
+              "properties": {
+                "addon_id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "state": {
+                  "type": "string",
+                  "enum": [
+                    "ACTIVE",
+                    "DORMANT_BASE_EXPIRED",
+                    "EXPIRED",
+                    "REFUNDED"
+                  ]
+                },
+                "activated_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "expires_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "extra_viewers": {
+                  "type": "integer",
+                  "const": 1
+                },
+                "extra_av_total_seconds": {
+                  "type": "integer",
+                  "const": 1800
+                },
+                "extra_av_remaining_seconds": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            }
+          },
+          "as_of": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ViewerTakeoverStatus": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "request_id",
+          "state",
+          "requested_at"
+        ],
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "ACCEPTED",
+              "DECLINED",
+              "EXPIRED"
+            ]
+          },
+          "requested_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lease_released": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ViewerTakeoverDecisionIntent": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "decision",
+          "expected_state"
+        ],
+        "properties": {
+          "decision": {
+            "type": "string",
+            "enum": [
+              "ACCEPT",
+              "DECLINE"
+            ]
+          },
+          "expected_state": {
+            "type": "string",
+            "const": "PENDING"
+          }
+        }
+      },
+      "ChildCheckinFeed": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "event_id",
+                "checked_in_at",
+                "delivery_state"
+              ],
+              "properties": {
+                "event_id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "checked_in_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "delivery_state": {
+                  "type": "string",
+                  "enum": [
+                    "RECEIVED",
+                    "NOTIFIED",
+                    "FAILED",
+                    "UNKNOWN"
+                  ]
+                }
+              }
+            }
+          },
+          "next_cursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      },
+      "FAQRevisionIntent": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "revision_id",
+          "expected_revision"
+        ],
+        "properties": {
+          "revision_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expected_revision": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      },
+      "FAQPreview": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "faq_id",
+          "revision_id",
+          "title",
+          "safe_body"
+        ],
+        "properties": {
+          "faq_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "revision_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "safe_body": {
+            "type": "string",
+            "description": "Sanitized markdown or allowed safe HTML. Never arbitrary script."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "DRAFT_PREVIEW"
+            ]
+          }
+        }
+      },
+      "FamilyMembershipList": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "members"
+        ],
+        "properties": {
+          "members": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "adult_ref",
+                "membership_role"
+              ],
+              "properties": {
+                "adult_ref": {
+                  "type": "string"
+                },
+                "membership_role": {
+                  "type": "string",
+                  "enum": [
+                    "BILLING_OWNER",
+                    "MEMBER"
+                  ]
+                }
+              }
+            }
+          },
+          "does_not_grant_child_access": {
+            "type": "boolean",
+            "const": true
           }
         }
       }
