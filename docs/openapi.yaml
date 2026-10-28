@@ -3,7 +3,7 @@
   "info": {
     "title": "Madalasa–Alarka Parent/Device API",
     "version": "1.0.0-draft",
-    "description": "IMPLEMENTATION DESIGN ONLY. Every parent endpoint enforces live child-scoped grants and family auth, in addition to ParentBearer. Every device endpoint binds deviceId to enrolled device credential. Deferred media and experimental corridor APIs are intentionally excluded from launch.\n\nProduct display names: Madalasa (guardian Android app), Alarka (child Android companion). The GitHub repo is Madalasa-Alarka. Naming does not change API paths, auth audiences or package IDs; legal under-18 gates remain required.\n2026-10-28 Figma screen audit addendum: 95 new planned (NOT IMPLEMENTED) operations; M1 narrow contract remains frozen. Real child/privacy and Play gates still apply."
+    "description": "IMPLEMENTATION DESIGN ONLY. Every parent endpoint enforces live child-scoped grants and family auth, in addition to ParentBearer. Every device endpoint binds deviceId to enrolled device credential. Deferred media and experimental corridor APIs are intentionally excluded from launch.\n\nProduct display names: Madalasa (guardian Android app), Alarka (child Android companion). The GitHub repo is Madalasa-Alarka. Naming does not change API paths, auth audiences or package IDs; legal under-18 gates remain required.\n2026-10-28 Figma screen audit addendum: 96 new planned (NOT IMPLEMENTED) operations; M1 narrow contract remains frozen. Real child/privacy and Play gates still apply."
   },
   "servers": [
     {
@@ -22996,7 +22996,8 @@
   "x-screen-audit": {
     "file": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
     "status": "DESIGN_ONLY",
-    "added_operations": 95,
-    "release_state": "DO_NOT_DEPLOY_WITHOUT_TESTS_AND_APPROVAL"
+    "added_operations": 96,
+    "release_state": "DO_NOT_DEPLOY_WITHOUT_TESTS_AND_APPROVAL",
+    "total_operations": 146
   }
 }
