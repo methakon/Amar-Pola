@@ -1,13 +1,13 @@
 {
   "title": "2026-10-28 Figma/API/DB GAP REMEDIATION TASK ADDENDUM",
-  "description": "28 additional dependency-checked task contracts for the existing 262-task local plan. Does not auto-complete or reorder original graph. Related tasks must be incorporated by coding agent before LOCAL_READY.",
+  "description": "Updated 2026-10-28: 54 agent tasks in remediation addendum, including 25 exact new typed API operations, retained original 262 local task DAG. Not executable evidence.",
   "base_graph": "docs/roadmap/LOCAL_TASK_GRAPH_2026-10-28.json",
   "base_tasks": 262,
-  "additional_tasks": 28,
-  "combined_backlog": 290,
+  "additional_tasks": 54,
+  "combined_backlog": 316,
   "all_initial_status": "NOT_STARTED",
   "statuses": {
-    "NOT_STARTED": 28
+    "NOT_STARTED": 54
   },
   "tasks": [
     {
@@ -18,7 +18,7 @@
         "L03-014"
       ],
       "target_artifact": "backend/tests/lint_openapi_full.py",
-      "acceptance": "Validator runs against 146 operations, 187 screen rows, 120 logical tables; record actual CI result.",
+      "acceptance": "Validator actually runs on current 171 OpenAPI operations, 187 registered Figma screens and 120 conceptual entities; check real exit code and preserve log.",
       "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
       "source_api": "docs/openapi.yaml",
       "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
@@ -393,7 +393,7 @@
     },
     {
       "id": "GAP-025",
-      "title": "Document all 146 API handler registrations and contract test coverage",
+      "title": "Document all 171 API handler registrations and contract test coverage",
       "status": "NOT_STARTED",
       "depends_on": [
         "GAP-007",
@@ -403,7 +403,7 @@
         "GAP-018"
       ],
       "target_artifact": "docs/api/HANDLER_COVERAGE_146.md",
-      "acceptance": "Every nonconditional endpoint has real router+unit/integration negative tests or explicitly BLOCKED status.",
+      "acceptance": "Every current 171 design-only API operation has a measured handler/test mapping or explicit gated NOT_IMPLEMENTED status; no fabricated handler pass.",
       "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
       "source_api": "docs/openapi.yaml",
       "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
@@ -458,6 +458,626 @@
       "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
       "evidence": "evidence/local/tasks/GAP-028.md",
       "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-029",
+      "title": "Implement & test GET /admin/access/profile",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "GAP-011",
+        "L14-018"
+      ],
+      "target_artifact": "backend/src/api/admin/get__screen_audit_admin_access_profile.cc",
+      "acceptance": "Contract get__screen_audit_admin_access_profile; strict SELF_PROFILE_ONLY; validate request/response, 401/403/404/409 negative cases, idempotency and DB child isolation; no fake 200.",
+      "source_api": "docs/openapi.yaml",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "related_screens": [
+        "BO-02",
+        "BO-02V"
+      ],
+      "related_tables": [
+        "admin_profiles",
+        "admin_accounts"
+      ],
+      "evidence": "evidence/local/tasks/GAP-029.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-030",
+      "title": "Implement & test GET /children/{childId}/places/{placeId}/notifications",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "GAP-007"
+      ],
+      "target_artifact": "backend/src/api/notifications/get__screen_audit_children_childId_places_placeId_notifications.cc",
+      "acceptance": "Contract get__screen_audit_children_childId_places_placeId_notifications; strict EXACT_CHILD_PLACE_ALERT_SETTINGS; validate request/response, 401/403/404/409 negative cases, idempotency and DB child isolation; no fake 200.",
+      "source_api": "docs/openapi.yaml",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "related_screens": [
+        "P-28"
+      ],
+      "related_tables": [
+        "place_notification_rules"
+      ],
+      "evidence": "evidence/local/tasks/GAP-030.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-031",
+      "title": "Implement & test GET /admin/support/tickets/{ticketId}",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "GAP-011",
+        "L14-018"
+      ],
+      "target_artifact": "backend/src/api/admin/get__screen_audit_admin_support_tickets_ticketId.cc",
+      "acceptance": "Contract get__screen_audit_admin_support_tickets_ticketId; strict TICKET_ASSIGNMENT_OR_OWNER; validate request/response, 401/403/404/409 negative cases, idempotency and DB child isolation; no fake 200.",
+      "source_api": "docs/openapi.yaml",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "related_screens": [
+        "BO-06"
+      ],
+      "related_tables": [
+        "support_tickets",
+        "admin_support_read_audit"
+      ],
+      "evidence": "evidence/local/tasks/GAP-031.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-032",
+      "title": "Implement & test GET /admin/access/email-verification/status",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "GAP-011",
+        "L14-018"
+      ],
+      "target_artifact": "backend/src/api/admin/get__screen_audit_admin_access_email_verification_status.cc",
+      "acceptance": "Contract get__screen_audit_admin_access_email_verification_status; strict SELF_EMAIL_STATUS_ONLY; validate request/response, 401/403/404/409 negative cases, idempotency and DB child isolation; no fake 200.",
+      "source_api": "docs/openapi.yaml",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "related_screens": [
+        "BO-02",
+        "BO-02V"
+      ],
+      "related_tables": [
+        "admin_email_verification_challenges",
+        "admin_profiles"
+      ],
+      "evidence": "evidence/local/tasks/GAP-032.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-033",
+      "title": "Implement & test GET /admin/owner/roles",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "GAP-011",
+        "L14-018"
+      ],
+      "target_artifact": "backend/src/api/admin/get__screen_audit_admin_owner_roles.cc",
+      "acceptance": "Contract get__screen_audit_admin_owner_roles; strict ROOT_OWNER_MFA_STEP_UP; validate request/response, 401/403/404/409 negative cases, idempotency and DB child isolation; no fake 200.",
+      "source_api": "docs/openapi.yaml",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "related_screens": [
+        "BO-04"
+      ],
+      "related_tables": [
+        "admin_roles",
+        "admin_role_permissions"
+      ],
+      "evidence": "evidence/local/tasks/GAP-033.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-034",
+      "title": "Implement & test GET /admin/owner/staff/{adminId}",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "GAP-011",
+        "L14-018"
+      ],
+      "target_artifact": "backend/src/api/admin/get__screen_audit_admin_owner_staff_adminId.cc",
+      "acceptance": "Contract get__screen_audit_admin_owner_staff_adminId; strict ROOT_OWNER_MFA_STEP_UP; validate request/response, 401/403/404/409 negative cases, idempotency and DB child isolation; no fake 200.",
+      "source_api": "docs/openapi.yaml",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "related_screens": [
+        "BO-04",
+        "BO-09"
+      ],
+      "related_tables": [
+        "admin_accounts",
+        "admin_role_grants"
+      ],
+      "evidence": "evidence/local/tasks/GAP-034.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-035",
+      "title": "Implement & test GET /admin/owner/access-requests/summary",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "GAP-011",
+        "L14-018"
+      ],
+      "target_artifact": "backend/src/api/admin/get__screen_audit_admin_owner_access_requests_summary.cc",
+      "acceptance": "Contract get__screen_audit_admin_owner_access_requests_summary; strict ROOT_OWNER_MFA_STEP_UP; validate request/response, 401/403/404/409 negative cases, idempotency and DB child isolation; no fake 200.",
+      "source_api": "docs/openapi.yaml",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "related_screens": [
+        "BO-09"
+      ],
+      "related_tables": [
+        "admin_access_requests"
+      ],
+      "evidence": "evidence/local/tasks/GAP-035.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-036",
+      "title": "Implement & test GET /admin/support/tickets/{ticketId}/messages",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "GAP-011",
+        "L14-018"
+      ],
+      "target_artifact": "backend/src/api/admin/get__screen_audit_admin_support_tickets_ticketId_messages.cc",
+      "acceptance": "Contract get__screen_audit_admin_support_tickets_ticketId_messages; strict TICKET_ASSIGNMENT_OR_OWNER; validate request/response, 401/403/404/409 negative cases, idempotency and DB child isolation; no fake 200.",
+      "source_api": "docs/openapi.yaml",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "related_screens": [
+        "BO-06"
+      ],
+      "related_tables": [
+        "support_messages",
+        "admin_support_read_audit"
+      ],
+      "evidence": "evidence/local/tasks/GAP-036.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-037",
+      "title": "Implement & test GET /admin/usage/parents/summary",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "GAP-011",
+        "L14-018"
+      ],
+      "target_artifact": "backend/src/api/admin/get__screen_audit_admin_usage_parents_summary.cc",
+      "acceptance": "Contract get__screen_audit_admin_usage_parents_summary; strict USAGE_AUDITOR_OR_OWNER; validate request/response, 401/403/404/409 negative cases, idempotency and DB child isolation; no fake 200.",
+      "source_api": "docs/openapi.yaml",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "related_screens": [
+        "BO-08",
+        "BO-09"
+      ],
+      "related_tables": [
+        "parent_service_usage_events"
+      ],
+      "evidence": "evidence/local/tasks/GAP-037.md",
+      "release_gate": "CONDITIONAL_BLOCKED_WITH_FAIL_CLOSED_TEST"
+    },
+    {
+      "id": "GAP-038",
+      "title": "Implement & test GET /admin/subscribers/{familyId}/entitlements",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "GAP-011",
+        "L14-018"
+      ],
+      "target_artifact": "backend/src/api/admin/get__screen_audit_admin_subscribers_familyId_entitlements.cc",
+      "acceptance": "Contract get__screen_audit_admin_subscribers_familyId_entitlements; strict BILLING_VIEWER_MINIMAL_CHILD_ROSTER; validate request/response, 401/403/404/409 negative cases, idempotency and DB child isolation; no fake 200.",
+      "source_api": "docs/openapi.yaml",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "related_screens": [
+        "BO-07",
+        "BO-08"
+      ],
+      "related_tables": [
+        "child_paid_entitlements",
+        "child_seat_assignments"
+      ],
+      "evidence": "evidence/local/tasks/GAP-038.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-039",
+      "title": "Implement & test GET /admin/billing/reconciliation-status",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "GAP-011",
+        "L14-018"
+      ],
+      "target_artifact": "backend/src/api/admin/get__screen_audit_admin_billing_reconciliation_status.cc",
+      "acceptance": "Contract get__screen_audit_admin_billing_reconciliation_status; strict BILLING_VIEWER_OR_OWNER; validate request/response, 401/403/404/409 negative cases, idempotency and DB child isolation; no fake 200.",
+      "source_api": "docs/openapi.yaml",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "related_screens": [
+        "BO-07",
+        "BO-09"
+      ],
+      "related_tables": [
+        "payment_reconciliation_inbox"
+      ],
+      "evidence": "evidence/local/tasks/GAP-039.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-040",
+      "title": "Implement & test GET /children/{childId}/extra-viewer-addons",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L11-014",
+        "GAP-002"
+      ],
+      "target_artifact": "backend/src/api/billing/get__screen_audit_children_childId_extra_viewer_addons.cc",
+      "acceptance": "Contract get__screen_audit_children_childId_extra_viewer_addons; strict AUTHORIZED_PAID_CHILD_VIEWER; validate request/response, 401/403/404/409 negative cases, idempotency and DB child isolation; no fake 200.",
+      "source_api": "docs/openapi.yaml",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "related_screens": [
+        "SH-04",
+        "SH-06"
+      ],
+      "related_tables": [
+        "extra_viewer_purchases",
+        "child_paid_entitlements"
+      ],
+      "evidence": "evidence/local/tasks/GAP-040.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-041",
+      "title": "Implement & test GET /children/{childId}/viewer-takeover-requests/{requestId}",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L11-014",
+        "GAP-002"
+      ],
+      "target_artifact": "backend/src/api/billing/get__screen_audit_children_childId_viewer_takeover_requests_requestId.cc",
+      "acceptance": "Contract get__screen_audit_children_childId_viewer_takeover_requests_requestId; strict EXACT_CHILD_VIEWER_LEASE_OWNER; validate request/response, 401/403/404/409 negative cases, idempotency and DB child isolation; no fake 200.",
+      "source_api": "docs/openapi.yaml",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "related_screens": [
+        "SH-03"
+      ],
+      "related_tables": [
+        "viewer_takeover_requests"
+      ],
+      "evidence": "evidence/local/tasks/GAP-041.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-042",
+      "title": "Implement & test POST /children/{childId}/viewer-takeover-requests/{requestId}/decision",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L11-014",
+        "GAP-002"
+      ],
+      "target_artifact": "backend/src/api/billing/post__screen_audit_children_childId_viewer_takeover_requests_requestId_decision.cc",
+      "acceptance": "Contract post__screen_audit_children_childId_viewer_takeover_requests_requestId_decision; strict EXACT_CHILD_ACTIVE_LEASE_OWNER; validate request/response, 401/403/404/409 negative cases, idempotency and DB child isolation; no fake 200.",
+      "source_api": "docs/openapi.yaml",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "related_screens": [
+        "SH-03"
+      ],
+      "related_tables": [
+        "viewer_takeover_requests",
+        "premium_viewer_leases"
+      ],
+      "evidence": "evidence/local/tasks/GAP-042.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-043",
+      "title": "Implement & test GET /children/{childId}/checkins",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L03-014",
+        "GAP-002"
+      ],
+      "target_artifact": "backend/src/api/children/get__screen_audit_children_childId_checkins.cc",
+      "acceptance": "Contract get__screen_audit_children_childId_checkins; strict AUTHORIZED_EXACT_CHILD_SAFETY_READ; validate request/response, 401/403/404/409 negative cases, idempotency and DB child isolation; no fake 200.",
+      "source_api": "docs/openapi.yaml",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "related_screens": [
+        "C-15",
+        "P-17"
+      ],
+      "related_tables": [
+        "child_checkins"
+      ],
+      "evidence": "evidence/local/tasks/GAP-043.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-044",
+      "title": "Implement & test POST /admin/faqs/{faqId}/unpublish",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "GAP-011",
+        "L14-018"
+      ],
+      "target_artifact": "backend/src/api/admin/post__screen_audit_admin_faqs_faqId_unpublish.cc",
+      "acceptance": "Contract post__screen_audit_admin_faqs_faqId_unpublish; strict FAQ_PUBLISH_PERMISSION; validate request/response, 401/403/404/409 negative cases, idempotency and DB child isolation; no fake 200.",
+      "source_api": "docs/openapi.yaml",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "related_screens": [
+        "BO-05"
+      ],
+      "related_tables": [
+        "faq_entries",
+        "faq_revisions",
+        "admin_action_audit"
+      ],
+      "evidence": "evidence/local/tasks/GAP-044.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-045",
+      "title": "Implement & test POST /admin/faqs/{faqId}/restore",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "GAP-011",
+        "L14-018"
+      ],
+      "target_artifact": "backend/src/api/admin/post__screen_audit_admin_faqs_faqId_restore.cc",
+      "acceptance": "Contract post__screen_audit_admin_faqs_faqId_restore; strict FAQ_PUBLISH_PERMISSION; validate request/response, 401/403/404/409 negative cases, idempotency and DB child isolation; no fake 200.",
+      "source_api": "docs/openapi.yaml",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "related_screens": [
+        "BO-05"
+      ],
+      "related_tables": [
+        "faq_entries",
+        "faq_revisions",
+        "admin_action_audit"
+      ],
+      "evidence": "evidence/local/tasks/GAP-045.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-046",
+      "title": "Implement & test GET /admin/faqs/{faqId}/preview",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "GAP-011",
+        "L14-018"
+      ],
+      "target_artifact": "backend/src/api/admin/get__screen_audit_admin_faqs_faqId_preview.cc",
+      "acceptance": "Contract get__screen_audit_admin_faqs_faqId_preview; strict FAQ_EDITOR_OR_OWNER; validate request/response, 401/403/404/409 negative cases, idempotency and DB child isolation; no fake 200.",
+      "source_api": "docs/openapi.yaml",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "related_screens": [
+        "BO-05"
+      ],
+      "related_tables": [
+        "faq_revisions"
+      ],
+      "evidence": "evidence/local/tasks/GAP-046.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-047",
+      "title": "Implement & test GET /families/{familyId}/members",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L03-014",
+        "GAP-002"
+      ],
+      "target_artifact": "backend/src/api/children/get__screen_audit_families_familyId_members.cc",
+      "acceptance": "Contract get__screen_audit_families_familyId_members; strict BILLING_OWNER_NO_CHILD_GRANTS; validate request/response, 401/403/404/409 negative cases, idempotency and DB child isolation; no fake 200.",
+      "source_api": "docs/openapi.yaml",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "related_screens": [
+        "P-16",
+        "P-39"
+      ],
+      "related_tables": [
+        "family_memberships"
+      ],
+      "evidence": "evidence/local/tasks/GAP-047.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-048",
+      "title": "Implement & test PATCH /children/{childId}/screen-time-rules/{ruleId}",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L09-009",
+        "L02-015"
+      ],
+      "target_artifact": "backend/src/api/children/patch__screen_audit_remainder_children_childId_screen_time_rules_ruleId.cc",
+      "acceptance": "Contract patch__screen_audit_remainder_children_childId_screen_time_rules_ruleId; strict MANAGED_DEVICE_AND_CHILD_SCOPE; validate request/response, 401/403/404/409 negative cases, idempotency and DB child isolation; no fake 200.",
+      "source_api": "docs/openapi.yaml",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "related_screens": [
+        "P-35",
+        "P-36"
+      ],
+      "related_tables": [
+        "screen_time_rules",
+        "rule_assignments",
+        "policy_execution_receipts"
+      ],
+      "evidence": "evidence/local/tasks/GAP-048.md",
+      "release_gate": "CONDITIONAL_BLOCKED_WITH_FAIL_CLOSED_TEST"
+    },
+    {
+      "id": "GAP-049",
+      "title": "Implement & test DELETE /children/{childId}/screen-time-rules/{ruleId}",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L09-009",
+        "L02-015"
+      ],
+      "target_artifact": "backend/src/api/children/delete__screen_audit_remainder_children_childId_screen_time_rules_ruleId.cc",
+      "acceptance": "Contract delete__screen_audit_remainder_children_childId_screen_time_rules_ruleId; strict MANAGED_DEVICE_AND_CHILD_SCOPE; validate request/response, 401/403/404/409 negative cases, idempotency and DB child isolation; no fake 200.",
+      "source_api": "docs/openapi.yaml",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "related_screens": [
+        "P-35",
+        "P-36"
+      ],
+      "related_tables": [
+        "screen_time_rules",
+        "rule_assignments",
+        "policy_execution_receipts"
+      ],
+      "evidence": "evidence/local/tasks/GAP-049.md",
+      "release_gate": "CONDITIONAL_BLOCKED_WITH_FAIL_CLOSED_TEST"
+    },
+    {
+      "id": "GAP-050",
+      "title": "Implement & test GET /parents/me/media-activity/export-requests/{id}",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L16-011",
+        "GAP-017"
+      ],
+      "target_artifact": "backend/src/api/children/get__screen_audit_remainder_parents_me_media_activity_export_requests_id.cc",
+      "acceptance": "Contract get__screen_audit_remainder_parents_me_media_activity_export_requests_id; strict MEDIA_EXPORT_APPROVED_POLICY_REQUIRED; validate request/response, 401/403/404/409 negative cases, idempotency and DB child isolation; no fake 200.",
+      "source_api": "docs/openapi.yaml",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "related_screens": [
+        "PA-06",
+        "PA-10"
+      ],
+      "related_tables": [
+        "media_access_audit"
+      ],
+      "evidence": "evidence/local/tasks/GAP-050.md",
+      "release_gate": "CONDITIONAL_BLOCKED_WITH_FAIL_CLOSED_TEST"
+    },
+    {
+      "id": "GAP-051",
+      "title": "Implement & test GET /children/{childId}/usage/coverage",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L09-009",
+        "L02-015"
+      ],
+      "target_artifact": "backend/src/api/children/get__screen_audit_remainder_children_childId_usage_coverage.cc",
+      "acceptance": "Contract get__screen_audit_remainder_children_childId_usage_coverage; strict CHILD_BEHAVIOR_MONITORING_LEGAL_GATE; validate request/response, 401/403/404/409 negative cases, idempotency and DB child isolation; no fake 200.",
+      "source_api": "docs/openapi.yaml",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "related_screens": [
+        "P-31",
+        "P-32"
+      ],
+      "related_tables": [
+        "usage_permission_checks",
+        "usage_period_summaries"
+      ],
+      "evidence": "evidence/local/tasks/GAP-051.md",
+      "release_gate": "CONDITIONAL_BLOCKED_WITH_FAIL_CLOSED_TEST"
+    },
+    {
+      "id": "GAP-052",
+      "title": "Implement & test POST /children/{childId}/guardian-invitations/{inviteId}/cancel",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "L04-012",
+        "GAP-003"
+      ],
+      "target_artifact": "backend/src/api/guardians/post__screen_audit_remainder_children_childId_guardian_invitations_inviteId_cancel.cc",
+      "acceptance": "Contract post__screen_audit_remainder_children_childId_guardian_invitations_inviteId_cancel; strict INVITER_EXACT_CHILD_SCOPE; validate request/response, 401/403/404/409 negative cases, idempotency and DB child isolation; no fake 200.",
+      "source_api": "docs/openapi.yaml",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "related_screens": [
+        "P-39"
+      ],
+      "related_tables": [
+        "guardian_invitations"
+      ],
+      "evidence": "evidence/local/tasks/GAP-052.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-053",
+      "title": "Implement & test GET /children/{childId}/notification-rules",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "GAP-007"
+      ],
+      "target_artifact": "backend/src/api/notifications/get__screen_audit_remainder_children_childId_notification_rules.cc",
+      "acceptance": "Contract get__screen_audit_remainder_children_childId_notification_rules; strict EXACT_CHILD_NOTIFICATION_SCOPE; validate request/response, 401/403/404/409 negative cases, idempotency and DB child isolation; no fake 200.",
+      "source_api": "docs/openapi.yaml",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "related_screens": [
+        "P-28",
+        "P-50"
+      ],
+      "related_tables": [
+        "place_notification_rules"
+      ],
+      "evidence": "evidence/local/tasks/GAP-053.md",
+      "release_gate": "LOCAL_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "GAP-054",
+      "title": "Final 171-operation full API, Figma screen and DB migration traceability signoff",
+      "status": "NOT_STARTED",
+      "depends_on": [
+        "GAP-029",
+        "GAP-030",
+        "GAP-031",
+        "GAP-032",
+        "GAP-033",
+        "GAP-034",
+        "GAP-035",
+        "GAP-036",
+        "GAP-037",
+        "GAP-038",
+        "GAP-039",
+        "GAP-040",
+        "GAP-041",
+        "GAP-042",
+        "GAP-043",
+        "GAP-044",
+        "GAP-045",
+        "GAP-046",
+        "GAP-047",
+        "GAP-048",
+        "GAP-049",
+        "GAP-050",
+        "GAP-051",
+        "GAP-052",
+        "GAP-053",
+        "GAP-028"
+      ],
+      "target_artifact": "evidence/local/FINAL_API_FIGMA_DB_COVERAGE.md",
+      "acceptance": "171/171 operations assessed against implemented handlers or explicitly OFF conditional branches; 187/187 screen row coverage; migrations/RLS and negative tests evidenced; no fabricated release clearance.",
+      "source_api": "docs/openapi.yaml",
+      "source_audit": "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json",
+      "source_db": "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
+      "evidence": "evidence/local/tasks/GAP-054.md",
+      "release_gate": "LOCAL_NOT_GOOGLE_PLAY"
     }
   ]
 }
