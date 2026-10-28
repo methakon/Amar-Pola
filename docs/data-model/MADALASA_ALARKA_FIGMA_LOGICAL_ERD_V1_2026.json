@@ -6,12 +6,13 @@
   "domains": [
     {
       "id": "93:2",
-      "title": "ERD 01 / Family, identity & explicit guardian authority",
+      "title": "ERD 01 / Family identity, child-scoped V2 cross-family grants and lawful authority",
       "notes": [
         "MADALASA · ALARKA  /  LOGICAL DATA MODEL",
         "01   Family, identity & explicit guardian authority",
         "Tenant boundary ≠ a parent's automatic right to view every child. Co-parent access is child-scoped and blocked until trusted relationship verification exists.",
-        "M1 SRS FR-001/022 · Data Authorization · M7 two-parent policy · India consent"
+        "M1 SRS FR-001/022 · Data Authorization · M7 two-parent policy · India consent",
+        "2026-10-28: Family Link third-party parental role requirement DROPPED; legal authority/consent remains independent and real-data gated"
       ],
       "tables": [
         {
@@ -61,38 +62,38 @@
           ]
         },
         {
-          "name": "child_parent_verifications",
-          "label": "BLOCKED: GOOGLE API UNVERIFIED",
+          "name": "child_authority_reviews",
+          "label": "LEGAL AUTHORITY · NOT FAMILY LINK",
           "columns": [
             "PK id : uuid",
             "FK child_id → children",
             "FK adult_id → adult_accounts",
-            "method, evidence_ref : enum / opaque",
-            "state : PENDING / VERIFIED / REVOKED",
-            "verified_at, expires_at : time?"
+            "method, secure_evidence_ref : opaque",
+            "state : PENDING / APPROVED / DISPUTED",
+            "reviewed_at, expires_at : time?"
           ]
         },
         {
-          "name": "child_guardian_grants",
-          "label": "DENY BY DEFAULT",
+          "name": "child_access_grants_v2",
+          "label": "CROSS-FAMILY · DENY DEFAULT",
           "columns": [
             "PK id : uuid",
             "FK child_id → children",
             "FK adult_id → adult_accounts",
-            "FK verification_id : uuid?",
-            "scopes : enum set",
-            "expires_at, revoked_at : time?"
+            "FK authority_review_id : uuid?",
+            "scopes : per-child enum + invite_id",
+            "expires, revoked, revocation_epoch"
           ]
         },
         {
-          "name": "guardian_invitations",
-          "label": "ONE CHILD INVITE",
+          "name": "child_access_invites",
+          "label": "ONE CHILD · ACCEPTED BY INVITEE",
           "columns": [
             "PK id : uuid",
             "FK child_id → children",
             "inviter_id, invitee_id : uuid",
-            "secret_hash : bytea",
-            "expires_at, consumed_at : time?"
+            "one_time_secret_hash : bytea",
+            "expires_at, accepted_at : time?"
           ]
         },
         {
@@ -132,11 +133,11 @@
         "families → children",
         "families → family_memberships",
         "adult_accounts → family_memberships",
-        "children → child_parent_verifications",
-        "adult_accounts → child_parent_verifications",
-        "children → child_guardian_grants",
-        "adult_accounts → child_guardian_grants",
-        "children → guardian_invitations",
+        "children → child_authority_reviews",
+        "adult_accounts → child_authority_reviews",
+        "children → child_access_grants_v2",
+        "adult_accounts → child_access_grants_v2",
+        "children → child_access_invites",
         "children → consent_records",
         "families → trial_redemptions",
         "families → family_revocation_epochs"
@@ -1601,7 +1602,7 @@
   "stage": "CONCEPTUAL_NOT_MIGRATED",
   "generatedFrom": "Figma editable text layers",
   "exportDate": "2026-10-28",
-  "adminRevision": "2026-10-28: Owner-controlled Google admin auth, FAQ, support and parent service metadata; design only",
+  "adminRevision": "2026-10-28: Owner-controlled Google admin auth, FAQ, support and parent service metadata; design only; V2 cross-family grant update 2026-10-28",
   "screenAuditAddendum": {
     "date": "2026-10-28",
     "new_domain_id": "121:2",
