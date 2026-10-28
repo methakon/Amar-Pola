@@ -414,7 +414,7 @@
     {
       "id": "L00-007",
       "phase": "00",
-      "name": "Record Google Family Link role attestation as unsupported",
+      "name": "Record removal of unsupported Google Family Link relationship API requirement",
       "status": "NOT_STARTED",
       "depends_on": [
         "L00-006"
@@ -425,14 +425,15 @@
         "docs/phases/M0-foundation-and-approvals/03-legal-and-privacy/DPIA.md",
         "docs/phases/M0-foundation-and-approvals/03-legal-and-privacy/DATA_RETENTION_SCHEDULE.md",
         "docs/phases/M9-play-release/01-play-and-data-safety/GOOGLE_PLAY_PUBLISHING_REQUIREMENTS.md",
-        "docs/phases/M0-foundation-and-approvals/01-project-governance/TECHNICAL_DOCUMENT_AUDIT_GAPS_2026.md"
+        "docs/phases/M0-foundation-and-approvals/01-project-governance/TECHNICAL_DOCUMENT_AUDIT_GAPS_2026.md",
+        "docs/phases/M1-secure-platform-foundation/03-security-and-permissions/ADR_2026_10_28_BLEND_FAMILY_V2_AND_NO_FAMILY_LINK_DEPENDENCY.md"
       ],
-      "target_artifact": "docs/roadmap/PARENT_VERIFICATION_GATE.md",
-      "acceptance": "Second-parent sharing denies if relationship proof is absent",
+      "target_artifact": "docs/phases/M1-secure-platform-foundation/03-security-and-permissions/ADR_2026_10_28_BLEND_FAMILY_V2_AND_NO_FAMILY_LINK_DEPENDENCY.md",
+      "acceptance": "No consumer Google parent-role API dependency remains; legal authority/consent remains a separate review",
       "verification_type": "STATIC_REVIEW_AND_VALIDATOR",
       "evidence": "evidence/local/tasks/L00-007.md",
       "privacy": "SYNTHETIC_DATA_ONLY",
-      "release_gate": "CONDITIONAL_HUMAN_SIGNOFF",
+      "release_gate": "LOCAL_ONLY",
       "notes": "Use tests/negative cases; refuse to mark PASS without actual command, exit code, redacted evidence."
     },
     {
@@ -1678,7 +1679,7 @@
     {
       "id": "L04-006",
       "phase": "04",
-      "name": "Implement Google-parent relationship verification fail-closed adapter",
+      "name": "Implement child-specific invitation acceptance, consent and authority-gate interface (NOT Family Link)",
       "status": "NOT_STARTED",
       "depends_on": [
         "L04-005"
@@ -1688,10 +1689,11 @@
         "docs/phases/M1-secure-platform-foundation/01-requirements-and-architecture/SRS.md",
         "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/TWO_PARENT_SHARED_CHILD_PREPAID_ENTITLEMENTS_2026.md",
         "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md",
-        "docs/phases/M0-foundation-and-approvals/03-legal-and-privacy/INDIA_GOVERNMENT_LEGAL_GOOGLE_PLAY_PROJECT_RISK_ASSESSMENT_2026.md"
+        "docs/phases/M0-foundation-and-approvals/03-legal-and-privacy/INDIA_GOVERNMENT_LEGAL_GOOGLE_PLAY_PROJECT_RISK_ASSESSMENT_2026.md",
+        "docs/phases/M1-secure-platform-foundation/03-security-and-permissions/ADR_2026_10_28_BLEND_FAMILY_V2_AND_NO_FAMILY_LINK_DEPENDENCY.md"
       ],
-      "target_artifact": "backend/src/identity/parent_verification.cc",
-      "acceptance": "Unverified relationship blocks every share path",
+      "target_artifact": "backend/src/identity/child_authority_and_invite.cc",
+      "acceptance": "Synthetic exact-child invite/accept/revoke works; real-data authority/consent unknown denies; Google Sign-In alone never grants child scope",
       "verification_type": "AUTOMATED_TEST_REQUIRED",
       "evidence": "evidence/local/tasks/L04-006.md",
       "privacy": "SYNTHETIC_DATA_ONLY",
@@ -1701,7 +1703,7 @@
     {
       "id": "L04-007",
       "phase": "04",
-      "name": "Implement child-specific grant management/revocation",
+      "name": "Implement V2 cross-family child-specific grants and revocation with RLS",
       "status": "NOT_STARTED",
       "depends_on": [
         "L04-006"
@@ -1711,10 +1713,11 @@
         "docs/phases/M1-secure-platform-foundation/01-requirements-and-architecture/SRS.md",
         "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/TWO_PARENT_SHARED_CHILD_PREPAID_ENTITLEMENTS_2026.md",
         "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md",
-        "docs/phases/M0-foundation-and-approvals/03-legal-and-privacy/INDIA_GOVERNMENT_LEGAL_GOOGLE_PLAY_PROJECT_RISK_ASSESSMENT_2026.md"
+        "docs/phases/M0-foundation-and-approvals/03-legal-and-privacy/INDIA_GOVERNMENT_LEGAL_GOOGLE_PLAY_PROJECT_RISK_ASSESSMENT_2026.md",
+        "docs/phases/M1-secure-platform-foundation/03-security-and-permissions/ADR_2026_10_28_BLEND_FAMILY_V2_AND_NO_FAMILY_LINK_DEPENDENCY.md"
       ],
       "target_artifact": "backend/src/identity/grants.cc",
-      "acceptance": "Parent A grant on Child A never unlocks Child B",
+      "acceptance": "Parent B can access explicitly authorized Child A in a different billing family, never Child B; revoke closes leases",
       "verification_type": "AUTOMATED_TEST_REQUIRED",
       "evidence": "evidence/local/tasks/L04-007.md",
       "privacy": "SYNTHETIC_DATA_ONLY",
@@ -5566,7 +5569,7 @@
     {
       "id": "L17-009",
       "phase": "17",
-      "name": "Benchmark 1/2/3 viewers and TURN fanout with fake media",
+      "name": "Benchmark local synthetic viewer fanout, report bytes/CPU without choosing hosting region",
       "status": "NOT_STARTED",
       "depends_on": [
         "L17-008"
@@ -5579,7 +5582,7 @@
         "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md"
       ],
       "target_artifact": "bench/viewer_cost",
-      "acceptance": "₹100/100day marginal costs estimated with limits",
+      "acceptance": "Measured 1/2/3 viewer throughput, CPU and bytes recorded; cloud tariff/region deferred to deployment",
       "verification_type": "AUTOMATED_TEST_REQUIRED",
       "evidence": "evidence/local/tasks/L17-009.md",
       "privacy": "SYNTHETIC_DATA_ONLY",
@@ -5803,7 +5806,7 @@
     {
       "id": "L18-004",
       "phase": "18",
-      "name": "Run Child A only co-parent invite blocked pending verification",
+      "name": "End-to-end child-specific cross-family invite acceptance and legal-gate denial",
       "status": "NOT_STARTED",
       "depends_on": [
         "L18-003"
@@ -5814,10 +5817,11 @@
         "docs/ui/figma-functional-handoff/README.md",
         "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json",
         "docs/openapi.yaml",
-        "docs/phases/M9-play-release/01-play-and-data-safety/GOOGLE_PLAY_PUBLISHING_REQUIREMENTS.md"
+        "docs/phases/M9-play-release/01-play-and-data-safety/GOOGLE_PLAY_PUBLISHING_REQUIREMENTS.md",
+        "docs/phases/M1-secure-platform-foundation/03-security-and-permissions/ADR_2026_10_28_BLEND_FAMILY_V2_AND_NO_FAMILY_LINK_DEPENDENCY.md"
       ],
       "target_artifact": "evidence/local/E2E_PARENT_SCOPE.md",
-      "acceptance": "Child B never visible to unrelated parent",
+      "acceptance": "Child A grant isolated, Child B hidden; unapproved legal authority cannot enable real child processing",
       "verification_type": "STATIC_REVIEW_AND_VALIDATOR",
       "evidence": "evidence/local/tasks/L18-004.md",
       "privacy": "SYNTHETIC_DATA_ONLY",
@@ -6271,12 +6275,11 @@
   "critical_unresolved": [
     "Publisher and data controller identity / lawful authority",
     "Indian DPDP child data purpose/consent/retention approval",
-    "Google Family Link child-specific parent verification API unavailable",
     "Actual two-app Google Play permissions and personal-account test eligibility",
     "Paid family capacity prepaid SKU feasibility and price",
     "Media capture Android/Play legality and runtime limits",
-    "Actual India-first hosting region vs Chicago historical cost docs",
-    "DB conceptual schema 112 tables vs executable M1 migration only"
+    "DB conceptual schema 112 tables vs executable M1 migration only",
+    "Child legal authority and DPDP processing/consent method must be independently approved; Google-specific parent role verification DROPPED"
   ],
   "phase_criticality": {
     "blocker_phases": [
@@ -6299,5 +6302,15 @@
       "L09-009",
       "L18-012"
     ]
-  }
+  },
+  "deployment_deferred": [
+    "Final hosting region and OCI provider configuration",
+    "Actual cloud egress tariff and margin estimate",
+    "Domain TLS/WAF, production backups, scale topology"
+  ],
+  "owner_changes_2026_10_28": [
+    "Family Link role attestation removed; Google OIDC identity + own exact-child grant remains",
+    "Legal parent/guardian authority not waived",
+    "Hosting-region and final bandwidth economics removed from local implementation blockers"
+  ]
 }
