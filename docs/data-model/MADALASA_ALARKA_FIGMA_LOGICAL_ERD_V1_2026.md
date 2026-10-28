@@ -1,6 +1,6 @@
 # Madalasa–Alarka • Logical PostgreSQL schema — Figma handoff
 
-**Design stage:** conceptual schema v1 (28 October 2026), **not executed SQL**. [Open Figma database design](https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=92-2). The 10-domain models are editable Figma frames with text and foreign-key relationship registers. **112 candidate tables**; some relationships and names intentionally remain proposals, not stable migrations.
+**Design stage:** conceptual schema v1 (28 October 2026), **not executed SQL**. [Open Figma database design](https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=92-2). The 11-domain models are editable Figma frames with text and foreign-key relationship registers. **120 candidate tables**; some relationships and names intentionally remain proposals, not stable migrations.
 
 ## Critical invariants and unresolved gates
 
@@ -419,10 +419,41 @@ Owner 2026-10-28: separate back-office, only verified owner swarna.s.jobs@gmail.
 
 **Permission boundary:** Owner controls staff roles, FAQ, support, subscriptions and parent service logs but does not get any unrestricted child private location, media or messages. Google OIDC sub is the durable identity key; named child media auditing remains a separate scoped gate. [Admin workflow design](https://github.com/methakon/Madalasa-Alarka/blob/main/docs/phases/P3-deferred-research/01-media-and-administrator-research/ADMIN_OWNER_GOOGLE_ACCESS_FAQ_SUPPORT_BILLING_AND_USAGE_2026.md).
 
+
+### [ERD 11 / Figma API gap closure additional persistence (CONCEPT ONLY)](https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=121-2)
+
+**8 newly identified screen-backed logical entities (no migration executed).** P-02/P-04 parent sessions, CAP permission changes, P-19 per-parent notification reads, P-29/P-30 commute plan/version history, P-51 adaptive cadence, P-52 public outage status, P-57/P-58/C-20 conditional device media approvals. [Physical schema / RLS migration review](FIGMA_SCREEN_GAP_PHYSICAL_SCHEMA_REVIEW_2026-10-28.md).
+
+**parent_auth_sessions** · AUTH LOGOUT/REVOKE  
+`PK id : uuid` · `FK adult_id → adult_accounts.id` · `token_hash : bytea unique` · `issued_at, expires_at : timestamp` · `revoked_at, revocation_epoch` · `client_audience : PARENT`
+
+**device_permission_change_events** · REVOCATION HISTORY  
+`PK id : uuid` · `FK device_id → child_devices.id` · `FK child_id → children.id` · `permission_key, old_state, new_state` · `observed_at, received_at : timestamp` · `device_state_revision : bigint`
+
+**parent_notification_read_receipts** · ONE GUARDIAN READ  
+`PK (delivery_id, adult_id)` · `FK delivery_id → notification_deliveries.id` · `FK adult_id → adult_accounts.id` · `read_at : timestamptz` · `is_read : boolean` · `source_revision : bigint`
+
+**commute_plans** · M3 ROUTE PLAN  
+`PK plan_id : uuid` · `FK child_id → children.id` · `start_place_id, end_place_id : uuid?` · `schedule_json : validated` · `version, created_by_adult_id` · `legal_history_gate : enum`
+
+**commute_plan_revisions** · REVISIONS / NO FAKE ARRIVAL  
+`PK (plan_id, revision)` · `FK plan_id → commute_plans.plan_id` · `expected_window : tstzrange` · `change_reason, edited_by : uuid` · `created_at, supersedes_revision`
+
+**tracking_policy_revisions** · FREE / PAID CADENCE  
+`PK id : uuid` · `FK child_id → children.id` · `FK device_id → child_devices.id` · `policy_version : bigint` · `frequency_class : enum` · `effective_at, device_ack_at`
+
+**service_incidents** · NO PRIVATE TELEMETRY  
+`PK id : uuid` · `component, status : enum` · `public_message : sanitized text` · `began_at, resolved_at` · `severity, release_stage` · `no child data or coordinates`
+
+**media_request_device_approvals** · EXPLICIT USER-AUTHORIZED  
+`PK id : uuid` · `FK command_id → media_command_requests.id` · `FK device_id → child_devices.id` · `device_ui_consent_state : enum` · `requested_at, decided_at` · `os_decision_reason : enum`
+
+**Relationships:** adult_accounts.id → parent_auth_sessions.adult_id; child_devices.id → device_permission_change_events.device_id; notification_deliveries.id → parent_notification_read_receipts.delivery_id; children.id → commute_plans.child_id; commute_plans.plan_id → commute_plan_revisions.plan_id; child_devices.id → tracking_policy_revisions.device_id; media_command_requests.id → media_request_device_approvals.command_id; child_devices.id → media_request_device_approvals.device_id.
+
 ## Migration / test gates
 
 1. Review naming, nullable columns, exact FK joins and tenant constraints with backend/security, including changing legacy same-family membership requirements for separately authorized external co-parents.
 2. Resolve DPDP legal basis, full-history retention, parental-role attestation and Play prepaid SKU blockers before enabling sensitive tables.
 3. Author numbered PostgreSQL DDL migrations, check constraints, partial unique indexes, appropriate PostGIS and event-time partitioning, real RLS policies and cross-tenant tests.
 4. Benchmark ingestion batch inserts, partition indexes, atomic viewer leases with simultaneous parents, refunds and 100-day dormancy/reactivation, deletion/restore non-revival, and finance cost simulations.
-5. Keep Figma and this exported register synchronized when migrations are approved; mark table states DRAFT/APPROVED/IMPLEMENTED instead of assuming all 112 tables must be shipped immediately.
+5. Keep Figma and this exported register synchronized when migrations are approved; mark table states DRAFT/APPROVED/IMPLEMENTED instead of assuming all 120 tables must be shipped immediately.
