@@ -32,3 +32,7 @@ Filing into a phase/category is not a claim of internal sign-off. Every migrated
 **Critical open decisions:** India children's location/usage lawfulness and Play eligibility; publisher/guardian verification; GPS 14-vs-30-day raw retention; processor DPAs/region; production incident/support contacts; licensing; Android/C++ implementation; CI evidence. M5 has no dedicated standalone technical design and is explicitly flagged in its phase index. All real-child pilot/release gates remain blocked until actual evidence and approval.
 
 **Stable paths:** `docs/openapi-m1.yaml` and `docs/openapi.yaml` remain unchanged so existing CI/requirements contracts are not silently broken. `docs/ui/` remains in its established Figma/tldraw handoff layout.
+
+## Agent-ready local coding plan
+
+Use [2026-10-28 local development roadmap](roadmap/LOCAL_AGENT_DEVELOPMENT_ROADMAP_2026-10-28.md) and [262-task dependency graph](roadmap/LOCAL_TASK_GRAPH_2026-10-28.json) with [evidence rules](roadmap/AGENT_EXECUTION_AND_TEST_EVIDENCE.md). This complements older M0–M9 milestones; it does not mark them completed. [Deployment and Google Play review remain separate](roadmap/DEPLOYMENT_AND_PLAY_RELEASE_PLAN_SEPARATE_2026-10-28.md).
