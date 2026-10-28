@@ -1,6 +1,6 @@
 # Madalasa–Alarka • Logical PostgreSQL schema — Figma handoff
 
-**Design stage:** conceptual schema v1 (28 October 2026), **not executed SQL**. [Open Figma database design](https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=92-2). The 9-domain models are editable Figma frames with text and foreign-key relationship registers. **96 candidate tables**; some relationships and names intentionally remain proposals, not stable migrations.
+**Design stage:** conceptual schema v1 (28 October 2026), **not executed SQL**. [Open Figma database design](https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=92-2). The 10-domain models are editable Figma frames with text and foreign-key relationship registers. **112 candidate tables**; some relationships and names intentionally remain proposals, not stable migrations.
 
 ## Critical invariants and unresolved gates
 
@@ -362,10 +362,67 @@ _09   Operations, evidence gates & resilient event flow — PostgreSQL-backed in
 **Relationships:** durable_event_inbox → processing_outbox; processing_outbox → worker_lease_fences; idempotency_claims → durable_event_inbox; feature_release_gates → external_service_accounts; support_cases → export_requests; support_cases → security_audit_events; telemetry_aggregates → cost_usage_snapshots; architecture_decisions → feature_release_gates.
 
 
+
+### [ERD 10 / Admin accounts, access requests, FAQ, support and parent-service logs](https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=108-2)
+
+Owner 2026-10-28: separate back-office, only verified owner swarna.s.jobs@gmail.com may approve/reject applicant staff profiles. Admin applicant needs valid profile and verified email. Collecting full DOB/address/gender is a privacy/legal design gate; Google login alone grants zero permissions.
+
+**admin_accounts** · OWNER BOOTSTRAP  
+`PK id : uuid` · `google_issuer, google_sub : UNIQUE` · `verified_google_email : text` · `email_verified_at : timestamp` · `state : NO_ACCESS/ACTIVE/REVOKED` · `session_revocation_epoch : bigint`
+
+**admin_profiles** · PERSONAL • ENCRYPTED  
+`PK/FK admin_id → admin_accounts` · `name : encrypted text` · `address : encrypted text` · `dob, gender : encrypted? (gate)` · `contact_email, verified_at` · `profile_version, privacy_notice`
+
+**admin_email_challenges** · HASHED SINGLE USE  
+`PK id : uuid` · `FK admin_id : uuid` · `contact_email_digest : bytea` · `challenge_hash : unique` · `expires_at, used_at` · `attempts : int`
+
+**admin_access_requests** · OWNER APPROVES ONLY  
+`PK id : uuid` · `FK admin_id : uuid` · `profile_version : bigint` · `state : DRAFT/PENDING/APPROVED` · `submitted_at, decided_at` · `decided_by_owner_id, reason`
+
+**admin_roles** · ROLE CATALOG  
+`PK role_id : uuid` · `code : ROOT_OWNER/FAQ_EDITOR/...` · `description, active : text/bool` · `owner_assignable : bool`
+
+**admin_permissions** · PERMISSION CATALOG  
+`PK code : text` · `module : enum` · `requires_case, step_up : bool` · `description : text`
+
+**admin_role_permissions** · RBAC JOIN  
+`PK (role_id, permission_code)` · `FK role_id → admin_roles` · `FK permission_code → permissions`
+
+**admin_role_grants** · OWNER ISSUED / REVOKABLE  
+`PK grant_id : uuid` · `FK admin_id, role_id` · `FK granted_by_owner_id` · `created_at, revoked_at` · `expires_at : time?`
+
+**admin_action_audit** · NO OFF SWITCH  
+`PK audit_id : uuid` · `FK actor_admin_id : uuid` · `action, result, target_ref` · `occurred_at, request_id` · `digest / case_ref`
+
+**admin_notifications** · PII MINIMAL  
+`PK id : uuid` · `FK access_request_id : uuid` · `recipient_owner_id : uuid` · `queued_at, delivered_at` · `dedup_key, status`
+
+**faq_entries** · PUBLIC ONLY IF PUBLISHED  
+`PK faq_id : uuid` · `slug : unique` · `category, status : enum` · `current_revision_id : uuid?` · `created_at, updated_at`
+
+**faq_revisions** · REVISION HISTORY  
+`PK revision_id : uuid` · `FK faq_id : uuid` · `language_code : en` · `title, safe_body : text` · `created_by_admin_id, published_at`
+
+**support_tickets** · AUTHENTICATED PARENT  
+`PK ticket_id : uuid` · `FK parent_adult_id : uuid` · `family_id : uuid? (restricted)` · `subject, state, priority` · `assigned_admin_id, timestamps`
+
+**support_messages** · SANITIZED REPLIES  
+`PK message_id : uuid` · `FK ticket_id : uuid` · `sender_parent_or_admin_ref` · `safe_body : text` · `sent_at, delivery_state`
+
+**parent_service_usage_events** · SERVICE METADATA ONLY  
+`PK event_id : uuid` · `FK parent_adult_id : uuid` · `child_ref : masked optional` · `service_code, outcome` · `started_at, ended_at, duration_s` · `quota_debit, receipt_ref`
+
+**admin_support_read_audit** · EVERY SENSITIVE READ  
+`PK id : uuid` · `FK admin_id, ticket_id` · `request_id, purpose` · `accessed_at, outcome` · `immutable_digest`
+
+**Relationships:** admin_accounts → admin_profiles; admin_accounts → admin_email_challenges; admin_accounts → admin_access_requests; admin_accounts → admin_role_grants; admin_roles → admin_role_permissions; admin_permissions → admin_role_permissions; admin_roles → admin_role_grants; admin_accounts → admin_action_audit; admin_access_requests → admin_notifications; faq_entries → faq_revisions; admin_accounts → faq_revisions; support_tickets → support_messages; admin_accounts → admin_support_read_audit; support_tickets → admin_support_read_audit; admin_accounts → parent_service_usage_events.
+
+**Permission boundary:** Owner controls staff roles, FAQ, support, subscriptions and parent service logs but does not get any unrestricted child private location, media or messages. Google OIDC sub is the durable identity key; named child media auditing remains a separate scoped gate. [Admin workflow design](https://github.com/methakon/Madalasa-Alarka/blob/main/docs/phases/P3-deferred-research/01-media-and-administrator-research/ADMIN_OWNER_GOOGLE_ACCESS_FAQ_SUPPORT_BILLING_AND_USAGE_2026.md).
+
 ## Migration / test gates
 
 1. Review naming, nullable columns, exact FK joins and tenant constraints with backend/security, including changing legacy same-family membership requirements for separately authorized external co-parents.
 2. Resolve DPDP legal basis, full-history retention, parental-role attestation and Play prepaid SKU blockers before enabling sensitive tables.
 3. Author numbered PostgreSQL DDL migrations, check constraints, partial unique indexes, appropriate PostGIS and event-time partitioning, real RLS policies and cross-tenant tests.
 4. Benchmark ingestion batch inserts, partition indexes, atomic viewer leases with simultaneous parents, refunds and 100-day dormancy/reactivation, deletion/restore non-revival, and finance cost simulations.
-5. Keep Figma and this exported register synchronized when migrations are approved; mark table states DRAFT/APPROVED/IMPLEMENTED instead of assuming all 96 tables must be shipped immediately.
+5. Keep Figma and this exported register synchronized when migrations are approved; mark table states DRAFT/APPROVED/IMPLEMENTED instead of assuming all 112 tables must be shipped immediately.
