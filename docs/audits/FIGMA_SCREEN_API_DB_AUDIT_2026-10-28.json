@@ -158,7 +158,12 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "LOCAL_ONLY"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-02",
@@ -203,7 +208,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-03",
@@ -250,7 +260,12 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-04",
@@ -295,7 +310,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-05",
@@ -349,7 +369,12 @@
         "operations_present_as_drafts": 3,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-06",
@@ -394,7 +419,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-07",
@@ -439,7 +469,12 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-08",
@@ -468,7 +503,12 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "LOCAL_ONLY"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-09",
@@ -512,7 +552,12 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-10",
@@ -559,7 +604,12 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-11",
@@ -600,7 +650,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-12",
@@ -641,7 +696,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-13",
@@ -670,7 +730,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-14",
@@ -711,7 +776,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-15",
@@ -757,7 +827,12 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-16",
@@ -800,7 +875,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-17",
@@ -843,7 +923,12 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-18",
@@ -887,7 +972,12 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-19",
@@ -924,7 +1014,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-20",
@@ -961,7 +1056,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-21",
@@ -998,7 +1098,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-22",
@@ -1027,7 +1132,12 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "LOCAL_ONLY"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-23",
@@ -1066,7 +1176,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-24",
@@ -1106,7 +1221,12 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-25",
@@ -1145,7 +1265,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-26",
@@ -1182,7 +1307,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-27",
@@ -1219,7 +1349,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-28",
@@ -1262,7 +1397,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-29",
@@ -1301,7 +1441,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-30",
@@ -1337,12 +1482,15 @@
       "figma_url": "https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=12-566",
       "design_status": "FIGMA_EDITABLE_FRAME_FOUND",
       "after_contract_update": {
-        "operations_present_as_drafts": 0,
-        "still_missing": [
-          "GET /children/{childId}/commute-plans"
-        ],
-        "status": "CONTRACT_GAP_REMAINS"
-      }
+        "operations_present_as_drafts": 1,
+        "still_missing": [],
+        "status": "SPECIFIED_NOT_IMPLEMENTED"
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-31",
@@ -1379,7 +1527,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-32",
@@ -1418,7 +1571,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-33",
@@ -1459,7 +1617,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-34",
@@ -1500,7 +1663,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-35",
@@ -1541,7 +1709,12 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-36",
@@ -1578,7 +1751,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-37",
@@ -1619,7 +1797,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-38",
@@ -1658,7 +1841,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-39",
@@ -1703,7 +1891,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-40",
@@ -1746,7 +1939,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-41",
@@ -1775,7 +1973,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-42",
@@ -1814,7 +2017,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-43",
@@ -1853,7 +2061,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-44",
@@ -1890,7 +2103,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-45",
@@ -1925,7 +2143,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-46",
@@ -1977,7 +2200,12 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-47",
@@ -2022,7 +2250,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-48",
@@ -2073,7 +2306,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-49",
@@ -2116,7 +2354,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-50",
@@ -2155,7 +2398,12 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-51",
@@ -2194,7 +2442,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-52",
@@ -2225,7 +2478,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-53",
@@ -2268,7 +2526,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-54",
@@ -2321,7 +2584,12 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-55",
@@ -2350,7 +2618,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "PLATFORM_GATED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "P-56",
@@ -2379,7 +2653,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "PLATFORM_GATED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "P-57",
@@ -2420,7 +2700,13 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "P-58",
@@ -2461,7 +2747,13 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "P-59",
@@ -2500,7 +2792,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "P-60",
@@ -2539,7 +2836,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "C-01",
@@ -2568,7 +2870,12 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "LOCAL_ONLY"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "C-02",
@@ -2619,7 +2926,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "C-03",
@@ -2660,7 +2972,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "C-04",
@@ -2701,7 +3018,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "C-05",
@@ -2752,7 +3074,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "C-06",
@@ -2781,7 +3108,12 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "LOCAL_ONLY"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "C-07",
@@ -2810,7 +3142,12 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "LOCAL_ONLY"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "C-08",
@@ -2839,7 +3176,12 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "LOCAL_ONLY"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "C-09",
@@ -2868,7 +3210,12 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "LOCAL_ONLY"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "C-10",
@@ -2905,7 +3252,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "PLATFORM_GATED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "C-11",
@@ -2934,7 +3287,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "PLATFORM_GATED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "C-12",
@@ -2977,7 +3336,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "C-13",
@@ -3018,7 +3382,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "C-14",
@@ -3047,7 +3416,12 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "LOCAL_ONLY"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "C-15",
@@ -3092,7 +3466,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "C-16",
@@ -3137,7 +3516,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "C-17",
@@ -3180,7 +3564,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "C-18",
@@ -3209,7 +3598,12 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "LOCAL_ONLY"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "C-19",
@@ -3238,7 +3632,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "PLATFORM_GATED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "C-20",
@@ -3277,7 +3677,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "PLATFORM_GATED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "C-21",
@@ -3318,7 +3724,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_DEVELOPER_SPEC_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "CAP-ALARKA-A-01",
@@ -3344,7 +3755,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "LOCAL_ONLY"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-ALARKA-A-02",
@@ -3370,7 +3787,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "LOCAL_ONLY"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-ALARKA-A-03",
@@ -3411,7 +3834,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-ALARKA-A-04",
@@ -3452,7 +3881,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-ALARKA-A-05",
@@ -3490,7 +3925,13 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-ALARKA-A-06",
@@ -3531,7 +3972,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-ALARKA-A-07",
@@ -3557,7 +4004,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "LOCAL_ONLY"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-ALARKA-A-08",
@@ -3583,7 +4036,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "LOCAL_ONLY"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-ALARKA-A-09",
@@ -3609,7 +4068,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "LOCAL_ONLY"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-ALARKA-A-10",
@@ -3643,7 +4108,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "PLATFORM_GATED"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-ALARKA-A-11",
@@ -3679,7 +4150,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "PLATFORM_GATED"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-ALARKA-A-12",
@@ -3715,7 +4192,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "PLATFORM_GATED"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-ALARKA-A-13",
@@ -3751,7 +4234,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "PLATFORM_GATED"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-ALARKA-A-14",
@@ -3777,7 +4266,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "PLATFORM_GATED"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-ALARKA-A-15",
@@ -3813,7 +4308,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "PLATFORM_GATED"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-ALARKA-A-16",
@@ -3839,7 +4340,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "LOCAL_ONLY"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-ALARKA-A-17",
@@ -3880,7 +4387,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-ALARKA-A-18",
@@ -3916,7 +4429,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "PLATFORM_GATED"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-ALARKA-A-19",
@@ -3957,7 +4476,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-ALARKA-A-20",
@@ -3998,7 +4523,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-ALARKA-A-21",
@@ -4039,7 +4570,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-ALARKA-A-22",
@@ -4080,7 +4617,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-ALARKA-A-23",
@@ -4121,7 +4664,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-ALARKA-A-24",
@@ -4147,7 +4696,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "LOCAL_ONLY"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-MADALASA-P-01",
@@ -4173,7 +4728,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "LOCAL_ONLY"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-MADALASA-P-02",
@@ -4199,7 +4760,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "LOCAL_ONLY"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-MADALASA-P-03",
@@ -4240,7 +4807,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-MADALASA-P-04",
@@ -4281,7 +4854,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-MADALASA-P-05",
@@ -4322,7 +4901,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-MADALASA-P-06",
@@ -4363,7 +4948,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-MADALASA-P-07",
@@ -4389,7 +4980,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "LOCAL_ONLY"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-MADALASA-P-08",
@@ -4430,7 +5027,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-MADALASA-P-09",
@@ -4466,7 +5069,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "PLATFORM_GATED"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-MADALASA-P-10",
@@ -4502,7 +5111,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "PLATFORM_GATED"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-MADALASA-P-11",
@@ -4528,7 +5143,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "LOCAL_ONLY"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-MADALASA-P-12",
@@ -4554,7 +5175,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "PLATFORM_GATED"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-MADALASA-P-13",
@@ -4595,7 +5222,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-MADALASA-P-14",
@@ -4621,7 +5254,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "LOCAL_ONLY"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-MADALASA-P-15",
@@ -4647,7 +5286,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "LOCAL_ONLY"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-MADALASA-P-16",
@@ -4688,7 +5333,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-MADALASA-P-17",
@@ -4714,7 +5365,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "LOCAL_ONLY"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-MADALASA-P-18",
@@ -4755,7 +5412,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-MADALASA-P-19",
@@ -4796,7 +5459,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-MADALASA-P-20",
@@ -4822,7 +5491,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "LOCAL_ONLY"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-MADALASA-P-21",
@@ -4848,7 +5523,13 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "LOCAL_ONLY"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "CAP-MADALASA-P-22",
@@ -4889,7 +5570,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_CAPABILITY_ONBOARDING_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "PA-01",
@@ -4926,7 +5613,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_AUDIT_DEVELOPER_HANDOFF_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "PA-02",
@@ -4962,7 +5655,13 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_AUDIT_DEVELOPER_HANDOFF_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "PA-03",
@@ -4999,7 +5698,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_AUDIT_DEVELOPER_HANDOFF_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "PA-04",
@@ -5036,7 +5741,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_AUDIT_DEVELOPER_HANDOFF_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "PA-05",
@@ -5073,7 +5784,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_AUDIT_DEVELOPER_HANDOFF_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "PA-06",
@@ -5110,7 +5827,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_AUDIT_DEVELOPER_HANDOFF_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "PA-07",
@@ -5147,7 +5870,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_AUDIT_DEVELOPER_HANDOFF_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "PA-08",
@@ -5184,7 +5913,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_AUDIT_DEVELOPER_HANDOFF_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "PA-09",
@@ -5221,7 +5956,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_AUDIT_DEVELOPER_HANDOFF_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "PA-10",
@@ -5258,7 +5999,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_AUDIT_DEVELOPER_HANDOFF_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "PA-11",
@@ -5295,7 +6042,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_AUDIT_DEVELOPER_HANDOFF_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "ADM-01",
@@ -5342,7 +6095,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_AUDIT_DEVELOPER_HANDOFF_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "ADM-02",
@@ -5389,7 +6148,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_AUDIT_DEVELOPER_HANDOFF_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "ADM-03",
@@ -5436,7 +6201,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_AUDIT_DEVELOPER_HANDOFF_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "ADM-04",
@@ -5483,7 +6254,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_AUDIT_DEVELOPER_HANDOFF_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "ADM-05",
@@ -5530,7 +6307,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_AUDIT_DEVELOPER_HANDOFF_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "ADM-06",
@@ -5577,7 +6360,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_AUDIT_DEVELOPER_HANDOFF_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "ADM-07",
@@ -5624,7 +6413,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_AUDIT_DEVELOPER_HANDOFF_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "ADM-08",
@@ -5671,7 +6466,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_AUDIT_DEVELOPER_HANDOFF_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "ADM-09",
@@ -5718,7 +6519,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_AUDIT_DEVELOPER_HANDOFF_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "ADM-10",
@@ -5765,7 +6572,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_AUDIT_DEVELOPER_HANDOFF_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "ADM-11",
@@ -5812,7 +6625,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_AUDIT_DEVELOPER_HANDOFF_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "ADM-12",
@@ -5859,7 +6678,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_AUDIT_DEVELOPER_HANDOFF_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "ADM-13",
@@ -5906,7 +6731,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_AUDIT_DEVELOPER_HANDOFF_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "ADM-14",
@@ -5953,7 +6784,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_AUDIT_DEVELOPER_HANDOFF_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "ADM-15",
@@ -6001,7 +6838,13 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_AUDIT_DEVELOPER_HANDOFF_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "ADM-16",
@@ -6049,7 +6892,13 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_AUDIT_DEVELOPER_HANDOFF_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "ADM-17",
@@ -6096,7 +6945,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_AUDIT_DEVELOPER_HANDOFF_NOT_FINAL_THEME_C",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "THEME-ST-01",
@@ -6121,7 +6976,12 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "LOCAL_ONLY"
-      }
+      },
+      "visual_readiness": "THEME_C_SAMPLE_ONLY",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "THEME-ST-02",
@@ -6146,7 +7006,12 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "LOCAL_ONLY"
-      }
+      },
+      "visual_readiness": "THEME_C_SAMPLE_ONLY",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "THEME-ST-03",
@@ -6171,7 +7036,12 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "LOCAL_ONLY"
-      }
+      },
+      "visual_readiness": "THEME_C_SAMPLE_ONLY",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "THEME-ST-04",
@@ -6196,7 +7066,12 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "LOCAL_ONLY"
-      }
+      },
+      "visual_readiness": "THEME_C_SAMPLE_ONLY",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "THEME-ST-05",
@@ -6221,7 +7096,12 @@
         "operations_present_as_drafts": 0,
         "still_missing": [],
         "status": "LOCAL_ONLY"
-      }
+      },
+      "visual_readiness": "THEME_C_SAMPLE_ONLY",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "THEME-P-05",
@@ -6271,7 +7151,12 @@
         "operations_present_as_drafts": 3,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "THEME_C_SAMPLE_ONLY",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "THEME-P-15",
@@ -6313,7 +7198,12 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "THEME_C_SAMPLE_ONLY",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "THEME-P-24",
@@ -6349,7 +7239,12 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "THEME_C_SAMPLE_ONLY",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "THEME-P-28",
@@ -6388,7 +7283,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "THEME_C_SAMPLE_ONLY",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "THEME-P-39",
@@ -6429,7 +7329,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "THEME_C_SAMPLE_ONLY",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "THEME-P-48",
@@ -6476,7 +7381,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "THEME_C_SAMPLE_ONLY",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "THEME-P-58",
@@ -6513,7 +7423,13 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "THEME_C_SAMPLE_ONLY",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "THEME-C-02",
@@ -6560,7 +7476,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "THEME_C_SAMPLE_ONLY",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "THEME-P-31",
@@ -6593,7 +7514,13 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "THEME_C_SAMPLE_ONLY",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "THEME-P-47",
@@ -6634,7 +7561,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "THEME_C_SAMPLE_ONLY",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "THEME-P-49",
@@ -6673,7 +7605,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "THEME_C_SAMPLE_ONLY",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "THEME-SH-01",
@@ -6714,7 +7651,13 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "THEME_C_SAMPLE_ONLY",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "THEME-SH-02",
@@ -6755,7 +7698,13 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "THEME_C_SAMPLE_ONLY",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "THEME-SH-03",
@@ -6794,7 +7743,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "THEME_C_SAMPLE_ONLY",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "THEME-SH-04",
@@ -6833,7 +7787,13 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "THEME_C_SAMPLE_ONLY",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "THEME-SH-05",
@@ -6874,7 +7834,13 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "THEME_C_SAMPLE_ONLY",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OS_PLAY_OR_LEGAL_RELEASE_GATE"
+      ]
     },
     {
       "screen_key": "THEME-SH-06",
@@ -6913,7 +7879,12 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "THEME_C_SAMPLE_ONLY",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "BO-01",
@@ -6963,7 +7934,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_STATIC_THEME_C_ADMIN",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OWNER_GOOGLE_BOOTSTRAP_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "BO-02",
@@ -7005,7 +7982,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_STATIC_THEME_C_ADMIN",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OWNER_GOOGLE_BOOTSTRAP_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "BO-02V",
@@ -7047,7 +8030,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_STATIC_THEME_C_ADMIN",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OWNER_GOOGLE_BOOTSTRAP_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "BO-03",
@@ -7087,7 +8076,13 @@
         "operations_present_as_drafts": 1,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_STATIC_THEME_C_ADMIN",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OWNER_GOOGLE_BOOTSTRAP_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "BO-04",
@@ -7129,7 +8124,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_STATIC_THEME_C_ADMIN",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OWNER_GOOGLE_BOOTSTRAP_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "BO-05",
@@ -7179,7 +8180,13 @@
         "operations_present_as_drafts": 4,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_STATIC_THEME_C_ADMIN",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OWNER_GOOGLE_BOOTSTRAP_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "BO-06",
@@ -7225,7 +8232,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_STATIC_THEME_C_ADMIN",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OWNER_GOOGLE_BOOTSTRAP_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "BO-07",
@@ -7267,7 +8280,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_STATIC_THEME_C_ADMIN",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OWNER_GOOGLE_BOOTSTRAP_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "BO-08",
@@ -7315,7 +8334,13 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_STATIC_THEME_C_ADMIN",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OWNER_GOOGLE_BOOTSTRAP_NOT_IMPLEMENTED"
+      ]
     },
     {
       "screen_key": "BO-09",
@@ -7357,14 +8382,27 @@
         "operations_present_as_drafts": 2,
         "still_missing": [],
         "status": "SPECIFIED_NOT_IMPLEMENTED"
-      }
+      },
+      "visual_readiness": "EDITABLE_STATIC_THEME_C_ADMIN",
+      "implementation_blockers": [
+        "API_HANDLERS_NOT_BUILT",
+        "ANDROID_OR_WEB_SCREEN_NOT_IMPLEMENTED",
+        "OWNER_GOOGLE_BOOTSTRAP_NOT_IMPLEMENTED"
+      ]
     }
   ],
   "after_contract_update": {
     "at": "2026-10-28",
-    "new_planned_operations": 95,
-    "total_whole_project_operations": 145,
-    "verified_no_unmapped_screen_routes": false,
-    "meaning": "OpenAPI draft only; ZERO new backend implementation/Android UI completion claimed."
-  }
+    "new_planned_operations": 96,
+    "total_whole_project_operations": 146,
+    "verified_no_unmapped_screen_routes": true,
+    "meaning": "All registered screen-mapped routes now exist as DRAFT contracts; NO handlers, app implementations, permissions, payments or approvals are claimed."
+  },
+  "current_db": {
+    "figma_domains": 11,
+    "logical_entities": 120,
+    "physical_migration_only_baseline": "backend/persistence/migrations/0001_m1_identity.sql",
+    "status": "DESIGN_NOT_MIGRATED"
+  },
+  "visual_note": "Static developer handoff and selected Theme C samples are not production-complete screen implementations. Structural node existence is not 187 pixel-by-pixel visual QA or accessible app QA."
 }
