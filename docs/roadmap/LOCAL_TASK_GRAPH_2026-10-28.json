@@ -261,11 +261,12 @@
     }
   ],
   "task_schema_explanation": {
-    "depends_on": "Upstream task IDs must pass before starting; sequential per phase conservative to protect privacy-first integration.",
+    "depends_on": "Explicit DAG, limited intra-phase sequencing; independent streams may work in parallel only when full prerequisite chain and test evidence PASS. Conditional device proof/media research can be recorded BLOCKED/SKIPPED without blocking independent local development, but release remains blocked.",
     "acceptance": "Mandatory measurable result; not a claim of success",
     "verification_type": "STATIC_REVIEW_AND_VALIDATOR requires link check/lint and human review; AUTOMATED_TEST_REQUIRED requires compiling/running test.",
     "evidence": "Redacted evidence file created only after execution with git SHA, test commands, exit status, and reviewer",
-    "release_gate": "Coding agent may not self-approve real child data, payments, media, Play, or deployment"
+    "release_gate": "Coding agent may not self-approve real child data, payments, media, Play, or deployment",
+    "conditional_external_evidence": "Optional for unrelated local coding, still required for claim of production readiness."
   },
   "tasks": [
     {
@@ -1227,7 +1228,8 @@
       "name": "Preserve narrow M1 API and review whole-project draft divergences",
       "status": "NOT_STARTED",
       "depends_on": [
-        "L02-015"
+        "L02-015",
+        "L01-014"
       ],
       "inputs": [
         "docs/openapi.yaml",
@@ -1563,7 +1565,8 @@
       "name": "Implement OIDC verifier with issuer audience expiry sub and nonce",
       "status": "NOT_STARTED",
       "depends_on": [
-        "L03-014"
+        "L03-014",
+        "L02-015"
       ],
       "inputs": [
         "docs/phases/M1-secure-platform-foundation/03-security-and-permissions/DATA_AUTHORIZATION_AND_RECOVERY_CONTRACT.md",
@@ -2084,7 +2087,10 @@
       "evidence": "evidence/local/tasks/L05-011.md",
       "privacy": "SYNTHETIC_DATA_ONLY",
       "release_gate": "LOCAL_ONLY",
-      "notes": "Use tests/negative cases; refuse to mark PASS without actual command, exit code, redacted evidence."
+      "notes": "Use tests/negative cases; refuse to mark PASS without actual command, exit code, redacted evidence.",
+      "conditional_external_evidence": true,
+      "skip_unblocks_other_work": true,
+      "release_readiness_still_requires_resolution": true
     },
     {
       "id": "L05-012",
@@ -2092,7 +2098,7 @@
       "name": "Implement enrollment stop/revoke/uninstall guidance",
       "status": "NOT_STARTED",
       "depends_on": [
-        "L05-011"
+        "L05-010"
       ],
       "inputs": [
         "docs/phases/M1-secure-platform-foundation/03-security-and-permissions/CAPABILITY_DISCOVERY_PERMISSION_SYNC_ADR_2026-10-27.md",
@@ -2115,7 +2121,8 @@
       "name": "Implement sensor-fused Android GPS observation model",
       "status": "NOT_STARTED",
       "depends_on": [
-        "L05-012"
+        "L05-012",
+        "L02-015"
       ],
       "inputs": [
         "docs/phases/M2-location-collection/01-location-collection-and-ingestion/TRACKING_RUNTIME_AND_ALGORITHM_CONTRACT.md",
@@ -2401,7 +2408,8 @@
       "name": "Implement child selector with only authorized child IDs",
       "status": "NOT_STARTED",
       "depends_on": [
-        "L06-013"
+        "L06-013",
+        "L04-012"
       ],
       "inputs": [
         "docs/phases/M3-trips-and-places/01-trips-and-named-places/LIVE_TRIP_ROUTE_NAMED_PLACES_BATTERY_SPECIFICATION.md",
@@ -2677,7 +2685,8 @@
       "name": "Implement event-time trip segmentation candidate",
       "status": "NOT_STARTED",
       "depends_on": [
-        "L07-012"
+        "L07-012",
+        "L06-013"
       ],
       "inputs": [
         "docs/phases/M3-trips-and-places/01-trips-and-named-places/LIVE_TRIP_ROUTE_NAMED_PLACES_BATTERY_SPECIFICATION.md",
@@ -2941,7 +2950,8 @@
       "name": "Implement child initiated SOS/check-in UI",
       "status": "NOT_STARTED",
       "depends_on": [
-        "L08-012"
+        "L05-012",
+        "L04-012"
       ],
       "inputs": [
         "docs/phases/M4-usage-health-sos/01-usage-health-and-sos/COMMAND_SOS_USAGE_QUEUE_CONTRACT.md",
@@ -3131,7 +3141,10 @@
       "evidence": "evidence/local/tasks/L09-009.md",
       "privacy": "SYNTHETIC_DATA_ONLY",
       "release_gate": "LOCAL_ONLY",
-      "notes": "Use tests/negative cases; refuse to mark PASS without actual command, exit code, redacted evidence."
+      "notes": "Use tests/negative cases; refuse to mark PASS without actual command, exit code, redacted evidence.",
+      "conditional_external_evidence": true,
+      "skip_unblocks_other_work": true,
+      "release_readiness_still_requires_resolution": true
     },
     {
       "id": "L09-010",
@@ -3139,7 +3152,7 @@
       "name": "Implement remote command state machine and timeout statuses",
       "status": "NOT_STARTED",
       "depends_on": [
-        "L09-009"
+        "L09-008"
       ],
       "inputs": [
         "docs/phases/M4-usage-health-sos/01-usage-health-and-sos/COMMAND_SOS_USAGE_QUEUE_CONTRACT.md",
@@ -3205,7 +3218,9 @@
       "name": "Define family trial abuse/privacy policy test fixture",
       "status": "NOT_STARTED",
       "depends_on": [
-        "L09-012"
+        "L04-012",
+        "L03-014",
+        "L02-015"
       ],
       "inputs": [
         "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/SUBSCRIPTION_PLANS_PRICING_AND_RULES_2026.md",
@@ -3513,7 +3528,8 @@
       "name": "Create server-side viewer lease policy 1 slot per paid child",
       "status": "NOT_STARTED",
       "depends_on": [
-        "L10-014"
+        "L10-014",
+        "L04-012"
       ],
       "inputs": [
         "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md",
@@ -3821,6 +3837,9 @@
       "name": "Create Theme C design tokens, fonts, icon resources",
       "status": "NOT_STARTED",
       "depends_on": [
+        "L07-012",
+        "L08-012",
+        "L09-012",
         "L11-014"
       ],
       "inputs": [
@@ -4129,7 +4148,8 @@
       "name": "Create Alarka Theme C child-appropriate launcher",
       "status": "NOT_STARTED",
       "depends_on": [
-        "L12-014"
+        "L05-012",
+        "L09-012"
       ],
       "inputs": [
         "docs/ui/figma-functional-handoff/README.md",
@@ -4393,7 +4413,9 @@
       "name": "Build separate admin web project and local dev shell",
       "status": "NOT_STARTED",
       "depends_on": [
-        "L13-012"
+        "L04-012",
+        "L03-014",
+        "L02-015"
       ],
       "inputs": [
         "docs/phases/P3-deferred-research/01-media-and-administrator-research/ADMIN_OWNER_GOOGLE_ACCESS_FAQ_SUPPORT_BILLING_AND_USAGE_2026.md",
@@ -4789,7 +4811,9 @@
       "name": "Create retention categories with DRAFT disabled scheduling",
       "status": "NOT_STARTED",
       "depends_on": [
-        "L14-018"
+        "L02-015",
+        "L06-013",
+        "L04-012"
       ],
       "inputs": [
         "docs/phases/M6-guardian-erasure-security/01-data-erasure-and-access/ACCOUNT_DELETION_DESIGN.md",
@@ -5053,8 +5077,8 @@
       "name": "Design capability-by-OS matrix and false-success tests",
       "status": "NOT_STARTED",
       "depends_on": [
-        "L15-012",
-        "L05-011"
+        "L05-012",
+        "L11-014"
       ],
       "inputs": [
         "docs/phases/P3-deferred-research/01-media-and-administrator-research/MEDIA_CAPABILITY_PARENT_REASON_AND_RUNTIME_DECISION_2026.md",
@@ -5068,7 +5092,10 @@
       "evidence": "evidence/local/tasks/L16-001.md",
       "privacy": "SYNTHETIC_DATA_ONLY",
       "release_gate": "CONDITIONAL_HUMAN_SIGNOFF",
-      "notes": "Use tests/negative cases; refuse to mark PASS without actual command, exit code, redacted evidence."
+      "notes": "Use tests/negative cases; refuse to mark PASS without actual command, exit code, redacted evidence.",
+      "conditional_research": true,
+      "skip_unblocks_other_work": true,
+      "release_readiness_still_requires_resolution": true
     },
     {
       "id": "L16-002",
@@ -5090,7 +5117,10 @@
       "evidence": "evidence/local/tasks/L16-002.md",
       "privacy": "SYNTHETIC_DATA_ONLY",
       "release_gate": "CONDITIONAL_HUMAN_SIGNOFF",
-      "notes": "Use tests/negative cases; refuse to mark PASS without actual command, exit code, redacted evidence."
+      "notes": "Use tests/negative cases; refuse to mark PASS without actual command, exit code, redacted evidence.",
+      "conditional_research": true,
+      "skip_unblocks_other_work": true,
+      "release_readiness_still_requires_resolution": true
     },
     {
       "id": "L16-003",
@@ -5112,7 +5142,10 @@
       "evidence": "evidence/local/tasks/L16-003.md",
       "privacy": "SYNTHETIC_DATA_ONLY",
       "release_gate": "CONDITIONAL_HUMAN_SIGNOFF",
-      "notes": "Use tests/negative cases; refuse to mark PASS without actual command, exit code, redacted evidence."
+      "notes": "Use tests/negative cases; refuse to mark PASS without actual command, exit code, redacted evidence.",
+      "conditional_research": true,
+      "skip_unblocks_other_work": true,
+      "release_readiness_still_requires_resolution": true
     },
     {
       "id": "L16-004",
@@ -5134,7 +5167,10 @@
       "evidence": "evidence/local/tasks/L16-004.md",
       "privacy": "SYNTHETIC_DATA_ONLY",
       "release_gate": "CONDITIONAL_HUMAN_SIGNOFF",
-      "notes": "Use tests/negative cases; refuse to mark PASS without actual command, exit code, redacted evidence."
+      "notes": "Use tests/negative cases; refuse to mark PASS without actual command, exit code, redacted evidence.",
+      "conditional_research": true,
+      "skip_unblocks_other_work": true,
+      "release_readiness_still_requires_resolution": true
     },
     {
       "id": "L16-005",
@@ -5156,7 +5192,10 @@
       "evidence": "evidence/local/tasks/L16-005.md",
       "privacy": "SYNTHETIC_DATA_ONLY",
       "release_gate": "CONDITIONAL_HUMAN_SIGNOFF",
-      "notes": "Use tests/negative cases; refuse to mark PASS without actual command, exit code, redacted evidence."
+      "notes": "Use tests/negative cases; refuse to mark PASS without actual command, exit code, redacted evidence.",
+      "conditional_research": true,
+      "skip_unblocks_other_work": true,
+      "release_readiness_still_requires_resolution": true
     },
     {
       "id": "L16-006",
@@ -5178,7 +5217,10 @@
       "evidence": "evidence/local/tasks/L16-006.md",
       "privacy": "SYNTHETIC_DATA_ONLY",
       "release_gate": "CONDITIONAL_HUMAN_SIGNOFF",
-      "notes": "Use tests/negative cases; refuse to mark PASS without actual command, exit code, redacted evidence."
+      "notes": "Use tests/negative cases; refuse to mark PASS without actual command, exit code, redacted evidence.",
+      "conditional_research": true,
+      "skip_unblocks_other_work": true,
+      "release_readiness_still_requires_resolution": true
     },
     {
       "id": "L16-007",
@@ -5200,7 +5242,10 @@
       "evidence": "evidence/local/tasks/L16-007.md",
       "privacy": "SYNTHETIC_DATA_ONLY",
       "release_gate": "CONDITIONAL_HUMAN_SIGNOFF",
-      "notes": "Use tests/negative cases; refuse to mark PASS without actual command, exit code, redacted evidence."
+      "notes": "Use tests/negative cases; refuse to mark PASS without actual command, exit code, redacted evidence.",
+      "conditional_research": true,
+      "skip_unblocks_other_work": true,
+      "release_readiness_still_requires_resolution": true
     },
     {
       "id": "L16-008",
@@ -5222,7 +5267,10 @@
       "evidence": "evidence/local/tasks/L16-008.md",
       "privacy": "SYNTHETIC_DATA_ONLY",
       "release_gate": "CONDITIONAL_HUMAN_SIGNOFF",
-      "notes": "Use tests/negative cases; refuse to mark PASS without actual command, exit code, redacted evidence."
+      "notes": "Use tests/negative cases; refuse to mark PASS without actual command, exit code, redacted evidence.",
+      "conditional_research": true,
+      "skip_unblocks_other_work": true,
+      "release_readiness_still_requires_resolution": true
     },
     {
       "id": "L16-009",
@@ -5244,7 +5292,10 @@
       "evidence": "evidence/local/tasks/L16-009.md",
       "privacy": "SYNTHETIC_DATA_ONLY",
       "release_gate": "CONDITIONAL_HUMAN_SIGNOFF",
-      "notes": "Use tests/negative cases; refuse to mark PASS without actual command, exit code, redacted evidence."
+      "notes": "Use tests/negative cases; refuse to mark PASS without actual command, exit code, redacted evidence.",
+      "conditional_research": true,
+      "skip_unblocks_other_work": true,
+      "release_readiness_still_requires_resolution": true
     },
     {
       "id": "L16-010",
@@ -5266,7 +5317,10 @@
       "evidence": "evidence/local/tasks/L16-010.md",
       "privacy": "SYNTHETIC_DATA_ONLY",
       "release_gate": "CONDITIONAL_HUMAN_SIGNOFF",
-      "notes": "Use tests/negative cases; refuse to mark PASS without actual command, exit code, redacted evidence."
+      "notes": "Use tests/negative cases; refuse to mark PASS without actual command, exit code, redacted evidence.",
+      "conditional_research": true,
+      "skip_unblocks_other_work": true,
+      "release_readiness_still_requires_resolution": true
     },
     {
       "id": "L16-011",
@@ -5288,7 +5342,10 @@
       "evidence": "evidence/local/tasks/L16-011.md",
       "privacy": "SYNTHETIC_DATA_ONLY",
       "release_gate": "CONDITIONAL_HUMAN_SIGNOFF",
-      "notes": "Use tests/negative cases; refuse to mark PASS without actual command, exit code, redacted evidence."
+      "notes": "Use tests/negative cases; refuse to mark PASS without actual command, exit code, redacted evidence.",
+      "conditional_research": true,
+      "skip_unblocks_other_work": true,
+      "release_readiness_still_requires_resolution": true
     },
     {
       "id": "L16-012",
@@ -5310,7 +5367,10 @@
       "evidence": "evidence/local/tasks/L16-012.md",
       "privacy": "SYNTHETIC_DATA_ONLY",
       "release_gate": "CONDITIONAL_HUMAN_SIGNOFF",
-      "notes": "Use tests/negative cases; refuse to mark PASS without actual command, exit code, redacted evidence."
+      "notes": "Use tests/negative cases; refuse to mark PASS without actual command, exit code, redacted evidence.",
+      "conditional_research": true,
+      "skip_unblocks_other_work": true,
+      "release_readiness_still_requires_resolution": true
     },
     {
       "id": "L17-001",
@@ -5318,7 +5378,14 @@
       "name": "Run STRIDE threat scenarios per API and actor",
       "status": "NOT_STARTED",
       "depends_on": [
-        "L16-012"
+        "L08-012",
+        "L09-012",
+        "L10-014",
+        "L11-014",
+        "L12-014",
+        "L13-012",
+        "L14-018",
+        "L15-012"
       ],
       "inputs": [
         "docs/phases/M1-secure-platform-foundation/03-security-and-permissions/THREAT_MODEL_STRIDE.md",
@@ -5663,7 +5730,11 @@
       "name": "Freeze local build and Figma/API/database traceability snapshot",
       "status": "NOT_STARTED",
       "depends_on": [
-        "L17-015"
+        "L17-015",
+        "L12-014",
+        "L13-012",
+        "L14-018",
+        "L15-012"
       ],
       "inputs": [
         "docs/phases/M8-operational-readiness/03-quality-and-evidence/VALIDATION_AND_RELEASE_PLAN.md",
@@ -5943,7 +6014,10 @@
       "evidence": "evidence/local/tasks/L18-012.md",
       "privacy": "SYNTHETIC_DATA_ONLY",
       "release_gate": "LOCAL_ONLY",
-      "notes": "Use tests/negative cases; refuse to mark PASS without actual command, exit code, redacted evidence."
+      "notes": "Use tests/negative cases; refuse to mark PASS without actual command, exit code, redacted evidence.",
+      "conditional_external_evidence": true,
+      "skip_unblocks_other_work": true,
+      "release_readiness_still_requires_resolution": true
     },
     {
       "id": "L18-013",
@@ -5951,7 +6025,7 @@
       "name": "Run accessibility, localization-readiness and screenshot diff",
       "status": "NOT_STARTED",
       "depends_on": [
-        "L18-012"
+        "L18-011"
       ],
       "inputs": [
         "docs/phases/M8-operational-readiness/03-quality-and-evidence/VALIDATION_AND_RELEASE_PLAN.md",
@@ -6203,5 +6277,27 @@
     "Media capture Android/Play legality and runtime limits",
     "Actual India-first hosting region vs Chicago historical cost docs",
     "DB conceptual schema 112 tables vs executable M1 migration only"
-  ]
+  ],
+  "phase_criticality": {
+    "blocker_phases": [
+      "00",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "10",
+      "11",
+      "14",
+      "15",
+      "17",
+      "18"
+    ],
+    "conditional_research_phase": "16",
+    "physical_device_gates": [
+      "L05-011",
+      "L09-009",
+      "L18-012"
+    ]
+  }
 }
