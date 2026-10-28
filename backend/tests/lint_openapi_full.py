@@ -91,6 +91,37 @@ def main() -> int:
             if match:
                 m, path = match.groups()
                 require(m.lower() in spec.get("paths", {}).get(path, {}), f"{screen.get('screen_key')}: missing {specifier}", errors)
+    # Contract-hardening audit for 2026-10-28. This is NOT backend runtime evidence.
+    post_audit_path = ROOT / "docs/audits/POST_REMEDIATION_SCREEN_API_DB_COVERAGE_2026-10-28.json"
+    try:
+        post_audit = json.loads(post_audit_path.read_text(encoding="utf-8"))
+    except (ValueError, OSError) as exc:
+        errors.append(f"Missing post-remediation coverage file: {exc}")
+        post_audit = {}
+    summary = post_audit.get("summary", {})
+    require(operations >= 171, f"Expected at least 171 current designed operations, got {operations}", errors)
+    require(len(spec.get("paths", {})) >= 155, "API path regression (<155)", errors)
+    require(summary.get("original_screen_count") == 187, "Post-remediation Figma screen count mismatch", errors)
+    require(summary.get("conceptual_db_entities") == db.get("tableCount"), "DB table count mismatch after remediation", errors)
+    for candidate in post_audit.get("candidates", []):
+        raw_key = candidate.get("key", "")
+        method, sep, path = raw_key.partition(" ")
+        if candidate.get("resolution") == "SPECIFIED_DESIGN_ONLY":
+            require(method.lower() in spec.get("paths", {}).get(path, {}),
+                    f"Regressed screen supplemental operation: {raw_key}", errors)
+        if candidate.get("resolution") == "REJECTED_UNSAFE_REDUNDANT":
+            require(method.lower() not in spec.get("paths", {}).get(path, {}),
+                    f"Unsafe access-request revocation endpoint resurrected: {raw_key}", errors)
+    for path, methods in spec.get("paths", {}).items():
+        for method, op in methods.items():
+            if method not in {"post", "put", "patch"}:
+                continue
+            body = op.get("requestBody", {}).get("content", {}).get("application/json", {}).get("schema", {})
+            require('"additionalProperties": true' not in json.dumps(body),
+                    f"Open-ended client payload at {method.upper()} {path}", errors)
+    require(all(row.get("unmatched_documented_routes") == []
+                for row in post_audit.get("screen_coverage", [])),
+            "At least one Figma screen references an absent method/path", errors)
     if errors:
         print("OPENAPI/SCREEN AUDIT: FAIL")
         for error in errors:
