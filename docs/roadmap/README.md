@@ -24,3 +24,8 @@ Dependency checks passed: 262 task IDs, dependencies present and acyclic, all st
 - [26 proposed exact API method/path gaps and needed DB structures](SCREEN_MISSING_API_AND_DB_GAPS_2026-10-28.md)
 
 This is a design/traceability audit. No new backend implementation, real-device Android test, PostgreSQL migration or legal/Play approval is claimed.
+
+
+## Post-development-plan Figma/API audit supplement
+
+[Final 187-screen post-remediation report](https://github.com/methakon/Madalasa-Alarka/blob/main/docs/audits/POST_REMEDIATION_SCREEN_API_DB_REPORT_2026-10-28.md) · [187-screen machine coverage](https://github.com/methakon/Madalasa-Alarka/blob/main/docs/audits/POST_REMEDIATION_SCREEN_API_DB_COVERAGE_2026-10-28.json) · [54-task gap implementation addendum](FIGMA_SCREEN_API_DB_REMEDIATION_TASKS_2026-10-28.json). The combined *planned* backlog is 262 base + 54 gap tasks = **316**, all remain unverified. Current OpenAPI master: 171 proposed methods, 155 paths, 130 schemas. `GAP-054` is the final local traceability reconciliation, NOT a Play release signoff.
