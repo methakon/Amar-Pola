@@ -243,19 +243,19 @@
     "figma_url": "https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=84-179",
     "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
     "launch_language": "en",
-    "legal_status": "GATED: Family Link role API unverified; Play add-on SKU unconfigured",
+    "legal_status": "Google Family Link attestation NOT required; exact-child invitation/grant required; statutory authority/consent review still pending",
     "product_spec": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md"
   },
   {
     "id": "SH-02",
     "actor": "Parent",
     "kind": "themed functional sample",
-    "theme_c_note": "Google parent-child verification unavailable; sharing locked",
+    "theme_c_note": "Child A-only invite acceptance and applicable authority/consent review; no Family Link API dependency",
     "figma_node_id": "84:201",
     "figma_url": "https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=84-201",
     "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
     "launch_language": "en",
-    "legal_status": "GATED: Family Link role API unverified; Play add-on SKU unconfigured",
+    "legal_status": "Google Family Link attestation NOT required; exact-child invitation/grant required; statutory authority/consent review still pending",
     "product_spec": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md"
   },
   {
@@ -294,7 +294,7 @@
     "figma_url": "https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=84-263",
     "figma_state": "EDITABLE_STATIC_THEME_C_SAMPLE",
     "launch_language": "en",
-    "legal_status": "GATED: Family Link role API unverified; Play add-on SKU unconfigured",
+    "legal_status": "Google Family Link attestation NOT required; exact-child invitation/grant required; statutory authority/consent review still pending",
     "product_spec": "docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md"
   },
   {
