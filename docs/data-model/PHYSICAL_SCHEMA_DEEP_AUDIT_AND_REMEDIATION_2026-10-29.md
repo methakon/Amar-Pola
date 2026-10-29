@@ -11,7 +11,7 @@ Scanning every `→ target` reference in `docs/data-model/MADALASA_ALARKA_FIGMA_
 | `location_batch_items.batch_id` | `ingest_batches` | Rename reference to **`location_ingest_batches`**, existing canonical logical entity | Use `batch_id` FK to the canonical ingest batch PK; enforce child/device consistency and rejection after erasure |
 | `admin_role_permissions.permission_code` | `permissions` | Rename target to **`admin_permissions`**, existing canonical logical entity | FK references immutable/unique permission code; verify exact existing PK/unique key and type |
 
-**Do not add shadow tables named `ingest_batches` or `permissions` solely to satisfy these references.** Update the Figma source and versioned ERD in a coordinated change with the mapping checker. This document intentionally leaves the frozen V1 unchanged, preserving CI baseline and audit provenance. When V2 is published, recalculate `tableCount`, rerun `backend/tests/check_physical_catalog.py --write` and the 16 drift tests, and ensure the generated document changes atomically.
+**Do not add shadow tables named `ingest_batches` or `permissions` solely to satisfy these references.** Update the Figma source and versioned ERD in a coordinated change with the mapping checker. This review has corrected the two dangling references in the version-controlled V1 ERD JSON (entity/column counts unchanged); the Figma canvas is **not yet synchronized**. The original errors remain recorded above for provenance. When V2 is published, recalculate `tableCount`, rerun `backend/tests/check_physical_catalog.py --write` and the 16 drift tests, and ensure the generated document changes atomically.
 
 ## 2. Incomplete definitions needing an explicit physical spec
 
@@ -51,7 +51,7 @@ The current `DATA_RETENTION_SCHEDULE.md` explicitly leaves periods pending; GPS 
 
 | Priority | Agent task | Exit evidence |
 |---|---|---|
-| P0 | Fix two unresolved logical references in **versioned ERD update** | 0 broken targets, no new shadow entities, generated catalog and CI pass |
+| P0 | Synchronize two corrected logical references to **Figma canvas** and add referential integrity lint | 0 broken targets, no new shadow entities, generated catalog and CI pass |
 | P0 | Canonical typed column/enum registry; correct FK PK/type checks | every implemented physical field typed, enum values explicit, postgres migration executes |
 | P0 | V2 child-scoped grants and SQL authorization; reconcile 0002–0004 first | cross-family A1 allowed, sibling A2 denied, revoke denied, no billing-family leakage |
 | P0 | Canonical GPS ingestion/partition/dedup/enrollment | fresh/post-backfill SQL tests; accepted vs rejected late/future fixes; queue restart |
