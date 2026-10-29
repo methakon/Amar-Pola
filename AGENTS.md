@@ -2,6 +2,10 @@
 
 This file is the **entrypoint for coding agents**. Work locally using synthetic data, not on production servers or live child devices.
 
+## Mandatory branch discipline (owner direction 2026-10-29)
+
+Before committing or creating branches, read [the canonical branch policy and active branch/PR register](docs/phases/M1-secure-platform-foundation/02-development-process/BRANCHING_VERSIONING_AND_RELEASE_PROCESS.md). **Reuse an appropriate existing tracked branch/PR by default.** A new task or agent does not automatically justify a new branch. Inspect live branches, PR bases, uncommitted work and dependency order; maintain the single register whenever creating, merging, retargeting, or closing work. Do not accidentally discard work in stacked PRs: merging into another feature branch is not the same as merging into `main`. New branches are appropriate only when there is a concrete independent-review/conflict/release need; record reason and owner. Never automatically delete branches or force-push another agent's commits. Normal commits and PR updates are welcome, subject to existing review and security rules.
+
 ## Read first
 
 1. docs/roadmap/LOCAL_TASK_GRAPH_2026-10-28.json — 262 task IDs, dependencies, acceptance, source paths and evidence destinations.
