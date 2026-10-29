@@ -13,7 +13,7 @@ Each blocker has an owner, decision or required evidence, and lifecycle: OPEN �
 | ID | Severity | Your question / choice | Conservative default until answered | What you can provide | Blocks |
 |---|---|---|---|---|---|
 | **B-01** | Critical | Individual legal publisher identified: **SWARNA SEKHAR DHAR**, India; same individual intended as Google Play account publisher | **OWNER DECIDED / EXTERNAL VERIFICATION OPEN**: no Play identity, payouts, support contact, or public-policy-page verification yet | Verify personal developer account and linked Payments legal name/address; verified contacts, public developer contact, monetization and policy-page owner | Privacy/Play |
-| **B-02** | Critical | Launch countries and child age range? | Internal testing only | Countries, ages, applicable parent authority expectations | Child privacy/legal |
+| **B-02** | Critical | **OWNER DECIDED: India-only initial launch; children aged 0–17 inclusive (under 18)** | Product scope established; legal assessment and Play policy classification still OPEN | India-specific parental authority, age-appropriate permissions, monitoring exemptions, consent and policy review | Child privacy/legal |
 | **B-03** | Critical | Confirm identifiable monitoring app, visible icon and required persistent notification? | Yes; **no stealth option** | Explicit acceptance | Play/Android UX |
 | **B-04** | High | Exact first-release feature list? | Pairing, location, trip/stop/map, named places, usage, trust diagnostics and privacy; other modules staged | Core vs paid vs later list | Delivery budget |
 | **B-05** | High | Normal consumer phones, managed-device edition, or both? | Standard installation first; optional separate managed edition | Whether device-owner provisioning/reset is acceptable | Device blocking and distribution |
@@ -209,3 +209,13 @@ These **add to**, and do not close, B-01 legal publisher, B-02 exact launch ages
 5. **Evidence gate:** note Play Console verified/rejected/pending with date and redacted supporting confirmation; privacy-policy URL/contacts tested; payments verified if paid release is intended. Keep `B-01` at `DECIDED` pending external evidence and policy/legal approval.
 
 **Reference:** Google Play Console Help — personal/organization account information and identity/contact verification: https://support.google.com/googleplay/android-developer/answer/13628312 and https://support.google.com/googleplay/android-developer/answer/10841920 .
+
+## B-02 owner launch-scope decision — 2026-10-30
+
+**Owner approved:** initial launch territory **India only**; children **aged 0 through 17 inclusive** (any individual under 18). No other launch markets approved. All child age bands remain subject to Android, Google Play and legal feature feasibility; **this is not approval to collect real-child data or enable all monitoring features**.
+
+**Lifecycle:** `OWNER_DECIDED / COMPLIANCE_EVIDENCE_PENDING`. Next legal gate: DPDP Act section 9, notified DPDP Rules 2025 Rule 10 and Rule 12 / Fourth Schedule; obtain counsel's documented position for consumer parental-control services and whether the real-time child-safety location exception applies, with separate decisions for historic location, usage monitoring, camera/microphone and app-control features. A safety-location exception must not be extrapolated to general historical or behavioural monitoring. Treat verification of parental status/authority separately from Google authentication, and keep uncertain release functionality OFF.
+
+**Downstream design:** adopt India-only audience defaults, correct child under-18 age classification, disclosures appropriate to guardians, no targeted advertising for children, narrowly scoped child grants, review/deletion and consent handling, and re-check policy effective dates before public testing. Avoid committing children’s actual dates of birth or identity documents to public Git.
+
+**Sources:** https://www.pib.gov.in/PressReleasePage.aspx?PRID=2190655 ; https://indiacode.ecourtsindia.com/rules/digital-personal-data-protection-dpdp-rules-2025-fe07b131/ .
