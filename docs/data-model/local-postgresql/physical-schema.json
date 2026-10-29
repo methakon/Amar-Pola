@@ -2086,7 +2086,7 @@
         {
           "name": "app_usage_intervals_package_name_check",
           "kind": "c",
-          "definition": "CHECK (((length(package_name) >= 3) AND (length(package_name) <= 255) AND (package_name ~ '^[A-Za-z0-9_]+(\\.[A-Za-z0-9_]+)+$'::text)))",
+          "definition": "CHECK ((((length(package_name) >= 3) AND (length(package_name) <= 255)) AND (package_name ~ '^[A-Za-z0-9_]+(\\.[A-Za-z0-9_]+)+$'::text)))",
           "validated": true
         },
         {
@@ -2741,6 +2741,12 @@
           "name": "capture_artifact_refs_storage_location_check",
           "kind": "c",
           "definition": "CHECK ((storage_location = 'PARENT_LOCAL_ACK_ONLY'::text))",
+          "validated": true
+        },
+        {
+          "name": "capture_artifact_session_child_fk",
+          "kind": "f",
+          "definition": "FOREIGN KEY (child_id, media_session_id) REFERENCES ap_m1.media_sessions(child_id, id)",
           "validated": true
         }
       ],
@@ -3533,6 +3539,12 @@
           "name": "child_media_quota_pools_video_used_check",
           "kind": "c",
           "definition": "CHECK ((video_used >= 0))",
+          "validated": true
+        },
+        {
+          "name": "media_pool_child_id_id_key",
+          "kind": "u",
+          "definition": "UNIQUE (child_id, id)",
           "validated": true
         }
       ],
@@ -4504,7 +4516,7 @@
         {
           "name": "commute_plan_revisions_days_of_week_check",
           "kind": "c",
-          "definition": "CHECK (((cardinality(days_of_week) >= 1) AND (cardinality(days_of_week) <= 7) AND (days_of_week <@ ARRAY[(1)::smallint, (2)::smallint, (3)::smallint, (4)::smallint, (5)::smallint, (6)::smallint, (7)::smallint]) AND (array_position(days_of_week, NULL::smallint) IS NULL)))",
+          "definition": "CHECK ((((cardinality(days_of_week) >= 1) AND (cardinality(days_of_week) <= 7)) AND (days_of_week <@ ARRAY[(1)::smallint, (2)::smallint, (3)::smallint, (4)::smallint, (5)::smallint, (6)::smallint, (7)::smallint]) AND (array_position(days_of_week, NULL::smallint) IS NULL)))",
           "validated": true
         },
         {
@@ -7152,6 +7164,12 @@
           "kind": "c",
           "definition": "CHECK (((used_av_seconds >= 0) AND (used_av_seconds <= 1800)))",
           "validated": true
+        },
+        {
+          "name": "media_addon_child_id_id_key",
+          "kind": "u",
+          "definition": "UNIQUE (child_id, id)",
+          "validated": true
         }
       ],
       "partition_key": null
@@ -7534,13 +7552,13 @@
         {
           "name": "faq_revisions_safe_body_check",
           "kind": "c",
-          "definition": "CHECK (((length(safe_body) >= 1) AND (length(safe_body) <= 10000) AND (safe_body !~ '[<>\\[\\]]'::text)))",
+          "definition": "CHECK ((((length(safe_body) >= 1) AND (length(safe_body) <= 10000)) AND (safe_body !~ '[<>\\[\\]]'::text)))",
           "validated": true
         },
         {
           "name": "faq_revisions_title_check",
           "kind": "c",
-          "definition": "CHECK (((length(title) >= 3) AND (length(title) <= 220) AND (title !~ '[<>]'::text)))",
+          "definition": "CHECK ((((length(title) >= 3) AND (length(title) <= 220)) AND (title !~ '[<>]'::text)))",
           "validated": true
         }
       ],
@@ -8270,7 +8288,7 @@
         {
           "name": "installed_app_inventory_package_name_check",
           "kind": "c",
-          "definition": "CHECK (((length(package_name) >= 3) AND (length(package_name) <= 255) AND (package_name ~ '^[A-Za-z0-9_]+(\\.[A-Za-z0-9_]+)+$'::text)))",
+          "definition": "CHECK ((((length(package_name) >= 3) AND (length(package_name) <= 255)) AND (package_name ~ '^[A-Za-z0-9_]+(\\.[A-Za-z0-9_]+)+$'::text)))",
           "validated": true
         },
         {
@@ -9120,6 +9138,12 @@
           "validated": true
         },
         {
+          "name": "media_request_child_id_id_key",
+          "kind": "u",
+          "definition": "UNIQUE (child_id, id)",
+          "validated": true
+        },
+        {
           "name": "media_request_device_child_fk",
           "kind": "f",
           "definition": "FOREIGN KEY (child_id, device_id) REFERENCES ap_m1.devices(child_id, id)",
@@ -9341,6 +9365,24 @@
         }
       ],
       "constraints": [
+        {
+          "name": "media_ledger_addon_child_fk",
+          "kind": "f",
+          "definition": "FOREIGN KEY (child_id, addon_id) REFERENCES ap_m1.extra_viewer_purchases(child_id, id)",
+          "validated": true
+        },
+        {
+          "name": "media_ledger_pool_child_fk",
+          "kind": "f",
+          "definition": "FOREIGN KEY (child_id, pool_id) REFERENCES ap_m1.child_media_quota_pools(child_id, id)",
+          "validated": true
+        },
+        {
+          "name": "media_ledger_session_child_fk",
+          "kind": "f",
+          "definition": "FOREIGN KEY (child_id, media_session_id) REFERENCES ap_m1.media_sessions(child_id, id)",
+          "validated": true
+        },
         {
           "name": "media_quota_ledger_addon_id_fkey",
           "kind": "f",
@@ -9581,6 +9623,18 @@
         }
       ],
       "constraints": [
+        {
+          "name": "media_session_child_id_id_key",
+          "kind": "u",
+          "definition": "UNIQUE (child_id, id)",
+          "validated": true
+        },
+        {
+          "name": "media_session_request_child_fk",
+          "kind": "f",
+          "definition": "FOREIGN KEY (child_id, request_id) REFERENCES ap_m1.media_command_requests(child_id, id)",
+          "validated": true
+        },
         {
           "name": "media_sessions_authorized_adult_id_fkey",
           "kind": "f",
@@ -12822,7 +12876,7 @@
         {
           "name": "support_messages_body_check",
           "kind": "c",
-          "definition": "CHECK (((length(body) >= 1) AND (length(body) <= 5000) AND (body !~ '[<>]'::text)))",
+          "definition": "CHECK ((((length(body) >= 1) AND (length(body) <= 5000)) AND (body !~ '[<>]'::text)))",
           "validated": true
         },
         {
@@ -12978,7 +13032,7 @@
         {
           "name": "support_tickets_subject_check",
           "kind": "c",
-          "definition": "CHECK (((length(subject) >= 1) AND (length(subject) <= 220) AND (subject !~ '[<>]'::text)))",
+          "definition": "CHECK ((((length(subject) >= 1) AND (length(subject) <= 220)) AND (subject !~ '[<>]'::text)))",
           "validated": true
         }
       ],
@@ -15759,6 +15813,12 @@
     },
     {
       "schema": "ap_m1",
+      "table": "extra_viewer_purchases",
+      "name": "media_addon_child_id_id_key",
+      "definition": "CREATE UNIQUE INDEX media_addon_child_id_id_key ON ap_m1.extra_viewer_purchases USING btree (child_id, id)"
+    },
+    {
+      "schema": "ap_m1",
       "table": "media_capability_gates",
       "name": "media_capability_gates_pkey",
       "definition": "CREATE UNIQUE INDEX media_capability_gates_pkey ON ap_m1.media_capability_gates USING btree (feature)"
@@ -15783,6 +15843,12 @@
     },
     {
       "schema": "ap_m1",
+      "table": "child_media_quota_pools",
+      "name": "media_pool_child_id_id_key",
+      "definition": "CREATE UNIQUE INDEX media_pool_child_id_id_key ON ap_m1.child_media_quota_pools USING btree (child_id, id)"
+    },
+    {
+      "schema": "ap_m1",
       "table": "media_quota_ledger",
       "name": "media_quota_ledger_pkey",
       "definition": "CREATE UNIQUE INDEX media_quota_ledger_pkey ON ap_m1.media_quota_ledger USING btree (id)"
@@ -15795,6 +15861,12 @@
     },
     {
       "schema": "ap_m1",
+      "table": "media_command_requests",
+      "name": "media_request_child_id_id_key",
+      "definition": "CREATE UNIQUE INDEX media_request_child_id_id_key ON ap_m1.media_command_requests USING btree (child_id, id)"
+    },
+    {
+      "schema": "ap_m1",
       "table": "media_request_device_approvals",
       "name": "media_request_device_approvals_pkey",
       "definition": "CREATE UNIQUE INDEX media_request_device_approvals_pkey ON ap_m1.media_request_device_approvals USING btree (id)"
@@ -15804,6 +15876,12 @@
       "table": "media_request_device_approvals",
       "name": "media_request_device_approvals_request_id_key",
       "definition": "CREATE UNIQUE INDEX media_request_device_approvals_request_id_key ON ap_m1.media_request_device_approvals USING btree (request_id)"
+    },
+    {
+      "schema": "ap_m1",
+      "table": "media_sessions",
+      "name": "media_session_child_id_id_key",
+      "definition": "CREATE UNIQUE INDEX media_session_child_id_id_key ON ap_m1.media_sessions USING btree (child_id, id)"
     },
     {
       "schema": "ap_m1",
@@ -19277,6 +19355,22 @@
     },
     {
       "table_schema": "ap_m1",
+      "table": "capture_artifact_refs",
+      "target_schema": "ap_m1",
+      "target": "media_sessions",
+      "name": "capture_artifact_session_child_fk",
+      "definition": "FOREIGN KEY (child_id, media_session_id) REFERENCES ap_m1.media_sessions(child_id, id)",
+      "columns": [
+        "child_id",
+        "media_session_id"
+      ],
+      "target_columns": [
+        "child_id",
+        "id"
+      ]
+    },
+    {
+      "table_schema": "ap_m1",
       "table": "child_access_grants_v2",
       "target_schema": "ap_m1",
       "target": "parent_principals",
@@ -20950,6 +21044,54 @@
       "table": "media_quota_ledger",
       "target_schema": "ap_m1",
       "target": "extra_viewer_purchases",
+      "name": "media_ledger_addon_child_fk",
+      "definition": "FOREIGN KEY (child_id, addon_id) REFERENCES ap_m1.extra_viewer_purchases(child_id, id)",
+      "columns": [
+        "child_id",
+        "addon_id"
+      ],
+      "target_columns": [
+        "child_id",
+        "id"
+      ]
+    },
+    {
+      "table_schema": "ap_m1",
+      "table": "media_quota_ledger",
+      "target_schema": "ap_m1",
+      "target": "child_media_quota_pools",
+      "name": "media_ledger_pool_child_fk",
+      "definition": "FOREIGN KEY (child_id, pool_id) REFERENCES ap_m1.child_media_quota_pools(child_id, id)",
+      "columns": [
+        "child_id",
+        "pool_id"
+      ],
+      "target_columns": [
+        "child_id",
+        "id"
+      ]
+    },
+    {
+      "table_schema": "ap_m1",
+      "table": "media_quota_ledger",
+      "target_schema": "ap_m1",
+      "target": "media_sessions",
+      "name": "media_ledger_session_child_fk",
+      "definition": "FOREIGN KEY (child_id, media_session_id) REFERENCES ap_m1.media_sessions(child_id, id)",
+      "columns": [
+        "child_id",
+        "media_session_id"
+      ],
+      "target_columns": [
+        "child_id",
+        "id"
+      ]
+    },
+    {
+      "table_schema": "ap_m1",
+      "table": "media_quota_ledger",
+      "target_schema": "ap_m1",
+      "target": "extra_viewer_purchases",
       "name": "media_quota_ledger_addon_id_fkey",
       "definition": "FOREIGN KEY (addon_id) REFERENCES ap_m1.extra_viewer_purchases(id)",
       "columns": [
@@ -21043,6 +21185,22 @@
       "columns": [
         "child_id",
         "device_id"
+      ],
+      "target_columns": [
+        "child_id",
+        "id"
+      ]
+    },
+    {
+      "table_schema": "ap_m1",
+      "table": "media_sessions",
+      "target_schema": "ap_m1",
+      "target": "media_command_requests",
+      "name": "media_session_request_child_fk",
+      "definition": "FOREIGN KEY (child_id, request_id) REFERENCES ap_m1.media_command_requests(child_id, id)",
+      "columns": [
+        "child_id",
+        "request_id"
       ],
       "target_columns": [
         "child_id",

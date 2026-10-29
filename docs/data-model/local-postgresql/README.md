@@ -6,7 +6,7 @@ Status: LOCAL_READY for the synthetic local database foundation. Admin/product/r
 
 1. [Current setup status and integration prerequisites](STATUS.md).
 2. [Development, migrations, build, tests and recovery runbook](RUNBOOK.md).
-3. [Final 176-test acceptance and admin API development decision](../../../evidence/local/database/FINAL_LOCAL_SETUP_ACCEPTANCE_2026-10-29.md); [lineage/restore checkpoint](../../../evidence/local/database/LINEAGE_CONVERGENCE_2026-10-29.md); [earlier 140-test checkpoint](../../../evidence/local/database/REVERIFICATION_2026-10-29.md).
+3. [Reconciliation acceptance: four reproduced defects, 0019 fix and 205-test run](../../../evidence/local/database/RECONCILIATION_ACCEPTANCE_2026-10-29.md); [earlier setup acceptance](../../../evidence/local/database/FINAL_LOCAL_SETUP_ACCEPTANCE_2026-10-29.md); [lineage/restore checkpoint](../../../evidence/local/database/LINEAGE_CONVERGENCE_2026-10-29.md).
 4. [Owner decisions and acceptance boundaries](../../roadmap/SIX_GATE_OWNER_DECISIONS_AND_AGENT_HANDOFF_2026-10-29.md).
 5. [Logical model reconciliation and enhancement security review](MODEL_RECONCILIATION_2026-10-29.md).
 6. [Separate historical 18-table M1 catalog](../historical-m1/PHYSICAL_TABLE_CATALOG.md).

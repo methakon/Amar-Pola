@@ -228,7 +228,7 @@ def load_migration_manifest(verify=True):
             raise ValueError('Invalid migration checksum: ' + identity)
         if verify and digest is not None and (not path.is_file() or sha256(path) != digest):
             raise ValueError('Migration checksum drift: ' + identity)
-    expected = {'common:0001', 'compat:m1_pre_v2_0016'} | {'m1:%04d' % n for n in range(2, 5)} | {'v2:%04d' % n for n in range(2, 19)}
+    expected = {'common:0001', 'compat:m1_pre_v2_0016'} | {'m1:%04d' % n for n in range(2, 5)} | {'v2:%04d' % n for n in range(2, 20)}
     if ids != expected:
         raise ValueError('Incomplete or unknown manifest identities')
     return entries
@@ -253,7 +253,7 @@ def migration_plan(entries, lineage='v2', through=None, applied=()):
         ids += ['v2:%04d' % n for n in range(2, 16)]
         if upgrade:
             ids += ['compat:m1_pre_v2_0016']
-        ids += ['v2:0016', 'v2:0017', 'v2:0018']
+        ids += ['v2:0016', 'v2:0017', 'v2:0018', 'v2:0019']
     if through:
         target = through if ':' in through else ('common:0001' if through == '0001' else lineage + ':' + through)
         if target not in ids:
@@ -402,7 +402,7 @@ def migrate(database, through=None, lineage='v2'):
                         (identity,filename,checksum,exc.sqlstate))
                     print('FAILED ' + filename + ' SQLSTATE=' + str(exc.sqlstate), file=sys.stderr)
                     raise
-            if upgrading and 'v2:0018' in applied:
+            if upgrading and 'v2:0019' in applied:
                 verify_lineage_security(database)
                 if not external_quarantine:
                     open_after_restore(database)

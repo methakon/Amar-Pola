@@ -147,15 +147,15 @@ erDiagram
   children ||--o{ media_export_requests : references
   media_sessions ||--o{ media_lifecycle_events : references
   extra_viewer_purchases ||--o{ media_quota_ledger : references
+  child_media_quota_pools ||--o{ media_quota_ledger : references
+  media_sessions ||--o{ media_quota_ledger : references
   children ||--o{ media_quota_ledger : references
   media_capability_gates ||--o{ media_quota_ledger : references
-  media_sessions ||--o{ media_quota_ledger : references
-  child_media_quota_pools ||--o{ media_quota_ledger : references
   media_command_requests ||--o{ media_request_device_approvals : references
   devices ||--o{ media_request_device_approvals : references
+  media_command_requests ||--o{ media_sessions : references
   parent_principals ||--o{ media_sessions : references
   children ||--o{ media_sessions : references
-  media_command_requests ||--o{ media_sessions : references
   children ||--o{ named_places : references
   parent_principals ||--o{ named_places : references
   alert_events ||--o{ notification_deliveries : references

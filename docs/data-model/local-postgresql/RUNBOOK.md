@@ -1,6 +1,6 @@
 # Local PostgreSQL development
 
-**Status:** LOCAL_READY for synthetic database/API development; migration lineages, exports and the unfiltered 176-test suite are verified. Read the [package index](README.md) and [current status](STATUS.md) before executing these commands. Use the explicit manifest/runner, never directory-wide SQL replay: historical M1 and V2 intentionally preserve different published files numbered 0002–0004.
+**Status:** LOCAL_READY for synthetic database/API development; migration lineages, exports and the unfiltered 205-test suite are verified. Read the [package index](README.md) and [current status](STATUS.md) before executing these commands. Use the explicit manifest/runner, never directory-wide SQL replay: historical M1 and V2 intentionally preserve different published files numbered 0002–0004.
 
 This runbook is for the dedicated synthetic development instance, never production. It binds PostgreSQL to `127.0.0.1:15432`, leaving any host installation on port 5432 untouched. Docker Compose limits it to one CPU and 512 MiB, with no automatic restart or system-service installation.
 

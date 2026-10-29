@@ -132,7 +132,7 @@ def main():
     db.migrate('test')
     with db.connect('test','admin',autocommit=False) as conn:
         assert conn.execute('SELECT * FROM ma_migrations.history ORDER BY version').fetchall() == old
-        assert conn.execute('SELECT count(*) FROM ma_migrations.lineage_history').fetchone()[0] == 18
+        assert conn.execute('SELECT count(*) FROM ma_migrations.lineage_history').fetchone()[0] == 19
     print('Clean V2 convergence + exact legacy adoption without history mutation PASS', flush=True)
     return 0
 

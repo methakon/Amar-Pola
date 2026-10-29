@@ -113,6 +113,11 @@
       "version": "compat:m1_pre_v2_0016",
       "file": "backend/persistence/migrations/compat/m1_pre_v2_0016.sql",
       "sha256": "6c94148e287076a508a505ebe8070d297c869376e56b5f731d0b8410c4bfdd3b"
+    },
+    {
+      "version": "v2:0019",
+      "file": "backend/persistence/migrations/0019_reconciliation_and_child_binding.sql",
+      "sha256": "7089fe231c80046cfef7a9d984cc0ff176bf7d3a5b29e6f59011e0ce66b7ac7c"
     }
   ]
 }

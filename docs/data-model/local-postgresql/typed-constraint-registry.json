@@ -2016,7 +2016,7 @@
         {
           "name": "app_usage_intervals_package_name_check",
           "kind": "c",
-          "definition": "CHECK (((length(package_name) >= 3) AND (length(package_name) <= 255) AND (package_name ~ '^[A-Za-z0-9_]+(\\.[A-Za-z0-9_]+)+$'::text)))",
+          "definition": "CHECK ((((length(package_name) >= 3) AND (length(package_name) <= 255)) AND (package_name ~ '^[A-Za-z0-9_]+(\\.[A-Za-z0-9_]+)+$'::text)))",
           "validated": true
         }
       ],
@@ -2692,6 +2692,22 @@
             "media_session_id"
           ],
           "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "table_schema": "ap_m1",
+          "table": "capture_artifact_refs",
+          "target_schema": "ap_m1",
+          "target": "media_sessions",
+          "name": "capture_artifact_session_child_fk",
+          "definition": "FOREIGN KEY (child_id, media_session_id) REFERENCES ap_m1.media_sessions(child_id, id)",
+          "columns": [
+            "child_id",
+            "media_session_id"
+          ],
+          "target_columns": [
+            "child_id",
             "id"
           ]
         }
@@ -4504,7 +4520,7 @@
         {
           "name": "commute_plan_revisions_days_of_week_check",
           "kind": "c",
-          "definition": "CHECK (((cardinality(days_of_week) >= 1) AND (cardinality(days_of_week) <= 7) AND (days_of_week <@ ARRAY[(1)::smallint, (2)::smallint, (3)::smallint, (4)::smallint, (5)::smallint, (6)::smallint, (7)::smallint]) AND (array_position(days_of_week, NULL::smallint) IS NULL)))",
+          "definition": "CHECK ((((cardinality(days_of_week) >= 1) AND (cardinality(days_of_week) <= 7)) AND (days_of_week <@ ARRAY[(1)::smallint, (2)::smallint, (3)::smallint, (4)::smallint, (5)::smallint, (6)::smallint, (7)::smallint]) AND (array_position(days_of_week, NULL::smallint) IS NULL)))",
           "validated": true
         },
         {
@@ -7635,13 +7651,13 @@
         {
           "name": "faq_revisions_safe_body_check",
           "kind": "c",
-          "definition": "CHECK (((length(safe_body) >= 1) AND (length(safe_body) <= 10000) AND (safe_body !~ '[<>\\[\\]]'::text)))",
+          "definition": "CHECK ((((length(safe_body) >= 1) AND (length(safe_body) <= 10000)) AND (safe_body !~ '[<>\\[\\]]'::text)))",
           "validated": true
         },
         {
           "name": "faq_revisions_title_check",
           "kind": "c",
-          "definition": "CHECK (((length(title) >= 3) AND (length(title) <= 220) AND (title !~ '[<>]'::text)))",
+          "definition": "CHECK ((((length(title) >= 3) AND (length(title) <= 220)) AND (title !~ '[<>]'::text)))",
           "validated": true
         }
       ],
@@ -8264,7 +8280,7 @@
         {
           "name": "installed_app_inventory_package_name_check",
           "kind": "c",
-          "definition": "CHECK (((length(package_name) >= 3) AND (length(package_name) <= 255) AND (package_name ~ '^[A-Za-z0-9_]+(\\.[A-Za-z0-9_]+)+$'::text)))",
+          "definition": "CHECK ((((length(package_name) >= 3) AND (length(package_name) <= 255)) AND (package_name ~ '^[A-Za-z0-9_]+(\\.[A-Za-z0-9_]+)+$'::text)))",
           "validated": true
         },
         {
@@ -9412,6 +9428,54 @@
           "table": "media_quota_ledger",
           "target_schema": "ap_m1",
           "target": "extra_viewer_purchases",
+          "name": "media_ledger_addon_child_fk",
+          "definition": "FOREIGN KEY (child_id, addon_id) REFERENCES ap_m1.extra_viewer_purchases(child_id, id)",
+          "columns": [
+            "child_id",
+            "addon_id"
+          ],
+          "target_columns": [
+            "child_id",
+            "id"
+          ]
+        },
+        {
+          "table_schema": "ap_m1",
+          "table": "media_quota_ledger",
+          "target_schema": "ap_m1",
+          "target": "child_media_quota_pools",
+          "name": "media_ledger_pool_child_fk",
+          "definition": "FOREIGN KEY (child_id, pool_id) REFERENCES ap_m1.child_media_quota_pools(child_id, id)",
+          "columns": [
+            "child_id",
+            "pool_id"
+          ],
+          "target_columns": [
+            "child_id",
+            "id"
+          ]
+        },
+        {
+          "table_schema": "ap_m1",
+          "table": "media_quota_ledger",
+          "target_schema": "ap_m1",
+          "target": "media_sessions",
+          "name": "media_ledger_session_child_fk",
+          "definition": "FOREIGN KEY (child_id, media_session_id) REFERENCES ap_m1.media_sessions(child_id, id)",
+          "columns": [
+            "child_id",
+            "media_session_id"
+          ],
+          "target_columns": [
+            "child_id",
+            "id"
+          ]
+        },
+        {
+          "table_schema": "ap_m1",
+          "table": "media_quota_ledger",
+          "target_schema": "ap_m1",
+          "target": "extra_viewer_purchases",
           "name": "media_quota_ledger_addon_id_fkey",
           "definition": "FOREIGN KEY (addon_id) REFERENCES ap_m1.extra_viewer_purchases(id)",
           "columns": [
@@ -9693,6 +9757,22 @@
         }
       ],
       "foreign_keys": [
+        {
+          "table_schema": "ap_m1",
+          "table": "media_sessions",
+          "target_schema": "ap_m1",
+          "target": "media_command_requests",
+          "name": "media_session_request_child_fk",
+          "definition": "FOREIGN KEY (child_id, request_id) REFERENCES ap_m1.media_command_requests(child_id, id)",
+          "columns": [
+            "child_id",
+            "request_id"
+          ],
+          "target_columns": [
+            "child_id",
+            "id"
+          ]
+        },
         {
           "table_schema": "ap_m1",
           "table": "media_sessions",
@@ -12868,7 +12948,7 @@
         {
           "name": "support_messages_body_check",
           "kind": "c",
-          "definition": "CHECK (((length(body) >= 1) AND (length(body) <= 5000) AND (body !~ '[<>]'::text)))",
+          "definition": "CHECK ((((length(body) >= 1) AND (length(body) <= 5000)) AND (body !~ '[<>]'::text)))",
           "validated": true
         },
         {
@@ -13022,7 +13102,7 @@
         {
           "name": "support_tickets_subject_check",
           "kind": "c",
-          "definition": "CHECK (((length(subject) >= 1) AND (length(subject) <= 220) AND (subject !~ '[<>]'::text)))",
+          "definition": "CHECK ((((length(subject) >= 1) AND (length(subject) <= 220)) AND (subject !~ '[<>]'::text)))",
           "validated": true
         }
       ],
