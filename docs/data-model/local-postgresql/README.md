@@ -6,9 +6,10 @@ Status: LOCAL_BLOCKED. This package documents synthetic local implementation wor
 
 1. [Current setup status and integration prerequisites](STATUS.md).
 2. [Development, migrations, build, tests and recovery runbook](RUNBOOK.md).
-3. [Current executed re-verification checkpoint](../../../evidence/local/database/REVERIFICATION_2026-10-29.md); [historical interrupted run](../../../evidence/local/database/INTEGRATION_PENDING_2026-10-29.md).
+3. [Current lineage convergence and 168-test checkpoint](../../../evidence/local/database/LINEAGE_CONVERGENCE_2026-10-29.md); [earlier 140-test checkpoint](../../../evidence/local/database/REVERIFICATION_2026-10-29.md); [historical interrupted run](../../../evidence/local/database/INTEGRATION_PENDING_2026-10-29.md).
 4. [Owner decisions and acceptance boundaries](../../roadmap/SIX_GATE_OWNER_DECISIONS_AND_AGENT_HANDOFF_2026-10-29.md).
 5. [Logical model reconciliation and enhancement security review](MODEL_RECONCILIATION_2026-10-29.md).
+6. [Separate historical 18-table M1 catalog](../historical-m1/PHYSICAL_TABLE_CATALOG.md).
 
 ## Package ownership and layout
 
@@ -19,7 +20,7 @@ Status: LOCAL_BLOCKED. This package documents synthetic local implementation wor
 - `evidence/local/database/`: redacted execution checkpoints, separate from specifications.
 - `.local-db/`: ignored credentials, raw logs, database storage, build caches and backup archives. Never commit these files.
 
-The [catalog](physical-schema.json), [physical ERD](PHYSICAL_ERD.md), [logical mapping](logical-to-physical.json), [operation/dependency matrix](api-to-table.json) and [migration manifest](migration-manifest.json) were generated and verified at the recorded checkpoint. The logical model has since been versioned correctly; derived artifacts need regeneration after compatibility replay. They are schema/dependency evidence, not proof of every HTTP handler. Canonical migration lineage integration remains in progress.
+The [catalog](physical-schema.json), [physical ERD](PHYSICAL_ERD.md), [logical mapping](logical-to-physical.json), [operation/dependency matrix](api-to-table.json) and [migration manifest](migration-manifest.json) were generated and verified at the earlier checkpoint. Logical models are now versioned correctly and migration lineages converge; derived artifacts and retention/constraint metadata still need final regeneration/acceptance. They are schema/dependency evidence, not proof of every HTTP handler.
 
 ## Navigation
 

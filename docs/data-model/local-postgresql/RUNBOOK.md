@@ -1,10 +1,20 @@
 # Local PostgreSQL development
 
-**Status:** implementation/integration in progress, not a certified setup. Read the [package index](README.md) and [current blockers](STATUS.md) before executing these commands. Reconcile the existing stacked M1 migration versions before treating this chain as the canonical upgrade path.
+**Status:** migration-lineage convergence verified; final export/metadata acceptance remains pending. Read the [package index](README.md) and [current status](STATUS.md) before executing these commands. Use the explicit manifest/runner, never directory-wide SQL replay: historical M1 and V2 intentionally preserve different published files numbered 0002–0004.
 
 This runbook is for the dedicated synthetic development instance, never production. It binds PostgreSQL to `127.0.0.1:15432`, leaving any host installation on port 5432 untouched. Docker Compose limits it to one CPU and 512 MiB, with no automatic restart or system-service installation.
 
 ## Prerequisites
+
+### Preserved historical migration lineages
+
+`backend/persistence/migration-lineages.json` selects immutable paths/checksums; default `--lineage v2` converges clean V2 or upgrades a tracked historical M1 database. `migrate --lineage m1` selects only original 0001–0004 on an appropriately bootstrapped historical target; it cannot downgrade V2. `--through` is scoped to the selected lineage. Never repair a checksum row or renumber either published chain.
+
+Run `.local-db/venv/bin/python tools/database/verify_lineages.py` for destructive replay acceptance on the exact labelled synthetic test database only. It preserves the independent recovery ledger, exercises original SQL/concurrency checks, compares the live 18-table M1 checkpoint, tests populated upgrade/restore and compares clean/upgraded schema/ACLs. Do not run it concurrently with another test/reset/restore process.
+
+Default `restore --lineage v2 --file <ignored-backup.dump>` upgrades historical archives while recovery stays closed through erasure suppression. `restore --lineage m1` is inspection-only: it intentionally leaves runtime/issuer/verifier CONNECT revoked. Restore the same archive with `--lineage v2` to complete suppression and reopen. A successful historical inspection is not a runtime-ready restore.
+
+### Tooling
 
 Ubuntu/Linux with Docker Engine, Docker Compose v2, Python 3.12+, and either `uv` or Python `venv`/`pip`. The database image is pinned by digest in `infra/local/compose.yaml`; it contains PostgreSQL, PostGIS, `psql`, `pg_dump`, and `pg_restore`. `tools/database/requirements.txt` pins the libpq-backed Python migration/test driver. No MySQL or SQLite server is installed.
 

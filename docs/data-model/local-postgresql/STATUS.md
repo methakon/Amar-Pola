@@ -1,30 +1,30 @@
 # Local PostgreSQL setup status
 
-Status: LOCAL_BLOCKED for canonical integration; the isolated V2 test baseline is now verified. No overall task PASS or production approval is recorded.
+Status: migration/schema convergence verified locally; final metadata/export acceptance remains LOCAL_BLOCKED. No overall task PASS or production approval is recorded.
 
 ## Verified at the recorded checkpoint
 
-- Fresh isolated local replay applied the implementation's 0001–0016 chain successfully.
+- Both original historical M1 and clean V2 through 0018 replay successfully; populated upgrade and exact history adoption are verified without rewriting published SQL.
 - Actual C++20/Drogon build and native CTest passed.
-- The latest isolated full suite passed all 140 tests, including six actual HTTP integration tests and both real backup/restore tests. The prior 69-test timeout is historical, not the current suite result.
+- The stable integration run passed 168 tests, including six actual HTTP integration tests and both real backup/restore tests. The metadata module was explicitly excluded pending its separate handoff; an unfiltered final run remains required.
 - Historical `0001_m1_identity.sql` remained checksum-identical.
 
-Commands, exit codes, actual catalog and implementation commit: [re-verification evidence](../../../evidence/local/database/REVERIFICATION_2026-10-29.md). The test instance is separately RAM-backed with fsync enabled; this does not certify persistent-disk durability, performance or the development database upgrade.
+Commands, exit codes, actual catalog and implementation commits: [lineage convergence evidence](../../../evidence/local/database/LINEAGE_CONVERGENCE_2026-10-29.md). Persistent development was backed up, additively migrated from 0015 to 0018 and verified successfully. Test remains separately RAM-backed with fsync enabled; no reboot/power-loss durability certification is claimed.
 
 ## Open setup and synchronization work
 
-1. Reconcile migration numbering with the existing stacked M1 credential/enrollment/idempotency work: that branch already has different migrations numbered 0002–0004. The local chain must not be published as if those versions were unallocated. Preserve historical migrations and account for the existing physical catalog/checkers.
-2. Host I/O pressure is bypassed for isolated tests without touching development storage; persistent-development upgrade and its recovery state still need verification.
+1. Migration collisions are resolved with explicit checksummed lineages and additive bridges. The original 18-table M1 checkpoint/checker remains distinct from the converged 139-table application catalog.
+2. Persistent development backup/migration/verification now succeed within bounded commands; the earlier I/O timeout is historical rather than the current blocker.
 3. The [logical model reconciliation](MODEL_RECONCILIATION_2026-10-29.md) restores the 120-entity canonical baseline and preserves all 124 proposed entities separately; full contract lint and reference checks now pass without loosening the baseline. Derived mappings will be regenerated after the compatibility replay.
 4. Reconcile the new physical-schema audit requirements, including per-table retention/ownership metadata, typed constraints and child-consistency evidence. Authored schema alone does not close those requirements.
-5. Verified test-isolation fixes are committed and pushed as `3d3e285cbf92f0583749cb239d9e3c0bd74e903f`. Canonical migration integration and normal review/CI remain outstanding.
-6. Subsequent enhancement review reproduced two metadata authorization/child-consistency defects in 0016. Additive 0018 and focused tests are authored; their coordinated GREEN run is still pending. The earlier 140-test checkpoint does not close these newly identified cases.
+5. Convergence is published as `4b4c4e85cebd3c35877d49e25fc2d7c11dc5f1a1`; additional historical restore routing/quarantine acceptance is committed as `50333c6dee6dfb45d6f56fd70501b8a4cb7a810f`. Final metadata integration, unfiltered regression and normal review/CI remain outstanding.
+6. The two 0016 metadata authorization/child-consistency regressions now pass with additive 0018. Historical inspection restores remain quarantined; full V2 restore verifies suppression before reopening runtime.
 
 ## Admin API development assessment
 
-Synthetic admin API development is permitted by the owner handoff; hosting, live Play verification and real-child legal approval are not prerequisites for local metadata-only coding. However, this checkpoint does not establish a verified, integration-ready database baseline for admin APIs.
+Synthetic admin API development is permitted by the owner handoff; hosting, live Play verification and real-child legal approval are not prerequisites for local metadata-only coding. The migration collision no longer blocks that work; final setup/readiness acceptance still awaits the metadata exports and unfiltered regression.
 
-Before building on the database, reconcile the migration chain and verify admin identity/approval/RBAC, immutable decisions, role revocation, redaction and denied-access tests. Existing SQL is not a running admin HTTP API. Real Google OIDC exchange and production authentication remain separate acceptance work. Owner authority must never imply unrestricted access to child location or media.
+Admin implementation must retain identity/approval/RBAC, immutable decisions, role revocation, redaction and denied-access tests. Existing SQL is not a running admin HTTP API. Real Google OIDC exchange and production authentication remain separate acceptance work. Owner authority must never imply unrestricted access to child location or media.
 
 ## Document control
 

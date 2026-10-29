@@ -1,6 +1,6 @@
 # Logical-model reconciliation and enhancement review
 
-Status: canonical specification consistency repaired; compatibility/enhancement implementation acceptance remains in progress.
+Status: canonical specification consistency, migration compatibility and enhancement regressions verified locally. Final metadata exports remain pending; see [executed convergence evidence](../../../evidence/local/database/LINEAGE_CONVERGENCE_2026-10-29.md).
 
 ## Preserve the approved baseline and the proposed additions separately
 
@@ -24,12 +24,12 @@ New regression tests against installed migration 0016 reproduced two actual defe
 1. Pickup-pass metadata remained visible after the creator's exact-child `VIEW_LOCATION` grant was revoked.
 2. A compliance bundle could bind a case/family to another child without a composite foreign-key rejection.
 
-Additive migration `0018_schema_enhancement_guards.sql` addresses these findings with live child scope/consent checks, case-child and family-child composite references, and bounded counters/digest validation. Its GREEN acceptance is pending coordinated migration replay; source existence is not a passed test.
+Additive migration `0018_schema_enhancement_guards.sql` addresses these findings with live child scope/consent checks, case-child and family-child composite references, and bounded counters/digest validation. Both regressions now pass after coordinated replay, including in the stable 168-test run.
 
 No pickup bearer issuance, non-account location access, compliance archive delivery, raw-child admin access or legal retention approval is enabled. A 45-minute label in the proposal or existing SQL is not independently verified product/legal approval.
 
 ## Historical migration compatibility
 
-The original M1 credential/enrollment/idempotency migrations and the published V2 chain reuse versions 0002–0004 and contain incompatible renewal-table types. Preserve their bytes; use explicit lineage manifests, checksum-bound history adoption, an additive bridge and runtime quarantine rather than merging filenames or replaying historical broad grants after V2. Integration tests and per-table retention/ownership metadata remain separate acceptance requirements.
+The original M1 credential/enrollment/idempotency migrations and the published V2 chain reuse versions 0002–0004 and contain incompatible renewal-table types. Explicit lineage manifests, checksum-bound history adoption, additive bridges and runtime quarantine now converge both paths while preserving their published bytes. Actual fresh/historical/populated-upgrade/restore acceptance passes; per-table retention/ownership metadata remains a separate acceptance requirement.
 
 [Package index](README.md) · [Current setup status](STATUS.md) · [Last complete 140-test checkpoint](../../../evidence/local/database/REVERIFICATION_2026-10-29.md).
