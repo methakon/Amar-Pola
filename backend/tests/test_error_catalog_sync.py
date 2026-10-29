@@ -32,6 +32,15 @@ class ErrorCatalogSync(unittest.TestCase):
         enum = yaml.safe_load(OPENAPI.read_text())["components"]["schemas"]["Error"]["properties"]["code"]["enum"]
         self.assertEqual(set(cpp_table()), set(enum))
 
+    def test_cpp_status_to_code_matches_linter(self):
+        import sys
+        sys.path.insert(0, str(ROOT / "backend" / "tests"))
+        import lint_openapi_m1 as linter
+        by_status = {}
+        for code, (status, _) in cpp_table().items():
+            by_status.setdefault(str(status), set()).add(code)
+        self.assertEqual(by_status, linter.STATUS_TO_CODES)
+
     def test_twelve_codes(self):
         self.assertEqual(len(cpp_table()), 12)
 

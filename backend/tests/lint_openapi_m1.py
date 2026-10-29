@@ -36,11 +36,22 @@ SECURITY_SCHEME_TYPES = {"apiKey", "http", "oauth2", "openIdConnect", "mutualTLS
 JSON_SCHEMA_TYPES = {"null", "integer", "number", "boolean", "string", "array", "object"}
 HTTP_VERBS = {"get", "post", "put", "patch", "delete"}
 # Must equal Error.code's enum and the catalog in docs/API_CONVENTIONS_AND_ERROR_CATALOG.md.
-ERROR_CODES = {
-    "INVALID_REQUEST", "UNAUTHENTICATED", "FORBIDDEN", "NOT_FOUND", "CONFLICT",
-    "IDEMPOTENCY_KEY_REUSED", "CODE_EXPIRED_OR_USED", "PAYLOAD_TOO_LARGE",
-    "VALIDATION_FAILED", "RATE_LIMITED", "INTERNAL_ERROR", "SERVICE_UNAVAILABLE",
+# Which error codes each HTTP status may carry (docs/API_CONVENTIONS_AND_ERROR_CATALOG.md section 5.2).
+# backend/tests/test_error_catalog_sync.py keeps this equal to the document table and the C++ catalog.
+STATUS_TO_CODES = {
+    "400": {"INVALID_REQUEST"},
+    "401": {"UNAUTHENTICATED"},
+    "403": {"FORBIDDEN"},
+    "404": {"NOT_FOUND"},
+    "409": {"CONFLICT", "IDEMPOTENCY_KEY_REUSED"},
+    "410": {"CODE_EXPIRED_OR_USED"},
+    "413": {"PAYLOAD_TOO_LARGE"},
+    "422": {"VALIDATION_FAILED"},
+    "429": {"RATE_LIMITED"},
+    "500": {"INTERNAL_ERROR"},
+    "503": {"SERVICE_UNAVAILABLE"},
 }
+ERROR_CODES = set().union(*STATUS_TO_CODES.values())
 # Creates that a mobile client may retry after a lost response: a retry must not create a duplicate.
 IDEMPOTENT_CREATES = {"createFamily", "createChild", "issuePairingCode"}
 REF_KINDS = {"schemas", "headers", "parameters"}
@@ -125,6 +136,24 @@ def lint(doc):
             if "410" in codes:
                 check(oid in GONE_OPERATIONS,
                       f"{where}: 410 is reserved for expired/used one-time enrollment codes")
+            for code, response in codes.items():
+                if code.startswith("2"):
+                    continue
+                allowed = STATUS_TO_CODES.get(code)
+                check(allowed is not None, f"{where}: status {code} is not in the error catalog")
+                declared_codes = response.get("x-error-codes")
+                if not isinstance(declared_codes, list) or not declared_codes:
+                    errors.append(f"{where}: {code} must declare x-error-codes (the catalog codes it can return)")
+                elif allowed is not None:
+                    check(len(declared_codes) == len(set(declared_codes)), f"{where}: {code} x-error-codes has duplicates")
+                    for c in declared_codes:
+                        check(c in allowed, f"{where}: {code} cannot carry error code {c}; allowed {sorted(allowed)}")
+                    if "IDEMPOTENCY_KEY_REUSED" in declared_codes:
+                        check(oid in IDEMPOTENT_CREATES,
+                              f"{where}: IDEMPOTENCY_KEY_REUSED only applies to the retryable creates")
+                    if code == "409" and oid in IDEMPOTENT_CREATES:
+                        check("IDEMPOTENCY_KEY_REUSED" in declared_codes,
+                              f"{where}: 409 on a retryable create must include IDEMPOTENCY_KEY_REUSED")
             for code, response in codes.items():
                 if not code.startswith("2"):
                     ref = (response.get("content", {}).get("application/json", {})

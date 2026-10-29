@@ -152,7 +152,7 @@ A mobile client WILL retry after a lost response. A retry must not create a seco
 
 ## 11. How this is enforced
 
-**Now (automatic, in CI):** the OpenAPI linter requires: `Error.code` equals the 12 catalog codes; every response declares `X-Request-Id`; every `429` declares `Retry-After`; the three create operations take `Idempotency-Key`; every non-2xx response uses the shared `Error` schema; each operation lists only errors it can return; `410` only where a one-time code or challenge exists.
+**Now (automatic, in CI):** the OpenAPI linter requires: `Error.code` equals the 12 catalog codes; every response declares `X-Request-Id`; every `429` declares `Retry-After`; the three create operations take `Idempotency-Key`; every non-2xx response uses the shared `Error` schema and declares `x-error-codes` that its status allows (G-6); each operation lists only errors it can return; `410` only where a one-time code or challenge exists.
 
 **To write with the backend (tests, before M1 sign-off):**
 1. Every error response body validates against `Error` and its `request_id` equals the `X-Request-Id` header.
@@ -171,7 +171,7 @@ A mobile client WILL retry after a lost response. A retry must not create a seco
 | G-3 | Technical specification §7 calls for a stable `event_id` on device observations; M1 `Health` and `Capabilities` have none. | Use (device, `observed_at`) in M1; add `event_id` when batches arrive in M2. |
 | G-4 | `public_key_spki_base64` is standard base64; every other binary field is base64url. | Decide **before the first client is built** (renaming later is a breaking change). Recommended: switch to base64url. |
 | G-5 | `redeemEnrollmentCode` and `finishEnrollmentProof` declare separate `404`, `409` and `410` outcomes, but the database functions return no row for unknown, used, expired and exhausted alike, so the backend cannot produce them. | Recommended: one status for all invalid-code cases (less information leaked). Alternative: have the functions return a reason, accepting a small oracle on pairing codes. Owner and security decision. |
-| G-6 | The linter checks the enum and headers but not that each operation uses only the right `code` for each status. | Add a status-to-code table check when handlers exist. |
+| G-6 | ~~The linter did not check that each operation uses only the right `code` for each status.~~ **Closed.** Every non-2xx response in `openapi-m1.yaml` declares `x-error-codes`; the linter requires each to be allowed for that status (table in `lint_openapi_m1.py`, kept equal to section 5.2 and the C++ catalog by tests) and requires `IDEMPOTENCY_KEY_REUSED` on the 409 of the three retryable creates and nowhere else. | Handlers must return one of the declared codes; add a handler-level test when routes exist. |
 | G-7 | Clock-skew and size-cap rules are not implemented anywhere yet. | Backend work item with tests 11.5 and the caps in section 8. |
 
 Two contradictions found while writing this were fixed in the contract: the credential challenge no longer returns a separate `422` for a wrong key fingerprint, and renewal no longer returns `404` for unknown devices (both would have revealed whether a device exists).

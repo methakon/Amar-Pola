@@ -153,6 +153,48 @@ class BrokenContractsFail(unittest.TestCase):
             op(d, "getChild")["responses"]["404"]["headers"]["X-Request-Id"] = {"$ref": "#/components/headers/Nope"}
         self.assertFails(go, "unresolved ref")
 
+class StatusToErrorCode(unittest.TestCase):
+    """G-6: every error response declares which catalog codes it can carry, and the status must permit them."""
+
+    def broken(self, operation_id, status, codes):
+        doc = copy.deepcopy(REAL)
+        op(doc, operation_id)["responses"][status]["x-error-codes"] = codes
+        return errors_for(doc)
+
+    def test_wrong_code_for_status(self):
+        self.assertTrue(any("cannot carry error code NOT_FOUND" in e for e in self.broken("getChild", "401", ["NOT_FOUND"])))
+
+    def test_missing_declaration(self):
+        doc = copy.deepcopy(REAL)
+        del op(doc, "getChild")["responses"]["404"]["x-error-codes"]
+        self.assertTrue(any("must declare x-error-codes" in e for e in errors_for(doc)))
+
+    def test_empty_and_duplicate_declarations(self):
+        self.assertTrue(any("must declare x-error-codes" in e for e in self.broken("getChild", "404", [])))
+        self.assertTrue(any("duplicates" in e for e in self.broken("getChild", "404", ["NOT_FOUND", "NOT_FOUND"])))
+
+    def test_unknown_status(self):
+        doc = copy.deepcopy(REAL)
+        op(doc, "getChild")["responses"]["418"] = copy.deepcopy(op(doc, "getChild")["responses"]["404"])
+        self.assertTrue(any("status 418 is not in the error catalog" in e for e in errors_for(doc)))
+
+    def test_idempotency_code_only_on_retryable_creates(self):
+        other = next(o for o in linter.EXPECTED_OPERATIONS - linter.IDEMPOTENT_CREATES
+                     if "409" in op(REAL, o)["responses"])
+        self.assertTrue(any("only applies to the retryable creates" in e
+                            for e in self.broken(other, "409", ["CONFLICT", "IDEMPOTENCY_KEY_REUSED"])))
+
+    def test_retryable_create_409_must_include_key_reuse(self):
+        self.assertTrue(any("must include IDEMPOTENCY_KEY_REUSED" in e for e in self.broken("createFamily", "409", ["CONFLICT"])))
+
+    def test_every_real_error_response_is_declared(self):
+        for url, verbs in REAL["paths"].items():
+            for method, o in verbs.items():
+                for status, r in o["responses"].items():
+                    if not status.startswith("2"):
+                        self.assertIn("x-error-codes", r, f"{method} {url} {status}")
+
+
 class DocumentationInSync(unittest.TestCase):
     def test_error_catalog_document_lists_exactly_the_linted_codes(self):
         text = (HERE.parent.parent / "docs" / "API_CONVENTIONS_AND_ERROR_CATALOG.md").read_text(encoding="utf-8")
@@ -163,6 +205,16 @@ class DocumentationInSync(unittest.TestCase):
             if len(cells) > 3 and cells[1].isdigit():
                 documented.add(cells[2].strip("`"))
         self.assertEqual(documented, linter.ERROR_CODES)
+
+    def test_status_to_code_table_matches_the_document(self):
+        text = (HERE.parent.parent / "docs" / "API_CONVENTIONS_AND_ERROR_CATALOG.md").read_text(encoding="utf-8")
+        table = text.split("### 5.2 Catalog")[1].split("### 5.3")[0]
+        documented = {}
+        for line in table.splitlines():
+            cells = [c.strip() for c in line.split("|")]
+            if len(cells) > 3 and cells[1].isdigit():
+                documented.setdefault(cells[1], set()).add(cells[2].strip("`"))
+        self.assertEqual(documented, linter.STATUS_TO_CODES)
 
 
 if __name__ == "__main__":
