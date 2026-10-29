@@ -203,6 +203,16 @@ class MigrationLineages(unittest.TestCase):
             manage.main()
         restore.assert_called_once_with('test',Path('historical.dump'),False,'m1')
 
+    def test_partial_m1_upgrade_rejected_before_ddl(self):
+        for tail in (['m1:0002'], ['m1:0002','m1:0003']):
+            conn=RecordingConnection(self.rows(['common:0001']+tail))
+            with patch.object(manage,'assert_container'), patch.object(manage,'connect',return_value=conn), \
+                 patch.object(manage,'quarantine'), patch.object(manage,'private_write'), \
+                 patch.object(manage,'verify_lineage_security'), patch.object(manage,'open_after_restore'):
+                with self.assertRaisesRegex(ValueError,'Complete historical M1'):
+                    manage.migrate('test')
+            self.assertFalse(any(q.lstrip().startswith(('CREATE','INSERT','ALTER','REVOKE','GRANT')) for q,_ in conn.calls))
+
 
 if __name__ == '__main__':
     unittest.main()

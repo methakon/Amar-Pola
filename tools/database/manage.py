@@ -244,6 +244,8 @@ def migration_plan(entries, lineage='v2', through=None, applied=()):
     if lineage == 'm1' and any(i.startswith(('v2:', 'compat:')) for i in applied):
         raise ValueError('V2 to M1 downgrade forbidden')
     upgrade = lineage == 'v2' and any(i.startswith('m1:') for i in applied)
+    if upgrade and not {'m1:0002','m1:0003','m1:0004'} <= applied:
+        raise ValueError('Complete historical M1 through m1:0004 before V2 upgrade')
     ids = ['common:0001']
     if lineage == 'm1':
         ids += ['m1:%04d' % n for n in range(2, 5)]
@@ -293,6 +295,8 @@ def validate_migration_history(entries, legacy_rows, lineage_rows, schema_has_ob
         if m1 != ['m1:%04d' % n for n in range(2, 2 + len(m1))]:
             raise ValueError('Gapped M1 history')
         v2 = sorted(i for i in applied if i.startswith('v2:'))
+        if m1 and v2 and m1 != ['m1:0002','m1:0003','m1:0004']:
+            raise ValueError('Complete historical M1 predecessors required for V2 history')
         if v2 != ['v2:%04d' % n for n in range(2, 2 + len(v2))]:
             raise ValueError('Gapped V2 history')
         bridge = 'compat:m1_pre_v2_0016' in applied

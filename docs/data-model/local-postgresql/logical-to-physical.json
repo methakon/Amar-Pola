@@ -19,7 +19,7 @@
         "ap_m1.parent_principals"
       ],
       "functions": [],
-      "representation": "NORMALIZED_OR_DERIVED",
+      "representation": "NORMALIZED",
       "scope": "PHYSICAL_SCHEMA_NOT_API_OR_ANDROID_COMPLETION"
     },
     {
@@ -29,7 +29,7 @@
         "ap_m1.guardian_memberships"
       ],
       "functions": [],
-      "representation": "NORMALIZED_OR_DERIVED",
+      "representation": "NORMALIZED",
       "scope": "PHYSICAL_SCHEMA_NOT_API_OR_ANDROID_COMPLETION"
     },
     {
@@ -89,7 +89,7 @@
         "ap_m1.revocation_epochs"
       ],
       "functions": [],
-      "representation": "NORMALIZED_OR_DERIVED",
+      "representation": "NORMALIZED",
       "scope": "PHYSICAL_SCHEMA_NOT_API_OR_ANDROID_COMPLETION"
     },
     {
@@ -109,7 +109,7 @@
         "ap_m1.devices"
       ],
       "functions": [],
-      "representation": "NORMALIZED_OR_DERIVED",
+      "representation": "NORMALIZED",
       "scope": "PHYSICAL_SCHEMA_NOT_API_OR_ANDROID_COMPLETION"
     },
     {
@@ -149,7 +149,7 @@
         "ap_m1.trusted_sessions"
       ],
       "functions": [],
-      "representation": "NORMALIZED_OR_DERIVED",
+      "representation": "NORMALIZED",
       "scope": "PHYSICAL_SCHEMA_NOT_API_OR_ANDROID_COMPLETION"
     },
     {
@@ -189,7 +189,7 @@
         "ap_m1.commands"
       ],
       "functions": [],
-      "representation": "NORMALIZED_OR_DERIVED",
+      "representation": "NORMALIZED",
       "scope": "PHYSICAL_SCHEMA_NOT_API_OR_ANDROID_COMPLETION"
     },
     {
@@ -299,7 +299,7 @@
         "ap_m1.route_geometry"
       ],
       "functions": [],
-      "representation": "DIRECT",
+      "representation": "DERIVED_VIEW",
       "scope": "PHYSICAL_SCHEMA_NOT_API_OR_ANDROID_COMPLETION"
     },
     {
@@ -309,7 +309,7 @@
         "ap_m1.ingestion_outbox"
       ],
       "functions": [],
-      "representation": "NORMALIZED_OR_DERIVED",
+      "representation": "NORMALIZED",
       "scope": "PHYSICAL_SCHEMA_NOT_API_OR_ANDROID_COMPLETION"
     },
     {
@@ -349,7 +349,7 @@
         "ap_m1.alert_events"
       ],
       "functions": [],
-      "representation": "NORMALIZED_OR_DERIVED",
+      "representation": "NORMALIZED",
       "scope": "PHYSICAL_SCHEMA_NOT_API_OR_ANDROID_COMPLETION"
     },
     {
@@ -379,7 +379,7 @@
         "ap_m1.child_signals"
       ],
       "functions": [],
-      "representation": "NORMALIZED_OR_DERIVED",
+      "representation": "NORMALIZED",
       "scope": "PHYSICAL_SCHEMA_NOT_API_OR_ANDROID_COMPLETION"
     },
     {
@@ -389,7 +389,7 @@
         "ap_m1.signal_acknowledgements"
       ],
       "functions": [],
-      "representation": "NORMALIZED_OR_DERIVED",
+      "representation": "NORMALIZED",
       "scope": "PHYSICAL_SCHEMA_NOT_API_OR_ANDROID_COMPLETION"
     },
     {
@@ -399,7 +399,7 @@
         "ap_m1.child_signals"
       ],
       "functions": [],
-      "representation": "NORMALIZED_OR_DERIVED",
+      "representation": "NORMALIZED",
       "scope": "PHYSICAL_SCHEMA_NOT_API_OR_ANDROID_COMPLETION"
     },
     {
@@ -429,7 +429,7 @@
         "ap_m1.app_usage_intervals"
       ],
       "functions": [],
-      "representation": "NORMALIZED_OR_DERIVED",
+      "representation": "NORMALIZED",
       "scope": "PHYSICAL_SCHEMA_NOT_API_OR_ANDROID_COMPLETION"
     },
     {
@@ -439,7 +439,7 @@
         "ap_m1.usage_period_summaries"
       ],
       "functions": [],
-      "representation": "DIRECT",
+      "representation": "DERIVED_VIEW",
       "scope": "PHYSICAL_SCHEMA_NOT_API_OR_ANDROID_COMPLETION"
     },
     {
@@ -500,7 +500,7 @@
         "ap_m1.app_usage_intervals"
       ],
       "functions": [],
-      "representation": "NORMALIZED_OR_DERIVED",
+      "representation": "NORMALIZED",
       "scope": "PHYSICAL_SCHEMA_NOT_API_OR_ANDROID_COMPLETION"
     },
     {
@@ -730,7 +730,7 @@
         "ap_m1.consent_records"
       ],
       "functions": [],
-      "representation": "NORMALIZED_OR_DERIVED",
+      "representation": "NORMALIZED",
       "scope": "PHYSICAL_SCHEMA_NOT_API_OR_ANDROID_COMPLETION"
     },
     {
@@ -750,7 +750,7 @@
         "ap_m1.history_visibility_rules"
       ],
       "functions": [],
-      "representation": "DIRECT",
+      "representation": "DERIVED_VIEW",
       "scope": "PHYSICAL_SCHEMA_NOT_API_OR_ANDROID_COMPLETION"
     },
     {
@@ -810,7 +810,7 @@
         "ap_m1.admin_accounts"
       ],
       "functions": [],
-      "representation": "NORMALIZED_OR_DERIVED",
+      "representation": "NORMALIZED",
       "scope": "PHYSICAL_SCHEMA_NOT_API_OR_ANDROID_COMPLETION"
     },
     {
@@ -840,7 +840,7 @@
         "ap_m1.admin_support_read_audit"
       ],
       "functions": [],
-      "representation": "NORMALIZED_OR_DERIVED",
+      "representation": "NORMALIZED",
       "scope": "PHYSICAL_SCHEMA_NOT_API_OR_ANDROID_COMPLETION"
     },
     {
@@ -920,7 +920,7 @@
         "ap_m1.support_tickets"
       ],
       "functions": [],
-      "representation": "NORMALIZED_OR_DERIVED",
+      "representation": "NORMALIZED",
       "scope": "PHYSICAL_SCHEMA_NOT_API_OR_ANDROID_COMPLETION"
     },
     {
@@ -931,7 +931,7 @@
         "ap_m1.media_export_requests"
       ],
       "functions": [],
-      "representation": "NORMALIZED_OR_DERIVED",
+      "representation": "NORMALIZED",
       "scope": "PHYSICAL_SCHEMA_NOT_API_OR_ANDROID_COMPLETION"
     },
     {
@@ -1131,7 +1131,7 @@
         "ap_m1.trusted_sessions"
       ],
       "functions": [],
-      "representation": "NORMALIZED_OR_DERIVED",
+      "representation": "NORMALIZED",
       "scope": "PHYSICAL_SCHEMA_NOT_API_OR_ANDROID_COMPLETION"
     },
     {

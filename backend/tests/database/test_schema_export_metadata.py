@@ -17,6 +17,14 @@ def table(name, columns=(), schema='ap_m1', **extra):
 
 
 class MetadataTests(unittest.TestCase):
+    def test_derived_views_are_not_classified_as_direct_tables(self):
+        data=json.loads((ROOT/'docs/data-model/local-postgresql/physical-schema.json').read_text())
+        kinds={o['schema']+'.'+o['name']:o['kind'] for o in data['objects']}
+        mapping=json.loads((ROOT/'docs/data-model/local-postgresql/logical-to-physical.json').read_text())
+        for row in mapping['mappings']:
+            if any(kinds[target]=='v' for target in row['physical_objects']):
+                self.assertEqual(row['representation'],'DERIVED_VIEW',row['concept'])
+
     def test_pending_policy_and_catalog_only_types(self):
         data = {'objects': [table('children', [{'name': 'id', 'type': 'uuid', 'not_null': True, 'default': None}])], 'foreign_keys': []}
         retention, typed = export.audit_metadata(data, {'ap_m1.children': ['fixture.sql']})

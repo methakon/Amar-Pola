@@ -203,6 +203,7 @@ def build(database):
     data=catalog(database)
     retention, typed = audit_metadata(data, migration_table_owners(root))
     names={o['name'] for o in data['objects'] if o['schema']=='ap_m1'}
+    kinds={o['name']:o['kind'] for o in data['objects'] if o['schema']=='ap_m1'}
     functions={f['name'] for f in data['functions'] if f['schema']=='ap_m1'}
     model=read_json(root/'docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json')
     mappings=[];missing=[]
@@ -216,7 +217,9 @@ def build(database):
             absent=set(targets)-names | (set(fn)-functions)
             if absent:missing.append({'concept':name,'missing':sorted(absent)})
             mappings.append({'concept':name,'domain':domain['title'],'physical_objects':['ap_m1.'+v for v in targets],
-                             'functions':['ap_m1.'+v for v in fn], 'representation':'DIRECT' if targets==[name] else 'NORMALIZED_OR_DERIVED',
+                             'functions':['ap_m1.'+v for v in fn],
+                             'representation':('DERIVED_VIEW' if any(kinds.get(t)=='v' for t in targets)
+                                               else 'FUNCTION' if fn else 'DIRECT' if targets==[name] else 'NORMALIZED'),
                              'scope':'PHYSICAL_SCHEMA_NOT_API_OR_ANDROID_COMPLETION'})
     if missing:raise ValueError('Unmapped logical dependencies: '+json.dumps(missing))
     assert len(mappings)==len({m['concept'] for m in mappings})==model['tableCount']

@@ -20,28 +20,44 @@ from physical_schema import physical_tables
 
 
 def application_shape(conn):
-    columns = conn.execute("""SELECT table_name,column_name,data_type,udt_name,is_nullable,column_default
-      FROM information_schema.columns WHERE table_schema='ap_m1'
-      ORDER BY table_name,ordinal_position""").fetchall()
-    acl = conn.execute("""SELECT c.relname,c.relkind,c.relrowsecurity,c.relforcerowsecurity,
+    columns = conn.execute("""SELECT table_schema,table_name,column_name,data_type,udt_name,is_nullable,column_default
+      FROM information_schema.columns WHERE table_schema IN ('ap_m1','ma_recovery')
+      ORDER BY table_schema,table_name,ordinal_position""").fetchall()
+    acl = conn.execute("""SELECT n.nspname,c.relname,c.relkind,c.relrowsecurity,c.relforcerowsecurity,c.reloptions,
       pg_get_userbyid(c.relowner),ARRAY(SELECT concat(a.grantee,':',a.grantor,':',a.privilege_type,':',a.is_grantable)
         FROM aclexplode(coalesce(c.relacl,acldefault('r',c.relowner))) a
         ORDER BY a.grantee,a.grantor,a.privilege_type,a.is_grantable) FROM pg_class c
       JOIN pg_namespace n ON n.oid=c.relnamespace
-      WHERE n.nspname='ap_m1' AND c.relkind IN ('r','p','v') ORDER BY c.relname""").fetchall()
-    constraints = conn.execute("""SELECT c.relname,k.conname,k.contype,k.convalidated,
+      WHERE n.nspname IN ('ap_m1','ma_recovery') AND c.relkind IN ('r','p','v') ORDER BY n.nspname,c.relname""").fetchall()
+    constraints = conn.execute("""SELECT n.nspname,c.relname,k.conname,k.contype,k.convalidated,
       pg_get_constraintdef(k.oid) FROM pg_constraint k JOIN pg_class c ON c.oid=k.conrelid
-      JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='ap_m1'
-      ORDER BY c.relname,k.conname""").fetchall()
-    indexes = conn.execute("SELECT indexname,indexdef FROM pg_indexes WHERE schemaname='ap_m1' ORDER BY indexname").fetchall()
-    functions = conn.execute("""SELECT p.proname,pg_get_function_identity_arguments(p.oid),p.prosrc,
+      JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname IN ('ap_m1','ma_recovery')
+      ORDER BY n.nspname,c.relname,k.conname""").fetchall()
+    indexes = conn.execute("SELECT schemaname,indexname,indexdef FROM pg_indexes WHERE schemaname IN ('ap_m1','ma_recovery') ORDER BY schemaname,indexname").fetchall()
+    functions = conn.execute("""SELECT n.nspname,p.proname,pg_get_function_identity_arguments(p.oid),pg_get_functiondef(p.oid),
       p.prosecdef,p.proconfig,p.provolatile,pg_get_userbyid(p.proowner),
       ARRAY(SELECT concat(a.grantee,':',a.grantor,':',a.privilege_type,':',a.is_grantable)
         FROM aclexplode(coalesce(p.proacl,acldefault('f',p.proowner))) a
         ORDER BY a.grantee,a.grantor,a.privilege_type,a.is_grantable)
-      FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='ap_m1'
-      ORDER BY p.proname,pg_get_function_identity_arguments(p.oid)""").fetchall()
-    return dict(columns=columns, acl=acl, constraints=constraints, indexes=indexes, functions=functions)
+      FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname IN ('ap_m1','ma_recovery')
+      ORDER BY n.nspname,p.proname,pg_get_function_identity_arguments(p.oid)""").fetchall()
+    policies=conn.execute("""SELECT schemaname,tablename,policyname,permissive,roles::text[],cmd,qual,with_check
+      FROM pg_policies WHERE schemaname IN ('ap_m1','ma_recovery') ORDER BY schemaname,tablename,policyname""").fetchall()
+    views=conn.execute("SELECT schemaname,viewname,definition FROM pg_views WHERE schemaname IN ('ap_m1','ma_recovery') ORDER BY schemaname,viewname").fetchall()
+    column_acl=conn.execute("""SELECT n.nspname,c.relname,a.attname,a.attacl::text
+      FROM pg_attribute a JOIN pg_class c ON c.oid=a.attrelid JOIN pg_namespace n ON n.oid=c.relnamespace
+      WHERE n.nspname IN ('ap_m1','ma_recovery') AND a.attnum>0 AND NOT a.attisdropped
+      ORDER BY n.nspname,c.relname,a.attnum""").fetchall()
+    roles=conn.execute("""SELECT rolname,rolsuper,rolinherit,rolcreaterole,rolcreatedb,rolcanlogin,rolreplication,rolbypassrls,rolconfig
+      FROM pg_roles WHERE rolname LIKE 'ap\\_%' ESCAPE '\\' OR rolname LIKE 'madalasa\\_%' ESCAPE '\\' ORDER BY rolname""").fetchall()
+    memberships=conn.execute("""SELECT r.rolname,u.rolname,m.admin_option,
+      to_jsonb(m)->'inherit_option',to_jsonb(m)->'set_option'
+      FROM pg_auth_members m JOIN pg_roles r ON r.oid=m.roleid JOIN pg_roles u ON u.oid=m.member
+      WHERE r.rolname LIKE 'ap\\_%' ESCAPE '\\' OR u.rolname LIKE 'madalasa\\_%' ESCAPE '\\' ORDER BY r.rolname,u.rolname""").fetchall()
+    schema_acl=conn.execute("""SELECT nspname,pg_get_userbyid(nspowner),nspacl::text FROM pg_namespace
+      WHERE nspname IN ('ap_m1','ma_recovery') ORDER BY nspname""").fetchall()
+    return dict(columns=columns,acl=acl,constraints=constraints,indexes=indexes,functions=functions,
+                policies=policies,views=views,column_acl=column_acl,roles=roles,memberships=memberships,schema_acl=schema_acl)
 
 
 def main():
