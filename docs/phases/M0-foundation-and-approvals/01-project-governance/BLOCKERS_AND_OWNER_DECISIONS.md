@@ -251,3 +251,15 @@ These **add to**, and do not close, B-01 legal publisher, B-02 exact launch ages
 - Do not extrapolate child-safety real-time location exceptions to retained histories, behavioural monitoring or remote sensors. High-risk features stay **OFF** until separately evidenced. Final first-release set must contain only passed capabilities, with owner acknowledgment of removals or redesigns.
 
 **B-04 status:** OWNER_DECIDED / FEATURE_ELIGIBILITY_REVIEW_PENDING. **Next:** B-05 owner details on optional managed-device edition enrollment, factory-reset willingness, and legal device-owner authority; B-06 optional child SOS UI follows.
+
+## B-05 financial-screen privacy decision — 2026-10-30
+
+**Owner APPROVED** combined protective approach for Alarka's *conditional, not yet release-approved* remote screen capture:
+
+1. **Respect OS/app protection.** Never bypass Android secure-window behavior (`FLAG_SECURE`), OS capture authorization, consent prompts, protected content suppression, or other app security controls. Financial applications remain responsible for their own secure-screen implementation, but Alarka does **not** assume that all sensitive views are protected.
+2. **Defense in depth.** If a recognized financial, banking, payment or similar sensitive app is foregrounded, **suspend/blank screen transmission**. Resume only on a safely identifiable non-sensitive screen and only while Android's valid screen-capture authorization remains in force.
+3. **Fail closed.** If foreground-app classification is unavailable, stale, inconclusive, or OS-version/policy limitations prevent reliable identification, stop screen transmission rather than capture potentially sensitive content. Do not claim that third-party app classification is exhaustive.
+4. **Capability gate.** Any foreground-app identification technique itself requires technical and Play-policy review; no Accessibility, usage access or other privileged APIs may be assumed available. Screen capture remains **OFF / CONDITIONAL** pending India child privacy, Google Play monitoring-app, Android MediaProjection and meaningful consent/authorization review.
+5. **Independent of GPS.** Pausing screen transmission does not pause other individually authorized and lawful safety features such as GPS.
+
+**Decision status:** B-05 financial-screen guard APPROVED; B-05 overall optional Device Owner provisioning details remain OPEN. Prior B-05 standard-edition capability detection/no reset proposal has not been separately confirmed by the owner; do not silently treat it as approved. Update SRS/API status contracts (`SENSITIVE_APP_ACTIVE`, `SENSITIVE_SCREEN_UNKNOWN`, `CAPTURE_PAUSED`, etc.), Android implementation acceptance tests and privacy disclosures only when corresponding design work is authorized. No capture bypass or OS security circumvention.
