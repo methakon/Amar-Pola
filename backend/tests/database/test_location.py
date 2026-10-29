@@ -38,7 +38,7 @@ def cleanup_domain(f):
                       'capability_snapshots','parent_notification_read_receipts','signal_acknowledgements',
                       'alert_delivery_attempts','notification_deliveries','alert_delivery_outbox','alert_events','child_signals',
                       'place_notification_rules','named_places','trip_routepoints','trip_revisions','trips',
-                      'device_latest_positions','ingestion_outbox','location_observations','location_event_dedup','location_ingest_batches','app_usage_intervals'):
+                      'device_latest_positions','ingestion_outbox','location_observations','location_batch_items','location_event_dedup','location_ingest_batches','app_usage_intervals'):
             if table in ('command_results','capability_snapshots'):
                 db.execute('delete from ap_m1.'+table+' where '+('command_id in (select id from ap_m1.commands where child_id=%s)' if table=='command_results' else 'device_id=%s'), (f['child_a'] if table=='command_results' else f['device_a'],))
             else:
@@ -209,6 +209,7 @@ class LocationTests(unittest.TestCase):
         # Remove durable rows immediately: no inter-test fixture dependence.
         self.admin.execute('delete from ap_m1.trips where id=%s',(trip,))
         self.admin.execute('delete from ap_m1.location_observations where child_id=%s',(self.child,))
+        self.admin.execute('delete from ap_m1.location_batch_items where child_id=%s',(self.child,))
         self.admin.execute('delete from ap_m1.location_event_dedup where child_id=%s',(self.child,))
         self.admin.execute('delete from ap_m1.location_ingest_batches where child_id=%s',(self.child,))
         self.admin.commit()

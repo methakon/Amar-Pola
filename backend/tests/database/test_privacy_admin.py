@@ -31,7 +31,8 @@ class PrivacyAdminTests(unittest.TestCase):
         cls.tokens = {}
         with admin_connection() as c:
             c.execute("INSERT INTO ap_m1.owner_identity_allowlist(issuer,subject) VALUES "
-                      "('https://synthetic.example.invalid','fixture-c') ON CONFLICT DO NOTHING")
+                      "('https://synthetic.example.invalid',%s) ON CONFLICT DO NOTHING",
+                      ('fixture-' + str(cls.f['c']),))
         for name in ('a', 'b', 'c'):
             with auth_connection() as c:
                 cls.accounts[name] = c.execute('SELECT ap_m1.register_admin(%s,%s)',
@@ -57,7 +58,8 @@ class PrivacyAdminTests(unittest.TestCase):
             c.execute('DELETE FROM ap_m1.admin_sessions WHERE admin_id=ANY(%s)', (ids,))
             c.execute('DELETE FROM ap_m1.admin_role_grants WHERE admin_id=ANY(%s)', (ids,))
             c.execute('DELETE FROM ap_m1.admin_accounts WHERE id=ANY(%s)', (ids,))
-            c.execute("DELETE FROM ap_m1.owner_identity_allowlist WHERE issuer='https://synthetic.example.invalid' AND subject='fixture-c'")
+            c.execute("DELETE FROM ap_m1.owner_identity_allowlist WHERE issuer='https://synthetic.example.invalid' AND subject=%s",
+                      ('fixture-' + str(cls.f['c']),))
 
     def setUp(self):
         self.c = runtime_connection()

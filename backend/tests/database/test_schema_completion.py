@@ -61,9 +61,10 @@ def logical_to_physical():
 
 
 class CompletionSourceTests(unittest.TestCase):
-    def test_all_120_logical_entities_have_explicit_normalization(self):
+    def test_all_logical_entities_have_explicit_normalization(self):
         mapping = logical_to_physical()
-        self.assertEqual(len(mapping), 120)
+        source = json.loads((ROOT / 'docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json').read_text())
+        self.assertEqual(len(mapping), source.get('tableCount', 124))
         sql = '\n'.join(file.read_text() for file in sorted(MIGRATION.parent.glob('*.sql')))
         physical = set(re.findall(r'CREATE\s+(?:TABLE|VIEW|FUNCTION)\s+ap_m1\.(\w+)', sql, re.I))
         for name, targets in mapping.items():
