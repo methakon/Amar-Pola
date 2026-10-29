@@ -32,7 +32,7 @@ Official: https://docs.oracle.com/en-us/iaas/Content/General/Concepts/regions.ht
 |---|---|---|
 | Primary hosting | **Preferred Mumbai**, alternate Hyderabad; **not provisioned** | Verify tenancy/home region, A1 availability, costs |
 | First launch | **India-first direction** | Confirm supported children age bands and lawful guardians; non-India users separately gated |
-| Legal publisher B-01 | OPEN | Owner supplies legal publisher/controller identity privately; no guessed identity |
+| Legal publisher B-01 | **OWNER DECIDED; VERIFICATION PENDING** | Individual legal publisher: **SWARNA SEKHAR DHAR**, India; same individual intended to own the Google Play publisher account. Play identity, Payments verification, contact channels and legal notices still require evidence |
 | Age B-02 | OPEN | Approve supported age bands and legal verification/authority method |
 | Data retention B-07 | OPEN | Raw 14d / derived 90d / audit 365d / backup 30d are design candidates only; usage OFF pending counsel |
 | Guardian B-09/B-18 | OPEN | Owner-only invitation/revocation, per-child scopes and 45min pickup current-view are secure **proposals**, not confirmed policy |
@@ -55,3 +55,7 @@ The former OCI Chicago figures (at 1,000 children ~₹0.20 direct or ₹3.24 res
 - Sign an explicit M0 approval record before M2 real child location or public pilot.
 
 Sources: [DPDP legal gate](INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md), [blocker register](../01-project-governance/BLOCKERS_AND_OWNER_DECISIONS.md).
+
+## B-01 follow-up — 2026-10-30
+
+The owner confirmed an **individual** Indian legal publisher (**SWARNA SEKHAR DHAR**) and the **same individual** for the Google Play account. This is an owner declaration, not proof of Play account verification or counsel signoff. B-01 is `DECIDED / EVIDENCE_REQUIRED`, not closed; consult the [canonical blocker register](../01-project-governance/BLOCKERS_AND_OWNER_DECISIONS.md#b-01-owner-decision-recorded--2026-10-30-identity-evidence-pending). Privacy, consent, grievance and deletion texts must identify the verified data fiduciary and approved public contact without committing private government IDs, addresses or financial details.
