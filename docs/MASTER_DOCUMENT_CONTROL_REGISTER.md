@@ -89,6 +89,7 @@
 | Repository governance | [Root LICENSE](../LICENSE), [Root SECURITY](../SECURITY.md), [CONTRIBUTING](../CONTRIBUTING.md), [CODEOWNERS](../.github/CODEOWNERS) | Contact/license/branch protection still require actual owner decisions |
 | M1 device credential lifecycle | [M1_DEVICE_CREDENTIAL_LIFECYCLE.md](M1_DEVICE_CREDENTIAL_LIFECYCLE.md) | Engineering decisions C-01 to C-06 with tests; recommendation, not owner-approved |
 | API conventions and error catalog | [API_CONVENTIONS_AND_ERROR_CATALOG.md](API_CONVENTIONS_AND_ERROR_CATALOG.md) | Engineering baseline for M1 v1 (errors, idempotency, pagination, versioning, formats); lint-enforced; gaps G-1 to G-7 open |
+| M1 physical table catalog | [M1_PHYSICAL_TABLE_CATALOG.md](M1_PHYSICAL_TABLE_CATALOG.md) (generated from [mapping JSON](data-model/M1_PHYSICAL_TO_LOGICAL_CATALOG.json)) | Maps the 18 physical M1 tables to the 120-entity logical ERD and records every difference; CI-enforced; the family-scoped vs child-scoped tenant decision remains open |
 | Owner and legal recommended resolutions | [OWNER_AND_LEGAL_RECOMMENDED_RESOLUTIONS_2026-10-27.md](OWNER_AND_LEGAL_RECOMMENDED_RESOLUTIONS_2026-10-27.md) | Proposals only; no approval, signature or legal advice implied |
 | Staged public legal drafts | [public/legal](../public/legal/README.md) | Not published/approved; developer account and final URLs unavailable |
 
