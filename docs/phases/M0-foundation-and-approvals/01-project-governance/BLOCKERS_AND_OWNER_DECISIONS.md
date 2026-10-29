@@ -219,3 +219,11 @@ These **add to**, and do not close, B-01 legal publisher, B-02 exact launch ages
 **Downstream design:** adopt India-only audience defaults, correct child under-18 age classification, disclosures appropriate to guardians, no targeted advertising for children, narrowly scoped child grants, review/deletion and consent handling, and re-check policy effective dates before public testing. Avoid committing children’s actual dates of birth or identity documents to public Git.
 
 **Sources:** https://www.pib.gov.in/PressReleasePage.aspx?PRID=2190655 ; https://indiacode.ecourtsindia.com/rules/digital-personal-data-protection-dpdp-rules-2025-fe07b131/ .
+
+## Owner decision queue update — 2026-10-30
+
+- **B-01:** Individual India publisher decision recorded; Play contact verification evidenced by owner-provided Console screenshots. Independent identity/payment/public-notice requirements must not be assumed complete.
+- **B-02:** **OWNER_DECIDED** — India-only initial launch, children aged 0–17 inclusive; compliance review remains a separate gate.
+- **B-03: NEXT OWNER BLOCKER — NOT YET APPROVED.** Confirm that Alarka is a transparent, identifiable monitoring app: visible launcher icon, honest in-app disclosure and setup/permission screens, Android-required foreground-service notifications, microphone/camera indicators, no stealth mode or notification/permission circumvention. This is an owner UX/policy decision; platform and Play policy compliance still requires independent verification. Do not mark decided without the owner's explicit response.
+
+**Gate sequence:** obtain B-03 owner answer → record exact scope → reconcile SRS/Figma/Android permissions/API/Play disclosures → perform feature-by-feature law/Play/platform audit before coding is authorized.
