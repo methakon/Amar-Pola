@@ -1,12 +1,12 @@
 # Local PostgreSQL implementation package
 
-Status: LOCAL_BLOCKED. This package documents synthetic local implementation work; it is not a production-readiness or legal-approval record.
+Status: LOCAL_READY for the synthetic local database foundation. Admin/product/real-child/production release remains NOT_READY; this is not a legal-approval record.
 
 ## Reading order
 
 1. [Current setup status and integration prerequisites](STATUS.md).
 2. [Development, migrations, build, tests and recovery runbook](RUNBOOK.md).
-3. [Current lineage convergence and 168-test checkpoint](../../../evidence/local/database/LINEAGE_CONVERGENCE_2026-10-29.md); [earlier 140-test checkpoint](../../../evidence/local/database/REVERIFICATION_2026-10-29.md); [historical interrupted run](../../../evidence/local/database/INTEGRATION_PENDING_2026-10-29.md).
+3. [Final 176-test acceptance and admin API development decision](../../../evidence/local/database/FINAL_LOCAL_SETUP_ACCEPTANCE_2026-10-29.md); [lineage/restore checkpoint](../../../evidence/local/database/LINEAGE_CONVERGENCE_2026-10-29.md); [earlier 140-test checkpoint](../../../evidence/local/database/REVERIFICATION_2026-10-29.md).
 4. [Owner decisions and acceptance boundaries](../../roadmap/SIX_GATE_OWNER_DECISIONS_AND_AGENT_HANDOFF_2026-10-29.md).
 5. [Logical model reconciliation and enhancement security review](MODEL_RECONCILIATION_2026-10-29.md).
 6. [Separate historical 18-table M1 catalog](../historical-m1/PHYSICAL_TABLE_CATALOG.md).
@@ -20,7 +20,7 @@ Status: LOCAL_BLOCKED. This package documents synthetic local implementation wor
 - `evidence/local/database/`: redacted execution checkpoints, separate from specifications.
 - `.local-db/`: ignored credentials, raw logs, database storage, build caches and backup archives. Never commit these files.
 
-The [catalog](physical-schema.json), [physical ERD](PHYSICAL_ERD.md), [logical mapping](logical-to-physical.json), [operation/dependency matrix](api-to-table.json) and [migration manifest](migration-manifest.json) were generated and verified at the earlier checkpoint. Logical models are now versioned correctly and migration lineages converge; derived artifacts and retention/constraint metadata still need final regeneration/acceptance. They are schema/dependency evidence, not proof of every HTTP handler.
+The [catalog](physical-schema.json), [physical ERD](PHYSICAL_ERD.md), [logical mapping](logical-to-physical.json), [operation/dependency matrix](api-to-table.json), [migration manifest](migration-manifest.json), [retention/ownership manifest](retention-ownership-manifest.json) and [typed constraint registry](typed-constraint-registry.json) are regenerated and verified against the actual final test catalog. They are schema/dependency evidence, not proof of every HTTP handler or approved retention policy.
 
 ## Navigation
 

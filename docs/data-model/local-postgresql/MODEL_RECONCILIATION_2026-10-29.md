@@ -1,6 +1,6 @@
 # Logical-model reconciliation and enhancement review
 
-Status: canonical specification consistency, migration compatibility and enhancement regressions verified locally. Final metadata exports remain pending; see [executed convergence evidence](../../../evidence/local/database/LINEAGE_CONVERGENCE_2026-10-29.md).
+Status: canonical specification consistency, migration compatibility, enhancement regressions and final metadata exports verified locally; see [final acceptance](../../../evidence/local/database/FINAL_LOCAL_SETUP_ACCEPTANCE_2026-10-29.md).
 
 ## Preserve the approved baseline and the proposed additions separately
 
@@ -30,6 +30,6 @@ No pickup bearer issuance, non-account location access, compliance archive deliv
 
 ## Historical migration compatibility
 
-The original M1 credential/enrollment/idempotency migrations and the published V2 chain reuse versions 0002–0004 and contain incompatible renewal-table types. Explicit lineage manifests, checksum-bound history adoption, additive bridges and runtime quarantine now converge both paths while preserving their published bytes. Actual fresh/historical/populated-upgrade/restore acceptance passes; per-table retention/ownership metadata remains a separate acceptance requirement.
+The original M1 credential/enrollment/idempotency migrations and the published V2 chain reuse versions 0002–0004 and contain incompatible renewal-table types. Explicit lineage manifests, checksum-bound history adoption, additive bridges and runtime quarantine now converge both paths while preserving their published bytes. Actual fresh/historical/populated-upgrade/restore acceptance and per-table retention/ownership metadata verification pass; policy approval remains a separate release requirement.
 
 [Package index](README.md) · [Current setup status](STATUS.md) · [Last complete 140-test checkpoint](../../../evidence/local/database/REVERIFICATION_2026-10-29.md).
