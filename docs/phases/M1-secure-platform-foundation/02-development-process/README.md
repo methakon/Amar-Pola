@@ -13,3 +13,7 @@
 | [ANDROID_M1_SOURCE_BOOTSTRAP_AND_BUILD_GATE_2026-10-27.md](ANDROID_M1_SOURCE_BOOTSTRAP_AND_BUILD_GATE_2026-10-27.md) | DOCUMENTED_REVIEW_PENDING | Engineering lead (unassigned) |
 
 **Review gate:** Design baseline, signed M1 acceptance and no real-child deployment implied. This grouping is a filing taxonomy, not a change to the approved/signed status of source material.
+
+## Local database implementation
+
+[Package index and reading order](../../../data-model/local-postgresql/README.md) · [Runbook](../../../data-model/local-postgresql/RUNBOOK.md) · [Current verification and integration status](../../../data-model/local-postgresql/STATUS.md). Status is LOCAL_BLOCKED, not implementation acceptance or production approval.

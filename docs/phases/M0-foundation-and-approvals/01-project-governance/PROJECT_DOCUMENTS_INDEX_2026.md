@@ -5,6 +5,8 @@
 **Reviewed 2026-10-27.** This index distinguishes **written documentation** from **operational implementation and approval**. All legal/commercial texts marked draft require an identified legal entity, final India/Play rules check and signatures.
 
 ## Current runnable baseline and developer process
+
+- Current local database work: [package index](../../../data-model/local-postgresql/README.md), [runbook](../../../data-model/local-postgresql/RUNBOOK.md), [status and integration prerequisites](../../../data-model/local-postgresql/STATUS.md). This feature-branch checkpoint supersedes any interpretation of the older entries below as a current claim that no C++ or database implementation exists; it does not certify a complete passing suite or release.
 - [Root README](../../../../README.md), [Build and Run](../../M1-secure-platform-foundation/02-development-process/BUILD_AND_RUN.md), [Developer Onboarding](../../M1-secure-platform-foundation/02-development-process/DEVELOPER_ONBOARDING_AND_CODING_STANDARDS.md), [Contributing](../../../../CONTRIBUTING.md), [Conduct](../../../../CODE_OF_CONDUCT.md), [Changelog](../../../../CHANGELOG.md).
 - [Release, Branch and Version Policy](../../M1-secure-platform-foundation/02-development-process/BRANCHING_VERSIONING_AND_RELEASE_PROCESS.md), [Release Readiness](../../M9-play-release/03-release-gates/DEPLOYMENT_RELEASE_READINESS_CHECKLIST.md), [About/Topics to apply](REPOSITORY_ABOUT_AND_TOPICS.md).
 - Existing `.github/workflows/m1-contract-and-tenant.yml` only tests the **M1 11-operation structural API** and PostgreSQL 16 synthetic tenant isolation. Android `android/alarka` and `android/madalasa` are **non-runnable source scaffolds**, not deployed apps.
