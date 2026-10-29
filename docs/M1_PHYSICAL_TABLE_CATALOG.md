@@ -2,11 +2,11 @@
 
 Generated from `docs/data-model/M1_PHYSICAL_TO_LOGICAL_CATALOG.json` by `backend/tests/check_physical_catalog.py --write`. **Do not edit by hand**; edit the JSON and regenerate. CI fails if this file is stale or if the migrations or the ERD drift from the mapping.
 
-- Physical tables (schema `ap_m1`, migrations 0001-0004): **18**
+- Physical tables (schema `ap_m1`, migrations in `backend/persistence/migrations/`): **18**
 - Logical ERD entities: **120**; mapped to a physical table: **17**; not yet physical (M2 and later, design only): **103**
 - Physical tables with no ERD entity: **1**
 
-The ERD is a conceptual design; the migrations are what actually exists. Every difference below is known and recorded. The largest one is the tenant model: M1 is family-scoped with forced row-level security, while the owner-approved ERD V2 is child-scoped (see `ADR_2026_10_28_BLEND_FAMILY_V2`). That decision is still open.
+The ERD is a conceptual design; the migrations are what actually exists. Every difference below is known and recorded. The largest one is the tenant model: M1 is family-scoped with forced row-level security, while the owner-approved ERD V2 is child-scoped (see `ADR_2026_10_28_BLEND_FAMILY_V2`). The V2 child-scoped decision is approved as design, but its physical migration and runtime enforcement remain pending.
 
 | Physical table | ERD entity | Renamed columns | Physical only | ERD only |
 |---|---|---|---|---|
