@@ -9,6 +9,12 @@ add_compile_options(-Wall -Wextra -Wpedantic -Werror)
 find_package(Drogon CONFIG REQUIRED)
 enable_testing()
 
+# Test-only header authentication. NEVER enable for a deployable build (see src/auth.h).
+option(MA_SYNTHETIC_AUTH "Compile the synthetic test authenticator" OFF)
+if(MA_SYNTHETIC_AUTH)
+  add_compile_definitions(MA_SYNTHETIC_AUTH=1)
+endif()
+
 add_library(ma_core INTERFACE)
 target_include_directories(ma_core INTERFACE src)
 target_link_libraries(ma_core INTERFACE Drogon::Drogon)

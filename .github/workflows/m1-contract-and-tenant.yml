@@ -67,6 +67,8 @@ jobs:
         run: psql -v ON_ERROR_STOP=1 -f backend/persistence/migrations/0003_m1_enrollment_and_credential_hardening.sql
       - name: M1 PostgreSQL migration 0004 (idempotency keys)
         run: psql -v ON_ERROR_STOP=1 -f backend/persistence/migrations/0004_m1_idempotency.sql
+      - name: M1 PostgreSQL migration 0005 (family provisioning)
+        run: psql -v ON_ERROR_STOP=1 -f backend/persistence/migrations/0005_m1_family_provisioning.sql
       - name: Two-family and child-scope isolation regression
         run: psql -v ON_ERROR_STOP=1 -f backend/tests/m1_tenant_isolation.sql
       - name: Device credential lifecycle and family listing regression
@@ -75,6 +77,8 @@ jobs:
         run: psql -v ON_ERROR_STOP=1 -f backend/tests/m1_enrollment.sql
       - name: Idempotency keys regression
         run: psql -v ON_ERROR_STOP=1 -f backend/tests/m1_idempotency.sql
+      - name: Family provisioning regression
+        run: psql -v ON_ERROR_STOP=1 -f backend/tests/m1_family_provisioning.sql
       - name: Idempotency concurrency regression
         run: bash backend/tests/m1_idempotency_concurrency.sh
       - name: Error catalog sync (C++ table, OpenAPI enum, document)
@@ -87,9 +91,22 @@ jobs:
           ! grep -q 'BEGIN PRIVATE KEY' backend/tests/M1_ACCEPTANCE_TEST_CASES.md
 
   backend-build:
-    # UNTESTED in Actions at the time of writing: built and passed locally against the same pinned dependencies,
-    # but without libpq (the sandbox had no apt mirror), so the PostgreSQL client path is first exercised here.
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: synthetic_test_only_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s --health-timeout 5s --health-retries 10
+    env:
+      PGHOST: 127.0.0.1
+      PGPORT: "5432"
+      PGUSER: postgres
+      PGPASSWORD: synthetic_test_only_password
     steps:
       - uses: actions/checkout@v4
       - name: System packages
@@ -111,3 +128,12 @@ jobs:
         run: cd build && ctest --output-on-failure
       - name: HTTP smoke test
         run: bash backend/tests/smoke_backend.sh build/ma_backend
+      - name: The deployable build must not contain the synthetic authenticator
+        run: |
+          if strings build/ma_backend | grep -q 'synthetic_test'; then echo "synthetic auth compiled into the deployable build"; exit 1; fi
+      - name: Build the test-only variant (synthetic authentication)
+        run: |
+          cmake -S backend -B build-it -DCMAKE_PREFIX_PATH=$HOME/ma-deps -DCMAKE_BUILD_RPATH=$HOME/ma-deps/lib -DMA_SYNTHETIC_AUTH=ON
+          cmake --build build-it -j2 --target ma_backend
+      - name: End-to-end createFamily against PostgreSQL
+        run: bash backend/tests/integration_families.sh build-it/ma_backend

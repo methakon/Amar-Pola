@@ -5,6 +5,9 @@
 
 #include <drogon/drogon.h>
 
+#include "auth.h"
+#include "db_support.h"
+#include "families.h"
 #include "http_support.h"
 
 int main() {
@@ -34,6 +37,32 @@ int main() {
       },
       {Get});
 
+  // Database: connection settings come from the environment; the role MUST be ap_m1_api (NOBYPASSRLS).
+  if (const char* db = std::getenv("MA_PG_DB")) {
+    auto env = [](const char* k, const char* d) { const char* v = std::getenv(k); return std::string(v ? v : d); };
+    drogon::orm::PostgresConfig cfg;
+    cfg.host = env("MA_PG_HOST", "127.0.0.1");
+    cfg.port = static_cast<unsigned short>(std::atoi(env("MA_PG_PORT", "5432").c_str()));
+    cfg.databaseName = db;
+    cfg.username = env("MA_PG_USER", "ap_m1_api");
+    cfg.password = env("MA_PG_PASSWORD", "");
+    cfg.connectionNumber = static_cast<size_t>(std::atoi(env("MA_PG_CONNECTIONS", "4").c_str()));
+    cfg.name = ma::kDbClientName;
+    cfg.isFast = false;
+    cfg.characterSet = "";
+    cfg.timeout = -1.0;
+    cfg.autoBatch = false;
+    app().addDbClient(cfg);
+  } else {
+    LOG_WARN << "MA_PG_DB not set: routes that need the database answer 503";
+  }
+
+  auto authenticate = ma::select_authenticator();
+  app().registerHandler(
+      "/v1/families",
+      [authenticate](HttpRequestPtr req) -> Task<HttpResponsePtr> { co_return co_await ma::create_family(std::move(req), authenticate); },
+      {Post});
+
   // Unknown route or wrong method -> catalog format, never Drogon's HTML page.
   app().setDefaultHandler([](const HttpRequestPtr& req, std::function<void(const HttpResponsePtr&)>&& cb) {
     cb(ma::error_response("NOT_FOUND", "no such route", ma::request_id_of(req)));
@@ -43,7 +72,24 @@ int main() {
     // Never echo exception text: it may contain SQL or identifiers.
     cb(ma::error_response("INTERNAL_ERROR", "unexpected server error", ma::request_id_of(req)));
   });
-  app().setClientMaxBodySize(64 * 1024);  // 413 PAYLOAD_TOO_LARGE is mapped in the body-size handler when routes exist
+  // Errors raised by the framework itself (oversize body, bad request line, ...) also use the catalog envelope and a
+  // server-generated request id, so no Drogon-specific error page or header set can leak.
+  app().setCustomErrorHandler([](HttpStatusCode code, const HttpRequestPtr& req) {
+    const std::string rid = req ? ma::request_id_of(req) : ma::new_request_id();
+    switch (code) {
+      case k413RequestEntityTooLarge: return ma::error_response("PAYLOAD_TOO_LARGE", "request body too large", rid);
+      case k400BadRequest: return ma::error_response("INVALID_REQUEST", "malformed request", rid);
+      case k404NotFound:
+      case k405MethodNotAllowed: return ma::error_response("NOT_FOUND", "no such route", rid);
+      case k503ServiceUnavailable: return ma::error_response("SERVICE_UNAVAILABLE", "service unavailable", rid, true);
+      default: return ma::error_response("INTERNAL_ERROR", "unexpected server error", rid);
+    }
+  });
+  // The API limit is 64 KiB and handlers enforce it with a catalog-format 413. Drogon's own parser limit must be HIGHER:
+  // its over-limit answer is a bare "413 ... Connection: close" written before any handler, advice or error hook runs,
+  // so it has no JSON envelope and no X-Request-Id. Bodies over 1 MiB still get that bare 413; the reverse proxy should
+  // cap the body at 64 KiB so clients never see it (docs/API_CONVENTIONS_AND_ERROR_CATALOG.md, G-7).
+  app().setClientMaxBodySize(1024 * 1024);  // 413 PAYLOAD_TOO_LARGE is mapped in the body-size handler when routes exist
 
   app().addListener(addr, static_cast<uint16_t>(port));
   std::cout << "madalasa backend listening on " << addr << ":" << port << std::endl;
