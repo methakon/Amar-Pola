@@ -8,6 +8,18 @@ The 72 root-level compatibility pointers were consolidated into [legacy-root-lin
 
 [Master Document Control Register](MASTER_DOCUMENT_CONTROL_REGISTER.md) · [Document Control Policy](DOCUMENT_CONTROL_POLICY.md) · [Phase Coverage Matrix](PHASE_DOCUMENTATION_COVERAGE_MATRIX.md) · [Relocation Manifest](DOCUMENT_RELOCATION_MANIFEST.json) · [M1 OpenAPI contract](openapi-m1.yaml) · [Whole-project API design](openapi.yaml) · [Figma design handoff](ui/figma-functional-handoff/README.md)
 
+## Repository Subfolder Structure
+
+| Directory | Scope & Contents | Index |
+|---|---|---|
+| [`phases/`](phases/README.md) | Canonical M0–M9 phase specifications, architecture contracts, and governance | [Browse Phases](phases/README.md) |
+| [`roadmap/`](roadmap/README.md) | Local task graph, DAG execution status, decision ledger, and test evidence rules | [Browse Roadmap](roadmap/README.md) |
+| [`data-model/`](data-model/README.md) | Logical 11-domain ERD, physical schema mappings, and relational audit reports | [Browse Data Model](data-model/README.md) |
+| [`audits/`](audits/README.md) | 187-screen Figma audits, 171 API contract crosswalks, and blocker reports | [Browse Audits](audits/README.md) |
+| [`ui/`](ui/README.md) | Figma screen indexes, Theme C narrative, design tokens, and functional handoffs | [Browse UI](ui/README.md) |
+| [`legacy-root-links/`](legacy-root-links/README.md) | Consolidated redirect pointers preserving historical root documentation links | [Browse Legacy Links](legacy-root-links/README.md) |
+| [`tools/`](tools/README.md) | Automated document validation, reorganization verification, and check scripts | [Browse Tools](tools/README.md) |
+
 ## Milestones and folders
 
 | Phase | Document category / purpose | Source documents | Browse |
