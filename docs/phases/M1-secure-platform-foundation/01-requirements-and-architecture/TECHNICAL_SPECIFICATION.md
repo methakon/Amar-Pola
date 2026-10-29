@@ -342,3 +342,46 @@ After Play Buy **one-time consumable** purchase is server-verified and bound ide
 Separate web back-office authorization, isolated from parent/child identities. Only securely bootstrapped **verified Google account** `swarna.s.jobs@gmail.com` with durable Google OIDC `sub` and MFA can approve/reject admin access requests or grant/revoke staff roles. Any other Google login starts as `NO_ACCESS`. Applicants fill name, address, DOB, gender, contact email, confirm authoritative Google email or expiring independent email challenge, and may submit only after email verification plus profile validation. DOB/gender/address collection must receive necessity/consent/retention approval. Owner receives minimal notification and reviews private profile in owner dashboard; not via plaintext Gmail.
 
 Access to FAQ authoring, support replies, subscriber/prepaid/payment statuses, minimal child alias/paid-seat roster, and parent **service access** duration/outcome logs is separately RBAC-gated. Child live location/trips, app activity, media content, files, messages, and device secrets are excluded even for ROOT_OWNER. Named sensitive media activity requires separate approved case-scoped `MEDIA_AUDIT_READ`, step-up and append-only access audit; neither Gmail login nor owner title overrides that. Session revocation on role changes, CSRF protections, opaque IDs, no PII in notifications, no card details or raw Play purchase tokens in API payloads. Plan admin domain in [ERD-10](https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=108-2); full contract: https://github.com/methakon/Madalasa-Alarka/blob/main/docs/phases/P3-deferred-research/01-media-and-administrator-research/ADMIN_OWNER_GOOGLE_ACCESS_FAQ_SUPPORT_BILLING_AND_USAGE_2026.md. Nothing implemented/tested by documentation.
+
+## Owner architecture decision — 2026-10-29: Option C, SOLID + HMVC + independently deployable C++ workers
+
+**Status: owner-approved architecture direction; implementation and benchmark evidence pending.** Supersedes any suggestion that one Drogon process must perform every scheduled/background job. This does **not** approve a migration to userver or a microservice per screen.
+
+### Deployment and ownership model
+
+- Keep **C++20 Drogon** as the HTTP/WebSocket ingress and API-facing framework for Madalasa, Alarka and the administrator application.
+- Implement bounded, independently executable **C++ worker processes/services** for durable GPS ingestion, trip reconstruction, notification/SOS dispatch, billing reconciliation, and privacy erasure, subdividing only when isolation, scale, or failure characteristics justify it. Begin with a **modular monolith API plus separate workers**, not dozens of prematurely distributed services.
+- Shared PostgreSQL is allowed for initial local development, but each module/service has an explicit schema/table owner and only least-privilege access. Never bypass the child-specific guardian authorization boundary through a worker or shared database. Define transactional ownership and cross-service contract before moving data to a distinct store.
+- Drogon-specific request/response and coroutine types stay at adapters/transport boundaries. Domain services, policies and repositories use C++ interfaces and domain types so a worker can run without Drogon. A future userver worker is **optional**, contingent on measured benefit and not a current dependency.
+
+### HMVC structure and SOLID application rules
+
+Organize features as **hierarchical modules with Model–View–Controller-like boundaries**, adapted to headless APIs: `modules/identity`, `modules/children`, `modules/devices`, `modules/location`, `modules/trips`, `modules/alerts`, `modules/billing`, `modules/privacy`, `modules/admin`. Each module owns `transport/controllers`, `application/services`, `domain/models + policies`, `infrastructure/repositories + adapters`, and `tests`. The Android and admin UIs are external views; do not place HTML template concerns in the backend simply to imitate PHP HMVC.
+
+- **S**ingle responsibility: controllers validate/translate HTTP; application services orchestrate; domain rules decide; repositories persist.
+- **O**pen/closed: extend payment, notification and storage providers through ports/adapters without changing domain rules.
+- **L**iskov substitution: alternative test/production adapters honor the same contracts and failure semantics.
+- **I**nterface segregation: child scope checks, purchase verification, event publishing and database operations expose narrow role-specific interfaces.
+- **D**ependency inversion: application/domain code depends on abstract ports; Drogon, PostgreSQL, Google Play, FCM and cloud SDK implementations depend inward.
+
+### Service communication, guarantees and safety
+
+- Synchronous operations use versioned HTTP/OpenAPI contracts where appropriate. Background work uses the existing **PostgreSQL durable inbox/outbox** patterns with transactional enqueue, idempotency, retries, dead-letter/reconciliation, observable processing states and bounded backpressure. Do not introduce a broker without a demonstrated need.
+- Preserve request IDs, trace/context IDs, actor authorization context, child ID, schema version and event IDs through messages; never embed raw GPS/media or secrets in verbose logs. Device requests must obey validated grants, device proof, retention and erasure tombstones.
+- Use bounded concurrency and separate deployment/restart lifecycles for workers; no expensive trip reconstruction, provider retry loops or billing reconciliation on Drogon event-loop threads.
+- Design operational metrics for request latency, queue lag, ingest ACK-to-commit, data freshness, deduplication, transaction pool utilization, erasure lag, retries and provider failures. Scalability claims require benchmark measurements at explicit device/ingest loads.
+- Maintain strict feature and policy gates for child data/media. Hosting geography and final bandwidth economics remain deferred to deployment, not local compilation gates.
+
+### Suggested source and build organization (adapt to existing code; no broad rewrite)
+
+```text
+backend/
+  src/api/                  # Drogon bootstrap, routes, filters and transport adapters
+  src/modules/<domain>/     # domain, application, infrastructure, transport boundaries
+  src/workers/              # GPS, trips, alerts, billing, erasure executable entrypoints
+  src/shared/               # narrow cross-cutting contracts, errors, telemetry, idempotency
+  persistence/migrations/   # versioned SQL and per-module ownership
+  tests/                    # unit, contract, DB isolation, worker restart/retry/e2e
+```
+
+**Incremental implementation acceptance:** add at least one end-to-end module vertical slice (HTTP→domain service→repository→SQL) and one independent worker with inbox→transaction→idempotent result; build/run them independently, restart the worker with backlog and demonstrate no lost/duplicated effects. Test dependency-injected fakes and real PostgreSQL role/RLS. Do not mark architecture `IMPLEMENTED` merely because these documents or folders exist. Preserve current M1 migration numbering/active Git branch dependencies.
