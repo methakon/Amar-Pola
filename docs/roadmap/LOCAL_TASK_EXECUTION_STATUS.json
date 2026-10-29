@@ -6,10 +6,10 @@
     "synthetic_local_database_foundation": {
       "readiness": "LOCAL_READY",
       "scope": "Local PostgreSQL/PostGIS foundation and synthetic admin API development only; product and real-data release NOT_READY",
-      "commit_sha": "698bbccd304b84d15e886a23b8f9ed4573764d15",
-      "evidence_path": "evidence/local/database/FINAL_LOCAL_SETUP_ACCEPTANCE_2026-10-29.md",
-      "verified_at_utc": "2026-10-29T14:45:58Z",
-      "executed_checks": "176 unfiltered SQL/HTTP/metadata tests; historical upgrade/restore; native build/CTest; persistent dev migration; seven catalog exports",
+      "commit_sha": "99f0914fb55eaf15b12436f8db9ed420880fb8b1",
+      "evidence_path": "evidence/local/database/RECONCILIATION_ACCEPTANCE_2026-10-29.md",
+      "verified_at_utc": "2026-10-29T17:40:00Z",
+      "executed_checks": "205 unfiltered tests; four reproduced defects fixed additively in 0019; historical M1 to V2 upgrade and clean V2 converge on full policy/function/ACL state; native build/CTest; seven catalog exports",
       "does_not_close_individual_dag_tasks": true
     }
   },
