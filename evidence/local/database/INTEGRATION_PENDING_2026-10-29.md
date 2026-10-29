@@ -1,5 +1,7 @@
 # Local database integration — LOCAL_BLOCKED
 
+Historical interrupted-run checkpoint. The isolated full suite subsequently passed 140 tests; see [current re-verification](REVERIFICATION_2026-10-29.md). Canonical integration remains blocked for the separately recorded migration-lineage and logical-model reconciliation work.
+
 Scope: synthetic-only PostgreSQL/PostGIS in the dedicated local Docker container. No production, Play, live-device or real-child operations.
 
 Worktree: `Madalasa-Alarka-db` (local implementation checkout).

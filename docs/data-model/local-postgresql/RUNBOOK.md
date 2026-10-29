@@ -44,6 +44,10 @@ The old M1 SQL tests demonstrate the historical schema only. The latest Python t
 
 ## Build and test
 
+For a disk-constrained workstation, `./tools/database/db start-memory-test` provisions a separate bounded test instance at `127.0.0.1:15433` and updates only the private test connections. It does not reset or relocate persistent development storage at port 15432. The test instance uses tmpfs (384 MiB), a 512 MiB container limit and one CPU; fsync, synchronous commit and full-page writes remain enabled. Its database is intentionally volatile across container recreation/reboot. Private backups and independent erasure ledgers remain under `.local-db/`; persistent-disk recovery requires separate evidence.
+
+Synthetic fixture IDs are stable within a test process and unique across runs to avoid resurrecting identities already present in the independent erasure ledger. Set `MA_TEST_NAMESPACE` to a UUID to reproduce an exact fixture namespace. Do not clear recovery ledgers or weaken revocation merely to reuse a deleted fixture.
+
 ```sh
 .local-db/venv/bin/python tools/database/build_backend.py
 ./tools/database/db test

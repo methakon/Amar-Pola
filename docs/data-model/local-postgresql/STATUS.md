@@ -1,23 +1,23 @@
 # Local PostgreSQL setup status
 
-Status: LOCAL_BLOCKED / integration incomplete. Updated for the 2026-10-29 documentation checkpoint; no task PASS is recorded.
+Status: LOCAL_BLOCKED for canonical integration; the isolated V2 test baseline is now verified. No overall task PASS or production approval is recorded.
 
 ## Verified at the recorded checkpoint
 
-- Clean local migration replay applied the implementation's 0001–0015 chain successfully.
+- Fresh isolated local replay applied the implementation's 0001–0016 chain successfully.
 - Actual C++20/Drogon build and native CTest passed.
-- The latest isolated full-suite attempt completed 69 passing tests, including six actual HTTP integration tests, before timing out during backup/restore. This is not a complete passing suite.
+- The latest isolated full suite passed all 140 tests, including six actual HTTP integration tests and both real backup/restore tests. The prior 69-test timeout is historical, not the current suite result.
 - Historical `0001_m1_identity.sql` remained checksum-identical.
 
-Commands, exit codes and limitations: [execution evidence](../../../evidence/local/database/INTEGRATION_PENDING_2026-10-29.md). Subsequent source edits require re-verification; the checkpoint does not certify the current source tree as a whole.
+Commands, exit codes, actual catalog and implementation commit: [re-verification evidence](../../../evidence/local/database/REVERIFICATION_2026-10-29.md). The test instance is separately RAM-backed with fsync enabled; this does not certify persistent-disk durability, performance or the development database upgrade.
 
 ## Open setup and synchronization work
 
 1. Reconcile migration numbering with the existing stacked M1 credential/enrollment/idempotency work: that branch already has different migrations numbered 0002–0004. The local chain must not be published as if those versions were unallocated. Preserve historical migrations and account for the existing physical catalog/checkers.
-2. Resolve host I/O pressure, confirm the interrupted restore's quarantine state, and complete serial database/recovery tests without weakening durability or authorization.
-3. Generate and verify the final catalog, logical-to-physical mapping, physical ERD and operation/dependency matrix.
+2. Host I/O pressure is bypassed for isolated tests without touching development storage; persistent-development upgrade and its recovery state still need verification.
+3. Catalog, logical-to-physical mapping, ERD and operation/dependency artifacts are generated and verified. The new 124-entity logical model conflicts with the 120-entity audit/lint baseline; full structural lint currently fails and needs evidence-based reconciliation.
 4. Reconcile the new physical-schema audit requirements, including per-table retention/ownership metadata, typed constraints and child-consistency evidence. Authored schema alone does not close those requirements.
-5. Finish tested implementation commits and normal review/CI integration. This documentation checkpoint intentionally does not stage the unfinished implementation.
+5. Verified test-isolation fixes are committed and pushed as `3d3e285cbf92f0583749cb239d9e3c0bd74e903f`. Canonical migration integration and normal review/CI remain outstanding.
 
 ## Admin API development assessment
 

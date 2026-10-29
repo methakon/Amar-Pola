@@ -6,7 +6,7 @@ Status: LOCAL_BLOCKED. This package documents synthetic local implementation wor
 
 1. [Current setup status and integration prerequisites](STATUS.md).
 2. [Development, migrations, build, tests and recovery runbook](RUNBOOK.md).
-3. [Executed partial verification checkpoint](../../../evidence/local/database/INTEGRATION_PENDING_2026-10-29.md).
+3. [Current executed re-verification checkpoint](../../../evidence/local/database/REVERIFICATION_2026-10-29.md); [historical interrupted run](../../../evidence/local/database/INTEGRATION_PENDING_2026-10-29.md).
 4. [Owner decisions and acceptance boundaries](../../roadmap/SIX_GATE_OWNER_DECISIONS_AND_AGENT_HANDOFF_2026-10-29.md).
 
 ## Package ownership and layout
@@ -18,7 +18,7 @@ Status: LOCAL_BLOCKED. This package documents synthetic local implementation wor
 - `evidence/local/database/`: redacted execution checkpoints, separate from specifications.
 - `.local-db/`: ignored credentials, raw logs, database storage, build caches and backup archives. Never commit these files.
 
-Catalog exports, the physical ERD and API-to-table matrix are pending final successful integration; their absence must not be represented as verified coverage. Migration numbering also needs reconciliation with the existing stacked M1 work before publication of the implementation.
+The actual [catalog](physical-schema.json), [physical ERD](PHYSICAL_ERD.md), [logical mapping](logical-to-physical.json), [operation/dependency matrix](api-to-table.json) and [migration manifest](migration-manifest.json) have been generated and verified against the isolated database. They are schema/dependency evidence, not proof of every HTTP handler. Canonical migration numbering and the logical-model/audit count conflict still need reconciliation with existing M1 work.
 
 ## Navigation
 
