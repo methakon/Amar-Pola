@@ -208,55 +208,229 @@ def transaction_body(text):
     return text
 
 
-def migrate(database, through=None):
-    assert_container(database)
+def load_migration_manifest(verify=True):
+    """Explicit identities, never infer lineage from a numeric filename prefix."""
+    data = json.loads((ROOT / 'backend/persistence/migration-lineages.json').read_text())
+    entries = data['migrations']
+    ids, paths = set(), set()
+    for entry in entries:
+        identity, relative = entry['id'], entry['path']
+        if identity in ids or relative in paths:
+            raise ValueError('Duplicate migration identity or path')
+        ids.add(identity); paths.add(relative)
+        path = (ROOT / relative).resolve()
+        if not path.is_relative_to(ROOT.resolve()):
+            raise ValueError('Migration outside checkout')
+        digest = entry['sha256']
+        if digest is None and entry.get('published', True):
+            raise ValueError('Published migration has no checksum: ' + identity)
+        if digest is not None and not re.fullmatch('[0-9a-f]{64}', digest):
+            raise ValueError('Invalid migration checksum: ' + identity)
+        if verify and digest is not None and (not path.is_file() or sha256(path) != digest):
+            raise ValueError('Migration checksum drift: ' + identity)
+    expected = {'common:0001', 'compat:m1_pre_v2_0016'} | {'m1:%04d' % n for n in range(2, 5)} | {'v2:%04d' % n for n in range(2, 19)}
+    if ids != expected:
+        raise ValueError('Incomplete or unknown manifest identities')
+    return entries
+
+
+def migration_plan(entries, lineage='v2', through=None, applied=()):
+    if lineage not in ('m1', 'v2'):
+        raise ValueError('Unknown lineage')
+    known = {e['id']: e for e in entries}
+    applied = set(applied)
+    if applied - known.keys():
+        raise ValueError('Unknown applied identity')
+    if lineage == 'm1' and any(i.startswith(('v2:', 'compat:')) for i in applied):
+        raise ValueError('V2 to M1 downgrade forbidden')
+    upgrade = lineage == 'v2' and any(i.startswith('m1:') for i in applied)
+    ids = ['common:0001']
+    if lineage == 'm1':
+        ids += ['m1:%04d' % n for n in range(2, 5)]
+    else:
+        ids += ['v2:%04d' % n for n in range(2, 16)]
+        if upgrade:
+            ids += ['compat:m1_pre_v2_0016']
+        ids += ['v2:0016', 'v2:0017', 'v2:0018']
+    if through:
+        target = through if ':' in through else ('common:0001' if through == '0001' else lineage + ':' + through)
+        if target not in ids:
+            raise ValueError('Through identity outside selected lineage')
+        ids = ids[:ids.index(target) + 1]
+    return [known[i] for i in ids]
+
+
+def validate_migration_history(entries, legacy_rows, lineage_rows, schema_has_objects=False):
+    """Read-only validation of *all* rows, including failures outside --through."""
+    known = {e['id']: e for e in entries}
+    by_name = {Path(e['path']).name: e for e in entries}
+    applied, legacy_lineages = set(), set()
+    for rows, namespaced in ((legacy_rows, False), (lineage_rows, True)):
+        seen = {}
+        for version, filename, checksum, status in rows:
+            entry = known.get(version) if namespaced or ':' in version else by_name.get(filename)
+            if (entry is None or filename != Path(entry['path']).name
+                    or checksum is None or checksum != entry['sha256']
+                    or status not in ('APPLIED', 'FAILED')
+                    or version not in (entry['id'], entry['id'].split(':')[-1])):
+                raise ValueError('Unknown or drifting migration history: ' + str(version))
+            identity = entry['id']
+            if identity in seen and (namespaced or seen[identity] == status):
+                raise ValueError('Duplicate migration history identity')
+            seen[identity] = status
+            if not namespaced and ':' not in version and identity != 'common:0001':
+                legacy_lineages.add(identity.split(':')[0])
+            if status == 'APPLIED':
+                applied.add(identity)
+    if len(legacy_lineages) > 1:
+        raise ValueError('Mixed legacy migration lineages')
+    if not applied and schema_has_objects:
+        raise ValueError('Untracked manual application schema; refusing adoption')
+    if applied:
+        if 'common:0001' not in applied:
+            raise ValueError('Missing common baseline history')
+        m1 = sorted(i for i in applied if i.startswith('m1:'))
+        if m1 != ['m1:%04d' % n for n in range(2, 2 + len(m1))]:
+            raise ValueError('Gapped M1 history')
+        v2 = sorted(i for i in applied if i.startswith('v2:'))
+        if v2 != ['v2:%04d' % n for n in range(2, 2 + len(v2))]:
+            raise ValueError('Gapped V2 history')
+        bridge = 'compat:m1_pre_v2_0016' in applied
+        if bridge and (not m1 or 'v2:0015' not in applied):
+            raise ValueError('Out-of-order compatibility bridge')
+        if m1 and 'v2:0016' in applied and not bridge:
+            raise ValueError('M1 upgrade missing compatibility bridge')
+    return applied
+
+
+def preflight_migration_plan(plan):
+    """Pin and buffer every selected source before the first DDL statement."""
+    sources = {}
+    for entry in plan:
+        path = ROOT / entry['path']
+        if entry['sha256'] is None or not path.is_file():
+            raise ValueError('Unpublished migration must be pinned before apply: ' + entry['id'])
+        content = path.read_bytes()
+        if hashlib.sha256(content).hexdigest() != entry['sha256']:
+            raise ValueError('Migration checksum drift: ' + entry['id'])
+        sources[entry['id']] = transaction_body(content.decode('utf-8'))
+    return sources
+
+
+def migrate(database, through=None, lineage='v2'):
+    entries = load_migration_manifest()
     if sha256(MIGRATIONS / '0001_m1_identity.sql') != BASELINE_SHA256:
         raise ValueError('Historical 0001 checksum changed')
-    files = sorted(MIGRATIONS.glob('[0-9][0-9][0-9][0-9]_*.sql'))
-    versions = [p.name[:4] for p in files]
-    if len(versions) != len(set(versions)):
-        raise ValueError('Duplicate migration version')
+    migration_plan(entries, lineage, through)
+    assert_container(database)
     with connect(database) as conn:
         conn.execute("SELECT pg_advisory_lock(hashtextextended('madalasa-migrations',0))")
         try:
+            legacy_rows, lineage_rows = [], []
+            for table, rows in (('history', legacy_rows), ('lineage_history', lineage_rows)):
+                if conn.execute('SELECT to_regclass(%s)', ('ma_migrations.' + table,)).fetchone()[0]:
+                    rows.extend(conn.execute('SELECT version,filename,checksum,status FROM ma_migrations.' + table).fetchall())
+            objects = conn.execute("""SELECT EXISTS (
+                SELECT 1 FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace
+                WHERE n.nspname='ap_m1'
+                UNION ALL SELECT 1 FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace
+                WHERE n.nspname='ap_m1')""").fetchone()[0]
+            applied = validate_migration_history(entries, legacy_rows, lineage_rows, objects)
+            plan = migration_plan(entries, lineage, through, applied)
+            sources = preflight_migration_plan(plan)
+            upgrading = lineage == 'v2' and any(i.startswith('m1:') for i in applied)
+            external_quarantine = False
+            if upgrading:
+                marker = quarantine_marker(database)
+                external_quarantine = marker.exists() and json.loads(marker.read_text()).get('state') != 'LINEAGE_UPGRADE'
+                quarantine(database)
+                if not external_quarantine:
+                    private_write(marker, json.dumps({'database': DATABASES[database], 'state': 'LINEAGE_UPGRADE'}) + '\n')
             conn.execute('CREATE SCHEMA IF NOT EXISTS ma_migrations')
             conn.execute('REVOKE ALL ON SCHEMA ma_migrations FROM PUBLIC')
-            conn.execute('''CREATE TABLE IF NOT EXISTS ma_migrations.history (
-                version text PRIMARY KEY, filename text NOT NULL, checksum text NOT NULL,
-                executed_at timestamptz NOT NULL DEFAULT now(), status text NOT NULL CHECK(status IN ('APPLIED','FAILED')),
-                sqlstate text, execution_ms integer NOT NULL DEFAULT 0)''')
-            for path in files:
-                version, checksum = path.name[:4], sha256(path)
-                if through and version > through:
-                    break
-                old = conn.execute('SELECT checksum,status FROM ma_migrations.history WHERE version=%s', (version,)).fetchone()
-                if old and old[0] != checksum:
-                    raise ValueError('Migration checksum drift: ' + path.name)
-                if old and old[1] == 'APPLIED':
-                    print('UNCHANGED ' + path.name)
+            for table in ('history', 'lineage_history'):
+                conn.execute("""CREATE TABLE IF NOT EXISTS ma_migrations.""" + table + """ (
+                    version text PRIMARY KEY, filename text NOT NULL, checksum text NOT NULL,
+                    executed_at timestamptz NOT NULL DEFAULT now(), status text NOT NULL CHECK(status IN ('APPLIED','FAILED')),
+                    sqlstate text, execution_ms integer NOT NULL DEFAULT 0)""")
+                conn.execute('REVOKE ALL ON ma_migrations.' + table + ' FROM PUBLIC')
+            known = {e['id']: e for e in entries}
+            # Adoption never changes the original history rows, even FAILED rows.
+            for identity in sorted(applied):
+                entry = known[identity]
+                conn.execute("""INSERT INTO ma_migrations.lineage_history(version,filename,checksum,status)
+                    VALUES(%s,%s,%s,'APPLIED') ON CONFLICT(version) DO NOTHING""",
+                    (identity, Path(entry['path']).name, entry['sha256']))
+            for entry in plan:
+                identity, checksum = entry['id'], entry['sha256']
+                filename = Path(entry['path']).name
+                if identity in applied:
+                    print('UNCHANGED ' + filename)
                     continue
                 begun = time.monotonic()
                 try:
                     with conn.transaction():
-                        # Lookup functions transferred to auth/worker owners need
-                        # schema CREATE while migrating; runtime never receives it.
-                        conn.execute(transaction_body(path.read_text()), prepare=False)
-                        if version == '0001':
+                        conn.execute(sources[identity], prepare=False)
+                        if identity == 'common:0001':
                             conn.execute('GRANT CREATE ON SCHEMA ap_m1 TO ap_m1_auth,ap_db_executor')
                             conn.execute('GRANT USAGE ON SCHEMA ap_m1 TO ap_auth_issuer,ap_billing_verifier')
-                        conn.execute('''INSERT INTO ma_migrations.history(version,filename,checksum,status,execution_ms)
+                        elapsed = int((time.monotonic()-begun)*1000)
+                        conn.execute("""INSERT INTO ma_migrations.lineage_history(version,filename,checksum,status,execution_ms)
                             VALUES(%s,%s,%s,'APPLIED',%s) ON CONFLICT(version) DO UPDATE SET
-                            checksum=excluded.checksum,status='APPLIED',executed_at=now(),sqlstate=NULL,execution_ms=excluded.execution_ms''',
-                            (version,path.name,checksum,int((time.monotonic()-begun)*1000)))
-                    print('APPLIED ' + path.name)
+                            status='APPLIED',executed_at=now(),sqlstate=NULL,execution_ms=excluded.execution_ms
+                            WHERE ma_migrations.lineage_history.status='FAILED' """,
+                            (identity,filename,checksum,elapsed))
+                        # Preserve numeric versions for old status/export readers
+                        # unless occupied by immutable rows from another lineage.
+                        version = identity.split(':')[-1] if identity.startswith(('common:', 'v2:', 'm1:')) else identity
+                        if upgrading or any(row[0] == version for row in legacy_rows):
+                            version = identity
+                        conn.execute("""INSERT INTO ma_migrations.history(version,filename,checksum,status,execution_ms)
+                            VALUES(%s,%s,%s,'APPLIED',%s) ON CONFLICT(version) DO NOTHING""",
+                            (version,filename,checksum,elapsed))
+                        applied.add(identity)
+                    print('APPLIED ' + filename)
                 except psycopg.Error as exc:
-                    conn.execute('''INSERT INTO ma_migrations.history(version,filename,checksum,status,sqlstate)
-                        VALUES(%s,%s,%s,'FAILED',%s) ON CONFLICT(version) DO UPDATE SET status='FAILED',sqlstate=excluded.sqlstate,executed_at=now()''',
-                        (version,path.name,checksum,exc.sqlstate))
-                    print('FAILED ' + path.name + ' SQLSTATE=' + str(exc.sqlstate), file=sys.stderr)
+                    conn.execute("""INSERT INTO ma_migrations.lineage_history(version,filename,checksum,status,sqlstate)
+                        VALUES(%s,%s,%s,'FAILED',%s) ON CONFLICT(version) DO UPDATE SET
+                        status='FAILED',sqlstate=excluded.sqlstate,executed_at=now()
+                        WHERE ma_migrations.lineage_history.status='FAILED' """,
+                        (identity,filename,checksum,exc.sqlstate))
+                    print('FAILED ' + filename + ' SQLSTATE=' + str(exc.sqlstate), file=sys.stderr)
                     raise
+            if upgrading and 'v2:0018' in applied:
+                verify_lineage_security(database)
+                if not external_quarantine:
+                    open_after_restore(database)
         finally:
             conn.execute("SELECT pg_advisory_unlock(hashtextextended('madalasa-migrations',0))")
+
+
+def verify_lineage_security(database):
+    """Final upgrade gate: FORCE RLS plus PUBLIC/role ACL checks before reopening."""
+    verify(database)
+    with connect(database, 'admin') as conn:
+        public_execute = conn.execute("""SELECT p.proname FROM pg_proc p
+            JOIN pg_namespace n ON n.oid=p.pronamespace
+            CROSS JOIN LATERAL aclexplode(coalesce(p.proacl,acldefault('f',p.proowner))) a
+            WHERE n.nspname IN ('ap_m1','ma_recovery')
+            AND a.grantee=0 AND a.privilege_type='EXECUTE'""").fetchall()
+        if public_execute:
+            raise ValueError('PUBLIC function execute ACL remains after lineage upgrade')
+        unsafe = conn.execute("""SELECT r.rolname FROM pg_roles r
+            WHERE r.rolname=ANY(%s) AND (r.rolsuper OR r.rolbypassrls OR r.rolcreaterole
+              OR pg_has_role(r.oid,'ap_m1_owner','MEMBER')
+              OR pg_has_role(r.oid,'ap_m1_auth','MEMBER')
+              OR pg_has_role(r.oid,'ap_db_executor','MEMBER'))""",
+            ([ROLES[k][0] for k in ('runtime','auth','billing')] + ['ap_m1_api'],)).fetchall()
+        if unsafe:
+            raise ValueError('Unsafe runtime role ACL after lineage upgrade')
+        writable_schema = conn.execute("""SELECT n.nspname FROM pg_namespace n
+            CROSS JOIN LATERAL aclexplode(coalesce(n.nspacl,acldefault('n',n.nspowner))) a
+            WHERE n.nspname IN ('ap_m1','ma_recovery','ma_migrations')
+            AND a.grantee=0 AND a.privilege_type='CREATE'""").fetchall()
+        if writable_schema:
+            raise ValueError('PUBLIC writable application schema')
 
 
 def verify(database):
@@ -441,6 +615,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('command',choices=['init','start','start-memory-test','create','migrate','verify','seed','test','reset','backup','restore','export-ledger','legacy-test','stop','psql','exec-test'])
     parser.add_argument('--database', choices=DATABASES, default='test')
+    parser.add_argument('--lineage', choices=('m1','v2'), default='v2')
     parser.add_argument('--through')
     parser.add_argument('--pattern',default='test_*.py')
     parser.add_argument('--allow-dev',action='store_true')
@@ -452,7 +627,7 @@ def main():
     elif args.command=='start': start()
     elif args.command=='start-memory-test': start_memory_test()
     elif args.command=='create': create()
-    elif args.command=='migrate': migrate(args.database,args.through)
+    elif args.command=='migrate': migrate(args.database,args.through,args.lineage)
     elif args.command=='verify': verify(args.database)
     elif args.command=='seed': seed(args.database)
     elif args.command=='test': tests(args.pattern)
