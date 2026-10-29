@@ -1,5 +1,5 @@
 {
-  "concept_count": 124,
+  "concept_count": 120,
   "source_model": "TKiZXwjkWdkponF1zNsfli",
   "mappings": [
     {
@@ -103,16 +103,6 @@
       "scope": "PHYSICAL_SCHEMA_NOT_API_OR_ANDROID_COMPLETION"
     },
     {
-      "concept": "child_pickup_viewer_passes",
-      "domain": "ERD 01 / Family identity, child-scoped V2 cross-family grants and lawful authority",
-      "physical_objects": [
-        "ap_m1.child_pickup_viewer_passes"
-      ],
-      "functions": [],
-      "representation": "DIRECT",
-      "scope": "PHYSICAL_SCHEMA_NOT_API_OR_ANDROID_COMPLETION"
-    },
-    {
       "concept": "child_devices",
       "domain": "ERD 02 / Devices, permissions & remote commands",
       "physical_objects": [
@@ -207,16 +197,6 @@
       "domain": "ERD 02 / Devices, permissions & remote commands",
       "physical_objects": [
         "ap_m1.command_results"
-      ],
-      "functions": [],
-      "representation": "DIRECT",
-      "scope": "PHYSICAL_SCHEMA_NOT_API_OR_ANDROID_COMPLETION"
-    },
-    {
-      "concept": "credential_renewal_challenges",
-      "domain": "ERD 02 / Devices, permissions & remote commands",
-      "physical_objects": [
-        "ap_m1.credential_renewal_challenges"
       ],
       "functions": [],
       "representation": "DIRECT",
@@ -864,16 +844,6 @@
       "scope": "PHYSICAL_SCHEMA_NOT_API_OR_ANDROID_COMPLETION"
     },
     {
-      "concept": "compliance_export_bundles",
-      "domain": "ERD 08 / Privacy, deletion, retention & admin-case access",
-      "physical_objects": [
-        "ap_m1.compliance_export_bundles"
-      ],
-      "functions": [],
-      "representation": "DIRECT",
-      "scope": "PHYSICAL_SCHEMA_NOT_API_OR_ANDROID_COMPLETION"
-    },
-    {
       "concept": "durable_event_inbox",
       "domain": "ERD 09 / Operations, evidence gates & resilient event flow",
       "physical_objects": [
@@ -1149,16 +1119,6 @@
       "domain": "ERD 10 / Admin accounts, access requests, FAQ, support and parent-service logs",
       "physical_objects": [
         "ap_m1.admin_support_read_audit"
-      ],
-      "functions": [],
-      "representation": "DIRECT",
-      "scope": "PHYSICAL_SCHEMA_NOT_API_OR_ANDROID_COMPLETION"
-    },
-    {
-      "concept": "admin_sessions",
-      "domain": "ERD 10 / Admin accounts, access requests, FAQ, support and parent-service logs",
-      "physical_objects": [
-        "ap_m1.admin_sessions"
       ],
       "functions": [],
       "representation": "DIRECT",

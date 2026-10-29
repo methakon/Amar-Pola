@@ -93,6 +93,9 @@ erDiagram
   consent_documents ||--o{ consent_records : references
   consent_policy_versions ||--o{ consent_records : references
   devices ||--o{ credential_renewal_challenges : references
+  device_key_records ||--o{ credential_renewal_challenges : references
+  devices ||--o{ device_credentials : references
+  device_key_records ||--o{ device_credentials : references
   devices ||--o{ device_health : references
   devices ||--o{ device_key_records : references
   location_observations ||--o{ device_latest_positions : references
