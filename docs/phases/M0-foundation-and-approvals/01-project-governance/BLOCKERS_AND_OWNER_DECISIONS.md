@@ -14,7 +14,7 @@ Each blocker has an owner, decision or required evidence, and lifecycle: OPEN �
 |---|---|---|---|---|---|
 | **B-01** | Critical | Individual legal publisher identified: **SWARNA SEKHAR DHAR**, India; same individual intended as Google Play account publisher | **OWNER DECIDED / EXTERNAL VERIFICATION OPEN**: no Play identity, payouts, support contact, or public-policy-page verification yet | Verify personal developer account and linked Payments legal name/address; verified contacts, public developer contact, monetization and policy-page owner | Privacy/Play |
 | **B-02** | Critical | **OWNER DECIDED: India-only initial launch; children aged 0–17 inclusive (under 18)** | Product scope established; legal assessment and Play policy classification still OPEN | India-specific parental authority, age-appropriate permissions, monitoring exemptions, consent and policy review | Child privacy/legal |
-| **B-03** | Critical | Confirm identifiable monitoring app, visible icon and required persistent notification? | Yes; **no stealth option** | Explicit acceptance | Play/Android UX |
+| **B-03** | Critical | **OWNER APPROVED: transparent background operation** — identifiable Alarka icon, prominent disclosure, applicable monitoring/FGS notifications, untouched OS privacy indicators, no stealth or permission bypass; Activity may close after setup, boot recovery only as Android permits | **DECIDED; Android/Play/India compliance evidence pending** | Android OS/OEM runtime tests, monitoring-app declaration, background-location review, child-privacy legal assessment | Play/Android UX |
 | **B-04** | High | Exact first-release feature list? | Pairing, location, trip/stop/map, named places, usage, trust diagnostics and privacy; other modules staged | Core vs paid vs later list | Delivery budget |
 | **B-05** | High | Normal consumer phones, managed-device edition, or both? | Standard installation first; optional separate managed edition | Whether device-owner provisioning/reset is acceptable | Device blocking and distribution |
 | **B-06** | High | Is optional child SOS/check-in/widget UI acceptable while main tracking Activity stays closed? | No continuously open Activity; optional action UI | Child interaction preferences | SOS and child UX |
@@ -227,3 +227,17 @@ These **add to**, and do not close, B-01 legal publisher, B-02 exact launch ages
 - **B-03: NEXT OWNER BLOCKER — NOT YET APPROVED.** Confirm that Alarka is a transparent, identifiable monitoring app: visible launcher icon, honest in-app disclosure and setup/permission screens, Android-required foreground-service notifications, microphone/camera indicators, no stealth mode or notification/permission circumvention. This is an owner UX/policy decision; platform and Play policy compliance still requires independent verification. Do not mark decided without the owner's explicit response.
 
 **Gate sequence:** obtain B-03 owner answer → record exact scope → reconcile SRS/Figma/Android permissions/API/Play disclosures → perform feature-by-feature law/Play/platform audit before coding is authorized.
+
+## B-03 owner architecture approval — 2026-10-30
+
+**Owner explicitly approved** the proposed **transparent background-only Alarka operating model**:
+
+1. Normal visible launcher identity and clear monitoring disclosures at onboarding/settings and the Play listing; consent/authority remain separate from Android runtime permissions.
+2. No requirement to keep the Activity foreground after configuration; permitted location tracking may run through a location-typed foreground service and appropriate scheduled work, with accurate monitoring/foreground-service notices as applicable.
+3. No suppression of Android camera/microphone privacy indicators, notification requirements or permission prompts; remote media remains separately release-gated OFF until technically and legally reviewed.
+4. No stealth, hidden app disguise or OS-permission bypass. Background service execution is not itself stealth; the app stays discoverable and monitoring state can be inspected.
+5. Restore or schedule eligible work after reboot only under actual Android API/FGS/boot/OEM constraints. Never claim guaranteed continuous startup or uninterrupted collection; expose unsupported/permission-required/delayed states.
+
+**B-03 state:** OWNER_DECIDED / IMPLEMENTATION_AND_COMPLIANCE_EVIDENCE_PENDING. This approval does *not* certify Google Play acceptance, DPDP lawfulness, specific background permission grants or device behavior. Keep synthetic setup only until the separate coding/compliance gates pass.
+
+**Next owner product blocker:** B-04 first-release feature selection, to be reconciled with the feature-by-feature legal/platform elimination gate before final approval. B-05 managed-device edition and B-07 retention are subsequent decisions.
