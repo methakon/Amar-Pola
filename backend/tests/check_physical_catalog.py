@@ -72,13 +72,13 @@ def render(mapping, erd, physical, logical):
     a("Generated from `docs/data-model/M1_PHYSICAL_TO_LOGICAL_CATALOG.json` by `backend/tests/check_physical_catalog.py --write`. "
       "**Do not edit by hand**; edit the JSON and regenerate. CI fails if this file is stale or if the migrations or the ERD drift from the mapping.")
     a("")
-    a(f"- Physical tables (schema `{mapping['schema']}`, migrations 0001-0004): **{len(physical)}**")
+    a(f"- Physical tables (schema `{mapping['schema']}`, migrations in `backend/persistence/migrations/`): **{len(physical)}**")
     a(f"- Logical ERD entities: **{len(logical)}**; mapped to a physical table: **{len(mapped)}**; not yet physical (M2 and later, design only): **{len(logical) - len(mapped)}**")
     a(f"- Physical tables with no ERD entity: **{len(mapping.get('physical_without_entity', []))}**")
     a("")
     a("The ERD is a conceptual design; the migrations are what actually exists. Every difference below is known and recorded. "
       "The largest one is the tenant model: M1 is family-scoped with forced row-level security, while the owner-approved ERD V2 is child-scoped "
-      "(see `ADR_2026_10_28_BLEND_FAMILY_V2`). That decision is still open.")
+      "(see `ADR_2026_10_28_BLEND_FAMILY_V2`). The V2 child-scoped decision is approved as design, but its physical migration and runtime enforcement remain pending.")
     a("")
     a("| Physical table | ERD entity | Renamed columns | Physical only | ERD only |")
     a("|---|---|---|---|---|")
@@ -108,6 +108,9 @@ def main(argv):
     errors = check(mapping, erd, physical, logical)
     text = render(mapping, erd, physical, logical)
     if "--write" in argv:
+        if errors:
+            print("PHYSICAL CATALOG CHECK FAILED; generated report not written:\n- " + "\n- ".join(errors))
+            return 1
         REPORT.write_text(text)
     elif not REPORT.exists() or REPORT.read_text() != text:
         errors.append("docs/M1_PHYSICAL_TABLE_CATALOG.md is stale: run backend/tests/check_physical_catalog.py --write")
