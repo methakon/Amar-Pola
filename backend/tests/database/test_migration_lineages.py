@@ -198,6 +198,11 @@ class MigrationLineages(unittest.TestCase):
                 manage.main()
                 migrate.assert_called_once_with(*expected)
 
+    def test_restore_cli_propagates_lineage(self):
+        with patch.object(manage.sys,'argv',['manage.py','restore','--lineage','m1','--file','historical.dump']), patch.object(manage,'restore') as restore:
+            manage.main()
+        restore.assert_called_once_with('test',Path('historical.dump'),False,'m1')
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -8,6 +8,7 @@ Run with the project's database virtualenv after building the native backend.
 from pathlib import Path
 import subprocess
 import sys
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'backend/tests/database'))
@@ -72,12 +73,30 @@ def main():
         expected = seed_historical_compatibility(conn)
         conn.commit()
     print('Historical M1: original SQL + concurrency + 18-table live catalog PASS', flush=True)
+    historical_backup = db.backup('test')
     db.migrate('test')
     db.verify_lineage_security('test')
     with db.connect('test','admin',autocommit=False) as conn:
         assert_historical_compatibility(conn, expected)
         upgraded_shape = application_shape(conn)
     print('Populated M1 -> V2: rows, device/key state and fail-closed credentials PASS', flush=True)
+    db.restore('test',historical_backup,lineage='m1')
+    with db.connect('test','admin') as conn:
+        assert conn.execute("SELECT count(*) FROM pg_tables WHERE schemaname='ap_m1'").fetchone()[0] == 18
+        for kind in ('runtime','auth','billing'):
+            assert not conn.execute("SELECT has_database_privilege(%s,current_database(),'CONNECT')",(db.ROLES[kind][0],)).fetchone()[0]
+    migrate = db.migrate
+    def observe_closed_upgrade(*args, **kwargs):
+        result = migrate(*args, **kwargs)
+        with db.connect('test','admin') as conn:
+            for kind in ('runtime','auth','billing'):
+                assert not conn.execute("SELECT has_database_privilege(%s,current_database(),'CONNECT')",(db.ROLES[kind][0],)).fetchone()[0], 'restore reopened during migration before suppression'
+        return result
+    with patch.object(db,'migrate',side_effect=observe_closed_upgrade):
+        db.restore('test',historical_backup)
+    with db.connect('test','admin') as conn:
+        assert_historical_compatibility(conn,expected)
+    print('Historical restore selection + V2 upgrade closed until ledger suppression PASS',flush=True)
     db.reset('test')
     db.create(targets=['test'])
     db.migrate('test')

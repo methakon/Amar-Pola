@@ -553,7 +553,7 @@ def open_after_restore(database):
     quarantine_marker(database).unlink(missing_ok=True)
 
 
-def restore(database, path, allow_dev=False):
+def restore(database, path, allow_dev=False, lineage='v2'):
     if database == 'dev' and not allow_dev:
         raise ValueError('Development restore requires --allow-dev')
     path = safe_backup_path(path)
@@ -583,7 +583,10 @@ def restore(database, path, allow_dev=False):
     with path.open('rb') as stream:
         subprocess.run(['docker','exec','-i',container_for(database),'pg_restore','-U','postgres','-d',DATABASES[database],'--exit-on-error'],stdin=stream,check=True)
     # Upgrade an older backup while the database is still closed to runtime.
-    migrate(database)
+    migrate(database,lineage=lineage)
+    if lineage == 'm1':
+        print('Restored historical M1 checkpoint for inspection; runtime remains quarantined. Restore with --lineage v2 to complete recovery suppression.')
+        return
     # Archive preserves owner roles, function ownership, grants and RLS policies.
     # Restoring with --no-owner/--no-acl would silently break the security model.
     with connect(database,'admin') as conn:
@@ -636,7 +639,7 @@ def main():
     elif args.command=='export-ledger': print(export_ledger(args.database))
     elif args.command=='restore':
         if not args.file: parser.error('restore requires --file')
-        restore(args.database,args.file,args.allow_dev)
+        restore(args.database,args.file,args.allow_dev,args.lineage)
     elif args.command=='legacy-test': legacy_test()
     elif args.command=='stop':
         assert_container(args.database);subprocess.run(['docker','stop',container_for(args.database)],check=True)
