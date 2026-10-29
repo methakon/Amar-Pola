@@ -8,6 +8,9 @@ on:
       - "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json"
       - "backend/persistence/migrations/**"
       - "backend/tests/**"
+      - "backend/src/**"
+      - "backend/scripts/**"
+      - "backend/CMakeLists.txt"
       - ".github/workflows/m1-contract-and-tenant.yml"
   pull_request:
     paths:
@@ -17,6 +20,9 @@ on:
       - "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json"
       - "backend/persistence/migrations/**"
       - "backend/tests/**"
+      - "backend/src/**"
+      - "backend/scripts/**"
+      - "backend/CMakeLists.txt"
 jobs:
   contracts-and-isolation:
     runs-on: ubuntu-latest
@@ -51,13 +57,49 @@ jobs:
         run: psql -v ON_ERROR_STOP=1 -f backend/persistence/migrations/0002_m1_device_credentials.sql
       - name: M1 PostgreSQL migration 0003 (enrollment flow, commit-safe renewal, retention, PUBLIC lockdown)
         run: psql -v ON_ERROR_STOP=1 -f backend/persistence/migrations/0003_m1_enrollment_and_credential_hardening.sql
+      - name: M1 PostgreSQL migration 0004 (idempotency keys)
+        run: psql -v ON_ERROR_STOP=1 -f backend/persistence/migrations/0004_m1_idempotency.sql
       - name: Two-family and child-scope isolation regression
         run: psql -v ON_ERROR_STOP=1 -f backend/tests/m1_tenant_isolation.sql
       - name: Device credential lifecycle and family listing regression
         run: psql -v ON_ERROR_STOP=1 -f backend/tests/m1_credential_lifecycle.sql
       - name: Enrollment flow, first credential and retention regression
         run: psql -v ON_ERROR_STOP=1 -f backend/tests/m1_enrollment.sql
+      - name: Idempotency keys regression
+        run: psql -v ON_ERROR_STOP=1 -f backend/tests/m1_idempotency.sql
+      - name: Idempotency concurrency regression
+        run: bash backend/tests/m1_idempotency_concurrency.sh
+      - name: Error catalog sync (C++ table, OpenAPI enum, document)
+        run: |
+          pip install pyyaml
+          python3 -m unittest backend.tests.test_error_catalog_sync -v
       - name: Verify no sensitive production fixture paths
         run: |
           test -f backend/tests/M1_ACCEPTANCE_TEST_CASES.md
           ! grep -q 'BEGIN PRIVATE KEY' backend/tests/M1_ACCEPTANCE_TEST_CASES.md
+
+  backend-build:
+    # UNTESTED in Actions at the time of writing: built and passed locally against the same pinned dependencies,
+    # but without libpq (the sandbox had no apt mirror), so the PostgreSQL client path is first exercised here.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: System packages
+        run: sudo apt-get update && sudo apt-get install -y libpq-dev uuid-dev zlib1g-dev libssl-dev cmake g++
+      - name: Cache pinned dependencies
+        id: deps-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/ma-deps
+          key: ma-deps-${{ hashFiles('backend/scripts/build_deps.sh') }}
+      - name: Build Drogon and jsoncpp (pinned)
+        if: steps.deps-cache.outputs.cache-hit != 'true'
+        run: PREFIX=$HOME/ma-deps MA_DROGON_PG=ON bash backend/scripts/build_deps.sh
+      - name: Build backend
+        run: |
+          cmake -S backend -B build -DCMAKE_PREFIX_PATH=$HOME/ma-deps -DCMAKE_BUILD_RPATH=$HOME/ma-deps/lib
+          cmake --build build -j2
+      - name: Unit tests
+        run: cd build && ctest --output-on-failure
+      - name: HTTP smoke test
+        run: bash backend/tests/smoke_backend.sh build/ma_backend

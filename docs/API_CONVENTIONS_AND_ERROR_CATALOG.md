@@ -100,7 +100,7 @@ A mobile client WILL retry after a lost response. A retry must not create a seco
 |---|---|
 | First request with this key | Processed normally; response stored. |
 | Same key, same body, original finished | The stored status and body are returned again. No second row. |
-| Same key, same body, original still running | `409 CONFLICT` with `retryable: true`. |
+| Same key, same body, original still running | The second request **waits** (database `lock_timeout` 5 s) and then receives the stored response. Only if the wait times out: `409 CONFLICT` with `retryable: true`. |
 | Same key, different body | `409 IDEMPOTENCY_KEY_REUSED`. |
 | After 24 hours | Key forgotten; treated as new. |
 
@@ -165,7 +165,8 @@ A mobile client WILL retry after a lost response. A retry must not create a seco
 
 | ID | Gap | Recommendation |
 |---|---|---|
-| G-1 | No table stores idempotency keys yet. | Add a migration (key, caller, route, body hash, response, expiry) before implementing the three create handlers. |
+| G-1 | ~~No table stores idempotency keys.~~ **Closed** by migration `0004_m1_idempotency.sql` (tests `m1_idempotency.sql` ID_01-ID_11 and `m1_idempotency_concurrency.sh`). Claim, create and record happen in one transaction; a rolled-back create leaves no claim; a committed claim without a result (`PENDING`) is a backend bug and is answered `500 INTERNAL_ERROR`. | Handlers must call `idempotency_claim` first and `idempotency_record` last in the same transaction. |
+| P-1 | **Open decision:** `issuePairingCode` returns a one-time secret, which is never stored (`p_omit_body`). A replay therefore cannot return the same code. | Recommended: a replay returns `200` with a new code issued for the same child and cancels the earlier unredeemed one. Alternative: replay returns `409 CONFLICT` and the parent app issues a new code. Owner/security decision before the handler is written. |
 | G-2 | `ALREADY_RECORDED` for capabilities needs a uniqueness rule; `capability_snapshots` has none. | Add a unique constraint on (device, `observed_at`) in a migration. |
 | G-3 | Technical specification §7 calls for a stable `event_id` on device observations; M1 `Health` and `Capabilities` have none. | Use (device, `observed_at`) in M1; add `event_id` when batches arrive in M2. |
 | G-4 | `public_key_spki_base64` is standard base64; every other binary field is base64url. | Decide **before the first client is built** (renaming later is a breaking change). Recommended: switch to base64url. |
