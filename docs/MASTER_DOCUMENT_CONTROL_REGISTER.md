@@ -83,10 +83,13 @@
 
 | Controlled artifact | Stable location | Control or decision |
 |---|---|---|
-| M1 design-contract baseline | [OpenAPI M1](openapi-m1.yaml) | 11-operation M1 lint scope, design+synthetic SQL evidence, not complete runtime |
+| M1 design-contract baseline | [OpenAPI M1](openapi-m1.yaml) | 14-operation M1 lint scope, design+synthetic SQL evidence, not complete runtime |
 | Whole-project design API | [OpenAPI draft](openapi.yaml) | Future endpoints design-only; no implementation claim |
 | Figma and tldraw design inventories | [UI handoff](ui/figma-functional-handoff/README.md) / [tldraw](ui/tldraw/README.md) | Editable/UI research, not functioning Android UI |
 | Repository governance | [Root LICENSE](../LICENSE), [Root SECURITY](../SECURITY.md), [CONTRIBUTING](../CONTRIBUTING.md), [CODEOWNERS](../.github/CODEOWNERS) | Contact/license/branch protection still require actual owner decisions |
+| M1 device credential lifecycle | [M1_DEVICE_CREDENTIAL_LIFECYCLE.md](M1_DEVICE_CREDENTIAL_LIFECYCLE.md) | Engineering decisions C-01 to C-06 with tests; recommendation, not owner-approved |
+| API conventions and error catalog | [API_CONVENTIONS_AND_ERROR_CATALOG.md](API_CONVENTIONS_AND_ERROR_CATALOG.md) | Engineering baseline for M1 v1 (errors, idempotency, pagination, versioning, formats); lint-enforced; gaps G-1 to G-7 open |
+| Owner and legal recommended resolutions | [OWNER_AND_LEGAL_RECOMMENDED_RESOLUTIONS_2026-10-27.md](OWNER_AND_LEGAL_RECOMMENDED_RESOLUTIONS_2026-10-27.md) | Proposals only; no approval, signature or legal advice implied |
 | Staged public legal drafts | [public/legal](../public/legal/README.md) | Not published/approved; developer account and final URLs unavailable |
 
 ## Approval register — no fictitious sign-offs
