@@ -15,9 +15,10 @@ Commands, exit codes, actual catalog and implementation commit: [re-verification
 
 1. Reconcile migration numbering with the existing stacked M1 credential/enrollment/idempotency work: that branch already has different migrations numbered 0002–0004. The local chain must not be published as if those versions were unallocated. Preserve historical migrations and account for the existing physical catalog/checkers.
 2. Host I/O pressure is bypassed for isolated tests without touching development storage; persistent-development upgrade and its recovery state still need verification.
-3. Catalog, logical-to-physical mapping, ERD and operation/dependency artifacts are generated and verified. The new 124-entity logical model conflicts with the 120-entity audit/lint baseline; full structural lint currently fails and needs evidence-based reconciliation.
+3. The [logical model reconciliation](MODEL_RECONCILIATION_2026-10-29.md) restores the 120-entity canonical baseline and preserves all 124 proposed entities separately; full contract lint and reference checks now pass without loosening the baseline. Derived mappings will be regenerated after the compatibility replay.
 4. Reconcile the new physical-schema audit requirements, including per-table retention/ownership metadata, typed constraints and child-consistency evidence. Authored schema alone does not close those requirements.
 5. Verified test-isolation fixes are committed and pushed as `3d3e285cbf92f0583749cb239d9e3c0bd74e903f`. Canonical migration integration and normal review/CI remain outstanding.
+6. Subsequent enhancement review reproduced two metadata authorization/child-consistency defects in 0016. Additive 0018 and focused tests are authored; their coordinated GREEN run is still pending. The earlier 140-test checkpoint does not close these newly identified cases.
 
 ## Admin API development assessment
 
