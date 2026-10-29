@@ -90,6 +90,7 @@
 | M1 device credential lifecycle | [M1_DEVICE_CREDENTIAL_LIFECYCLE.md](M1_DEVICE_CREDENTIAL_LIFECYCLE.md) | Engineering decisions C-01 to C-06 with tests; recommendation, not owner-approved |
 | API conventions and error catalog | [API_CONVENTIONS_AND_ERROR_CATALOG.md](API_CONVENTIONS_AND_ERROR_CATALOG.md) | Engineering baseline for M1 v1 (errors, idempotency, pagination, versioning, formats); lint-enforced; gaps G-2 to G-5, G-7 and G-8 open; G-1 and G-6 closed; decision P-1 open |
 | M1 physical table catalog | [M1_PHYSICAL_TABLE_CATALOG.md](M1_PHYSICAL_TABLE_CATALOG.md) (generated from [mapping JSON](data-model/M1_PHYSICAL_TO_LOGICAL_CATALOG.json)) | Maps the 18 physical M1 tables to the 120-entity logical ERD and records every difference; CI-enforced; the family-scoped vs child-scoped tenant decision remains open |
+| M1 scheduled retention jobs runbook | [M1_PURGE_JOBS_RUNBOOK.md](M1_PURGE_JOBS_RUNBOOK.md) | Least-privilege purge role, script, systemd timer; tested on PG16; not deployed, no alerting or hosting decided |
 | Owner and legal recommended resolutions | [OWNER_AND_LEGAL_RECOMMENDED_RESOLUTIONS_2026-10-27.md](OWNER_AND_LEGAL_RECOMMENDED_RESOLUTIONS_2026-10-27.md) | Proposals only; no approval, signature or legal advice implied |
 | Staged public legal drafts | [public/legal](../public/legal/README.md) | Not published/approved; developer account and final URLs unavailable |
 

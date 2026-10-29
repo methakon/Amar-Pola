@@ -12,6 +12,7 @@ on:
       - "backend/tests/**"
       - "backend/src/**"
       - "backend/scripts/**"
+      - "backend/deploy/**"
       - "backend/CMakeLists.txt"
       - ".github/workflows/m1-contract-and-tenant.yml"
   pull_request:
@@ -26,6 +27,7 @@ on:
       - "backend/tests/**"
       - "backend/src/**"
       - "backend/scripts/**"
+      - "backend/deploy/**"
       - "backend/CMakeLists.txt"
 jobs:
   contracts-and-isolation:
@@ -81,6 +83,10 @@ jobs:
         run: psql -v ON_ERROR_STOP=1 -f backend/tests/m1_family_provisioning.sql
       - name: Idempotency concurrency regression
         run: bash backend/tests/m1_idempotency_concurrency.sh
+      - name: Scheduled purge job (least-privilege role, deletes, fails closed, bounded waits)
+        run: bash backend/tests/purge_job.sh
+      - name: Deployment units
+        run: python3 -m unittest backend.tests.test_deploy_units -v
       - name: Error catalog sync (C++ table, OpenAPI enum, document)
         run: |
           pip install pyyaml
