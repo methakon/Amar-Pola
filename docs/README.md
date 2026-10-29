@@ -2,6 +2,8 @@
 
 **Organized:** 2026-10-27 · **Scope:** documentation-first planning, **not software implementation**. Canonical source documents are organized **by M0–M9 project phase, then by category** using the repository's [master milestone plan](phases/M0-foundation-and-approvals/01-project-governance/MASTER_MILESTONE_IMPLEMENTATION_AND_RELEASE_PLAN.md). P3 research remains outside the launch milestones.
 
+The 72 root-level compatibility pointers were consolidated into [legacy-root-links](legacy-root-links/README.md), while their canonical M0–M9 full documents and the two OpenAPI files remain in place. Old direct GitHub root-level pointers should now be replaced by canonical document links.
+
 ## Start here
 
 [Master Document Control Register](MASTER_DOCUMENT_CONTROL_REGISTER.md) · [Document Control Policy](DOCUMENT_CONTROL_POLICY.md) · [Phase Coverage Matrix](PHASE_DOCUMENTATION_COVERAGE_MATRIX.md) · [Relocation Manifest](DOCUMENT_RELOCATION_MANIFEST.json) · [M1 OpenAPI contract](openapi-m1.yaml) · [Whole-project API design](openapi.yaml) · [Figma design handoff](ui/figma-functional-handoff/README.md)
