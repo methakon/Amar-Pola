@@ -21,5 +21,10 @@ int main() {
     setenv("DB_PASSWORD", "synthetic'\\password", 1);
     const auto config = madalasa::connectionInfoFromEnvironment();
     if (config.find("password='synthetic\\'\\\\password'") == std::string::npos) return 5;
+    setenv("DB_PORT", "15433", 1);
+    if (madalasa::connectionInfoFromEnvironment().find("port='15433'")==std::string::npos) return 6;
+    setenv("DB_NAME", "madalasa_alarka_dev", 1);
+    try { (void)madalasa::connectionInfoFromEnvironment(); return 7; }
+    catch (const std::runtime_error &) {}
     std::cout << "Database configuration boundaries and libpq escaping PASS\n";
 }

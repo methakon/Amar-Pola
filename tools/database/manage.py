@@ -28,6 +28,7 @@ LOCAL = ROOT / '.local-db'
 CONFIG = LOCAL / 'connection.json'
 MIGRATIONS = ROOT / 'backend/persistence/migrations'
 CONTAINER = 'madalasa-local-postgres'
+MEMORY_CONTAINER = 'madalasa-memory-test-postgres'
 BASELINE_SHA256 = 'e6014a2e2512a793efc320b39be8d0f1b5a4de8b9f7560d444d88aa2ffa5b3fe'
 DATABASES = {'dev': 'madalasa_alarka_dev', 'test': 'madalasa_alarka_test'}
 COMPOSE = ['docker', 'compose', '-f', str(ROOT / 'infra/local/compose.yaml')]
@@ -51,11 +52,11 @@ def private_write(path, content):
 
 
 def validate_target(config):
-    if config.get('host') not in ('127.0.0.1', 'localhost', '::1'):
+    if config.get('host') not in ('127.0.0.1', 'localhost', '::1') or config.get('hostaddr',config.get('host')) not in ('127.0.0.1','localhost','::1') or config.get('service'):
         raise ValueError('Refusing non-loopback database target')
     if config.get('dbname') not in DATABASES.values():
         raise ValueError('Refusing database outside the two named synthetic databases')
-    if int(config.get('port', 0)) != 15432:
+    if int(config.get('port', 0)) not in (15432,15433) or (int(config.get('port',0))==15433 and config.get('dbname')!=DATABASES['test']):
         raise ValueError('Refusing an unconfigured database port')
 
 
@@ -73,15 +74,34 @@ def connect(database='test', role='migration', autocommit=True):
     return psycopg.connect(dsn, autocommit=autocommit, connect_timeout=5)
 
 
-def assert_container():
-    info = subprocess.run(['docker', 'inspect', CONTAINER], capture_output=True, text=True, check=True)
+def container_for(database='test'):
+    name=configuration()[database].get('container',CONTAINER)
+    if name not in (CONTAINER,MEMORY_CONTAINER) or (name==MEMORY_CONTAINER and database!='test'):
+        raise ValueError('Unrecognized local database container')
+    return name
+
+
+def assert_container(database='test'):
+    name=container_for(database)
+    info = subprocess.run(['docker', 'inspect', name], capture_output=True, text=True, check=True)
     item = json.loads(info.stdout)[0]
     if item['Config'].get('Labels', {}).get('com.madalasa.local-db') != 'synthetic':
         raise ValueError('Container is not the labelled synthetic database')
     mounts = item.get('Mounts', [])
+    if name==MEMORY_CONTAINER:
+        if item['Config'].get('Labels',{}).get('com.madalasa.local-db-root')!=str(ROOT):
+            raise ValueError('Memory test container belongs to a different checkout')
+        if '/var/lib/postgresql/data' not in item.get('HostConfig',{}).get('Tmpfs',{}) and not any(m.get('Type')=='tmpfs' and m['Destination']=='/var/lib/postgresql/data' for m in mounts):
+            raise ValueError('Memory test container has unexpected storage')
+        return
     expected = str((LOCAL / 'pgdata').resolve())
     if not any(m['Source'] == expected and m['Destination'] == '/var/lib/postgresql/data' for m in mounts):
         raise ValueError('Container belongs to a different checkout; refusing to touch it')
+
+
+def quarantine_marker(database):
+    suffix='-memory' if container_for(database)==MEMORY_CONTAINER else ''
+    return LOCAL/('quarantine-'+database+suffix+'.json')
 
 
 def init():
@@ -111,33 +131,54 @@ def start():
         raise ValueError('At least 2 GiB free disk required for bounded local DB')
     existing = subprocess.run(['docker', 'container', 'inspect', CONTAINER], capture_output=True)
     if existing.returncode == 0:
-        assert_container()
+        assert_container('dev')
     subprocess.run(COMPOSE + ['up', '-d', '--wait'], cwd=ROOT, check=True)
-    assert_container()
+    assert_container('dev')
     print('Dedicated PostgreSQL healthy on 127.0.0.1:15432 (512 MiB / 1 CPU)')
 
 
-def create():
-    assert_container()
+def start_memory_test():
+    """Use a separate volatile test instance; never move/reset persistent dev."""
+    cfg=configuration()
+    env=os.environ.copy();env['MA_LOCAL_CHECKOUT']=str(ROOT)
+    command=['docker','compose','-f',str(ROOT/'infra/local/compose.memory-test.yaml')]
+    existing=subprocess.run(['docker','inspect',MEMORY_CONTAINER],capture_output=True)
+    if existing.returncode==0:
+        item=json.loads(existing.stdout)[0]
+        if item['Config'].get('Labels',{}).get('com.madalasa.local-db-root')!=str(ROOT):
+            raise ValueError('Refusing another checkout memory test container')
+    subprocess.run(command+['up','-d','--wait'],cwd=ROOT,env=env,check=True)
+    for kind in ('admin',*ROLES):
+        values=conninfo_to_dict(cfg['test'][kind]);values['port']='15433'
+        cfg['test'][kind]=make_conninfo(**values)
+    cfg['test']['container']=MEMORY_CONTAINER
+    private_write(CONFIG,json.dumps(cfg,indent=2)+'\n')
+    assert_container('test')
+    create(targets=['test'])
+    print('Isolated RAM-backed test database on 127.0.0.1:15433; persistent dev unchanged; fsync remains enabled')
+
+
+def create(targets=None):
     cfg = configuration()
-    admin_args = conninfo_to_dict(cfg['test']['admin'])
-    admin_args['dbname'] = 'postgres'
-    with psycopg.connect(**admin_args, autocommit=True) as admin:
-        for name, bypass in [('ap_m1_owner', False), ('ap_m1_api', False), ('ap_m1_auth', True),
-                             ('ap_db_executor', True), ('ap_auth_issuer', False), ('ap_billing_verifier', False), ('ap_service_worker', False), ('ap_privacy_worker', False)]:
-            if not admin.execute('SELECT 1 FROM pg_roles WHERE rolname=%s', (name,)).fetchone():
-                admin.execute(sql.SQL('CREATE ROLE {} NOLOGIN NOSUPERUSER {}').format(sql.Identifier(name), sql.SQL('BYPASSRLS' if bypass else 'NOBYPASSRLS')))
-        for kind, (name, groups) in ROLES.items():
-            args = conninfo_to_dict(cfg['test'][kind])
-            if not admin.execute('SELECT 1 FROM pg_roles WHERE rolname=%s', (name,)).fetchone():
-                admin.execute(sql.SQL('CREATE ROLE {} LOGIN NOSUPERUSER NOBYPASSRLS NOCREATEDB NOCREATEROLE').format(sql.Identifier(name)))
-            admin.execute(sql.SQL('ALTER ROLE {} PASSWORD {}').format(sql.Identifier(name), sql.Literal(args['password'])))
-            for group in groups:
-                admin.execute(sql.SQL('GRANT {} TO {}').format(sql.Identifier(group), sql.Identifier(name)))
-        for name in DATABASES.values():
+    for target in targets or DATABASES:
+        assert_container(target)
+        admin_args = conninfo_to_dict(cfg[target]['admin'])
+        admin_args['dbname'] = 'postgres'
+        with psycopg.connect(**admin_args, autocommit=True) as admin:
+            for name, bypass in [('ap_m1_owner', False), ('ap_m1_api', False), ('ap_m1_auth', True),
+                                 ('ap_db_executor', True), ('ap_auth_issuer', False), ('ap_billing_verifier', False), ('ap_service_worker', False), ('ap_privacy_worker', False)]:
+                if not admin.execute('SELECT 1 FROM pg_roles WHERE rolname=%s', (name,)).fetchone():
+                    admin.execute(sql.SQL('CREATE ROLE {} NOLOGIN NOSUPERUSER {}').format(sql.Identifier(name), sql.SQL('BYPASSRLS' if bypass else 'NOBYPASSRLS')))
+            for kind, (name, groups) in ROLES.items():
+                args = conninfo_to_dict(cfg[target][kind])
+                if not admin.execute('SELECT 1 FROM pg_roles WHERE rolname=%s', (name,)).fetchone():
+                    admin.execute(sql.SQL('CREATE ROLE {} LOGIN NOSUPERUSER NOBYPASSRLS NOCREATEDB NOCREATEROLE').format(sql.Identifier(name)))
+                admin.execute(sql.SQL('ALTER ROLE {} PASSWORD {}').format(sql.Identifier(name), sql.Literal(args['password'])))
+                for group in groups:
+                    admin.execute(sql.SQL('GRANT {} TO {}').format(sql.Identifier(group), sql.Identifier(name)))
+            name=DATABASES[target]
             if not admin.execute('SELECT 1 FROM pg_database WHERE datname=%s', (name,)).fetchone():
                 admin.execute(sql.SQL("CREATE DATABASE {} OWNER madalasa_migrator TEMPLATE template0 ENCODING 'UTF8'").format(sql.Identifier(name)))
-    for target in DATABASES:
         with connect(target, 'admin') as conn:
             conn.execute('REVOKE CREATE ON SCHEMA public FROM PUBLIC')
             conn.execute('CREATE EXTENSION IF NOT EXISTS pgcrypto')
@@ -150,7 +191,7 @@ def create():
             conn.execute('ALTER DATABASE ' + DATABASES[target] + " SET timezone TO 'UTC'")
             conn.execute('REVOKE ALL ON DATABASE ' + DATABASES[target] + ' FROM PUBLIC')
             for kind in ROLES:
-                if kind != 'migration' and (LOCAL / ('quarantine-' + target + '.json')).exists():
+                if kind != 'migration' and quarantine_marker(target).exists():
                     continue
                 conn.execute(sql.SQL('GRANT CONNECT ON DATABASE {} TO {}').format(sql.Identifier(DATABASES[target]), sql.Identifier(ROLES[kind][0])))
     print('Development and test databases created; PostGIS and pgcrypto installed')
@@ -168,7 +209,7 @@ def transaction_body(text):
 
 
 def migrate(database, through=None):
-    assert_container()
+    assert_container(database)
     if sha256(MIGRATIONS / '0001_m1_identity.sql') != BASELINE_SHA256:
         raise ValueError('Historical 0001 checksum changed')
     files = sorted(MIGRATIONS.glob('[0-9][0-9][0-9][0-9]_*.sql'))
@@ -253,10 +294,11 @@ def test_environment(database='test'):
 
 
 def seed(database):
-    os.environ.update({k:v for k,v in test_environment(database).items() if k.startswith('MA_')})
     sys.path.insert(0, str(ROOT / 'backend/tests/database'))
     import fixtures
-    fixtures.seed_core()
+    fixtures.NS=uuid5(NAMESPACE_URL,'madalasa-local-'+database+'-seed-v1')
+    with connect(database,'admin',autocommit=False) as conn:
+        fixtures.seed_core(conn)
     print('Synthetic fixture inserted in ' + DATABASES[database])
 
 
@@ -271,7 +313,7 @@ def tests(pattern):
 def reset(database, allow_dev=False):
     if database == 'dev' and not allow_dev:
         raise ValueError('Development reset requires --allow-dev; test reset is isolated')
-    assert_container()
+    assert_container(database)
     with connect(database, 'admin') as conn:
         # Dedicated database only; never drop cluster roles or any other database.
         conn.execute('DROP SCHEMA IF EXISTS ap_m1 CASCADE')
@@ -288,13 +330,13 @@ def safe_backup_path(path):
 
 
 def backup(database):
-    assert_container()
+    assert_container(database)
     folder = LOCAL / 'backups'
     folder.mkdir(exist_ok=True)
     folder.chmod(0o700)
-    path = safe_backup_path(folder / (DATABASES[database] + '-' + datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S') + '.dump'))
+    path = safe_backup_path(folder / (DATABASES[database] + '-' + datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%f') + '.dump'))
     with open(path, 'wb') as stream:
-        subprocess.run(['docker','exec',CONTAINER,'pg_dump','-U','postgres','-d',DATABASES[database],'-Fc','--exclude-schema=ma_recovery'], stdout=stream, check=True)
+        subprocess.run(['docker','exec',container_for(database),'pg_dump','-U','postgres','-d',DATABASES[database],'-Fc','--exclude-schema=ma_recovery'], stdout=stream, check=True)
     path.chmod(0o600)
     ledger_path = export_ledger(database)
     meta = {'source_database':DATABASES[database], 'backup_ref':str(uuid4()), 'sha256':sha256(path), 'created_at':datetime.now(timezone.utc).isoformat(), 'erasure_ledger_sha256':sha256(ledger_path)}
@@ -318,7 +360,7 @@ def export_ledger(database):
 
 def quarantine(database):
     """Close the exact target database, including already-pooled connections."""
-    private_write(LOCAL / ('quarantine-' + database + '.json'), json.dumps({'database':DATABASES[database], 'state':'RESTORE_IN_PROGRESS'})+'\n')
+    private_write(quarantine_marker(database), json.dumps({'database':DATABASES[database], 'state':'RESTORE_IN_PROGRESS'})+'\n')
     with connect(database,'admin') as conn:
         if conn.execute("SELECT to_regclass('ma_recovery.control')").fetchone()[0]:
             conn.execute('UPDATE ma_recovery.control SET quarantined=true,revision=revision+1,updated_at=now()')
@@ -334,7 +376,7 @@ def open_after_restore(database):
             conn.execute('UPDATE ma_recovery.control SET quarantined=false,revision=revision+1,updated_at=now()')
         for kind in ('runtime','auth','billing'):
             conn.execute(sql.SQL('GRANT CONNECT ON DATABASE {} TO {}').format(sql.Identifier(DATABASES[database]),sql.Identifier(ROLES[kind][0])))
-    (LOCAL / ('quarantine-' + database + '.json')).unlink(missing_ok=True)
+    quarantine_marker(database).unlink(missing_ok=True)
 
 
 def restore(database, path, allow_dev=False):
@@ -344,7 +386,7 @@ def restore(database, path, allow_dev=False):
     meta = json.loads(path.with_suffix('.json').read_text())
     if sha256(path) != meta['sha256']:
         raise ValueError('Backup checksum mismatch')
-    assert_container()
+    assert_container(database)
     quarantine(database)
     # Existing destination tombstones MUST survive restore of an older backup.
     # This also prevents test reset from being used as a restoration bypass.
@@ -365,7 +407,7 @@ def restore(database, path, allow_dev=False):
     private_write(ledger_path,json.dumps(list(merged.values()),indent=2)+'\n')
     reset(database, allow_dev)
     with path.open('rb') as stream:
-        subprocess.run(['docker','exec','-i',CONTAINER,'pg_restore','-U','postgres','-d',DATABASES[database],'--exit-on-error'],stdin=stream,check=True)
+        subprocess.run(['docker','exec','-i',container_for(database),'pg_restore','-U','postgres','-d',DATABASES[database],'--exit-on-error'],stdin=stream,check=True)
     # Upgrade an older backup while the database is still closed to runtime.
     migrate(database)
     # Archive preserves owner roles, function ownership, grants and RLS policies.
@@ -392,12 +434,12 @@ def restore(database, path, allow_dev=False):
 def legacy_test():
     assert_container()
     with (ROOT / 'backend/tests/m1_tenant_isolation.sql').open('rb') as stream:
-        subprocess.run(['docker','exec','-i',CONTAINER,'psql','-X','-U','postgres','-d',DATABASES['test'],'-v','ON_ERROR_STOP=1'],stdin=stream,check=True)
+        subprocess.run(['docker','exec','-i',container_for('test'),'psql','-X','-U','postgres','-d',DATABASES['test'],'-v','ON_ERROR_STOP=1'],stdin=stream,check=True)
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command',choices=['init','start','create','migrate','verify','seed','test','reset','backup','restore','export-ledger','legacy-test','stop','psql','exec-test'])
+    parser.add_argument('command',choices=['init','start','start-memory-test','create','migrate','verify','seed','test','reset','backup','restore','export-ledger','legacy-test','stop','psql','exec-test'])
     parser.add_argument('--database', choices=DATABASES, default='test')
     parser.add_argument('--through')
     parser.add_argument('--pattern',default='test_*.py')
@@ -408,6 +450,7 @@ def main():
         parser.error('Unexpected arguments')
     if args.command=='init': init()
     elif args.command=='start': start()
+    elif args.command=='start-memory-test': start_memory_test()
     elif args.command=='create': create()
     elif args.command=='migrate': migrate(args.database,args.through)
     elif args.command=='verify': verify(args.database)
@@ -421,9 +464,9 @@ def main():
         restore(args.database,args.file,args.allow_dev)
     elif args.command=='legacy-test': legacy_test()
     elif args.command=='stop':
-        assert_container();subprocess.run(COMPOSE+['stop'],check=True)
+        assert_container(args.database);subprocess.run(['docker','stop',container_for(args.database)],check=True)
     elif args.command=='psql':
-        assert_container();raise SystemExit(subprocess.run(['docker','exec','-i',CONTAINER,'psql','-X','-U','postgres','-d',DATABASES[args.database],'-v','ON_ERROR_STOP=1']+extra).returncode)
+        assert_container(args.database);raise SystemExit(subprocess.run(['docker','exec','-i',container_for(args.database),'psql','-X','-U','postgres','-d',DATABASES[args.database],'-v','ON_ERROR_STOP=1']+extra).returncode)
     elif args.command=='exec-test':
         if extra and extra[0]=='--': extra.pop(0)
         if not extra: parser.error('exec-test requires executable after --')

@@ -22,7 +22,7 @@ def domain_fixture():
         for purpose in ('CORE','LOCATION','USAGE','MEDIA'):
             cid = f['consent_a'] if purpose == 'CORE' else uuid4()
             db.execute("insert into ap_m1.consent_records(id,child_id,adult_id,purpose,status,authority_review_id,notice_version,legal_state,expires_at) values(%s,%s,%s,%s,'GRANTED',%s,'synthetic-v1','LOCAL_TEST_APPROVED',now()+interval '1 day')", (cid,f['child_a'],f['a'],purpose,f['review_a']))
-        db.execute("insert into ap_m1.child_access_grants_v2(child_id,adult_id,scope,consent_record_id,authority_review_id,issued_by) select %s,adult_id,scope,%s,%s,issued_by from ap_m1.child_access_grants_v2 where child_id=%s and adult_id=%s", (f['child_a'],f['consent_a'],f['review_a'],fixtures.seed_core(db)['child_a'],f['a']))
+        db.execute("insert into ap_m1.child_access_grants_v2(child_id,adult_id,scope,consent_record_id,authority_review_id,issued_by) select %s,adult_id,scope,%s,%s,issued_by from ap_m1.child_access_grants_v2 where child_id=%s and adult_id=%s and revoked_at IS NULL", (f['child_a'],f['consent_a'],f['review_a'],fixtures.seed_core(db)['child_a'],f['a']))
         db.execute("insert into ap_m1.devices(id,family_id,child_id,spki_public_key,enrollment_state) values(%s,%s,%s,%s,'ACTIVE')", (f['device_a'],f['family_a'],f['child_a'],('SYNTHETIC-NOT-CRYPTO-' + str(f['device_a'])).encode()*2))
         f['device_key_a'] = fixtures.seed_device_key(db, f['device_a'])
         db.execute("insert into ap_m1.location_collection_policies(child_id,enabled,retain_for,policy_reference) values(%s,true,interval '7 days','SYNTHETIC_FIXTURE_ONLY')", (f['child_a'],))

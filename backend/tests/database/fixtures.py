@@ -8,11 +8,13 @@ from contextlib import contextmanager
 import json
 import os
 from pathlib import Path
-from uuid import UUID, uuid5
+from uuid import UUID, uuid4, uuid5
 import psycopg
 
 ROOT = Path(__file__).resolve().parents[3]
-NS = UUID('7344120b-e43e-4fe4-91b2-c877b69a2911')
+# Stable within a run, unique across runs: never resurrect identifiers in the
+# independent erasure ledger. Set MA_TEST_NAMESPACE to reproduce an exact run.
+NS = UUID(os.environ['MA_TEST_NAMESPACE']) if os.environ.get('MA_TEST_NAMESPACE') else uuid4()
 
 
 def validate_test_dsn(dsn):
@@ -20,10 +22,10 @@ def validate_test_dsn(dsn):
     values = psycopg.conninfo.conninfo_to_dict(dsn)
     if (values.get('host') not in ('127.0.0.1','localhost','::1')
         or values.get('hostaddr',values.get('host')) not in ('127.0.0.1','localhost','::1')
-        or values.get('port') != '15432'
+        or values.get('port') not in ('15432','15433')
         or values.get('dbname') != 'madalasa_alarka_test'
         or values.get('service')):
-        raise ValueError('Tests require the dedicated loopback test database on port 15432')
+        raise ValueError('Tests require the dedicated loopback test database on port 15432 or 15433')
     return dsn
 
 

@@ -51,7 +51,7 @@ std::string connectionInfoFromEnvironment() {
     const auto user = environment("DB_USER", "madalasa_dev");
     const auto password = environment("DB_PASSWORD", "");
     const auto port = environment("DB_PORT", "15432");
-    if (host != "127.0.0.1" || port != "15432" ||
+    if (host != "127.0.0.1" || (port != "15432" && !(port == "15433" && database == "madalasa_alarka_test")) ||
         (database != "madalasa_alarka_dev" && database != "madalasa_alarka_test") ||
         user != "madalasa_dev" || password.empty())
         throw std::runtime_error("Local backend requires named loopback database and restricted runtime role");

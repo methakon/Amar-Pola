@@ -26,6 +26,14 @@ class RunnerSafety(unittest.TestCase):
         self.assertNotIn('\nBEGIN;', result)
         self.assertIn('\nBEGIN\nNULL;', result)
 
+    def test_memory_port_is_only_for_the_exact_test_database(self):
+        manage.validate_target({'host':'127.0.0.1','port':15433,'dbname':'madalasa_alarka_test'})
+        for target in (
+            {'host':'127.0.0.1','hostaddr':'192.0.2.1','port':15433,'dbname':'madalasa_alarka_test'},
+            {'host':'127.0.0.1','port':15433,'dbname':'madalasa_alarka_dev'},
+        ):
+            with self.assertRaises(ValueError):manage.validate_target(target)
+
     def test_unsafe_restore_path_rejected(self):
         with self.assertRaises(ValueError):
             manage.safe_backup_path(Path('/etc/passwd'))

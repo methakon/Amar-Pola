@@ -80,7 +80,7 @@
     {
       "version": "0016",
       "file": "backend/persistence/migrations/0016_pickup_passes_and_compliance_bundles.sql",
-      "sha256": "928374a3df93e885e3f03ba534a190a3c4cb388861fb6ca96e12d51e10b515b0"
+      "sha256": "f54f78412271dda0748f3ac7153ad566df498384a2c8d21a649d655f121f06e0"
     }
   ]
 }

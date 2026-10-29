@@ -207,11 +207,18 @@ class IdentityTests(unittest.TestCase):
         with changed('children','id',self.f['child_a'],'deleted_at','2026-01-01T00:00:00Z'):
             self.assertEqual(self.visible('a'),set())
             with self.assertRaises(psycopg.errors.InsufficientPrivilege): mint_session(None,device=self.f['device_a'])
-        with admin_connection() as c:
-            c.execute("INSERT INTO ap_m1.child_erasure_tombstones(child_id,reason_code) VALUES(%s,'SYNTHETIC_TEST')",(self.f['child_a'],))
-        try: self.assertEqual(self.visible('a'),set())
-        finally:
-            with admin_connection() as c: c.execute('DELETE FROM ap_m1.child_erasure_tombstones WHERE child_id=%s',(self.f['child_a'],))
+        # A committed tombstone also enters the independent recovery ledger.
+        # Use an owned child: removing an application tombstone must NOT revive
+        # a shared fixture in a later backup/restore test.
+        from test_location import domain_fixture, cleanup_domain
+        own=domain_fixture()
+        try:
+            self.assertIn(own['child_a'],self.visible('a'))
+            with admin_connection() as c:
+                c.execute("INSERT INTO ap_m1.child_erasure_tombstones(child_id,reason_code) VALUES(%s,'SYNTHETIC_TEST')",(own['child_a'],))
+            self.assertNotIn(own['child_a'],self.visible('a'))
+            self.assertIn(self.f['child_a'],self.visible('a'))
+        finally:cleanup_domain(own)
 
     def test_22_definer_acl_and_forced_rls(self):
         with admin_connection() as c:
