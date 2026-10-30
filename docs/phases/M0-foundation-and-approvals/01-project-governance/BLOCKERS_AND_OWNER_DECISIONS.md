@@ -218,3 +218,17 @@ These **add to**, and do not close, B-01 legal publisher, B-02 exact launch ages
 
 Concrete recommended answers for the open owner and legal items, with the questions to put to counsel and Google Play: [Owner and legal recommended resolutions](../../../OWNER_AND_LEGAL_RECOMMENDED_RESOLUTIONS_2026-10-27.md). **Proposals only; none of B-01, B-02, B-07, B-09/B-18, OCI-06, HW-01, B-21, SOS, DR or G01–G05 is closed by them.**
 Engineering decisions C-01 to C-06 (credential lifetime, rate limits, no per-request signing, first credential, cleanup, no key rotation in M1): [M1 device credential lifecycle](../../../M1_DEVICE_CREDENTIAL_LIFECYCLE.md). Migration 0003 also removes PUBLIC execute from every `ap_m1` function.
+
+
+## 2026-10-30 G01 / G04 Google Play Console AI guidance — non-binding clarification
+
+The owner received an AI-generated response in the Play Console support flow. It stated that the parental-monitoring policy does **not** override the Families restriction on precise location for apps solely targeting children. It suggested a mixed-audience model only where the app genuinely serves that audience; audience declarations must never be manipulated to bypass policy. It also stated that **background location is not automatically permitted and requires a separate location-permissions declaration/review**.
+
+This AI response is not a human policy-team determination, app review decision or permission approval.
+
+| Gate | Updated position | Evidence still required |
+|---|---|---|
+| **G01 / R01** | **CRITICAL OPEN.** Families precise-location eligibility for Alarka's actual child-facing architecture remains unconfirmed. Do not infer an exception from the monitoring-tool flag or parent authorization. | Human written Google Play policy response addressing truthful audience, child users and precise location; preserve case ID and complete response. |
+| **G04 / R07** | **HIGH OPEN / separate approval gate.** Background location is not automatically permitted. A runtime permission grant or monitoring declaration is not Play approval. | Submit the Play Console location-permissions declaration; provide core-feature rationale, prominent in-app disclosure, runtime permission flow, demonstration video, accurate listing and public privacy policy; obtain required Play review approval before release. |
+
+**Owner/project instruction:** keep real-child GPS collection disabled until G01 is resolved and all applicable legal/Play gates are satisfied. Treat background-location approval separately from G01. Keep the target-audience declaration truthful; do not add older age groups solely to bypass Families policy. Synthetic-data engineering and non-production OS tests may continue. A human support response is still pending; the AI answer alone closes neither gate.
