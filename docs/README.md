@@ -18,6 +18,8 @@ The 72 root-level compatibility pointers were consolidated into [legacy-root-lin
 
 ## X-03 Indian child-data lawfulness — clarification 2026-10-31
 
+[Independent primary-text DPDP Act/Rules review and feature matrix](phases/M0-foundation-and-approvals/03-legal-and-privacy/INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md#2026-10-31-first-party-primary-law-review-no-mandatory-paid-counsel-opinion) replaces the compulsory-paid-lawyer-paperwork assumption; substantive child-data lawfulness remains gated.
+
 **Legal compliance for each enabled feature is required; buying a signed lawyer opinion/printed certificate is not a general prerequisite.** The owner is preparing an evidence-backed feature-by-feature assessment; Tele-Law case registered, MeitY clarification email sent, responses pending. A substantive counsel email can support the record. Release-sensitive child-data features remain OFF while the substantive legality and Android/Play gates are unresolved. [Current X-03/G02 disposition](phases/M0-foundation-and-approvals/01-project-governance/BLOCKERS_AND_OWNER_DECISIONS.md).
 
 ## X-01 status — 2026-10-31

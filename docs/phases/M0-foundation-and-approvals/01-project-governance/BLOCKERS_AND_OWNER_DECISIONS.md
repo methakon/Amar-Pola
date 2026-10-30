@@ -8,6 +8,8 @@
 
 Each blocker has an owner, decision or required evidence, and lifecycle: OPEN → DECIDED → IMPLEMENTED → VERIFIED → CLOSED. **Selecting a product option does not resolve software testing or Google Play review.**
 
+**Official-text review:** [Independent Indian DPDP/Rule 12 feature assessment — 2026-10-31](../03-legal-and-privacy/INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md#2026-10-31-first-party-primary-law-review-no-mandatory-paid-counsel-opinion). Signed-paper prerequisite REMOVED, substantive child monitoring G02 restrictions and Play G01/G04 remain unresolved.
+
 ## 2026-10-31 correction: X-03 is legal due diligence, NOT a compulsory paid-counsel/government-permit gate
 
 **Owner challenge accepted; previous documentation incorrectly elevated a *recommended signed Indian advocate's opinion* into a universal compulsory launch condition.** Neither the DPDP Act/Rules nor Google's general Play app-review workflow has been shown to require every child-safety app developer to buy a signed legal-opinion PDF, printed certificate or separate MeitY/CERT-In approval. Do not imply that Tele-Law or MeitY can grant a general parental-monitoring license by email. Any activity-specific authorizations must be checked separately if the legal analysis identifies them.
