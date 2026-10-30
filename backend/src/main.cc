@@ -15,6 +15,7 @@
 #include "parent_reads.h"
 #include "device_capabilities.h"
 #include "children_create.h"
+#include "device_revoke.h"
 #include "http_support.h"
 #include "pairing.h"
 
@@ -146,6 +147,13 @@ int main() {
         co_return co_await ma::complete_enrollment_proof(std::move(req), std::move(enrollmentId));
       },
       {Post});
+
+  app().registerHandler(
+      "/v1/devices/{deviceId}/pairing",
+      [authenticate](HttpRequestPtr req, std::string deviceId) -> Task<HttpResponsePtr> {
+        co_return co_await ma::revoke_device(std::move(req), std::move(deviceId), authenticate);
+      },
+      {Delete});
 
   app().registerHandler(
       "/v1/devices/{deviceId}/credential/challenge",

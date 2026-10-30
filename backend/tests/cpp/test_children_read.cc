@@ -4,6 +4,7 @@
 #include "children_read.h"
 #include "parent_reads.h"
 #include "children_create.h"
+#include "device_revoke.h"
 #include <iostream>
 #include <optional>
 
@@ -67,6 +68,12 @@ int main() {
   invalid_alias->setBody(R"({"alias":"not","unexpected":1})");
   auto malformed=drogon::sync_wait(ma::create_child(invalid_alias,good_id,allow));
   check(malformed->statusCode()==drogon::k400BadRequest,"createChild unknown field rejected");
+    const auto revoke_bad = drogon::sync_wait(ma::revoke_device(request(),"not-a-uuid",allow));
+  check(revoke_bad->statusCode()==drogon::k400BadRequest,"revokeDevice invalid UUID");
+  const auto revoke_anon = drogon::sync_wait(ma::revoke_device(request(),good_id,deny));
+  check(revoke_anon->statusCode()==drogon::k401Unauthorized,"revokeDevice requires ParentOIDC");
+  const auto revoke_offline = drogon::sync_wait(ma::revoke_device(request(),good_id,allow));
+  check(revoke_offline->statusCode()==drogon::k503ServiceUnavailable,"revokeDevice no DB is fail closed");
     if (failed) return 1;
   std::cout << "M1 children list negative tests PASS\n";
   return 0;
