@@ -145,7 +145,7 @@ The owner explicitly requested integration into `main`, followed by deletion of 
 | `feat/m1-purge-jobs` | **already integrated and deleted** remotely | Same patch-coverage proof; current restricted runner/role and retention/concurrency tests retained |
 | `fix/m1-lint-credential-lifecycle` | **already integrated and deleted** remotely | Same patch-coverage proof; published historical SQL unchanged and later additive fixes retained |
 | `docs/phase-category-reorganization-2026-10-27` | **consolidated and deleted** remotely | All12 source-only artifacts hash-checked and accounted for; 22 parser/negative tests, 72-row current register, navigation fixes and historical archive integrated. [Current proof and CI](../../../../evidence/local/integration/DOCUMENTATION_CONSOLIDATION_2026-10-30.json) at `1312dac`; remote deletion read back |
-| `feat/local-postgresql-physical-schema` | **RETAINED — unsafe current-M1 convergence is blocked** | Source `b507e5f` pins historical M1 only through0004; published0017 omits newer renewal holds before dropping staging, misses newer mutator ACL normalization, and uses V2 opaque-session authorization incompatible with the M1 raw principal-GUC path. Additive compatibility and independently executed fresh/old/current-M1/restore equivalence are required before merging or deleting |
+| `feat/local-postgresql-physical-schema` | **ACTIVE INTEGRATION — PR [#11](https://github.com/methakon/Madalasa-Alarka/pull/11)** | Source `b507e5f` merged with `main`; convergence completed additively (`compat:m1_pre_v2_0017`, `v2:0020`, manifest coverage of `m1:0005`/`0006`) with every published migration byte-identical. Executed on isolated PostgreSQL 16.9/PostGIS 3.5.2: fresh V2, M1 suites, populated 0004/0006→V2 upgrades with retention holds preserved, 232-test suite, restore/quarantine drill. Production `ma_backend` stays on historical M1 authorization; V2 production session issuance remains an explicit blocker. [Acceptance record](../../../../evidence/local/database/PR11_RECONCILIATION_ACCEPTANCE_2026-10-30.md). Delete only after merge and verification on `main` |
 
 OIDC identity contains only issuer/subject; it does not prove adulthood, legal guardianship, consent or child access. Its public-key fetch/cache tests and a positive public Google JWKS fetch are not genuine Google ID-token or adversarial live-TLS certification. The retained V2 database branch was source-reviewed only during this consolidation: its dated 205-test evidence is not current integrated acceptance, and no published migration was altered to force convergence.
 
@@ -154,3 +154,23 @@ OIDC identity contains only issuer/subject; it does not prove adulthood, legal g
 - Treat this table as a dated snapshot, not a live API. Reconcile against `git branch -r` and GitHub PR statuses before acting; update the table whenever status changes.
 - Each task's evidence should include branch, base, PR, commit SHA, tests, and integration/merge status. An agent must never describe a feature as on `main` merely because an upstream/stacked PR closed.
 - Keep one shared, searchable branch register here rather than independent spreadsheets per agent. Document branch conflicts, abandoned sessions, and recovery commits here before deleting anything.
+
+### Superseded DB-source integration decisions (source `b507e5f`, PR11 review)
+
+The source branch's 2026-10-29 #3 → #4 → #6 sequencing and its instruction
+to prefer the DB branch backend/CMake over the then-historical skeleton are
+**superseded**, not current implementation instructions: the current integration
+must preserve main's production Drogon/OIDC backend and M1 through0006. The
+historical lineage/checksum decision remains valid: published overlapping M1 and
+V2 migration numbers are distinct namespaced identities; do not renumber either
+chain or execute their alphabetical union. Existing published migration/test bytes
+and the source-through0004 catalog/mapping remain provenance, not substitutes for
+current acceptance. The source's earlier non-ancestry/patch-equivalence snapshot
+against `861ab630` does not describe the post-consolidation branch state.
+
+PR11 reuses the retained database branch; neutral file-by-file conflict review and
+additive compatibility are in progress against `4a1fda5`. No merge, branch deletion
+or readiness is asserted here. Main's completed cleanup rows above are unchanged;
+all current-M1/fresh/old/restore equivalence, security and integration gates must
+pass before engineering merge. Owner authorization for engineering integration
+is not legal, Play, deployment, guardian-authority or pricing approval.

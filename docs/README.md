@@ -61,3 +61,7 @@ Filing into a phase/category is not a claim of internal sign-off. Every migrated
 ## Agent-ready local coding plan
 
 Use [2026-10-28 local development roadmap](roadmap/LOCAL_AGENT_DEVELOPMENT_ROADMAP_2026-10-28.md) and [262-task dependency graph](roadmap/LOCAL_TASK_GRAPH_2026-10-28.json) with [evidence rules](roadmap/AGENT_EXECUTION_AND_TEST_EVIDENCE.md). This complements older M0–M9 milestones; it does not mark them completed. [Deployment and Google Play review remain separate](roadmap/DEPLOYMENT_AND_PLAY_RELEASE_PLAN_SEPARATE_2026-10-28.md).
+
+## Local database implementation checkpoint
+
+The [local PostgreSQL package](data-model/local-postgresql/README.md) groups its [runbook](data-model/local-postgresql/RUNBOOK.md), [current status](data-model/local-postgresql/STATUS.md) and redacted execution evidence. It supplements the historical documentation-first baseline above: implementation has begun on a feature branch, but full verification and migration-chain integration remain incomplete. No production or admin API readiness is implied.
