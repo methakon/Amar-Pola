@@ -125,6 +125,8 @@ class CurrentDocumentationNegativeControls(unittest.TestCase):
         import check_documentation
         cls.validator = check_documentation
         root = MODULE.parents[2]
+        # Fresh checkouts do not contain the ignored local scratch directory.
+        (root / '.dev-environment').mkdir(exist_ok=True)
         cls.temp = tempfile.TemporaryDirectory(prefix='docs-check-', dir=root / '.dev-environment')
         cls.fixture = Path(cls.temp.name)
         # Exact tracked fixtures include JSON/API/source link targets. Never copy
