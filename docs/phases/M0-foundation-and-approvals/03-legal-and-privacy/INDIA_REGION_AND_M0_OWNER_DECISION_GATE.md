@@ -4,12 +4,14 @@
 
 > **Current app names:** **Madalasa** (guardian/parent), **Alarka** (child companion). GitHub repository [Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka), renamed 2026-10-26. [Source story and naming contract](../02-market-and-feasibility/BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
-**Decision version:** 2026-10-26 | **Status:** User indicated preference for Indian hosting to avoid unnecessary US transfer issues; engineering direction updated, legal and cloud signoffs still open.
+**Current status — 2026-10-30:** Owner-declared publisher is **Individual SWARNA SEKHAR DHAR, India**, the same individual intended for the legal and Google Play publisher identity. This is a declaration, not verified account evidence or legal approval. **Payments identity pending; merchant setup pending; public support confirmation pending; legal review pending.** No company, GST registration, public address or email is inferred. Real child-data release remains **OFF / NO-GO**.
+
+**Decision version:** 2026-10-26, reconciled 2026-10-30. Hosting preferences below are deployment scenarios, not prerequisites for environment-agnostic local development. Final production region, tenancy and bandwidth economics are reserved for deployment; nothing here authorizes provisioning. The [current legal-source review](INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md#current-source-grounded-review--2026-10-30) distinguishes enacted law, commenced provisions, guidance and questions for counsel.
 
 ## 1. New preferred architecture location
 
-- **New primary OCI region: India West — Mumbai (ap-mumbai-1)**.
-- **Alternative before tenancy creation: India South — Hyderabad (ap-hyderabad-1)**.
+- **Historical preferred primary OCI region: India West — Mumbai (ap-mumbai-1)**; final owner deployment decision remains reserved.
+- **Historical alternative before tenancy creation: India South — Hyderabad (ap-hyderabad-1)**; not a verified tenancy or provisioning instruction.
 - **Historical Chicago (us-chicago-1) superseded for new deployment selection**, not a physical migration. This project has not provisioned an OCI VM or database. [Chicago financial plan](../../M8-operational-readiness/01-cloud-infrastructure/OCI_CHICAGO_DEPLOYMENT_AND_FINANCIAL_PLAN.md) remains for historical scenario comparison, not a verified Mumbai quote.
 - Ampere A1 availability, quotas, billable charges, invoice currency and support must be verified for actual account. Always Free compute belongs in the tenancy's **home region**; do not assume an existing US-home tenancy gets Mumbai Always Free resources. Check feasibility of a new tenancy, where appropriate, rather than silently changing an existing one.
 - Oracle lists **one availability domain each** for the general Mumbai and Hyderabad OCI regions; don't invent multi-AD resilience in either region. Independent failover and real backup/restore still matter.
@@ -30,10 +32,10 @@ Official: https://docs.oracle.com/en-us/iaas/Content/General/Concepts/regions.ht
 
 | Question | Status | Action |
 |---|---|---|
-| Primary hosting | **Preferred Mumbai**, alternate Hyderabad; **not provisioned** | Verify tenancy/home region, A1 availability, costs |
+| Primary hosting | Historical Mumbai preference, Hyderabad alternative; **final deployment selection reserved** | Local development is environment-agnostic; verify actual region/tenancy/costs before deployment |
 | First launch B-02 | **OWNER DECIDED: India-only, children 0–17 inclusive** | No release in additional countries; under-18 legal/Play consent and feature-specific compliance still pending |
 | Legal publisher B-01 | **OWNER DECIDED; VERIFICATION PENDING** | Individual legal publisher: **SWARNA SEKHAR DHAR**, India; same individual intended to own the Google Play publisher account. Play identity, Payments verification, contact channels and legal notices still require evidence |
-| Age B-02 | OPEN | Approve supported age bands and legal verification/authority method |
+| Age B-02 | **OWNER DECIDED: 0–17 inclusive** | Legal age-verification/authority method and age-appropriate safeguards remain open |
 | Data retention B-07 | OPEN | Raw 14d / derived 90d / audit 365d / backup 30d are design candidates only; usage OFF pending counsel |
 | Guardian B-09/B-18 | OPEN | Owner-only invitation/revocation, per-child scopes and 45min pickup current-view are secure **proposals**, not confirmed policy |
 | Login OCI-06 | Google Sign-In via Credential Manager + backend ID-token verification **engineering candidate** | Verify provider/account recovery; independent guardian/adult verification required |
@@ -48,7 +50,7 @@ The former OCI Chicago figures (at 1,000 children ~₹0.20 direct or ₹3.24 res
 
 ## 5. Milestone M0 acceptance
 
-- Decide exact India region **before creating an OCI home tenancy**, if there isn't one already.
+- At the separate deployment gate, decide region **before creating an OCI home tenancy**; this is not an M0 local-coding prerequisite.
 - Owner supplies B-01/B-02/B-07/B-09/B-18/OCI-06/hardware/TEAM answers, with no personal child data in public repository.
 - India legal counsel reviews child tracking and behavioral monitoring even if storage is entirely India-hosted.
 - Work on synthetic fixtures, M1 API, SQL and test harness can proceed without using real child data.

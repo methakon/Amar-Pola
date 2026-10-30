@@ -4,6 +4,8 @@
 
 [M9 phase](../README.md) · [Docs home](../../../README.md) · [Master register](../../../MASTER_DOCUMENT_CONTROL_REGISTER.md)
 
+**2026-10-30 owner reconciliation:** [Privacy](PRIVACY_POLICY_DRAFT.md) and [terms](TERMS_AND_SUBSCRIPTIONS_DRAFT.md) name owner-declared individual SWARNA SEKHAR DHAR, India, without claiming a company or verified legal/public contact details. Both remain DRAFT_LEGAL_REVIEW_REQUIRED and unpublished; Payments/merchant verification is not legal approval.
+
 | Document | Registry state | Proposed owner role |
 |---|---|---|
 | [PRIVACY_POLICY_DRAFT.md](PRIVACY_POLICY_DRAFT.md) | DRAFT_LEGAL_REVIEW_REQUIRED | Privacy counsel + owner (unassigned) |

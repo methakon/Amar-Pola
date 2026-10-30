@@ -4,15 +4,33 @@
 
 > **Current product:** **Madalasa** (parent app) + **Alarka** (child app); the GitHub repository is now **[Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka)**. [English mythological inspiration](../02-market-and-feasibility/BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
-**Date:** 2026-10-25 | **Version:** 1.0 | **State:** OPEN | **Purpose:** actionable project-owner decisions and independently verifiable engineering/release gates.
+**Established:** 2026-10-25 | **Updated:** 2026-10-30 | **Version:** 1.1 | **State:** DOCUMENTED_REVIEW_PENDING | **Purpose:** actionable project-owner decisions and independently verifiable engineering/release gates. Current statements below supersede historical question/queue text; an owner decision is not external verification.
 
 Each blocker has an owner, decision or required evidence, and lifecycle: OPEN → DECIDED → IMPLEMENTED → VERIFIED → CLOSED. **Selecting a product option does not resolve software testing or Google Play review.**
+
+## Current progress while Google identity verification is pending — 2026-10-30
+
+Source and decision owner: explicit project-owner instruction dated 2026-10-30. **Recorded owner decision:** individual publisher **SWARNA SEKHAR DHAR**, country **India**, same legal individual as Google Play publisher. **Google Payments identity verification: PENDING; merchant setup: PENDING; legal review: PENDING; public support contact: PENDING CONFIRMATION.** No registered company, GST registration, legal address or support email is claimed. Do not put ID/PAN/bank details, sensitive screenshots, purchase tokens or credentials in GitHub.
+
+| Gate | Current status | Work permitted now / evidence still required |
+|---|---|---|
+| B-01 / X-01 publisher | OWNER_DECIDED; external identity/Payments verification PENDING | Reconcile notices and controller identity now; owner supplies only redacted outcome/status, not identity documents |
+| E-09 ParentOIDC | OPEN; default-deny implementation seam only | Provider-validation design and synthetic negative tests need not wait for Payments; real parent authentication and guardian authority remain separate |
+| E-01 / E-02 / PR9 | Local M1 SQL and hosted narrow backend gates VERIFIED at pinned PR head; PR9 NOT MERGED | [PR9 review](../../M1-secure-platform-foundation/02-development-process/M1_STACK_PR9_REVIEW_2026-10-30.md); owner approval required before merge, V2 co-parent/schema convergence still separate |
+| B-02 / B-03 / B-04 | OWNER_DECIDED: India0–17; transparent Alarka; complete inventory eligible for review only | Feature/platform/legal/Play disposition and evidence; no blanket release or Android implementation authorization |
+| B-05 | Financial-screen fail-closed protection APPROVED; managed provisioning details OPEN | Never capture financial screens; no protection bypass. Device Owner enrollment/reset/authority and signed-device proof still required |
+| B-06 / B-07 / B-09 / B-18 | OPEN | Child SOS interaction, purpose/category retention and exact-child guardian invite/revoke/history scopes; qualified counsel review |
+| B-14 / E-13 | Founding-family commercial rule OWNER_APPROVED; provider behavior UNVERIFIED | First 1,008 distinct paid families, one count per family, ₹50/month or ₹500/year for eligible paid children including later additions; no change to prices. Thirteen sandbox cases NOT_RUN; prepaid founding catalog and multi-child capacity unproven. Owner/finance must decide refund/fraud disqualification, slot recycling and checkout reservation/order; no automatic policy invented |
+| M8 / M9 | DOCUMENTED_REVIEW_PENDING; release NOT_READY | Threat/test/incident and reviewer-pack preparation now; builds, physical OS/OEM evidence, signed notices, provider tests and owner Console actions later |
+| Signing/recovery | Earlier upload-only key generated and local recovery-tested; permanent custody BLOCKED | Independent off-device backup/recovery custody and actual Play app-signing role confirmation; no new credentials authorized by current work |
+
+Only owner-held identity/contact verification, merchant/payment setup and account-dependent Console eligibility/actions are directly pending on Google/account workflow. OIDC engineering, RLS/SQL tests, legal analysis, policy checklists, billing lifecycle design and evidence preparation can continue independently. No infrastructure deployment, real-child processing, Android implementation, Console submission or PR merge is authorized by this update.
 
 ## A. Decisions you can make now
 
 | ID | Severity | Your question / choice | Conservative default until answered | What you can provide | Blocks |
 |---|---|---|---|---|---|
-| **B-01** | Critical | Individual legal publisher identified: **SWARNA SEKHAR DHAR**, India; same individual intended as Google Play account publisher | **OWNER DECIDED / EXTERNAL VERIFICATION OPEN**: no Play identity, payouts, support contact, or public-policy-page verification yet | Verify personal developer account and linked Payments legal name/address; verified contacts, public developer contact, monetization and policy-page owner | Privacy/Play |
+| **B-01** | Critical | Individual legal publisher identified: **SWARNA SEKHAR DHAR**, India; same legal individual as Google Play publisher | **OWNER_DECIDED / EVIDENCE_PENDING**: Google Payments identity verification pending; merchant setup pending; public support contact pending confirmation; legal review pending | Owner-held Console evidence of outcome; confirm public contact and notices without publishing ID, address or payment evidence | Privacy/Play |
 | **B-02** | Critical | **OWNER DECIDED: India-only initial launch; children aged 0–17 inclusive (under 18)** | Product scope established; legal assessment and Play policy classification still OPEN | India-specific parental authority, age-appropriate permissions, monitoring exemptions, consent and policy review | Child privacy/legal |
 | **B-03** | Critical | **OWNER APPROVED: transparent background operation** — identifiable Alarka icon, prominent disclosure, applicable monitoring/FGS notifications, untouched OS privacy indicators, no stealth or permission bypass; Activity may close after setup, boot recovery only as Android permits | **DECIDED; Android/Play/India compliance evidence pending** | Android OS/OEM runtime tests, monitoring-app declaration, background-location review, child-privacy legal assessment | Play/Android UX |
 | **B-04** | High | **OWNER DECIDED: evaluate the complete previously planned feature inventory as first-release candidates** | No blanket feature shipping approval; each candidate must pass India legal, Google Play, Android OS and security/privacy acceptance gates | Feature-by-feature eligibility evidence and final surviving release list | Delivery budget/compliance |
@@ -25,7 +43,7 @@ Each blocker has an owner, decision or required evidence, and lifecycle: OPEN �
 | **B-11** | High | Standalone Wear OS watch at launch? | Phone-first; Wear beta after power tests | Watch brands and GPS/LTE capability | Wear architecture |
 | **B-12** | High | Battery preservation vs detailed 5–15s route capture? | Balanced default; bounded user-authorized detail mode | Accuracy/freshness preference and context | Location tuning |
 | **B-13** | Medium | What counts as a stop or confirmed school arrival? | Initial candidate 3–5min walking / 5–10min vehicle with multiple trustworthy fixes | Desired rule after field tests | Trip/commute semantics |
-| **B-14** | High | Free/premium tiers, device count, trials and regions? | No pricing promises; use server-validated Play billing | Plans and entitlements | Billing/store |
+| **B-14** | High | Founding-family pricing and eligibility owner-approved; commercial provider integration pending | First 1,008 distinct successfully paying families count once; eligible paid children retain ₹50/month or ₹500/year including later additions; no automatic renewal in prepaid design | Sandbox proof of seats/top-ups/token verification/refund behavior, merchant/tax/legal review | Billing/store |
 | **B-15** | Medium | Does Google Drive backup ship in v1? What media and deletion behavior? | P2, opt-in only | Media type and retention/ownership | OAuth/data safety |
 | **B-16** | High | Camera/video/microphone in Play launch or deferred? | **Defer**; only openly authorized, compliant research | Defer entirely or separately fund feasibility tests | Sensitive permissions |
 | **B-17** | Medium | Which alerts are high-priority vs quiet hours? | SOS priority; ordinary alerts deduped | Desired critical/noncritical alert list | Notification logic |
@@ -60,7 +78,7 @@ Each blocker has an owner, decision or required evidence, and lifecycle: OPEN �
 
 | ID | Blocker | What must happen | Who can unblock |
 |---|---|---|---|
-| **X-01** | Play publisher identity and package ownership | Verify developer account, company identity and signing setup | You / Play |
+| **X-01** | Play publisher identity and package ownership | Verify the declared individual publisher and linked Payments identity, package availability and separate upload/app-signing setup; no company claimed | Owner / Google Play |
 | **X-02** | Sensitive background-location/monitoring policy | Real app disclosure, persistent notification, video, permission declarations, reviewer access and approval | Release / Play |
 | **X-03** | Country-specific child privacy/guardianship | Independent legal review of launch territories, age and authority | Legal counsel |
 | **X-04** | Public privacy and account deletion URLs | Functioning pages matching real data operations | Product/backend |
@@ -75,7 +93,7 @@ This documentation refresh can remediate **design gaps** AG-001/002/003/006/007/
 
 ## E. Recommended next actions for you
 
-1. Most blocking decisions: **B-01, B-02, B-03, B-05, B-07, B-08, B-10, B-11, B-12, B-14, B-16**.
+1. Owner decisions B-01/B-02/B-03/B-04 and founding pricing are recorded, not awaiting the same answers again. Remaining decisions/evidence: **B-05 provisioning, B-06, B-07, B-09/B-18, B-10/B-11, B-12 and final per-feature release selection**. B-08 hosting remains a deployment decision, not a synthetic engineering blocker.
 2. Approve role sharing **B-09 and B-18** before multi-guardian data tables are implemented.
 3. Identify available real phones/watches, developer account status and desired launch region; the design can proceed using synthetic data while answers are pending.
 4. Keep **remote hidden capture, protected private-file access, and Android security bypass** excluded.
@@ -224,9 +242,9 @@ These **add to**, and do not close, B-01 legal publisher, B-02 exact launch ages
 
 - **B-01:** Individual India publisher decision recorded; Play contact verification evidenced by owner-provided Console screenshots. Independent identity/payment/public-notice requirements must not be assumed complete.
 - **B-02:** **OWNER_DECIDED** — India-only initial launch, children aged 0–17 inclusive; compliance review remains a separate gate.
-- **B-03: NEXT OWNER BLOCKER — NOT YET APPROVED.** Confirm that Alarka is a transparent, identifiable monitoring app: visible launcher icon, honest in-app disclosure and setup/permission screens, Android-required foreground-service notifications, microphone/camera indicators, no stealth mode or notification/permission circumvention. This is an owner UX/policy decision; platform and Play policy compliance still requires independent verification. Do not mark decided without the owner's explicit response.
+- **B-03 historical queue entry — SUPERSEDED by the owner approval below.** Alarka's transparent, identifiable background model is OWNER_DECIDED; Android/Play compliance is still unverified. Do not re-ask the resolved UX decision or mark platform acceptance complete.
 
-**Gate sequence:** obtain B-03 owner answer → record exact scope → reconcile SRS/Figma/Android permissions/API/Play disclosures → perform feature-by-feature law/Play/platform audit before coding is authorized.
+**Current gate sequence:** preserve recorded B-03/B-04/B-05 financial-screen decisions → reconcile SRS/Figma/permissions/API/Play disclosures → feature-by-feature law/Play/platform assessment → separately authorize implementation and final release set. Device Owner provisioning details, retention and legal authority remain unresolved.
 
 ## B-03 owner architecture approval — 2026-10-30
 

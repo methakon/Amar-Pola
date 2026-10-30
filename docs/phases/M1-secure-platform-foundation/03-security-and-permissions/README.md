@@ -4,6 +4,8 @@
 
 [M1 phase](../README.md) · [Docs home](../../../README.md) · [Master register](../../../MASTER_DOCUMENT_CONTROL_REGISTER.md)
 
+**2026-10-30 evidence/preparation:** [Feature-by-feature Android feasibility](ANDROID_COMPATIBILITY_MATRIX.md), [updated threat model](THREAT_MODEL_STRIDE.md), and [prior upload-key setup/recovery record](MADALASA_UPLOAD_KEY_SETUP_2026-10-30.md). Feasibility is not release approval; financial screens and stealth/security bypass stay excluded. The upload key is not automatically the Google-managed app signing identity; permanent custody remains blocked.
+
 | Document | Registry state | Proposed owner role |
 |---|---|---|
 | [SECURITY.md](SECURITY.md) | DOCUMENTED_REVIEW_PENDING | Security + Android/backend (unassigned) |

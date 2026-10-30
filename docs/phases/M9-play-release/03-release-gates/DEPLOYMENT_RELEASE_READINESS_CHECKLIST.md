@@ -2,10 +2,11 @@
 
 > **Document control:** M9 / 03-release-gates · Proposed owner: Engineering lead (not assigned) · Registry: DOCUMENTED_REVIEW_PENDING; approval not recorded. [Master register](../../../MASTER_DOCUMENT_CONTROL_REGISTER.md).
 
-**State as of 2026-10-27:** All protected real-child data features **NO-GO**. Repository contains M1 contract/SQL test baseline, many architecture/UX documents, Android **source scaffolding only**, and no runnable C++/Android apps or production deployment.
+**Current state, 2026-10-30:** real-child and commercial release **NO-GO**. PR9 has a runnable, CI-tested narrow Drogon backend and fresh PostgreSQL16 M1 tests; it is unmerged and real ParentOIDC validation is absent. Android remains source scaffolding only. No production deployment or Play approval is evidenced. [Detailed M1 review](../../M1-secure-platform-foundation/02-development-process/M1_STACK_PR9_REVIEW_2026-10-30.md) and [test evidence queue](../../M8-operational-readiness/03-quality-and-evidence/TEST_STRATEGY_UNIT_INTEGRATION_LOAD_SECURITY.md) distinguish verified slices from remaining work. Google Payments verification does not prevent documentation/testing progress.
 
-## Ownership and corporate setup
-- [ ] Legal publisher/controller, registered address, tax entity, Play merchant and legal IP/license decision **signed**.
+## Ownership and publisher setup
+- [x] Owner-declared publisher/controller decision recorded: **SWARNA SEKHAR DHAR**, individual, India; same legal individual as Google Play publisher. This records a decision, not verified identity or counsel approval; no registered company is claimed.
+- [ ] Google Payments identity verification **PENDING**; merchant setup **PENDING**; public support contact **PENDING CONFIRMATION**; legal review **PENDING**. Any legally/platform-required address/tax/IP/license disclosures need separate owner/counsel evidence, not invented values.
 - [ ] GitHub About description/topics, private vuln report channel, enforced CODEOWNERS review and branch protections set in GitHub UI.
 - [ ] Named, funded security response lead/backups, Grievance Officer and confidential support contact.
 - [ ] Staff responsibility roster and release/incident authorization matrix verified.
@@ -34,9 +35,11 @@
 ## Go / No-Go record
 Release type: [SYNTHETIC DEVELOPMENT / ADULT DOGFOOD / REAL CHILD PILOT / COMMERCIAL]. Legal entity: [TBD]. Release commit/build SHA: [TBD]. Approvers: Product [TBD], Android [TBD], Backend [TBD], Security [TBD], India counsel [TBD], Privacy/Grievance [TBD], Play reviewer evidence [TBD]. Decision: **NO-GO for real children until independently approved**. Date: [NOT APPROVED]. No placeholder constitutes a signature.
 
+For future records, publisher/controller is the owner-declared individual above, not a fictional company. Keep verification evidence private. No release approval is granted by checking the owner-decision row.
+
 ## 2026-10-27 uploaded governance document reconciliation — review does not equal approval
 
-The six supplied governance files were reviewed/merged under \`docs/\` and recorded in [review ledger](../../M0-foundation-and-approvals/01-project-governance/UPLOADED_GOVERNANCE_DOCUMENTS_REVIEW_2026-10-27.md). This **does not close** the real-child/commercial NO-GO: retention 14-vs-30-day GPS and all other periods are unsigned; DPIA has no controller/India counsel signoff; security reporter email/PGP/private GitHub intake not verified; incident roster/24x7 escalation not verified or tabletop-tested; root licence has no identified rights-holder/publisher; Play/DPDP child collection remains feature gated; Android, C++ and Postgres location ingestion still not implemented. Owner must record each approval and evidence before this checklist can move to GO.
+The six supplied governance files were reviewed/merged under \`docs/\` and recorded in [review ledger](../../M0-foundation-and-approvals/01-project-governance/UPLOADED_GOVERNANCE_DOCUMENTS_REVIEW_2026-10-27.md). This **does not close** the real-child/commercial NO-GO: retention 14-vs-30-day GPS and all other periods are unsigned; DPIA has no controller/India counsel signoff; security reporter email/PGP/private GitHub intake not verified; incident roster/24x7 escalation not verified or tabletop-tested; IP/license approval remains separate from the now-recorded individual publisher; Play/DPDP child collection remains feature gated. The historical blanket assertion that no C++ implementation exists is superseded by the narrow PR9 evidence above; Android and full product/ingestion acceptance remain unverified. Owner must record each approval and evidence before this checklist can move to GO.
 
 ## 2026-10-27 repo-wide evidence gate
 

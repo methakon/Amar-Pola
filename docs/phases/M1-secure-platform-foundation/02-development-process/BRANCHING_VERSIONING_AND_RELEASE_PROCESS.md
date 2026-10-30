@@ -43,21 +43,23 @@ Owner/product, Android/backend, security/privacy and legal/Play leads sign a rel
 5. Every working PR should cite its parent/base and its follow-up; update the register when created, retargeted, merged, abandoned or closed. Use descriptive commits and CI results as the evidence trail. A PR merged **into another feature branch** is not yet included in `main`.
 6. Merge in dependency order; after each merge, verify downstream diffs, retarget stacked PRs to `main` when appropriate, rerun checks, and confirm commit ancestry. Delete only an *already merged and verified* redundant branch after owner/team review; preserve unresolved commits and document alternatives before cleanup.
 
-### Current known branch and PR register (snapshot verified 2026-10-29)
+### Current known branch and PR register (snapshot verified 2026-10-30)
 
 | Branch | PR / base | Purpose | Status / action |
 |---|---|---|---|
-| `main` | integration base | Stable source of truth | No change without normal integration workflow |
-| `fix/m1-lint-credential-lifecycle` | [#3](https://github.com/methakon/Madalasa-Alarka/pull/3) → `main` | Credential lifecycle, M1 migration 0002/0003, lints | **OPEN**; merge/review first |
-| `feat/m1-backend-skeleton-idempotency` | [#4](https://github.com/methakon/Madalasa-Alarka/pull/4) → `fix/m1-lint-credential-lifecycle` | Migration 0004, Drogon skeleton, tests | **OPEN**; follows #3, then retarget/retest |
-| `feat/m1-physical-table-catalog` | [#5](https://github.com/methakon/Madalasa-Alarka/pull/5) → `feat/m1-backend-skeleton-idempotency` | 18-table catalog, mapping and CI check | **MERGED into #4 branch**, NOT yet `main`; verify ancestry after #4 merge; do not recreate |
-| `feat/m1-g6-lint` | [#6](https://github.com/methakon/Madalasa-Alarka/pull/6) → `feat/m1-backend-skeleton-idempotency` | G-6 lint | **OPEN**; retarget/retest after #4 integration |
+| `main` | integration base | Stable source of truth | `0a6be11ca811e842cc9839ab623ec118514020dd`; includes #3, not complete #4–#8 stack |
+| `fix/m1-lint-credential-lifecycle` | [#3](https://github.com/methakon/Madalasa-Alarka/pull/3) → `main` | Credential lifecycle, M1 migration 0002/0003, lints | **MERGED** into main as `0a6be11`; branch later advanced to `2821a8a` via #4, which is NOT thereby on main |
+| `feat/m1-backend-skeleton-idempotency` | [#4](https://github.com/methakon/Madalasa-Alarka/pull/4) → `fix/m1-lint-credential-lifecycle` | Migration 0004, Drogon skeleton, tests | **MERGED** into feature branch as `2821a8a`; branch later advanced to `58ba650` via #6 |
+| `feat/m1-physical-table-catalog` | [#5](https://github.com/methakon/Madalasa-Alarka/pull/5) → `feat/m1-backend-skeleton-idempotency` | 18-table catalog, mapping and CI check | **MERGED** as `ddbb25a`; included in PR9 ancestry, not current main |
+| `feat/m1-g6-lint` | [#6](https://github.com/methakon/Madalasa-Alarka/pull/6) → `feat/m1-backend-skeleton-idempotency` | G-6 lint | **MERGED** as `58ba650`; #7 later merged into this branch as `62a33a6` |
+| `feat/m1-create-family` | [#7](https://github.com/methakon/Madalasa-Alarka/pull/7) → `feat/m1-g6-lint`; [#9](https://github.com/methakon/Madalasa-Alarka/pull/9) → `main` | createFamily, M1 0005 provisioning, final stack integration | #7 **MERGED into feature branch**; #9 **OPEN** at `c693899e4b411cbadd1639f0bcb642844af50ea9`; detailed review and explicit owner merge approval required |
+| `feat/m1-purge-jobs` | [#8](https://github.com/methakon/Madalasa-Alarka/pull/8) → `feat/m1-create-family` | Restricted purge role, jobs, units and tests | **MERGED** as `c693899`; its tree equals PR9 head; nothing scheduled/deployed |
 | `docs/2026-10-29-six-gate-owner-handoff` | [#1](https://github.com/methakon/Madalasa-Alarka/pull/1) → `main` | Six architecture/release gates | **OPEN**; consolidate/review rather than duplicate |
 | `audit/2026-10-29-final-screen-api-db-reconciliation` | [#2](https://github.com/methakon/Madalasa-Alarka/pull/2) → `main` | Figma/API/DB audit and these branch governance rules | **OPEN**; existing documentation branch reused |
-| `feat/local-postgresql-physical-schema` | No open PR found at snapshot | Synthetic local PostgreSQL migrations 0002–0015 and database schema completion tests | **INTEGRATION BLOCKER**: overlaps versions 0002–0004 on #3/#4 stack; preserve branch, compare migration ancestry/checksums and renumber after owner-aware review before merge |
+| `feat/local-postgresql-physical-schema` | No open PR found at snapshot | Synthetic V2 DB through 0019; original M1 and namespaced lineage/checksum adoption | `b507e5f`; preserve published bytes and existing manifest, **do not renumber or replay alphabetically**. PR9's historical M1 0005 and conflicting backend/catalog still need semantic integration |
 | `docs/phase-category-reorganization-2026-10-27` | No open PR found at snapshot | Older documentation reorganization | **REVIEW REQUIRED**; inspect unique commits before merge/archive, do not assume obsolete |
 
-**Recommended sequence:** review/merge #3 → retarget/review/merge #4 → confirm #5 commits appear in `main` via #4 (or separate remaining changes if missing) → retarget/review/merge #6. Documentation PRs #1/#2 can be integrated independently after conflict and duplication review. Do **not** automatically merge, close, retarget or delete branches because this document suggests the order.
+**Updated sequence:** #3 is on main; #4–#8 were merged into feature branches after their parents had already merged, so the previous #3→#4→#6 advice is superseded. Review [PR9](M1_STACK_PR9_REVIEW_2026-10-30.md) → report findings → obtain explicit owner approval before any merge → reconcile the separate V2 DB branch using its immutable namespaced runner, including new M1 0005 and backend conflicts. Documentation work reuses existing PR2; PR1 remains a separate six-gate source. Do **not** automatically merge, close, retarget or delete branches. No branch was created for this review.
 
 ### Ongoing maintenance
 

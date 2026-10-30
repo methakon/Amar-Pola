@@ -4,6 +4,8 @@
 
 [M0 phase](../README.md) · [Docs home](../../../README.md) · [Master register](../../../MASTER_DOCUMENT_CONTROL_REGISTER.md)
 
+**2026-10-30 current checkpoint:** [Progress while Google identity is pending](PENDING_IDENTITY_PROGRESS_2026-10-30.md) and [updated owner/blocker register](BLOCKERS_AND_OWNER_DECISIONS.md). Individual India publisher is recorded; external verification, merchant, public contact and counsel approval remain pending.
+
 | Document | Registry state | Proposed owner role |
 |---|---|---|
 | [MASTER_MILESTONE_IMPLEMENTATION_AND_RELEASE_PLAN.md](MASTER_MILESTONE_IMPLEMENTATION_AND_RELEASE_PLAN.md) | DOCUMENTED_REVIEW_PENDING | Project owner (unassigned) |
