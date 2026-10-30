@@ -14,6 +14,7 @@
 #include "children_read.h"
 #include "parent_reads.h"
 #include "device_capabilities.h"
+#include "children_create.h"
 #include "http_support.h"
 #include "pairing.h"
 
@@ -110,6 +111,13 @@ int main() {
         co_return co_await ma::list_child_devices(std::move(req), std::move(childId), authenticate);
       },
       {Get});
+
+  app().registerHandler(
+      "/v1/families/{familyId}/children",
+      [authenticate](HttpRequestPtr req, std::string familyId) -> Task<HttpResponsePtr> {
+        co_return co_await ma::create_child(std::move(req), std::move(familyId), authenticate);
+      },
+      {Post});
 
   app().registerHandler(
       "/v1/families/{familyId}/children",

@@ -3,6 +3,7 @@
 #include <drogon/drogon.h>
 #include "children_read.h"
 #include "parent_reads.h"
+#include "children_create.h"
 #include <iostream>
 #include <optional>
 
@@ -47,6 +48,25 @@ int main() {
   check(devices_noauth->statusCode() == drogon::k401Unauthorized,"listChildDevices requires ParentOIDC");
   const auto devices_offline = drogon::sync_wait(ma::list_child_devices(request(),good_id,allow));
   check(devices_offline->statusCode() == drogon::k503ServiceUnavailable,"listChildDevices denies without DB");
+    // Frozen createChild negative matrix — synthetic identity only.
+  auto create_req = [&] {
+    auto q=request();
+    q->setMethod(drogon::Post);
+    q->setContentTypeCode(drogon::CT_APPLICATION_JSON);
+    q->addHeader("idempotency-key","00000000-0000-4000-8000-000000000003");
+    q->setBody(R"({"alias":"Synthetic profile"})");
+    return q;
+  };
+  auto create_bad= drogon::sync_wait(ma::create_child(create_req(),"invalid",allow));
+  check(create_bad->statusCode()==drogon::k400BadRequest,"createChild path check");
+  auto create_anon= drogon::sync_wait(ma::create_child(create_req(),good_id,deny));
+  check(create_anon->statusCode()==drogon::k401Unauthorized,"createChild requires ParentOIDC");
+  auto create_offline= drogon::sync_wait(ma::create_child(create_req(),good_id,allow));
+  check(create_offline->statusCode()==drogon::k503ServiceUnavailable,"createChild denies without DB");
+  auto invalid_alias=create_req();
+  invalid_alias->setBody(R"({"alias":"not","unexpected":1})");
+  auto malformed=drogon::sync_wait(ma::create_child(invalid_alias,good_id,allow));
+  check(malformed->statusCode()==drogon::k400BadRequest,"createChild unknown field rejected");
     if (failed) return 1;
   std::cout << "M1 children list negative tests PASS\n";
   return 0;
