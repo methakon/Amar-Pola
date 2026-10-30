@@ -16,6 +16,10 @@ The 72 root-level compatibility pointers were consolidated into [legacy-root-lin
 
 [MA-P2P-ADR-004](phases/P3-deferred-research/01-media-and-administrator-research/P2P_MEDIA_AND_LIVE_LOCATION_TRANSPORT_ARCHITECTURE_2026-10-31.md): WebRTC ICE/STUN direct, TURN relay when necessary, existing Drogon signaling, no custom VPN for these features; separate durable GPS pipeline. **Documentation only:** Android/Indian counsel/Play gate approvals remain OPEN and child capture release OFF.
 
+## X-03 Indian child-data lawfulness — clarification 2026-10-31
+
+**Legal compliance for each enabled feature is required; buying a signed lawyer opinion/printed certificate is not a general prerequisite.** The owner is preparing an evidence-backed feature-by-feature assessment; Tele-Law case registered, MeitY clarification email sent, responses pending. A substantive counsel email can support the record. Release-sensitive child-data features remain OFF while the substantive legality and Android/Play gates are unresolved. [Current X-03/G02 disposition](phases/M0-foundation-and-approvals/01-project-governance/BLOCKERS_AND_OWNER_DECISIONS.md).
+
 ## X-01 status — 2026-10-31
 
 **Google Play publisher identity: COMPLETED (owner-confirmed).** BillDesk/payment verification: **SUBMITTED; AWAITING PROVIDER RESPONSE**. Distinct merchant/payment account activation: **NOT CONFIRMED**. Identity verification is removed from the active blockers; related payment activation remains a separate external dependency. [Canonical X-01 breakdown](phases/M0-foundation-and-approvals/01-project-governance/BLOCKERS_AND_OWNER_DECISIONS.md).

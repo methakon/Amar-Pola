@@ -8,11 +8,21 @@
 
 Each blocker has an owner, decision or required evidence, and lifecycle: OPEN → DECIDED → IMPLEMENTED → VERIFIED → CLOSED. **Selecting a product option does not resolve software testing or Google Play review.**
 
+## 2026-10-31 correction: X-03 is legal due diligence, NOT a compulsory paid-counsel/government-permit gate
+
+**Owner challenge accepted; previous documentation incorrectly elevated a *recommended signed Indian advocate's opinion* into a universal compulsory launch condition.** Neither the DPDP Act/Rules nor Google's general Play app-review workflow has been shown to require every child-safety app developer to buy a signed legal-opinion PDF, printed certificate or separate MeitY/CERT-In approval. Do not imply that Tele-Law or MeitY can grant a general parental-monitoring license by email. Any activity-specific authorizations must be checked separately if the legal analysis identifies them.
+
+**Keep G02 legal substance OPEN; remove the artificial document/payment blocker.** Before processing real children's information or releasing a feature, the product owner must document a *feature-specific lawfulness and compliance assessment*, with primary-source citations and risk/conditions: real-time safety location versus historical tracking, usage/behavioural reports, guardian authority, SOS, optional audio/camera/screen, third-party capture, notices, retention/deletion, cross-border processors, operative law and relevant commencement dates. Engineering must implement the necessary safeguards; Google Play and Android have **separate** policy/runtime gates. A legally sound and evidenced internal assessment can be prepared without mandatory paid counsel, but it is not itself official approval or a guarantee of compliance.
+
+**Evidence formats:** An actionable response from a qualified Indian advocate **by email** is acceptable *supporting evidence* for the internal decision; signed PDF or paper is optional unless a particular regulator, proceeding or engagement demonstrably requires it. A 20-minute verbal call alone does not settle unanalysed features. For genuinely ambiguous/high-risk child tracking, app-usage analytics or remote media, an independent privacy-law specialist's review remains **strongly recommended**, not a universal regulatory prerequisite. If advice remains inconclusive, narrow/disable the affected feature rather than declaring it cleared.
+
+**X-03 status:** LEGAL DUE DILIGENCE / FEATURE-BY-FEATURE ASSESSMENT IN PROGRESS; **Tele-Law case REGISTERED and MeitY guidance EMAIL SENT**, both owner-reported, responses pending. No new owner action or legal-fee payment is required just because the checklist previously said "signed opinion". Do not pause synthetic engineering; no unassessed real-child monitoring or Play release.
+
 ## X-03 legal/government consultation progress — 2026-10-31
 
 **Owner-reported, not independently acknowledged by the authorities:** A **Government Tele-Law case has been registered** for legal guidance on the proposed Indian child-safety/parental-monitoring application. The owner has **sent the MeitY Cyber Laws clarification email** requesting guidance/referral concerning the DPDP child-safety location exception, location history, app usage, optional microphone/camera/screen features and whether any official permission or procedure applies. **MeitY acknowledgement/response has NOT been reported; no case ID, personal correspondence or private details are included in Git.**
 
-**X-03 status:** CONSULTATIONS INITIATED / **IN PROGRESS — EXTERNAL ADVICE PENDING**. A sent inquiry or Tele-Law registration is not permission, a signed Indian counsel opinion, approval by a DPDP authority or clearance for children's-data processing. Keep the independent feature-by-feature legal assessment and documented release eligibility OPEN, with real-child media and unapproved monitoring OFF. Prepare technical/data-flow/legal-question packs and continue synthetic engineering independently while awaiting responses. Do not ask the owner to submit the same MeitY message again.
+**X-03 consultation substatus:** Tele-Law and MeitY contacts initiated, responses pending; not a government-approval process. Feature-specific documented legal due diligence remains OPEN under the correction above. A signed advocate opinion is optional, not a statutory prerequisite. Keep unassessed real-child media and monitoring OFF. Prepare technical/data-flow/legal-question packs and continue synthetic engineering independently while awaiting responses. Do not ask the owner to submit the same MeitY message again.
 
 ## X-01 updated status — 2026-10-31 (supersedes prior pending-identity wording)
 
@@ -60,7 +70,7 @@ Source and decision owner: explicit project-owner instruction dated 2026-10-30. 
 | **B-13** | Medium | What counts as a stop or confirmed school arrival? | Initial candidate 3–5min walking / 5–10min vehicle with multiple trustworthy fixes | Desired rule after field tests | Trip/commute semantics |
 | **B-14** | High | Founding-family pricing and eligibility owner-approved; commercial provider integration pending | First 1,008 distinct successfully paying families count once; eligible paid children retain ₹50/month or ₹500/year including later additions; no automatic renewal in prepaid design | Sandbox proof of seats/top-ups/token verification/refund behavior, merchant/tax/legal review | Billing/store |
 | **B-15** | Medium | Does Google Drive backup ship in v1? What media and deletion behavior? | P2, opt-in only | Media type and retention/ownership | OAuth/data safety |
-| **B-16** | High | Camera/video/microphone in Play launch or deferred? | **SOS-only media remains conditional / OFF** pending counsel, Play and physical-device gates; no remote/background capture | Visible child-initiated foreground capture only; one front + one rear still sequentially where supported; short visible audio clip; permission denial never blocks SOS | Sensitive permissions |
+| **B-16** | High | Camera/video/microphone in Play launch or deferred? | **SOS-only media remains conditional / OFF** pending documented feature legality, Play and physical-device gates; specialist counsel recommended if legality unresolved, not compulsory paperwork; no remote/background capture | Visible child-initiated foreground capture only; one front + one rear still sequentially where supported; short visible audio clip; permission denial never blocks SOS | Sensitive permissions |
 | **B-17** | Medium | Which alerts are high-priority vs quiet hours? | SOS priority; ordinary alerts deduped | Desired critical/noncritical alert list | Notification logic |
 | **B-18** | High | Does a guardian see full history, current only, or child-specific subset? | Explicit least privilege, owner configurable | Role/access policy | ACL and sharing |
 | **B-19** | Medium | Parent Android app only or web too? | Android first, versioned API supports future web | Client platform choices | Frontend architecture |
@@ -89,13 +99,13 @@ Source and decision owner: explicit project-owner instruction dated 2026-10-30. 
 | **E-13** | Medium | Play Billing and optional Drive/provider integrations | Sandbox payment and OAuth revocation results | Integrations |
 | **E-14** | High | End-to-end FR-to-test traceability and CI evidence | All release-scope requirements traceable to passing tests | QA/architect |
 
-## C. External blockers and third-party approvals
+## C. Compliance and external prerequisites (X-03 is **not** a compulsory external approval)
 
 | ID | Blocker | What must happen | Who can unblock |
 |---|---|---|---|
 | **X-01** | **Publisher identity CLOSED; payment verification IN PROGRESS** | **X-01A CLOSED:** developer identity completed per owner. **X-01B:** BillDesk/payment verification submitted, response awaited. **X-01C:** separately verify any needed Google Payments merchant activation, account/target-app/package availability, app signing and upload setup. Never treat BillDesk submission as merchant approval. | Owner / BillDesk or actual payments provider / Google Play |
 | **X-02** | Sensitive background-location/monitoring policy | Real app disclosure, persistent notification, video, permission declarations, reviewer access and approval | Release / Play |
-| **X-03** | **India child-data legal review IN PROGRESS; Tele-Law case registered and MeitY clarification email SENT (owner-reported, 2026-10-31)** | Await MeitY guidance/referral and Tele-Law consultation; obtain qualified counsel's written feature-specific legal opinion, including authority/consent, DPDP child location/media/usage eligibility, notices/retention/deletion and applicable commencement. Neither inquiry is a license or release clearance. | Owner / Tele-Law counsel / MeitY (guidance or referral only) |
+| **X-03** | **India child-data lawfulness assessment IN PROGRESS; optional advice requested via Tele-Law (registered) and MeitY (email sent)** | Document feature-specific applicable law and safeguards; optionally incorporate substantive counsel email/advice. A paid signed legal opinion or general government permit is **NOT a prescribed blanket requirement**. Do not launch legally unresolved child-data features. | Project owner accountable for legal compliance; optional qualified India lawyer / guidance bodies |
 | **X-04** | Public privacy and account deletion URLs | Functioning pages matching real data operations | Product/backend |
 | **X-05** | Optional Google Roads asset-tracking terms | Written provider license/caching/attribution review | Legal/Maps provider |
 | **X-06** | Cloud/SDK subprocessors | Region choices and processor contract/data safety evaluation | Operations/legal |
@@ -196,7 +206,7 @@ See [MA-COMPLIANCE-001 Government/Legal/Play Risk Assessment](../03-legal-and-pr
 | ID | Status | Owner decision / evidence |
 |---|---|---|
 | **G01 / R01** | **CRITICAL OPEN** | Verify Alarka exact Google Play audience and get product-specific Google Play interpretation of Families ban on precise location collection by solely child-targeted apps vs parental monitoring policy. Never falsely label age. **No child GPS release** before this. |
-| **G02 / R02** | **CRITICAL OPEN** | Qualified India counsel confirms commercial real-time safety location Rule Part B item 4 scope separately from history, usage, behavioral inference, custody/parent verification. |
+| **G02 / R02** | **CRITICAL OPEN — legal substance, not lawyer paperwork** | Record a feature-by-feature legal assessment of commercial child-safety real-time location versus history, usage, behavioural inference and verified guardian authority with primary-law citations. Qualified counsel review is advisable for uncertain/high-risk features, not universally mandated. |
 | **G03 / R12/R17** | **HIGH OPEN** | Decide data category retention plus CERT-In 6h incident reporting/180d India logs and prospective DPDP year logs/breach notice. |
 | **G04 / R05/R19** | **HIGH OPEN** | Two accurate Play App Content/target audience/manifest/monitoring disclosure, privacy and Data Safety submissions with final package evidence. |
 | **G05 / R22** | **HIGH OPEN** | Build/API 36, 16KB native ABI, Android permissions and device-owner physical acceptance, no fake success. |
@@ -254,7 +264,7 @@ This AI response is not a human policy-team determination, app review decision o
 
 **Substantive G02 question:** Once operative, section 9(3) generally prohibits tracking/behavioural monitoring of children; section 9(4) allows prescribed purposes subject to conditions. Rule 12 / Fourth Schedule Part B item 4 specifies determination of a child's real-time location, restricted to real-time tracking in the child's safety/protection or security interest, as a purpose for which section 9(1) and 9(3) do not apply. This is a narrow purpose-specific provision, not a blanket approval for historical route reconstruction, school/stop profiling, geofences, app usage, behavioural analytics, media capture, broad guardian sharing or indefinite retention. Section 9(2)'s detrimental-effect prohibition remains a separate issue.
 
-**G02 remains CRITICAL OPEN.** Obtain a signed Indian privacy-counsel opinion addressing:
+**G02 remains CRITICAL OPEN for feature legality, not for purchasing an opinion.** Document a cited, reviewable Indian-law assessment (independent specialist consultation recommended for uncertain/high-risk activities but not a mandatory signed-paper condition) addressing:
 - whether this commercial parent/guardian service qualifies for the real-time child-safety location purpose;
 - whether it permits only on-demand current location or also periodic/background collection;
 - permissible precision, cadence, offline device queue, PostgreSQL inbox, derived data, history, retention and guardian access;
@@ -262,4 +272,4 @@ This AI response is not a human policy-team determination, app review decision o
 - section 9(2), guardian authority/consent, child notice, revocation and custody disputes;
 - commencement dates, transitional/corrigendum position, other applicable Indian laws, subprocessors and cross-border processing.
 
-Required output: feature-by-feature GREEN / CONDITIONAL / PROHIBITED classification with lawful purpose, conditions, retention and evidence. Until counsel signs off, real-minor data ingestion and unapproved child tracking/usage remain OFF; synthetic-data engineering may continue. The existing India DPDP child privacy issue brief remains the detailed design reference.
+Required output: feature-by-feature GREEN / CONDITIONAL / PROHIBITED / UNRESOLVED classification with lawful purpose, primary-law citations, controls, retention, evidence and accountable owner sign-off. A qualified lawyer's substantive email can support this record, and a signed PDF/printed opinion is optional unless a specific requirement is demonstrated. Until the particular feature's lawful basis and controls are documented and independently required Play/Android gates pass, real-minor ingestion and unapproved tracking/usage remain OFF; synthetic engineering may continue. A G02 self-assessment is not a government clearance. The India DPDP child privacy issue brief remains the design reference.
