@@ -1,6 +1,12 @@
-# Historical M1 physical table catalog (generated)
+# Frozen historical M1 physical table catalog — through0004
 
-Generated from `docs/data-model/M1_PHYSICAL_TO_LOGICAL_CATALOG.json` by `backend/tests/check_physical_catalog.py --write`. **Do not edit by hand**; edit the JSON and regenerate. CI fails if this file is stale or if the migrations or the ERD drift from the mapping.
+**Archived source snapshot, not a separately maintained current report.** Source:
+`b507e5f47e78d453db2703d02a3d80dcb45fa1dc`, M1 migrations0001–0004 only.
+The original mapping bytes are preserved in `M1_PHYSICAL_TO_LOGICAL_CATALOG.json`;
+they are historical evidence, not the runtime/default checker input. Do not regenerate
+this frozen snapshot with the current mapping. The maintained current historical M1
+report (through0006, including retention holds) is
+[`../../M1_PHYSICAL_TABLE_CATALOG.md`](../../M1_PHYSICAL_TABLE_CATALOG.md).
 
 - Physical tables (schema `ap_m1`, manifest-selected `m1` lineage): **18**
 - Logical ERD entities: **120**; mapped to a physical table: **17**; not yet physical (M2 and later, design only): **103**

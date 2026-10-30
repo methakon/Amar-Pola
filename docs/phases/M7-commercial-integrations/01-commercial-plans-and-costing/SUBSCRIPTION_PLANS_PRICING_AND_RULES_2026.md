@@ -5,12 +5,84 @@
 > **Current product:** **Madalasa** (parent app) + **Alarka** (child app); the GitHub repository is now **[Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka)**. [English mythological inspiration](../../M0-foundation-and-approvals/02-market-and-feasibility/BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 **Document:** AP-SUB-PRICING-001  
-**Version:** 1.0 | **Prepared:** 2026-10-26 | **Status:** PROPOSED FOR OWNER APPROVAL — not live Play Console products, not a binding quote, and not independently signed off by tax/legal counsel.  
+**Version:** 1.0 historical baseline; reconciled 2026-10-30 | **Prepared:** 2026-10-26 | **Status:** owner policy recorded below; provider implementation/sandbox and tax/legal approval pending — not live Play Console products or a binding quote.
 **Scope:** India-first Android family safety service with a **price per enrolled paying child**, shared parent/guardian viewing, and Google Play Billing.  
 **Financial references:** [Third-Party Cost Analysis](THIRD_PARTY_SERVICES_COST_ANALYSIS_2026.md) (old ₹149 sensitivity) and [Oracle Chicago Deployment & Hosting](../../M8-operational-readiness/01-cloud-infrastructure/OCI_CHICAGO_DEPLOYMENT_AND_FINANCIAL_PLAN.md). Those documents remain separate cost ledgers.  
 **Requirement references:** [SRS](../../M1-secure-platform-foundation/01-requirements-and-architecture/SRS.md) FR-012/022/039, [API](../../../openapi.yaml), [Data Security](../../M1-secure-platform-foundation/03-security-and-permissions/DATA_AUTHORIZATION_AND_RECOVERY_CONTRACT.md).
 
-## 1. Decision and official product offer
+## Current canonical reconciliation — 2026-10-30
+
+**State:** owner commercial policy recorded; provider/catalog feasibility **UNVERIFIED**, sandbox **NOT EXECUTED**, Payments identity **PENDING**, merchant **PENDING**, accountant/tax **NOT APPROVED**. This is a documentation review, not billing implementation, legal approval or permission to create products/purchases. Publisher is the individual **SWARNA SEKHAR DHAR, India**, using the **same legal entity as the Play publisher**; no company incorporation or verified Payments identity is implied. Account status is owner-reported, not independently inspected.
+
+### Owner decisions (not recommendations)
+
+- First **1,008 DISTINCT successfully paying families**, counted **once per family**, qualify for founding **₹50/month or ₹500/year per eligible paid child**. Later eligible children added to that founding family retain founding pricing. Trial, extra guardian, extra child, device, top-up, restored token or repeated transaction must not count as another founding family.
+- Regular prices remain **₹99/month or ₹999/year per paid child**. Existing customers retain their applicable pricing; this review authorizes **no price change**. Founding recognition persists through prepaid lapses where lawfully recognizable; retention/deletion policy still applies.
+- **Prepaid manual purchase/top-up only; no auto-renew or automatic charge.** A premium button opens review, never silently purchases. Terms/month-year coverage and actual total come from Play, not fixed 30/365-day arithmetic.
+- Payer selects exact covered child IDs. Child-specific adult grants are separate from payer-family membership; paying does not grant a co-parent access, expose siblings, or duplicate a charge for the same shared child. **No Google Family Link relationship lookup prerequisite**; Google Sign-In authenticates an adult, not parenthood. Approved authority/consent remains required.
+- One included simultaneous premium viewer per paid child; optional extra viewer target is **₹100 once / 100 consecutive calendar days / +1 concurrent premium viewer / +30 combined pooled audio+video minutes total for that child**, not per month or per guardian. Base lapse makes it dormant, does not pause its clock; renewal before its independent expiry resumes remaining validity. It creates neither child seats nor permissions. Media remains **OFF**, subject to existing legal, Android, Play and safety gates. Repeatable one-time consumable Buy is a **candidate**, not a verified product.
+
+### Official provider guidance checked 2026-10-30 (not account-specific proof)
+
+| Topic | Verified public guidance | Project consequence / remaining gate |
+|---|---|---|
+| Prepaid availability | Play documents prepaid base plans, including **1 month and 1 year**, region-specific availability/prices and an allow-extension setting.[3][4] | Supports investigating the owner target; does not establish this India-based publisher account's availability, exact INR price, merchant readiness or catalog eligibility. |
+| Top-up vs capacity | Top-up purchases extend the **same subscription's time**, charging the full selected period. They are not another concurrent child seat.[1][2] | Never multiply purchased capacity because a token, top-up or line item exists. Use a reviewed server catalog mapping to capacity and explicit child allocations; N-seat products or distinct-child products remain sandbox candidates. No approved five-child maximum is inferred from the old example. |
+| Extension limits | Provider `expiryTime` is authoritative; early top-ups accumulate after existing expiry. `prepaidPlan.allowExtendAfterTime` indicates when another top-up is allowed; only one unconsumed top-up is allowed at a time.[2] | Show verified expiry and eligibility; reject early/disallowed repeated top-ups and duplicate extensions. Do not compute a fresh month starting at callback arrival. |
+| Token lineage | Each top-up has a **new purchase token** with `linkedPurchaseToken` referencing its predecessor; each emits `SUBSCRIPTION_PURCHASED`, not a guaranteed renewal event. Token API validity ends 60 days after expiry.[2] | Reconcile the chain to the same payer family and capacity without stacking duplicate seats; retain bounded lawful financial evidence, not an indefinitely callable token assumption. |
+| Acknowledgement | Initial prepaid purchases **and every top-up** require acknowledgement. Duration ≥1 week: within **3 days**; shorter: within **half the plan duration**. Missing a top-up deadline can revoke/refund the top-up **and remaining subscription**.[1][2] | Durable grant and acknowledgement-retry obligation, prompt server acknowledgement, deadline monitoring and refund/revocation recovery; never apply an unconditional three-day rule to every duration. |
+| Cancel, expire, refund | Prepaid does not auto-renew and has no renewal to cancel: let it expire if no top-up. Refund-only and refund-with-revoke are different outcomes; reviewed refund policy and applicable law still apply.[2][10] | Provide manage/support/refund routes without a false “cancel next debit” promise. Revoke premium at verified expiry/revocation, not just on a UI cancel click; preserve free fallback, privacy/deletion rights. Account deletion is separate from provider refunds. |
+| Founding price implementation | Help text explicitly limits subscription **offers to auto-renewing base plans** and says new prices apply to prepaid top-ups. Auto-renew legacy price cohorts are not a prepaid price-lock mechanism.[4] | Automatic founding eligibility is owner policy, **not proven prepaid offer support**. Recommend testing separate prepaid pricing/catalog mapping and strict server eligibility; do not switch to auto-renew to obtain offers. Protect later children and existing prices before launch. |
+| Subscription add-ons | Play's subscription-with-add-ons requires auto-renewing plans, same recurring period and distinct product IDs.[11] | Cannot use that feature to assert repeatable prepaid child seats or the 100-day viewer product. |
+| Fees and taxes | Current remaining-market fee table specifically gives 15% for **automatically renewing** subscriptions and separately lists fee-tier eligibility.[12] | No automatic 15% prepaid/one-time fee entitlement; merchant reports and accountant must establish rate, fee base, tax inclusivity, withholding/credits and net settlement. Test purchases do **not** compute taxes.[8] |
+
+**Source ambiguity to preserve:** the lifecycle guide's prepaid field summary lists ACTIVE/PENDING/CANCELED, while describing expiry/revocation elsewhere; evaluate actual `subscriptionState`, line-item expiry and void/refund evidence together. Never infer paid access from an ACTIVE label after its expiry, nor treat a historical auto-renew grace/hold table below as prepaid semantics.[2]
+
+### Proposed traceable server state/lifecycle (acceptance specification, not implemented)
+
+Each attempt needs a redacted evidence reference binding payer family, selected child allocation, reviewed package/product/base-plan/capacity mapping, price cohort decision, token digest and predecessor digest, provider state/expiry, acknowledgement status/deadline, inbox processing result and financial reversal. Keep restricted raw API tokens outside public records. Token uniqueness, provider event deduplication, financial transaction uniqueness and family founding uniqueness are **separate** controls; order ID alone is not a universal purchase key.[6][7]
+
+| Local state/event | Required source of truth and transition | Negative acceptance |
+|---|---|---|
+| REVIEW / PENDING | Authenticated payer request; pending/declined/canceled checkout grants nothing. Verify server-side using `purchases.subscriptionsv2.get` with the configured package and token.[5][6] | Client success, fake price/capacity, test token in production, wrong package/product/base plan or foreign-family binding never unlocks seats. |
+| VERIFIED → GRANTED / ACK_DUE → ACKED | Validate line items, prepaid type, state, expiry, account binding and lineage. Atomically persist entitlement/allocation plus durable ack retry; call `purchases.subscriptions.acknowledge` promptly and read acknowledgement state back.[2][6] | Crash/retry or ack timeout creates neither a second grant nor a second founding count; unresolved identity/capacity fails closed and enters reviewed support/refund handling. |
+| ACTIVE → TOP_UP_VERIFIED | Read fresh provider state; bind replacement token to same family, retire predecessor's independent authority, set provider expiry once and preserve audit lineage.[2][6] | Top-up cannot become a second child or grant to another family. Callback replay cannot add another month/year. |
+| ACTIVE → EXPIRED / REVOKED | Enforce server expiry even if RTDN is delayed; fetch current state on notification, restore and reconciliation. Refund-only is reconciled financially without inventing revocation.[2][7][10] | No late callback, stale ACTIVE response, old token or offline cache resurrects revoked entitlement, guardian grants or deletion tombstones. |
+| EXTRA_VIEWER_ACTIVE ↔ DORMANT → EXPIRED | Independently verified one-time purchase and fixed 100-day server deadline; base expiry gates usability, not the calendar clock. Consume only after durable exactly-once grant if consumable design is approved.[6] | Replay cannot add slots/minutes; base renewal does not reset 100 days or replenish 30 minutes; no purchase enables media while gates are OFF. |
+
+**RTDN recommendation:** authenticated Pub/Sub ingestion, strict expected package validation, durable inbox dedup by message ID, transactional per-token/lineage processing, retry/backoff/dead-letter handling and reconciliation. RTDN is a change hint; fetch current Developer API state, never grant from notification type alone. Distinct message IDs can still describe one purchase, and out-of-order delivery must not roll entitlement backwards or revive revoked state.[5][7] These are required engineering tests, not verified implementation.
+
+**Founding-count recommendation requiring implementation proof:** atomically assign a unique family rank/qualification on the first eligible successfully verified paid base purchase; concurrency at ranks 1,008/1,009 cannot over-allocate. **Open owner/finance decision:** refund/chargeback/fraud disqualification, slot recycling, first-checkout reservation/order and fair fallback if founding capacity changes during checkout. Do not silently choose these policies or charge a regular price after displaying founding pricing. License-test payments must be isolated from production founding rank.
+
+### Release blockers and evidence boundary
+
+- Publisher/Payments/merchant/tax approval as stated above; no payment details or private account IDs in evidence. Future Developer API access requires enabled API and narrowly scoped server identity/Play permissions; this review configured none.[9]
+- Sandbox proof of same-Play-account multi-child capacity, repeated purchase behavior, top-ups, mixed terms/replacements, founding price access including later children and no existing-price migration.
+- Executed state, negative and reconciliation tests in the [sandbox checklist](../../../roadmap/PLAY_BILLING_SANDBOX_ACCESS_CHECKLIST_NO_SECRETS_2026-10-29.md), with code SHA, commands/exit codes, sanitized provider responses, expected/actual entitlement transitions and reviewer. No test is marked PASS by this review.
+- Legal child-data scope and Android capability remain separate gates. Hosting region/economics is a deployment decision, **not** a prerequisite for synthetic billing work. No real products, purchases, credentials, Console mutations or deployment were performed or authorized here.
+
+## Sources
+
+Official sources for the current reconciliation, retrieved **2026-10-30**. The historical material following this list is preserved separately below, not freshly certified.
+
+[1] https://developer.android.com/google/play/billing/subscriptions
+[2] https://developer.android.com/google/play/billing/lifecycle/subscriptions
+[3] https://support.google.com/googleplay/android-developer/answer/140504
+[4] https://support.google.com/googleplay/android-developer/answer/12154973
+[5] https://developers.google.com/android-publisher/api-ref/rest/v3/purchases.subscriptionsv2/get
+[6] https://developer.android.com/google/play/billing/security
+[7] https://developer.android.com/google/play/billing/rtdn-reference
+[8] https://developer.android.com/google/play/billing/test
+[9] https://developers.google.com/android-publisher/getting_started
+[10] https://support.google.com/googleplay/android-developer/answer/2741495
+[11] https://developer.android.com/google/play/billing/subscription-with-addons
+[12] https://support.google.com/googleplay/android-developer/answer/112622
+
+## Historical 2026-10-26 proposal — superseded where inconsistent with current reconciliation
+
+Sections 1–12 preserve the original auto-renew, universal ₹50/₹500, seat-catalog and financial sensitivities for audit history. Their approval rows and “recommended/official” wording are **not current decisions**. They must not be used as launch instructions. Later owner addenda remain effective only as reconciled above.
+
+## 1. Historical decision and product-offer proposal
 
 **Madalasa–Alarka's NEW recommended public price point is ₹50 per paying child per month OR ₹500 per paying child per year**, subject to Google Play Console validating the India offer/total displayed payable amount, merchant/tax setup, platform compliance and implementation of family-seat checkout.
 
@@ -250,7 +322,7 @@ All subscription plans must have an in-app **Manage / Cancel subscription** rout
 - Oracle baseline and per-child reserve at 1,000: [Hosting Financial Plan §14.10](../../M8-operational-readiness/01-cloud-infrastructure/OCI_CHICAGO_DEPLOYMENT_AND_FINANCIAL_PLAN.md)
 - External API and earlier illustrative ₹149 pricing: [Third Party Cost Analysis](THIRD_PARTY_SERVICES_COST_ANALYSIS_2026.md)
 
-**Document precedence for pricing:** THIS document is the **new proposal baseline** for Madalasa–Alarka subscription prices. The ₹149/month figures in older cost analyses are **historical price sensitivity examples only**, not official or recommended public prices. No price, billing SKU, tax-inclusive status or merchant configuration has yet been activated in Play Console.
+**Historical document precedence (superseded by current canonical reconciliation above):** This was the 2026-10-26 proposal baseline for Madalasa–Alarka subscription prices. The ₹149/month figures in older cost analyses are **historical price sensitivity examples only**, not official or recommended public prices. No price, billing SKU, tax-inclusive status or merchant configuration has yet been activated in Play Console.
 
 ## 12. Pre-launch India legal and full cash break-even correction
 
@@ -291,9 +363,9 @@ This document is **not a launch clearance**. For under-18 Indian children, requi
 
 ## 2026-10-28 owner change — child-by-child co-parent grants and extra concurrent screen
 
-**This addendum overrides preceding broad "shared family" access assumptions:** primary payer assigns paid seats to selected children and must separately choose **exact child+co-parent pairs** for sharing. Nothing about paying for Child A unlocks Child B; new spouses and their children remain private by default. Sharing is requested only for **Google-recognized parental accounts**: Google Family Link supports second parents, but a verified third-party API to attest child-specific parental relationships has NOT been established. Google Sign-In alone does not prove parenthood; do not enable sharing until a trusted allowed method is signed off. No guessing/fake verification, no forced broad sharing.
+**This addendum overrides preceding broad "shared family" access assumptions:** primary payer assigns paid seats to selected children and must separately choose **exact child+co-parent pairs** for sharing. Nothing about paying for Child A unlocks Child B; new spouses and their children remain private by default. **Google-recognized parental accounts requirement superseded by later owner direction and the six-gate handoff:** separate adult authentication plus exact-child accepted invitation and approved authority/consent replaces Google Family Link lookup. Google Sign-In alone does not prove parenthood. No guessing/fake verification, no forced broad sharing; real child-data processing remains legally gated.
 
-**Concurrency working policy:** one included simultaneous **premium viewer screen per paid child** across every authorized parent device; free tracking and safety notices remain available. Additional +1 concurrent premium viewer slot is **₹100 target one-time, no auto-renew**, fixed 100-calendar-day entitlement; remains valid through base prepaid lapses though premium use pauses. Owner has not specified add-on validity: 30 days is a **provisional, open** proposal. Each purchased slot contributes **30 minutes combined audio+video** to that *child's* shared balance, not 30 each. These are child- and period-scoped; they don't add child seats or extra permissions. Capture still disabled until Android/Play/legal gates and media feature flags pass. Google Play one-time consumable (or time-bound rent alternative) requires Play Console feasibility tests, backend purchase verification and exact displayed pricing; prepaid subscription add-ons are auto-renew-only and cannot be used.
+**Concurrency working policy:** one included simultaneous **premium viewer screen per paid child** across every authorized parent device; free tracking and safety notices remain available. Additional +1 concurrent premium viewer slot is **₹100 target one-time, no auto-renew**, fixed 100-calendar-day entitlement; remains valid through base prepaid lapses though premium use pauses. The former provisional 30-day proposal is **superseded** by the owner-selected **100 independent calendar days** below. Each purchased slot contributes **30 minutes combined audio+video** to that *child's* shared balance, not 30 each. These are child- and period-scoped; they don't add child seats or extra permissions. Capture still disabled until Android/Play/legal gates and media feature flags pass. Google Play one-time consumable (or time-bound rent alternative) requires Play Console feasibility tests, backend purchase verification and exact displayed pricing; prepaid subscription add-ons are auto-renew-only and cannot be used.
 
 [Canonical child-specific sharing + concurrent viewer/add-on specification](https://github.com/methakon/Madalasa-Alarka/blob/main/docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md). [Figma SH-01..05 preview](https://www.figma.com/design/TKiZXwjkWdkponF1zNsfli?node-id=84-179). Any historic family-wide access, automatic second-parent entitlement, or unlimited concurrent screen statements are superseded. Extra streaming bandwidth must be costed.
 

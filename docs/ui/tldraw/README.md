@@ -1,6 +1,6 @@
 # Madalasa–Alarka — Native tldraw Android UI Design System
 
-> **Current product:** **Madalasa** (parent app) + **Alarka** (child app); the GitHub repository is now **[Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka)**. [English mythological inspiration](../BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
+> **Current product:** **Madalasa** (parent app) + **Alarka** (child app); the GitHub repository is now **[Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka)**. [English mythological inspiration](../../phases/M0-foundation-and-approvals/02-market-and-feasibility/BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 **Design status:** Editable UI wireframes implemented as native tldraw vector shapes, **not yet executable Android code**.  
 **Date:** 2026-10-26 · **Design board:** https://www.tldraw.com/f/-IuhoGjlF7uXC5imxkaL3  

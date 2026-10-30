@@ -18,7 +18,7 @@ In scope after implementation: C++ Drogon controllers and workers, Android Alark
 
 Out of scope without prior written coordination: service interruption/DDoS or mass load, accessing other people's data, physical stalking/surveillance, social engineering, bypass of Android monitoring indicators, vendor products unrelated to project configuration. If accidentally encountering child data **stop access immediately** and report minimally without copying it.
 
-**Targets not promises:** initial acknowledgment within 3 business days; first triage within 7 days; updates every 14 days if active. Critical incidents are escalated immediately to the incident owner under [MA-IR-001](docs/INCIDENT_AND_BREACH_RESPONSE_PROCEDURE.md). A 90-day coordinated disclosure period is a suggested starting point; negotiate exceptions when user safety demands faster action. The publisher must verify staffing and a monitored reporting channel first.
+**Targets not promises:** initial acknowledgment within 3 business days; first triage within 7 days; updates every 14 days if active. Critical incidents are escalated immediately to the incident owner under [MA-IR-001](docs/phases/M8-operational-readiness/02-operations-and-support/INCIDENT_AND_BREACH_RESPONSE_PROCEDURE.md). A 90-day coordinated disclosure period is a suggested starting point; negotiate exceptions when user safety demands faster action. The publisher must verify staffing and a monitored reporting channel first.
 
 ## Safe-harbor intent
 
@@ -33,4 +33,4 @@ We welcome authorized, good-faith research on self-owned synthetic test assets, 
 - [ ] Conduct incident tabletop, RLS/child-scope and audit/recovery negative tests.
 - [ ] Do not use real-minor data until India/Play and technical release gates close.
 
-Security operations: [STRIDE](docs/THREAT_MODEL_STRIDE.md), [Incident Procedure](docs/INCIDENT_AND_BREACH_RESPONSE_PROCEDURE.md), [Signing/Keys](docs/APP_SIGNING_AND_KEY_MANAGEMENT_POLICY.md).
+Security operations: [STRIDE](docs/phases/M1-secure-platform-foundation/03-security-and-permissions/THREAT_MODEL_STRIDE.md), [Incident Procedure](docs/phases/M8-operational-readiness/02-operations-and-support/INCIDENT_AND_BREACH_RESPONSE_PROCEDURE.md), [Signing/Keys](docs/phases/M1-secure-platform-foundation/03-security-and-permissions/APP_SIGNING_AND_KEY_MANAGEMENT_POLICY.md).

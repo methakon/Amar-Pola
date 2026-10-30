@@ -2,12 +2,24 @@
 
 > **Document control:** M0 / 03-legal-and-privacy · Proposed owner: Privacy counsel + owner (not assigned) · Registry: DRAFT_LEGAL_REVIEW_REQUIRED; approval not recorded. [Master register](../../../MASTER_DOCUMENT_CONTROL_REGISTER.md).
 
-**MA-DPIA-001 | Reviewed 2026-10-27 | DRAFT / NOT APPROVED.** Assessor [UNASSIGNED], security lead [UNASSIGNED], India counsel [UNASSIGNED], Product owner signoff [PENDING], controller legal entity [UNDECIDED], OCI deployment region [NOT VERIFIED]. **NO REAL-MINOR DATA PILOT.**
+**MA-DPIA-001 | Reviewed 2026-10-30 | DRAFT / NOT APPROVED.** Assessor [UNASSIGNED], security lead [UNASSIGNED], India counsel [UNASSIGNED], Product owner signoff [PENDING]. Responsible publisher/data-fiduciary identity is **owner-declared Individual SWARNA SEKHAR DHAR, India**, same intended legal/Play publisher; **identity evidence, Payments identity, merchant setup, public support confirmation and legal review pending**. No company, GST status, address or email is inferred. Final production region is reserved for deployment, not a local-development prerequisite. **REAL CHILD-DATA RELEASE OFF / NO REAL-MINOR DATA PILOT.**
 
 ## Legal and policy interpretation
 India's DPDP Act 2023 and 2025 Rules have **phased commencement**. Gazette notices dated 13 Nov 2025 specify many substantive child-data provisions 18 months after publication, subject to amendments. DPIA-specific statutory assessment obligations attach to **notified Significant Data Fiduciaries** under Act section 10; voluntarily drafting this DPIA does not prove this startup has that designation. Child behavioral monitoring is restricted under Act section 9 with **narrow, conditional exceptions**; a hypothesized real-time safety tracking exception must not be extended automatically to historical GPS profiles, app usage analytics, or remote camera/microphone capture. Android OS grants do not substitute for verified guardian authority, proper legal processing or Google Play policy.
 
 Official sources: https://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf ; https://www.meity.gov.in/static/uploads/2024/02/Digital-Personal-Data-Protection-Act-2023.pdf ; https://www.cert-in.org.in/Directions70B.jsp.
+
+## Current legal reconciliation — 2026-10-30
+
+The [source-grounded legal gate](INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md#current-source-grounded-review--2026-10-30) controls commencement, exceptions and retrieval limits. Section 9/Rules 10 and 12 are future-phase provisions; no unrestricted release is justified by phased commencement. Existing IT Act/SPDI/CERT-In duties require role/data-specific assessment now. The voluntary DPIA does not imply notified Significant Data Fiduciary status.
+
+- Google Sign-In is authentication only, not age/guardian proof. No Family Link dependency; accepted sharing invitations are **one exact child**, with approved authority/consent where required and no sibling/billing-family expansion. Adult verification and custody/dispute safeguards need separate legal and abuse-risk review.
+- The real-time safety-location exception cannot be assumed to extend to route history, app usage, DPC controls, predictions, media or media metadata. Consent does not itself disapply behavioural-monitoring restrictions. Keep each unapproved purpose OFF.
+- Add to R13: future Rule 8(3) expressly covers **personal data, associated traffic data and other processing logs**, not security logs alone. Resolve it with Rule 6(1)(e), erasure/withdrawal, processor copies, holds and backup restoration before accepting short candidate GPS/backup TTLs. No one-year blanket GPS policy or unconditional immediate-erasure promise is adopted.
+- Add to R11/R12: keep CERT-In six-hour reportability/India ICT logs separate from future DPDP breach notices (without-delay initial intimation plus specified 72-hour detail). Confirm the applicable grievance regime, including **2026-amended** intermediary deadlines if that role applies. Neither an app-support email nor the owner's declaration proves a staffed statutory contact or grievance appointment.
+- Actual vendor roles, valid processor contracts where required, region/transfers, subprocessor copies and deletion evidence remain unapproved. Individual publisher status does not automatically exclude commercial data-security obligations.
+
+**Residual disposition unchanged: NO-GO.** The owner declaration resolves the identity choice, not verification, signoff, contractual or implementation gates; no real child-data processing or external identity-document upload is authorized.
 
 ## Proposed processing and deployment reality
 | Activity | Data/source | Status |
@@ -26,7 +38,7 @@ Official sources: https://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bf
 | Derived trip/usage | PostGIS location, outbox, aggregated sessions | DESIGN, worker not implemented |
 | Vendor services | OCI/Google/Maps/FCM/Drive/Play Billing, optional TURN/SMS | Not finally contracted |
 
-There is **no deployed Android application, C++ backend, app signing configuration, production database or restored offsite backup** verified in repo. Historical OCI Chicago plans conflict with possible India/Mumbai; no final region or processor contract confirmed.
+The 2026-10-27 baseline did not verify a deployed Android application, backend, production database or restored offsite backup. This legal-document review does **not** certify the current build/signing/deployment state. Historical Chicago/India hosting scenarios are not selected infrastructure; final deployment region and processor contracts remain unconfirmed.
 
 ## Data flows and trust
 Alarka OS → encrypted local queue → authenticated child-bound HTTPS → Drogon Tx A durable PostgreSQL inbox **after commit HTTP 202** → C++ leased bulk worker Tx B raw location+dedup+outbox → separate trip worker → authorized Madalasa. 202 inbox queued is not live GPS/trip completion. UsageStats is separate, may be delayed, and needs independent processing authority. All live content feature flags OFF. Admin roles by default see aggregate metrics; named child access needs MFA, approved case/purpose and separately logged reads.
@@ -59,7 +71,7 @@ Alarka OS → encrypted local queue → authenticated child-bound HTTPS → Drog
 - Minimize persistent child GPS copies, choose direct bulk if equal resilience with less resource use after benchmark; current accepted default durable inbox+bulk requires explicit TTL.
 
 ## Required approvals & acceptance evidence
-- [ ] Named legal publisher/controller; India counsel confirms actual statutory commencement, exemptions, privacy notice and Play Families/monitoring restrictions.
+- [ ] Verify owner-declared Individual SWARNA SEKHAR DHAR as responsible legal/Play publisher; complete pending Payments/merchant/public-support evidence. India counsel confirms actual statutory commencement, exemptions, privacy notice and Play Families/monitoring restrictions.
 - [ ] Verified guardian consent/authority with child safety complaint process; under-18 and adulthood transition handling.
 - [ ] Data retention including 14 vs 30 day raw GPS conflict; inbox, WAL, backup purge; data subjects rights and deletion.
 - [ ] OCI region, vendor DPAs and Indian ICT security log storage decided; restore and incident-reporting drill.
@@ -86,7 +98,7 @@ The uploaded 146-line assessment enumerated 12 processing activities and risks *
 | P7 Remote audio/camera/screen and file browsing | Bystanders, consent each screen session, OS sensor startup prohibition, guardian misuse | **Research P3 OFF**; no covert operation, persistent identification/indicators |
 | P8 Media **activity** metadata (not binary media) | Who observed a child, duration, verified failure; this is child-related personal data even without files | Scaled-minimal events, nullable size, no file content; parent and case-scoped admin |
 | P9 Guardian-authorized Drive backup | Independent third-party retention, regional transfer and deletion | Optional and revocable; no universal deletion promise for copies |
-| P10 Subscription, billing and tax | Controller/merchant legal entity unknown; receipts/tax law need accountant | Minimal billing reference; no card numbers |
+| P10 Subscription, billing and tax | Publisher declared Individual SWARNA SEKHAR DHAR; Payments identity/merchant setup pending; receipts/tax applicability need accountant | Manual prepaid renewal only; minimal billing reference, no card numbers or inferred GST status |
 | P11 Administrator panel | Broad child-name/ID autocomplete is an enumeration surface | Case/purpose/MFA + separate audited read, fail-closed if audit fails |
 | P12 Security/auth/operational logs | CERT-In covered ICT logs, not an excuse to retain raw GPS for 180d | 180-day India secured **ICT log** obligation assessment separate from GPS TTL |
 

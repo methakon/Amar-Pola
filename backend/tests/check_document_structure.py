@@ -47,13 +47,13 @@ def main() -> int:
     paths: set[str] = set()
     for entry in entries:
         new = ROOT / entry["canonical_path"]
-        old = ROOT / entry["original_path"]
+        old = ROOT / entry.get("compatibility_pointer_path", entry["original_path"])
         check(entry["canonical_path"] not in paths,
               f"Duplicate canonical path {new}", failures)
         paths.add(entry["canonical_path"])
         check(new.is_file() and new.stat().st_size > 200,
               f"Missing or suspiciously short canonical document: {new}", failures)
-        check(old.is_file(), f"Missing backwards-compatible reference: {old}", failures)
+        check(old.is_file(), f"Missing relocated legacy reference: {old}", failures)
         if old.is_file():
             check(new.name in old.read_text(encoding="utf-8"),
                   f"Forwarding page does not point to correct filename: {old}", failures)

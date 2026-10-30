@@ -4,6 +4,16 @@
 
 **Document MA-RET-001 | 2026-10-27. Status DRAFT, NOT ADOPTED.** No real child data collection approved. Earlier docs propose **14 days raw GPS**; uploaded draft proposed **30 days**. These conflict; neither is an adopted retention policy. Date/time windows below are candidates for discussion and must be reconciled with purpose-specific India legal and Play disclosures before implementation.
 
+## Current legal reconciliation — 2026-10-30
+
+**Still DRAFT / NOT ADOPTED; real child-data release OFF.** Owner-declared responsible publisher is **Individual SWARNA SEKHAR DHAR, India**, same intended legal/Play publisher. Identity evidence, Payments identity, merchant setup, public support confirmation and legal review remain pending. The declaration approves no retention number or deletion exception.
+
+The [current official-source legal gate](INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md#current-source-grounded-review--2026-10-30) distinguishes current CERT-In/IT duties from future-phase DPDP provisions. In particular, future **Rule 6(1)(e)** refers to one-year retention of the specified security logs and personal data; **Rule 8(3)** separately requires retention of **personal data, associated traffic data and other logs of processing** for at least one year for Seventh Schedule purposes. Its wording must **not** be reduced to a security-log-only rule. Counsel must reconcile its scope with purpose limitation, consent withdrawal, section 8(7)/12 erasure, processor copies and lawful holds before approving the shorter candidates below. This review neither adopts one-year retention of all GPS nor certifies that 14/30-day raw GPS or 30/35-day backups are sufficient.
+
+Rule 8(1)/Third Schedule inactivity periods apply to specified classes/thresholds and purposes, not a general three-year allowance for this app. CERT-In's existing rolling 180-day India ICT-log duty is a separate category; its May 2022 FAQ does not authorize arbitrary child-content retention. SPDI applicability, purpose-limited retention, withdrawal, grievance and transfer/security duties still require full-text counsel review; the legal gate records the limited SPDI retrieval.
+
+Before release, approve a per-store matrix: data category and purpose; applicable commenced law/effective date; exact statutory or necessity basis; minimum/maximum and clock; restricted hold/access; processor and backup/WAL expiry; deletion/tombstone propagation; evidence and review owner. Rights responses must distinguish revoked access, stopped intake, active-store deletion, restricted lawful retention and backup expiry, without claiming impossible remote deletion of independent adult-held copies. Preserve confidential custody/abuse reporting and exact-child authorization; no sibling-wide deletion/access simply from a co-parent invite. All periods below remain candidates subject to this reconciliation.
+
 ## Retention principles
 - Data purpose + guardian authority are separate from Android grants. Retention measured from **original observation/event time** where applicable, not later upload or batch queue acceptance.
 - Offline 48-hour Alarka queue is a **device storage capacity design target**, not permission for unrestricted capture, a universal 48-hour data-retention policy, or a guarantee that the OS will gather data.

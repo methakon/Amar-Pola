@@ -1,110 +1,118 @@
-#include "Database.h"
-#include <drogon/drogon.h>
-#include <charconv>
-#include <condition_variable>
-#include <deque>
-#include <functional>
+// Madalasa-Alarka M1 backend skeleton. Implements only the cross-cutting rules (request id, error envelope, health).
+// Business routes are added against docs/openapi-m1.yaml in later changes. SYNTHETIC DATA ONLY.
+#include <cstdlib>
 #include <iostream>
-#include <mutex>
-#include <thread>
-#include <vector>
 
-namespace {
-// Blocking repository work stays off Drogon's I/O loop. Two workers and a
-// bounded queue match the two runtime DB connections; no unbounded fan-out.
-class Workers {
- public:
-    Workers() {
-        for (int i=0; i<2; ++i) workers_.emplace_back([this] {
-            for (;;) {
-                std::function<void()> task;
-                {
-                    std::unique_lock lock(mutex_);
-                    available_.wait(lock,[this]{return stopped_ || !queue_.empty();});
-                    if (stopped_ && queue_.empty()) return;
-                    task=std::move(queue_.front()); queue_.pop_front();
-                }
-                task();
-            }
-        });
-    }
-    ~Workers() {
-        { std::lock_guard lock(mutex_); stopped_=true; }
-        available_.notify_all();
-        for (auto &worker:workers_) worker.join();
-    }
-    bool submit(std::function<void()> task) {
-        std::lock_guard lock(mutex_);
-        if (stopped_ || queue_.size()>=64) return false;
-        queue_.push_back(std::move(task)); available_.notify_one(); return true;
-    }
- private:
-    bool stopped_=false;
-    std::mutex mutex_;
-    std::condition_variable available_;
-    std::deque<std::function<void()>> queue_;
-    std::vector<std::thread> workers_;
-};
-using Callback=std::function<void(const drogon::HttpResponsePtr &)>;
+#include <drogon/drogon.h>
 
-drogon::HttpResponsePtr error(const int status,const std::string &code,const std::string &message) {
-    Json::Value body;
-    body["code"]=code; body["message"]=message;
-    body["request_id"]=drogon::utils::getUuid(); body["retryable"]=(status==503);
-    auto response=drogon::HttpResponse::newHttpJsonResponse(body);
-    response->setStatusCode(static_cast<drogon::HttpStatusCode>(status));
-    response->addHeader("Cache-Control","no-store");
-    return response;
-}
-std::string token(const drogon::HttpRequestPtr &request) {
-    const auto header=request->getHeader("authorization");
-    if (!header.starts_with("Bearer ")) throw madalasa::ApiError(401,"AUTHENTICATION_REQUIRED","Parent session required");
-    return header.substr(7);
-}
-int limit(const drogon::HttpRequestPtr &request) {
-    const auto text=request->getParameter("limit");
-    if (text.empty()) return 25;
-    int value=0;
-    const auto [end,code]=std::from_chars(text.data(),text.data()+text.size(),value);
-    if (code!=std::errc{} || end!=text.data()+text.size() || value<1 || value>100)
-        throw madalasa::ApiError(400,"INVALID_REQUEST","Invalid pagination");
-    return value;
-}
-void dispatch(Workers &workers,const Callback &callback,std::function<Json::Value()> task) {
-    const auto job=[callback,task=std::move(task)] {
-        try {
-            auto response=drogon::HttpResponse::newHttpJsonResponse(task());
-            response->addHeader("Cache-Control","no-store"); callback(response);
-        } catch (const madalasa::ApiError &e) { callback(error(e.status,e.code,e.what())); }
-        catch (const std::exception &) { callback(error(503,"DATABASE_UNAVAILABLE","Database operation unavailable")); }
-    };
-    if (!workers.submit(job)) callback(error(503,"BACKPRESSURE","Request queue full; retry later"));
-}
-}
+#include "auth.h"
+#include "db_support.h"
+#include "families.h"
+#include "http_support.h"
 
 int main() {
-    try {
-        trantor::Logger::setLogLevel(trantor::Logger::kWarn);
-        madalasa::Database database(madalasa::connectionInfoFromEnvironment());
-        Workers workers;
-        auto &app=drogon::app();
-        app.setThreadNum(1).setClientMaxBodySize(65536).addListener("127.0.0.1",18080);
-        app.registerHandler("/v1/parents/me",[&](const drogon::HttpRequestPtr &req,Callback &&cb) {
-            dispatch(workers,cb,[&,req]{return database.profile(token(req));});
-        },{drogon::Get});
-        app.registerHandler("/v1/children/{1}",[&](const drogon::HttpRequestPtr &req,Callback &&cb,std::string id) {
-            dispatch(workers,cb,[&,req,id=std::move(id)]{return database.child(token(req),id);});
-        },{drogon::Get});
-        app.registerHandler("/v1/families/{1}/children",[&](const drogon::HttpRequestPtr &req,Callback &&cb,std::string id) {
-            dispatch(workers,cb,[&,req,id=std::move(id)]{return database.children(token(req),id,req->getParameter("cursor"),limit(req));});
-        },{drogon::Get});
-        app.registerHandler("/v1/children/{1}/consents",[&](const drogon::HttpRequestPtr &req,Callback &&cb,std::string id) {
-            dispatch(workers,cb,[&,req,id=std::move(id)]{return database.consents(token(req),id,req->getParameter("cursor"),limit(req));});
-        },{drogon::Get});
-        std::cout<<"Local database-backed API listening on 127.0.0.1:18080\n";
-        app.run();
-    } catch (const std::exception &) {
-        std::cerr<<"Backend startup failed: check local database availability and restricted runtime configuration\n";
-        return 1;
+  using namespace drogon;
+  // Parse once before registering any listener/client. Bad limits cannot silently disable deadlines.
+  try {
+    (void)ma::db_limits();
+  } catch (const std::invalid_argument&) {
+    std::cerr << "invalid database limit configuration" << std::endl;
+    return 78;
+  }
+  const char* port_env = std::getenv("MA_LISTEN_PORT");
+  const char* addr_env = std::getenv("MA_LISTEN_ADDR");
+  const int port = port_env ? std::atoi(port_env) : 8080;
+  const std::string addr = addr_env ? addr_env : "127.0.0.1";
+
+  // Every request gets a fresh server-generated id before routing; every response carries it.
+  app().registerPreRoutingAdvice([](const HttpRequestPtr& req, AdviceCallback&&, AdviceChainCallback&& next) {
+    req->getAttributes()->insert(ma::kRequestIdAttr, ma::new_request_id());
+    next();
+  });
+  app().registerPreSendingAdvice([](const HttpRequestPtr& req, const HttpResponsePtr& resp) {
+    resp->removeHeader(ma::kRequestIdHeader);
+    resp->addHeader(ma::kRequestIdHeader, ma::request_id_of(req));
+  });
+
+  // Liveness only: no database access, no data. Readiness is added with the database layer.
+  app().registerHandler(
+      "/healthz",
+      [](const HttpRequestPtr&, std::function<void(const HttpResponsePtr&)>&& cb) {
+        Json::Value j;
+        j["status"] = "ok";
+        cb(HttpResponse::newHttpJsonResponse(j));
+      },
+      {Get});
+
+  // Database: connection settings come from the environment; the role MUST be ap_m1_api (NOBYPASSRLS).
+  if (const char* db = std::getenv("MA_PG_DB")) {
+    auto env = [](const char* k, const char* d) { const char* v = std::getenv(k); return std::string(v ? v : d); };
+    drogon::orm::PostgresConfig cfg;
+    cfg.host = env("MA_PG_HOST", "127.0.0.1");
+    cfg.port = static_cast<unsigned short>(ma::db_limits().port);
+    cfg.databaseName = db;
+    cfg.username = env("MA_PG_USER", "ap_m1_api");
+    cfg.password = env("MA_PG_PASSWORD", "");
+    cfg.connectionNumber = ma::db_limits().connections;
+    cfg.name = ma::kDbClientName;
+    cfg.isFast = false;
+    cfg.characterSet = "";
+    // v1.9.14 DbClientImpl bounds both queued transaction acquisition and SQL
+    // execution with this value; each acquired Transaction inherits it.
+    cfg.timeout = ma::db_limits().client_seconds();
+    cfg.autoBatch = false;
+    // v1.9.14 maps these to PostgreSQL startup -c options (not libpq keywords).
+    // Server-side cancellation frees the connection even after a client timeout.
+    cfg.connectOptions = {{"statement_timeout", std::to_string(ma::db_limits().statement_ms)},
+                          {"lock_timeout", std::to_string(ma::db_limits().lock_ms)},
+                          {"idle_in_transaction_session_timeout", "60000"}};
+    app().addDbClient(cfg);
+  } else {
+    LOG_WARN << "MA_PG_DB not set: routes that need the database answer 503";
+  }
+
+  ma::Authenticator authenticate;
+  try {
+    authenticate = ma::select_authenticator();
+  } catch (const std::invalid_argument&) {
+    std::cerr << "invalid Google OIDC client configuration" << std::endl;
+    return 78;
+  }
+  app().registerHandler(
+      "/v1/families",
+      [authenticate](HttpRequestPtr req) -> Task<HttpResponsePtr> { co_return co_await ma::create_family(std::move(req), authenticate); },
+      {Post});
+
+  // Unknown route or wrong method -> catalog format, never Drogon's HTML page.
+  app().setDefaultHandler([](const HttpRequestPtr& req, std::function<void(const HttpResponsePtr&)>&& cb) {
+    cb(ma::error_response("NOT_FOUND", "no such route", ma::request_id_of(req)));
+  });
+  app().setExceptionHandler([](const std::exception&, const HttpRequestPtr& req,
+                               std::function<void(const HttpResponsePtr&)>&& cb) {
+    // Never echo exception text: it may contain SQL or identifiers.
+    cb(ma::error_response("INTERNAL_ERROR", "unexpected server error", ma::request_id_of(req)));
+  });
+  // Errors raised by the framework itself (oversize body, bad request line, ...) also use the catalog envelope and a
+  // server-generated request id, so no Drogon-specific error page or header set can leak.
+  app().setCustomErrorHandler([](HttpStatusCode code, const HttpRequestPtr& req) {
+    const std::string rid = req ? ma::request_id_of(req) : ma::new_request_id();
+    switch (code) {
+      case k413RequestEntityTooLarge: return ma::error_response("PAYLOAD_TOO_LARGE", "request body too large", rid);
+      case k400BadRequest: return ma::error_response("INVALID_REQUEST", "malformed request", rid);
+      case k404NotFound:
+      case k405MethodNotAllowed: return ma::error_response("NOT_FOUND", "no such route", rid);
+      case k503ServiceUnavailable: return ma::error_response("SERVICE_UNAVAILABLE", "service unavailable", rid, true);
+      default: return ma::error_response("INTERNAL_ERROR", "unexpected server error", rid);
     }
+  });
+  // The API limit is 64 KiB and handlers enforce it with a catalog-format 413. Drogon's own parser limit must be HIGHER:
+  // its over-limit answer is a bare "413 ... Connection: close" written before any handler, advice or error hook runs,
+  // so it has no JSON envelope and no X-Request-Id. Bodies over 1 MiB still get that bare 413; the reverse proxy should
+  // cap the body at 64 KiB so clients never see it (docs/API_CONVENTIONS_AND_ERROR_CATALOG.md, G-7).
+  app().setClientMaxBodySize(1024 * 1024);  // 413 PAYLOAD_TOO_LARGE is mapped in the body-size handler when routes exist
+
+  app().addListener(addr, static_cast<uint16_t>(port));
+  std::cout << "madalasa backend listening on " << addr << ":" << port << std::endl;
+  app().run();
+  return 0;
 }

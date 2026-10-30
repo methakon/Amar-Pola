@@ -2,13 +2,15 @@
 
 > **Document control:** M8 / 02-operations-and-support · Proposed owner: SRE + incident lead (not assigned) · Registry: DOCUMENTED_REVIEW_PENDING; approval not recorded. [Master register](../../../MASTER_DOCUMENT_CONTROL_REGISTER.md).
 
-**Document:** MA-IR-001 · **Reviewed:** 2026-10-27 · **State:** DRAFT, NOT EXERCISED, CONTACTS AND LEGAL SIGN-OFF PENDING.  
+**Document:** MA-IR-001 · **Updated:** 2026-10-30 · **State:** DOCUMENTED_REVIEW_PENDING, NOT EXERCISED, CONTACTS AND LEGAL SIGN-OFF PENDING. Publisher/controller for planning is the owner-declared individual **SWARNA SEKHAR DHAR**, India; Google Payments identity verification is pending. This does not appoint the technical, legal or incident-response roles below.
 **Scope:** Android Alarka/Madalasa, connected Wear OS devices, future C++20 Drogon API, PostgreSQL/PostGIS, temporary GPS inbox, encrypted local queues, guardian/child access, admin console, third-party APIs, OCI, GitHub/CI, Play Console and personnel.  
 **Companion:** [Security Policy](../../../../SECURITY.md), [Threat Model](../../M1-secure-platform-foundation/03-security-and-permissions/THREAT_MODEL_STRIDE.md), [Runbooks](OPERATIONS_RUNBOOKS.md), [Data Retention](../../M0-foundation-and-approvals/03-legal-and-privacy/DATA_RETENTION_SCHEDULE.md), [DPIA](../../M0-foundation-and-approvals/03-legal-and-privacy/DPIA.md).
 
 **Deployment reality:** No production backend or child Android app has been verified in the repository. This is a *planned procedure*, not evidence of an active 24×7 incident team. No real child location, usage or media data may be introduced until the open release gates close.
 
 ## 1. Prepare before real-data onboarding
+
+Preparation can proceed while identity verification is pending: run a synthetic tabletop for forged guardian authority, cross-child data exposure, compromised upload credential, unsafe screen capture and missing deletion suppression after restore. Record T0, incident lead, containment decision, minimal evidence inventory, statutory/contractual applicability decision and recovery validation. No actual regulator notification, Console change, credential rotation or real-child evidence collection is authorized by this preparation. Keep operational clock decisions tied to the current [India legal review](../../M0-foundation-and-approvals/03-legal-and-privacy/INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md), not the payments verification outcome. **Exercise status: NOT_EXECUTED.**
 
 | Role | Required assignment before pilot | Responsibility |
 |---|---|---|
@@ -38,7 +40,7 @@ Set **T0** to earliest documented awareness that triggers the relevant legal rul
 |---|---|---|
 | **CERT-In Directions dated 28 April 2022** | **Report covered incidents within 6 hours of noticing or being brought to notice**, subject to Annexure I and official FAQs | India counsel/security determine reportability immediately; partial information may be reported within clock and updated later; designate and maintain contact |
 | **CERT-In ICT security logs** | Covered entities retain secured ICT logs for rolling **180 days within Indian jurisdiction** | Use separate metadata-minimized ICT logs; does **not** require 180 days of raw child GPS, recordings or application-use history |
-| **DPDP Rules 2025, Rule 7** | **Phased commencement**: substantive breach-intimation obligations appear scheduled for **13 May 2027** under 13 Nov 2025 notifications; verify corrigenda and latest notifications on incident date | Once in force and applicable: affected individuals without delay; Board initial intimation without delay; detailed Board report generally within **72 hours** or written extension. In Oct 2026 **do not state it already applies identically to every entity** |
+| **DPDP Rules 2025, Rule 7** | **Phased commencement**: eighteen months from Gazette publication; 13-versus-14 May2027 planning date depends on publication evidence, not instrument drafting date. The current India legal gate reserves the precise date for counsel and checks the corrigendum | Once in force and applicable: affected individuals without delay; Board initial intimation without delay; detailed Board report generally within **72 hours** or written extension. In Oct2026 **do not state it already applies identically to every entity**; recheck notifications on incident date |
 | Sector/vendor/platform duties | Contractual or applicable-law specific | Security/legal owner checks processors (Oracle/Google), Google Play declarations, police/child-safety emergency escalation, and any jurisdiction-specific law |
 
 **Sources (verify current versions at real incident):**

@@ -4,20 +4,38 @@
 
 > **Current product:** **Madalasa** (parent app) + **Alarka** (child app); the GitHub repository is now **[Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka)**. [English mythological inspiration](../02-market-and-feasibility/BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
-**Date:** 2026-10-25 | **Version:** 1.0 | **State:** OPEN | **Purpose:** actionable project-owner decisions and independently verifiable engineering/release gates.
+**Established:** 2026-10-25 | **Updated:** 2026-10-30 | **Version:** 1.2 | **State:** DOCUMENTED_REVIEW_PENDING | **Purpose:** actionable project-owner decisions and independently verifiable engineering/release gates. Current statements below supersede historical question/queue text; an owner decision is not external verification.
 
 Each blocker has an owner, decision or required evidence, and lifecycle: OPEN → DECIDED → IMPLEMENTED → VERIFIED → CLOSED. **Selecting a product option does not resolve software testing or Google Play review.**
+
+## Current progress while Google identity verification is pending — 2026-10-30
+
+Source and decision owner: explicit project-owner instruction dated 2026-10-30. **Recorded owner decision:** individual publisher **SWARNA SEKHAR DHAR**, country **India**, same legal individual as Google Play publisher. **Google Payments identity verification: PENDING; merchant setup: PENDING; legal review: PENDING; public support contact: PENDING CONFIRMATION.** No registered company, GST registration, legal address or support email is claimed. Do not put ID/PAN/bank details, sensitive screenshots, purchase tokens or credentials in GitHub.
+
+| Gate | Current status | Work permitted now / evidence still required |
+|---|---|---|
+| B-01 / X-01 publisher | OWNER_DECIDED; external identity/Payments verification PENDING | Reconcile notices and controller identity now; owner supplies only redacted outcome/status, not identity documents |
+| E-09 ParentOIDC | OPEN; default-deny implementation seam only | Provider-validation design and synthetic negative tests need not wait for Payments; real parent authentication and guardian authority remain separate |
+| E-01 / E-02 / PR9 | Local M1 SQL and hosted narrow backend gates VERIFIED at pinned PR head; PR9 NOT MERGED | [PR9 review](../../M1-secure-platform-foundation/02-development-process/M1_STACK_PR9_REVIEW_2026-10-30.md); owner approval required before merge, V2 co-parent/schema convergence still separate |
+| B-02 / B-03 / B-04 | OWNER_DECIDED: India0–17; transparent Alarka; complete inventory eligible for review only | Feature/platform/legal/Play disposition and evidence; no blanket release or Android implementation authorization |
+| B-05 | **OWNER DECIDED: standard installation first; Device Owner provisioning excluded from first release.** Read-only managed/Device Owner state detection may be designed; no elevation or silent conversion. | Never capture financial screens; no protection bypass. Future managed mode requires a separate owner decision, Android-supported provisioning, clear guardian involvement and physical-device verification |
+| B-06 / B-07 / B-09 / B-18 | OPEN | Child SOS interaction, purpose/category retention and exact-child guardian invite/revoke/history scopes; qualified counsel review |
+| B-14 / E-13 | Founding-family commercial rule OWNER_APPROVED; provider behavior UNVERIFIED | First 1,008 distinct paid families, one count per family, ₹50/month or ₹500/year for eligible paid children including later additions; no change to prices. Thirteen sandbox cases NOT_RUN; prepaid founding catalog and multi-child capacity unproven. Owner/finance must decide refund/fraud disqualification, slot recycling and checkout reservation/order; no automatic policy invented |
+| M8 / M9 | DOCUMENTED_REVIEW_PENDING; release NOT_READY | Threat/test/incident and reviewer-pack preparation now; builds, physical OS/OEM evidence, signed notices, provider tests and owner Console actions later |
+| Signing/recovery | Earlier upload-only key generated and local recovery-tested; permanent custody BLOCKED | Independent off-device backup/recovery custody and actual Play app-signing role confirmation; no new credentials authorized by current work |
+
+Only owner-held identity/contact verification, merchant/payment setup and account-dependent Console eligibility/actions are directly pending on Google/account workflow. OIDC engineering, RLS/SQL tests, legal analysis, policy checklists, billing lifecycle design and evidence preparation can continue independently. No infrastructure deployment, real-child processing, Android implementation, Console submission or PR merge is authorized by this update.
 
 ## A. Decisions you can make now
 
 | ID | Severity | Your question / choice | Conservative default until answered | What you can provide | Blocks |
 |---|---|---|---|---|---|
-| **B-01** | Critical | What legal person/company publishes the app? | Documentation drafts only; no public legal claims | Company/legal name, support email, business contact | Privacy/Play |
-| **B-02** | Critical | Launch countries and child age range? | Internal testing only | Countries, ages, applicable parent authority expectations | Child privacy/legal |
-| **B-03** | Critical | Confirm identifiable monitoring app, visible icon and required persistent notification? | Yes; **no stealth option** | Explicit acceptance | Play/Android UX |
-| **B-04** | High | Exact first-release feature list? | Pairing, location, trip/stop/map, named places, usage, trust diagnostics and privacy; other modules staged | Core vs paid vs later list | Delivery budget |
-| **B-05** | High | Normal consumer phones, managed-device edition, or both? | Standard installation first; optional separate managed edition | Whether device-owner provisioning/reset is acceptable | Device blocking and distribution |
-| **B-06** | High | Is optional child SOS/check-in/widget UI acceptable while main tracking Activity stays closed? | No continuously open Activity; optional action UI | Child interaction preferences | SOS and child UX |
+| **B-01** | Critical | Individual legal publisher identified: **SWARNA SEKHAR DHAR**, India; same legal individual as Google Play publisher | **OWNER_DECIDED / EVIDENCE_PENDING**: Google Payments identity verification pending; merchant setup pending; public support contact pending confirmation; legal review pending | Owner-held Console evidence of outcome; confirm public contact and notices without publishing ID, address or payment evidence | Privacy/Play |
+| **B-02** | Critical | **OWNER DECIDED: India-only initial launch; children aged 0–17 inclusive (under 18)** | Product scope established; legal assessment and Play policy classification still OPEN | India-specific parental authority, age-appropriate permissions, monitoring exemptions, consent and policy review | Child privacy/legal |
+| **B-03** | Critical | **OWNER APPROVED: transparent background operation** — identifiable Alarka icon, prominent disclosure, applicable monitoring/FGS notifications, untouched OS privacy indicators, no stealth or permission bypass; Activity may close after setup, boot recovery only as Android permits | **DECIDED; Android/Play/India compliance evidence pending** | Android OS/OEM runtime tests, monitoring-app declaration, background-location review, child-privacy legal assessment | Play/Android UX |
+| **B-04** | High | **OWNER DECIDED: evaluate the complete previously planned feature inventory as first-release candidates** | No blanket feature shipping approval; each candidate must pass India legal, Google Play, Android OS and security/privacy acceptance gates | Feature-by-feature eligibility evidence and final surviving release list | Delivery budget/compliance |
+| **B-05** | High | **OWNER DECIDED (2026-10-30): standard installation for first release; managed Device Owner provisioning deferred.** Alarka may read and report whether the device is already managed/Device Owner, but must not elevate itself or silently convert an already-configured phone. | Standard-mode permissions and compatibility still require device tests. A future managed edition requires a new owner decision, legitimate Android provisioning (normally eligible new/factory-reset device), guardian involvement and physical proof. | First-release scope; future managed edition |
+| **B-06** | High | Child-initiated SOS/check-in, optional visible foreground evidence capture, and parent-only urgent alarm | **OWNER REQUESTED DESIGN; legal/Play/Android evidence OPEN.** Child opens Alarka and presses SOS; event sends independently; optional bounded visible capture only while foreground; dedicated parent SOS notification channel only | See [B-06 UX/engineering handoff](../../../ui/figma-functional-handoff/B06_CHILD_SOS_CAPTURE_AND_PARENT_ALARM_HANDOFF_2026-10-30.md). No Figma file or implementation claimed. | Child SOS, media privacy, parent alarm |
 | **B-07** | High | Retention for raw GPS, trips, usage, audit and backups? | Planning candidates: raw 14d, derived 90d, usage 90d, audit 90d; **not approved** | Actual retention per category | Privacy/schema/cost |
 | **B-08** | High | Server provider and hosting/data-residency region? | No production deployment before selection | Hosting region/provider, budget | Deployment/processors |
 | **B-09** | High | Who may add/revoke guardians, and how long can pickup access last? | Family owner approves per-child; temporary 45min current-location only | Roles, scopes, TTL | ACL/security |
@@ -25,9 +43,9 @@ Each blocker has an owner, decision or required evidence, and lifecycle: OPEN �
 | **B-11** | High | Standalone Wear OS watch at launch? | Phone-first; Wear beta after power tests | Watch brands and GPS/LTE capability | Wear architecture |
 | **B-12** | High | Battery preservation vs detailed 5–15s route capture? | Balanced default; bounded user-authorized detail mode | Accuracy/freshness preference and context | Location tuning |
 | **B-13** | Medium | What counts as a stop or confirmed school arrival? | Initial candidate 3–5min walking / 5–10min vehicle with multiple trustworthy fixes | Desired rule after field tests | Trip/commute semantics |
-| **B-14** | High | Free/premium tiers, device count, trials and regions? | No pricing promises; use server-validated Play billing | Plans and entitlements | Billing/store |
+| **B-14** | High | Founding-family pricing and eligibility owner-approved; commercial provider integration pending | First 1,008 distinct successfully paying families count once; eligible paid children retain ₹50/month or ₹500/year including later additions; no automatic renewal in prepaid design | Sandbox proof of seats/top-ups/token verification/refund behavior, merchant/tax/legal review | Billing/store |
 | **B-15** | Medium | Does Google Drive backup ship in v1? What media and deletion behavior? | P2, opt-in only | Media type and retention/ownership | OAuth/data safety |
-| **B-16** | High | Camera/video/microphone in Play launch or deferred? | **Defer**; only openly authorized, compliant research | Defer entirely or separately fund feasibility tests | Sensitive permissions |
+| **B-16** | High | Camera/video/microphone in Play launch or deferred? | **SOS-only media remains conditional / OFF** pending counsel, Play and physical-device gates; no remote/background capture | Visible child-initiated foreground capture only; one front + one rear still sequentially where supported; short visible audio clip; permission denial never blocks SOS | Sensitive permissions |
 | **B-17** | Medium | Which alerts are high-priority vs quiet hours? | SOS priority; ordinary alerts deduped | Desired critical/noncritical alert list | Notification logic |
 | **B-18** | High | Does a guardian see full history, current only, or child-specific subset? | Explicit least privilege, owner configurable | Role/access policy | ACL and sharing |
 | **B-19** | Medium | Parent Android app only or web too? | Android first, versioned API supports future web | Client platform choices | Frontend architecture |
@@ -60,7 +78,7 @@ Each blocker has an owner, decision or required evidence, and lifecycle: OPEN �
 
 | ID | Blocker | What must happen | Who can unblock |
 |---|---|---|---|
-| **X-01** | Play publisher identity and package ownership | Verify developer account, company identity and signing setup | You / Play |
+| **X-01** | Play publisher identity and package ownership | Verify the declared individual publisher and linked Payments identity, package availability and separate upload/app-signing setup; no company claimed | Owner / Google Play |
 | **X-02** | Sensitive background-location/monitoring policy | Real app disclosure, persistent notification, video, permission declarations, reviewer access and approval | Release / Play |
 | **X-03** | Country-specific child privacy/guardianship | Independent legal review of launch territories, age and authority | Legal counsel |
 | **X-04** | Public privacy and account deletion URLs | Functioning pages matching real data operations | Product/backend |
@@ -75,20 +93,20 @@ This documentation refresh can remediate **design gaps** AG-001/002/003/006/007/
 
 ## E. Recommended next actions for you
 
-1. Most blocking decisions: **B-01, B-02, B-03, B-05, B-07, B-08, B-10, B-11, B-12, B-14, B-16**.
+1. Owner decisions B-01/B-02/B-03/B-04 and founding pricing are recorded, not awaiting the same answers again. Remaining decisions/evidence: **B-05 provisioning, B-06, B-07, B-09/B-18, B-10/B-11, B-12 and final per-feature release selection**. B-08 hosting remains a deployment decision, not a synthetic engineering blocker.
 2. Approve role sharing **B-09 and B-18** before multi-guardian data tables are implemented.
 3. Identify available real phones/watches, developer account status and desired launch region; the design can proceed using synthetic data while answers are pending.
 4. Keep **remote hidden capture, protected private-file access, and Android security bypass** excluded.
 
 Related: [Feasibility](../02-market-and-feasibility/WHOLE_PROJECT_FEASIBILITY_GATE_2026.md) · [Audit](TECHNICAL_DOCUMENT_AUDIT_GAPS_2026.md) · [SRS](../../M1-secure-platform-foundation/01-requirements-and-architecture/SRS.md).
 
-## F. Newly confirmed architecture constraints — 2026-10-25
+## F. Historical architecture direction — superseded by owner decision 2026-10-30
 
 The project owner has supplied these additional instructions. They update the **design direction** but do not certify platform capabilities or legal compliance:
 
 | Blocker | New information | Decision status | What remains open |
 |---|---|---|---|
-| **B-05** | Managed-device provisioning is available | **DIRECTION DECIDED:** plan optional fully managed child DPC path in addition to STANDARD app | Exact enrollment approach, factory reset acceptance and physical proof of device-owner authority |
+| **B-05** | Earlier proposal for optional fully managed child DPC path | **SUPERSEDED 2026-10-30:** first release is STANDARD only; Device Owner provisioning deferred. Read-only state detection may be included. | Any future managed-device edition needs a fresh owner decision and Android-compliant provisioning proof |
 | **B-10** | A mix of older and newer Android versions must be supported | **PARTIALLY DECIDED:** implement API-aware Android compatibility path, proposed minSdk 29 | Exact supported Android versions/OEM models, test fleet and capability pass evidence |
 | **B-19** | Parent interface is a **native Android app** | **DECIDED:** Kotlin/Jetpack Compose native client, no web parent client in M1 | None for architecture choice; production UI remains to be coded |
 | **B-03** | Transparent, permission-based monitoring is prioritized | **DIRECTION DECIDED:** identifiable child app and system monitoring notification are nonnegotiable | Exact localized disclosure, jurisdiction/consent and Play Console approval |
@@ -195,3 +213,38 @@ These **add to**, and do not close, B-01 legal publisher, B-02 exact launch ages
 **Owner decision (accepted as design, not code):** 1–2 minute authenticated JSON batch upload target for independently captured adaptive GPS; encrypted Alarka 48-hour **offline capacity** (not 48-hour guaranteed active GPS if Android off); PostgreSQL durable server inbox **one row per device upload batch**; C++ workers claim via bounded SKIP LOCKED/fenced leases; combine observations into **bulk INSERT** (multirow / optional COPY into temp staging) and atomically commit event dedup + raw time-partitioned GPS + route outbox + inbox PROCESSED. Drogon sends 202 QUEUED only after **inbox COMMIT**; device local cleanup only for durably ACKed records. Redis is **not selected** as an ingest requirement. Keep a direct raw bulk+dedup+outbox commit as mandatory resource/WAL comparison; inbox may consume MORE total DB I/O while helping burst isolation.
 
 **Still OPEN:** target Android/OEM/Wear 48h buffer, local encryption, 1–2 minute upload permissions/FGS, mixed source identity, phone storage and overflow policy, old consent/permitted data collection, worker crash recovery/fencing, 1k/10k/100k 48h reconnect storm benchmarks, SQL migration/retention/deletion, exact transport precision/version choice, OCI Mumbai resource sizing and Play/India minors tracking/usage legality. T-ING-01…24 ALL NOT_TESTED. Canonical [MA-INGEST-ADR-004](../../M2-location-collection/01-location-collection-and-ingestion/POSTGRES_DURABLE_INBOX_BULK_GPS_USAGE_INGESTION_ADR_2026-10-27.md).
+
+## L. 2026-10-27 recommended resolutions and M1 credential decisions
+
+Concrete recommended answers for the open owner and legal items, with the questions to put to counsel and Google Play: [Owner and legal recommended resolutions](../../../OWNER_AND_LEGAL_RECOMMENDED_RESOLUTIONS_2026-10-27.md). **Proposals only; none of B-01, B-02, B-07, B-09/B-18, OCI-06, HW-01, B-21, SOS, DR or G01–G05 is closed by them.**
+Engineering decisions C-01 to C-06 (credential lifetime, rate limits, no per-request signing, first credential, cleanup, no key rotation in M1): [M1 device credential lifecycle](../../../M1_DEVICE_CREDENTIAL_LIFECYCLE.md). Migration 0003 also removes PUBLIC execute from every `ap_m1` function.
+
+
+## 2026-10-30 G01 / G04 Google Play Console AI guidance — non-binding clarification
+
+The owner received an AI-generated response in the Play Console support flow. It stated that the parental-monitoring policy does **not** override the Families restriction on precise location for apps solely targeting children. It suggested a mixed-audience model only where the app genuinely serves that audience; audience declarations must never be manipulated to bypass policy. It also stated that **background location is not automatically permitted and requires a separate location-permissions declaration/review**.
+
+This AI response is not a human policy-team determination, app review decision or permission approval.
+
+| Gate | Updated position | Evidence still required |
+|---|---|---|
+| **G01 / R01** | **CRITICAL OPEN.** Families precise-location eligibility for Alarka's actual child-facing architecture remains unconfirmed. Do not infer an exception from the monitoring-tool flag or parent authorization. | Human written Google Play policy response addressing truthful audience, child users and precise location; preserve case ID and complete response. |
+| **G04 / R07** | **HIGH OPEN / separate approval gate.** Background location is not automatically permitted. A runtime permission grant or monitoring declaration is not Play approval. | Submit the Play Console location-permissions declaration; provide core-feature rationale, prominent in-app disclosure, runtime permission flow, demonstration video, accurate listing and public privacy policy; obtain required Play review approval before release. |
+
+**Owner/project instruction:** keep real-child GPS collection disabled until G01 is resolved and all applicable legal/Play gates are satisfied. Treat background-location approval separately from G01. Keep the target-audience declaration truthful; do not add older age groups solely to bypass Families policy. Synthetic-data engineering and non-production OS tests may continue. A human support response is still pending; the AI answer alone closes neither gate.
+
+## 2026-10-30 G02 — Indian DPDP child-location legal interpretation and commencement timing
+
+**Primary-text timing correction:** The commencement notifications schedule DPDP Act section 9 (sections 7–10) and DPDP Rules 2025 Rule 12 (within Rules 3, 5–16) to commence eighteen months after Gazette publication on 13 November 2025. The calendar computation is **13 May 2027**. Accordingly, on 30 October 2026 these provisions are scheduled but **not yet in force** under G.S.R. 843(E) and G.S.R. 846(E). Counsel must confirm the operative date, corrigenda and any later notifications before launch. This timing does not remove the need to assess other laws, Google Play policy, Android OS limits or future compliance readiness.
+
+**Substantive G02 question:** Once operative, section 9(3) generally prohibits tracking/behavioural monitoring of children; section 9(4) allows prescribed purposes subject to conditions. Rule 12 / Fourth Schedule Part B item 4 specifies determination of a child's real-time location, restricted to real-time tracking in the child's safety/protection or security interest, as a purpose for which section 9(1) and 9(3) do not apply. This is a narrow purpose-specific provision, not a blanket approval for historical route reconstruction, school/stop profiling, geofences, app usage, behavioural analytics, media capture, broad guardian sharing or indefinite retention. Section 9(2)'s detrimental-effect prohibition remains a separate issue.
+
+**G02 remains CRITICAL OPEN.** Obtain a signed Indian privacy-counsel opinion addressing:
+- whether this commercial parent/guardian service qualifies for the real-time child-safety location purpose;
+- whether it permits only on-demand current location or also periodic/background collection;
+- permissible precision, cadence, offline device queue, PostgreSQL inbox, derived data, history, retention and guardian access;
+- separate treatment of app usage/behavioural monitoring, geofences, SOS, media and admin access;
+- section 9(2), guardian authority/consent, child notice, revocation and custody disputes;
+- commencement dates, transitional/corrigendum position, other applicable Indian laws, subprocessors and cross-border processing.
+
+Required output: feature-by-feature GREEN / CONDITIONAL / PROHIBITED classification with lawful purpose, conditions, retention and evidence. Until counsel signs off, real-minor data ingestion and unapproved child tracking/usage remain OFF; synthetic-data engineering may continue. The existing India DPDP child privacy issue brief remains the detailed design reference.

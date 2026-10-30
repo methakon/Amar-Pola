@@ -1,6 +1,12 @@
 # Local PostgreSQL setup status
 
-Status: LOCAL_READY for the synthetic local database foundation and admin API development. Product/admin UI/provider/real-child/production release remains NOT_READY. This is not blanket completion of roadmap tasks.
+Status: LOCAL_READY for the synthetic local database foundation and admin API development. **Current reconciled checkpoint (2026-10-30):** the branch has been merged with `main`, convergence extends to `v2:0020`, and V2-backed *production* parent authentication is an explicit blocker (see below). Product/admin UI/provider/real-child/production release remains NOT_READY. This is not blanket completion of roadmap tasks.
+
+## 2026-10-30 main reconciliation
+
+Ledger numbers below describe the earlier 0019 checkpoint and are kept as history. The reconciled branch adds `compat/m1_pre_v2_0017` (pre-0017 retention-hold preservation) and `v2:0020` (hold restoration, definer/ACL normalization, M1 0006 lock ordering and a catalog-driven dependent-device check), covers `m1:0005`/`m1:0006` in the manifest, and keeps every published migration byte-identical. Executed on an isolated PostgreSQL 16.9/PostGIS 3.5.2 instance: fresh V2 replay plus a 232-test suite (six real HTTP→Drogon→PostgreSQL probe tests included), historical M1 suites, retention matrix, security catalog, purge/concurrency gates, populated 0006→V2 and 0004→V2 upgrades with holds preserved, hold-aware purge and a backup/restore/quarantine drill. Full commands, exit codes and limits: [PR11 reconciliation acceptance](../../../evidence/local/database/PR11_RECONCILIATION_ACCEPTANCE_2026-10-30.md).
+
+**Blockers retained:** V2 production session issuance for a verified Google OIDC identity is unimplemented (`mint_session` stays synthetic-gated), `ap_db_executor` RLS-bypass posture is assumed rather than separately certified, and the `0017`→`0020` range is only safe inside one transaction. Production `ma_backend` therefore remains on the historical M1 authorization path.
 
 ## Verified at the recorded checkpoint
 

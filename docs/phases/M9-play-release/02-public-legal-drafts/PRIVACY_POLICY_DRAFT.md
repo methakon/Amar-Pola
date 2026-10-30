@@ -8,9 +8,35 @@
 
 > **LEGAL/PRODUCT REVIEW REQUIRED.** Every bracketed field and TBD must be completed before hosting as a public policy. Do not claim an implemented feature, encryption measure or deletion SLA until it is actually verified. This is a template for the intended product, not the live policy of an operating service.
 
+## Current publication gates and processing boundaries — 2026-10-30
+
+**INTERNAL PUBLICATION DRAFT ONLY — DO NOT PUBLISH OR TREAT AS LEGAL APPROVAL.** Owner-selected publisher is **SWARNA SEKHAR DHAR, Individual, India**, initial children **0–17**. Google Payments identity verification **PENDING**; merchant setup **PENDING**; legal review **PENDING**; public support/privacy/grievance contact and approved public postal address **PENDING CONFIRMATION**. Do not copy the admin login into public contacts or invent company/GST/address details. Verification evidence stays private. Individual publisher selection and merchant/Payments verification are separate matters.[29][30]
+
+- **Separate apps:** Madalasa receives permitted reports and manages adult account/paid child choices; Alarka is a recognizable child-device companion. Actual data collected by each package and every SDK must be disclosed separately, including linked capability/grant metadata, source timestamps, local up-to-48h location queue, temporary inbox/WAL/backups, derived history/usage, parent service-use/audit and any approved support data. Final actual feature list, processors/region, purpose-specific retention, deletion deadlines/exceptions and public URLs remain unresolved. No unverified encryption or deletion SLA may become a public promise.[13][14]
+- **Authority and rights:** Google Sign-In authenticates an adult, not custody. Accepted exact-child invitations create scoped revocable sharing only under approved lawful authority/consent; no sibling inheritance or Family Link API dependency. Payment/Android permission/DeviceOwner never supplies legal authority. Child-purpose review separately covers live safety, historical routes, usage and any media. India 0–17 scope is decided; lawfulness/Families disposition is not. Play's solely-child-targeted location restriction is still an unresolved distribution gate.[10]
+- **Transparency:** Activity may close, but Alarka launcher/monitoring notice remains discoverable and mandatory sensor indicators are untouched. No stealth, permission suppression, hidden launcher, notification bypass, Accessibility surveillance workaround, or adult/spouse tracking. Denial/revoke/force-stop/offline may stop features; parent sees last-confirmed/unknown, not guaranteed instantaneous status.[9]
+- **Media and financial privacy:** Remote audio/photo/video/screen capture stays **OFF/P3**. Conditional future P2P/relay, encrypted parent-local recording or Drive flow is not “no personal data processing”; no media files on VPS still permits sensitive metadata and endpoint/relay processing requiring disclosure. Any future screen share requires fresh device consent every session, secure-screen respect and verified exclusion of financial/banking/wallet/UPI/payment/password screens. Unknown classification fails closed **before capture/transmission**; absent robust transition/classification proof keep screen share OFF. No promise of capture, sensor availability, background-start exemption or financial-screen classifier exists.[3][13]
+- **Commercial rights:** Prepaid/manual top-up only, no auto-renewal or trial auto-conversion. User can stop future purchases by declining further top-ups; account deletion/revocation is distinct from refunds and lawful financial retention. Prices and quotas in the commercial terms are unchanged; restricted media budgets confer no available media entitlement while OFF. Owner must verify actual Play product behavior/taxes/refunds before offering checkout.[16]
+- **Public completion:** PREP now: draft package-specific notices/rights/contact placeholders. BUILD later: prove data flows, visible disclosures, lawful feature gates, version/capability preflight before ACCEPT, revocation/erasure including late queues/restore and no financial frames. OWNER/COUNSEL: approve lawful authority/retention/processor transfers, supply real public contact/address, verify merchant identity, publish accessible privacy/deletion/support pages and complete accurate Console declarations. None is certified by this draft.
+
+Official Android/Play sources retrieved **2026-10-30**; they establish platform/policy constraints, not legal advice or service compliance. Earlier legal research below is retained historical review material; current India-qualified counsel must validate applicability/commencement and precise permitted purposes before publication. The historical Chicago hosting option is not an imposed deployment region.
+
+## Sources
+
+[3] https://developer.android.com/media/grow/media-projection
+[9] https://support.google.com/googleplay/android-developer/answer/9888380
+[10] https://support.google.com/googleplay/android-developer/answer/9893335
+[13] https://support.google.com/googleplay/android-developer/answer/10787469
+[14] https://support.google.com/googleplay/android-developer/answer/13327111
+[16] https://developer.android.com/google/play/billing/subscriptions
+[29] https://support.google.com/googleplay/android-developer/answer/13628312
+[30] https://support.google.com/googleplay/android-developer/answer/16260648?hl=en
+
+---
+
 ## 1. Who operates Madalasa–Alarka?
 
-Madalasa–Alarka is planned as a parental device-safety and monitoring service operated by **[LEGAL BUSINESS NAME]** (“we”). Contact us at **[PUBLIC SUPPORT EMAIL]**, **[BUSINESS ADDRESS / RELEVANT LEGAL CONTACT]**. Last effective date: **[PUBLICATION DATE]**.
+Madalasa–Alarka is planned as a parental device-safety and monitoring service published by **SWARNA SEKHAR DHAR, an Individual in India** (“we”). This is the owner-selected publisher identity, not a claim of completed Google Payments or merchant verification. Public support email: **[PENDING OWNER CONFIRMATION]**. Privacy/grievance contact: **[PENDING OWNER/COUNSEL CONFIRMATION]**. Publishable postal/legal contact address: **[PENDING OWNER CONFIRMATION]**. Effective date: **[PUBLICATION DATE — NOT YET EFFECTIVE]**. No registered company, GST status, address or verified payment account is asserted.
 
 The service is intended for appropriately authorized parents and guardians to supervise their children's devices. It is not intended for covert monitoring of adults or other unauthorized individuals.
 
@@ -53,11 +79,11 @@ Parents may revoke a device, disconnect Google Drive and request account/data de
 
 ## 8. Parental authority and child privacy
 
-Only a person with the required legal authority should enroll a child's phone. Review regional consent/child privacy requirements before launch, including intended countries and age ranges **[TARGET JURISDICTIONS AND AGE POLICY]**. The child agent will have a recognizable identity and required disclosure and notifications.
+Only a person with the required legal authority should enroll a child's phone. Review regional consent/child privacy requirements before launch, for the owner-selected initial scope **India, children aged 0–17 inclusive (under 18)**; purpose-specific lawful processing, guardian verification/consent and Play audience eligibility remain unresolved. The child agent will have a recognizable identity and required disclosure and notifications.
 
 ## 9. Your choices
 
-A parent may review enabled features, revoke pairing, manage the subscription, request deletion and revoke cloud integrations. Android permissions and some special-access settings can be changed in device Settings. Revoking access may prevent location or usage reports from updating.
+A parent may review enabled features, revoke pairing, manage manually purchased prepaid access, stop further top-ups, request deletion and revoke cloud integrations. There is no automatic renewal or trial auto-conversion; refund requests are a separate process subject to Play and applicable law. Android permissions and some special-access settings can be changed in device Settings. Revoking access may prevent location or usage reports from updating.
 
 ## 10. Changes
 
@@ -65,7 +91,7 @@ We will update the policy and notify users where required if data handling or th
 
 ## Must-complete publication checklist
 
-- [ ] Operator legal name/contact validated
+- [ ] Owner-selected Individual name SWARNA SEKHAR DHAR reconciled; Payments identity/legal review and public contact/address validation still pending
 - [ ] All SDKs and backend data recipients listed
 - [ ] Actual retention and deletion behavior tested
 - [ ] Play Data safety wording reconciled with collection
@@ -79,15 +105,15 @@ We will update the policy and notify users where required if data handling or th
 
 **DO NOT PUBLISH as compliant terms or begin real Indian child-data collection yet.** The planned India-first product has unresolved India DPDP Act 2023 s.9 children's data processing and behavioural-monitoring prohibitions, Rule 10 adult parent consent mechanism, Rule 12 narrow real-time child-safety purpose exception, and section 16/Rule 15 US hosting transfer issues. Most provisions are phased toward approximately May 2027 under November 2025 Gazette; this timing is **not** blanket permission today. [Detailed primary-source legal gate](../../M0-foundation-and-approvals/03-legal-and-privacy/INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md).
 
-Provider wording must list **Oracle OCI Chicago, United States** *if actually deployed there*, plus Google Maps/FCM/Billing, identity service and any SMS fallback/other processor with actual subprocessor purposes. Real age scope, adult/guardian verification, lawful collection purposes, each live-vs-history-vs-app-usage retention and legal transfer approval are **NOT DETERMINED**.
+Provider wording must list **Oracle OCI Chicago, United States** *if actually deployed there*, plus Google Maps/FCM/Billing, identity service and any SMS fallback/other processor with actual subprocessor purposes. India child age scope **0–17 is owner-decided**. Adult/guardian verification, lawful collection purposes, each live-vs-history-vs-app-usage retention and legal transfer approval remain **NOT DETERMINED**. Chicago is only a historical hosting scenario; final region/processors are reserved for deployment.
 
-**Safe defaults:** no real child data in development; app-usage history and historical tracking disabled for minors pending signed counsel advice; owner-specific guardian invitations, purpose notices and erasure tests; never imply a Play permission or purchase proves parent authority. Publisher identity, support/grievance contact and real public deletion page remain blank until supplied. Retention 14/90/365/30 are engineering candidates, **not approved published dates**.
+**Safe defaults:** no real child data in development; app-usage history and historical tracking disabled for minors pending signed counsel advice; owner-specific guardian invitations, purpose notices and erasure tests; never imply a Play permission or purchase proves parent authority. Publisher identity is **SWARNA SEKHAR DHAR, Individual, India**. Support/privacy/grievance contact, approved public address and real public deletion page remain pending; Payments identity verification, merchant setup and legal review are pending. Retention 14/90/365/30 are engineering candidates, **not approved published dates**.
 
 
 
 ## Explicit app identities (2026-10-26)
 
-**Madalasa** is the parent/guardian Android application and **Alarka** is the child-device companion. Final policy must disclose each app's actual information processing, monitoring permissions, third parties and rights separately. The draft is NOT approved or published; legal publisher, retention and India DPDP basis remain open.
+**Madalasa** is the parent/guardian Android application and **Alarka** is the child-device companion. Final policy must disclose each app's actual information processing, monitoring permissions, third parties and rights separately. The draft is NOT approved or published; publisher selection is SWARNA SEKHAR DHAR, Individual, India; public contacts/address, Payments/merchant verification, retention and India DPDP basis remain open.
 
 ## Internal media architecture option — not a published privacy policy (2026-10-26)
 

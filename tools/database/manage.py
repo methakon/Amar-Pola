@@ -3,6 +3,22 @@
 
 Secrets remain in .local-db (0700/0600), never command arguments or logs.
 Only two exact database names, loopback and our labelled Docker container are accepted.
+
+Local:            python3 tools/database/manage.py start|create|migrate|test
+Isolated PR11:    MA_LOCAL_DB_DIR=.local-db/pr11-runtime + docker label
+                  com.madalasa.local-db-root, container madalasa-pr11-test-postgres,
+                  loopback port 15434 only.
+CI (Actions):     export GITHUB_ACTIONS=true MA_CI_SYNTHETIC=1 MA_LOCAL_DB_CI=1
+                  export MA_LOCAL_DB_CONFIG=$RUNNER_TEMP/ma-connection.json
+                  export MA_CI_ADMIN_PASSWORD=<service POSTGRES_PASSWORD>
+                  python3 tools/database/manage.py ci-config
+                  python3 tools/database/manage.py create
+                  python3 tools/database/manage.py migrate
+                  python3 tools/database/manage.py verify
+                  python3 tools/database/manage.py test
+                  docker inspect is unavailable there, so the container guard becomes
+                  a SQL identity check (exact database, admin login, PostgreSQL 16,
+                  PostGIS, expected database owner) and only port 5432 is accepted.
 """
 from __future__ import annotations
 import argparse
@@ -24,10 +40,40 @@ from psycopg import sql
 from psycopg.conninfo import make_conninfo, conninfo_to_dict
 
 ROOT = Path(__file__).resolve().parents[2]
-LOCAL = ROOT / '.local-db'
+DEFAULT_LOCAL = ROOT / '.local-db'
+
+
+def local_directory(environ=None):
+    """Alternate private state stays below this checkout's ignored DB folder."""
+    environ = os.environ if environ is None else environ
+    path = Path(environ.get('MA_LOCAL_DB_DIR') or DEFAULT_LOCAL)
+    path = (ROOT / path).resolve() if not path.is_absolute() else path.resolve()
+    if path not in (DEFAULT_LOCAL.resolve(), (DEFAULT_LOCAL / 'pr11-runtime').resolve()):
+        raise ValueError('MA_LOCAL_DB_DIR must select this checkout .local-db/pr11-runtime')
+    return path
+
+
+LOCAL = local_directory()
 CONFIG = LOCAL / 'connection.json'
+
+
+def ci_mode(environ=None):
+    """Bounded CI surface: no Docker inspect for an Actions service container.
+
+    Requires all three explicit opt-ins. A stray MA_LOCAL_DB_CI without the two
+    corroborating variables fails closed instead of silently falling back.
+    """
+    environ = os.environ if environ is None else environ
+    if environ.get('MA_LOCAL_DB_CI') != '1':
+        return False
+    if environ.get('GITHUB_ACTIONS') != 'true' or environ.get('MA_CI_SYNTHETIC') != '1':
+        raise ValueError('MA_LOCAL_DB_CI requires GITHUB_ACTIONS=true and MA_CI_SYNTHETIC=1')
+    return True
+
+
 MIGRATIONS = ROOT / 'backend/persistence/migrations'
 CONTAINER = 'madalasa-local-postgres'
+PR11_CONTAINER = 'madalasa-pr11-test-postgres'
 MEMORY_CONTAINER = 'madalasa-memory-test-postgres'
 BASELINE_SHA256 = 'e6014a2e2512a793efc320b39be8d0f1b5a4de8b9f7560d444d88aa2ffa5b3fe'
 DATABASES = {'dev': 'madalasa_alarka_dev', 'test': 'madalasa_alarka_test'}
@@ -56,38 +102,72 @@ def validate_target(config):
         raise ValueError('Refusing non-loopback database target')
     if config.get('dbname') not in DATABASES.values():
         raise ValueError('Refusing database outside the two named synthetic databases')
-    if int(config.get('port', 0)) not in (15432,15433) or (int(config.get('port',0))==15433 and config.get('dbname')!=DATABASES['test']):
+    port = int(config.get('port', 0))
+    if ci_mode():
+        if port != 5432 or config.get('dbname') != DATABASES['test']:
+            raise ValueError('CI mode permits only the exact test database on port 5432')
+    elif LOCAL.resolve() != DEFAULT_LOCAL.resolve():
+        if port != 15434 or config.get('dbname') != DATABASES['test']:
+            raise ValueError('Alternate config permits only the PR11 test target on 15434')
+    elif port not in (15432,15433) or (port == 15433 and config.get('dbname') != DATABASES['test']):
         raise ValueError('Refusing an unconfigured database port')
 
 
 def configuration():
-    if not CONFIG.exists():
+    path = CONFIG
+    if ci_mode():
+        override = os.environ.get('MA_LOCAL_DB_CONFIG')
+        if not override:
+            raise ValueError('CI mode requires MA_LOCAL_DB_CONFIG (absolute private path)')
+        path = Path(override)
+        if not path.is_absolute():
+            raise ValueError('CI connection config must be an absolute path outside the checkout')
+    if not path.exists():
         raise ValueError('Run tools/database/db init first')
-    if CONFIG.stat().st_mode & 0o077:
+    if path.stat().st_mode & 0o077:
         raise ValueError('connection.json must have mode 0600')
-    return json.loads(CONFIG.read_text())
+    return json.loads(path.read_text())
 
 
 def connect(database='test', role='migration', autocommit=True):
     dsn = configuration()[database][role]
     validate_target(conninfo_to_dict(dsn))
+    if ci_mode() or LOCAL.resolve() != DEFAULT_LOCAL.resolve():
+        assert_container(database)
     return psycopg.connect(dsn, autocommit=autocommit, connect_timeout=5)
 
 
 def container_for(database='test'):
+    if ci_mode():
+        raise ValueError('CI mode has no Docker container; use pg_dump/psql against the service')
     name=configuration()[database].get('container',CONTAINER)
-    if name not in (CONTAINER,MEMORY_CONTAINER) or (name==MEMORY_CONTAINER and database!='test'):
+    if LOCAL.resolve() != DEFAULT_LOCAL.resolve():
+        if database != 'test' or name != PR11_CONTAINER:
+            raise ValueError('Alternate config requires the owned PR11 test container')
+    elif name not in (CONTAINER,MEMORY_CONTAINER) or (name==MEMORY_CONTAINER and database!='test'):
         raise ValueError('Unrecognized local database container')
     return name
 
 
 def assert_container(database='test'):
+    if ci_mode():
+        return assert_ci_database(database)
     name=container_for(database)
     info = subprocess.run(['docker', 'inspect', name], capture_output=True, text=True, check=True)
     item = json.loads(info.stdout)[0]
     if item['Config'].get('Labels', {}).get('com.madalasa.local-db') != 'synthetic':
         raise ValueError('Container is not the labelled synthetic database')
     mounts = item.get('Mounts', [])
+    if name == PR11_CONTAINER:
+        if item['Config'].get('Labels', {}).get('com.madalasa.local-db-root') != str(ROOT):
+            raise ValueError('PR11 test container belongs to a different checkout')
+        bindings = item.get('HostConfig', {}).get('PortBindings', {}).get('5432/tcp', [])
+        if not bindings or any(b.get('HostIp') not in ('127.0.0.1','::1') or b.get('HostPort') != '15434' for b in bindings):
+            raise ValueError('PR11 test container must publish only loopback port 15434')
+        for role, dsn in configuration()['test'].items():
+            if role != 'container':
+                validate_target(conninfo_to_dict(dsn))
+        return
     if name==MEMORY_CONTAINER:
         if item['Config'].get('Labels',{}).get('com.madalasa.local-db-root')!=str(ROOT):
             raise ValueError('Memory test container belongs to a different checkout')
@@ -99,12 +179,44 @@ def assert_container(database='test'):
         raise ValueError('Container belongs to a different checkout; refusing to touch it')
 
 
+def assert_ci_database(database='test'):
+    """Docker-free identity proof for an Actions service container.
+
+    The service has no local container to inspect, so identity is asserted from
+    the server: exact database, configured admin login, PostgreSQL 16, PostGIS
+    installed and the database owned by that same admin login. Everything else
+    (loopback, exact dbname, port 5432, no service=) is already enforced by
+    validate_target before this point.
+    """
+    cfg = configuration()[database]
+    admin = conninfo_to_dict(cfg['admin'])
+    validate_target(admin)
+    if admin.get('user') is None:
+        raise ValueError('CI admin DSN must name an explicit login')
+    with psycopg.connect(cfg['admin'], connect_timeout=5) as conn:
+        row = conn.execute("""SELECT current_database(), current_user, current_setting('server_version'),
+            pg_get_userbyid(d.datdba), EXISTS(SELECT 1 FROM pg_extension WHERE extname='postgis')
+            FROM pg_database d WHERE d.datname=current_database()""").fetchone()
+    if row[0] != DATABASES[database] or row[1] != admin['user']:
+        raise ValueError('CI server is not the configured synthetic test database login')
+    if not row[2].startswith('16'):
+        raise ValueError('CI target must run PostgreSQL 16')
+    if row[3] != admin['user']:
+        raise ValueError('CI database was created with an unexpected owner')
+    if not row[4]:
+        raise ValueError('CI target is missing the PostGIS extension')
+
+
 def quarantine_marker(database):
+    if ci_mode():
+        return LOCAL/('quarantine-'+database+'-ci.json')
     suffix='-memory' if container_for(database)==MEMORY_CONTAINER else ''
     return LOCAL/('quarantine-'+database+suffix+'.json')
 
 
 def init():
+    if ci_mode() or LOCAL.resolve() != DEFAULT_LOCAL.resolve():
+        raise ValueError('CI/alternate config is operator-provisioned; init/start are disabled')
     LOCAL.mkdir(exist_ok=True)
     LOCAL.chmod(0o700)
     if CONFIG.exists():
@@ -125,6 +237,39 @@ def init():
     print('Created ignored private credentials (0600); no password printed')
 
 
+def ci_config():
+    """Write the CI connection config from the service admin credential only.
+
+    App-role passwords are generated here and applied by `create`, so the only
+    CI secret is the service admin password. Never reads or rewrites the local
+    .local-db/connection.json.
+    """
+    if not ci_mode():
+        raise ValueError('ci-config is available only in CI mode')
+    target = Path(os.environ.get('MA_LOCAL_DB_CONFIG') or '')
+    if not target.is_absolute():
+        raise ValueError('CI mode requires MA_LOCAL_DB_CONFIG (absolute private path)')
+    if target.resolve().is_relative_to(DEFAULT_LOCAL.resolve()):
+        raise ValueError('CI config must not replace the local .local-db credentials')
+    base = dict(host='127.0.0.1', port=5432, dbname=DATABASES['test'], sslmode='disable')
+    if os.environ.get('MA_CI_ADMIN_DSN'):
+        admin = conninfo_to_dict(os.environ['MA_CI_ADMIN_DSN'])
+    else:
+        password = os.environ.get('MA_CI_ADMIN_PASSWORD')
+        if not password:
+            raise ValueError('Set MA_CI_ADMIN_PASSWORD or MA_CI_ADMIN_DSN for CI bootstrap')
+        admin = dict(base, user=os.environ.get('MA_CI_ADMIN_USER') or 'postgres', password=password)
+    for key, value in base.items():
+        admin.setdefault(key, value)
+    validate_target(admin)
+    config = {'test': {'admin': make_conninfo(**admin)}}
+    for role, (user, _) in ROLES.items():
+        config['test'][role] = make_conninfo(**dict(admin, user=user, password=secrets.token_urlsafe(36)))
+    private_write(target, json.dumps(config, indent=2) + '\n')
+    print('CI connection config written 0600; no password printed')
+    return target
+
+
 def start():
     init()
     if shutil.disk_usage(LOCAL).free < 2 * 1024**3:
@@ -139,6 +284,8 @@ def start():
 
 def start_memory_test():
     """Use a separate volatile test instance; never move/reset persistent dev."""
+    if ci_mode() or LOCAL.resolve() != DEFAULT_LOCAL.resolve():
+        raise ValueError('CI/alternate config is operator-provisioned; memory start is disabled')
     cfg=configuration()
     env=os.environ.copy();env['MA_LOCAL_CHECKOUT']=str(ROOT)
     command=['docker','compose','-f',str(ROOT/'infra/local/compose.memory-test.yaml')]
@@ -160,7 +307,10 @@ def start_memory_test():
 
 def create(targets=None):
     cfg = configuration()
-    for target in targets or DATABASES:
+    # An isolated config may legitimately describe only the test database; never
+    # invent a dev entry, and never touch a database the config does not name.
+    selected = targets or [name for name in DATABASES if name in cfg]
+    for target in selected:
         assert_container(target)
         admin_args = conninfo_to_dict(cfg[target]['admin'])
         admin_args['dbname'] = 'postgres'
@@ -179,22 +329,33 @@ def create(targets=None):
             name=DATABASES[target]
             if not admin.execute('SELECT 1 FROM pg_database WHERE datname=%s', (name,)).fetchone():
                 admin.execute(sql.SQL("CREATE DATABASE {} OWNER madalasa_migrator TEMPLATE template0 ENCODING 'UTF8'").format(sql.Identifier(name)))
-        with connect(target, 'admin') as conn:
-            conn.execute('REVOKE CREATE ON SCHEMA public FROM PUBLIC')
-            conn.execute('CREATE EXTENSION IF NOT EXISTS pgcrypto')
-            conn.execute('CREATE EXTENSION IF NOT EXISTS postgis')
-            conn.execute('CREATE SCHEMA IF NOT EXISTS ap_m1 AUTHORIZATION ap_m1_owner')
-            conn.execute('GRANT CREATE ON SCHEMA ap_m1 TO ap_m1_auth,ap_db_executor')
-            conn.execute('GRANT CREATE ON SCHEMA public TO madalasa_migrator')
-            # ALTER FUNCTION OWNER requires the target owner CREATE on its schema.
-            # No runtime user is a member of any function-owner role.
-            conn.execute('ALTER DATABASE ' + DATABASES[target] + " SET timezone TO 'UTC'")
-            conn.execute('REVOKE ALL ON DATABASE ' + DATABASES[target] + ' FROM PUBLIC')
-            for kind in ROLES:
-                if kind != 'migration' and quarantine_marker(target).exists():
-                    continue
-                conn.execute(sql.SQL('GRANT CONNECT ON DATABASE {} TO {}').format(sql.Identifier(DATABASES[target]), sql.Identifier(ROLES[kind][0])))
+        bootstrap(target)
     print('Development and test databases created; PostGIS and pgcrypto installed')
+
+
+def bootstrap(database):
+    """Restore the empty bootstrap state a migration replay expects.
+
+    `reset` drops the application schemas, so the same schema owner, extension
+    and connect privileges must be re-established before any replay; otherwise
+    the restricted migration login cannot create objects in `ap_m1`.
+    """
+    assert_container(database)
+    with connect(database, 'admin') as conn:
+        conn.execute('REVOKE CREATE ON SCHEMA public FROM PUBLIC')
+        conn.execute('CREATE EXTENSION IF NOT EXISTS pgcrypto')
+        conn.execute('CREATE EXTENSION IF NOT EXISTS postgis')
+        conn.execute('CREATE SCHEMA IF NOT EXISTS ap_m1 AUTHORIZATION ap_m1_owner')
+        conn.execute('GRANT CREATE ON SCHEMA ap_m1 TO ap_m1_auth,ap_db_executor')
+        conn.execute('GRANT CREATE ON SCHEMA public TO madalasa_migrator')
+        # ALTER FUNCTION OWNER requires the target owner CREATE on its schema.
+        # No runtime user is a member of any function-owner role.
+        conn.execute('ALTER DATABASE ' + DATABASES[database] + " SET timezone TO 'UTC'")
+        conn.execute('REVOKE ALL ON DATABASE ' + DATABASES[database] + ' FROM PUBLIC')
+        for kind in ROLES:
+            if kind != 'migration' and quarantine_marker(database).exists():
+                continue
+            conn.execute(sql.SQL('GRANT CONNECT ON DATABASE {} TO {}').format(sql.Identifier(DATABASES[database]), sql.Identifier(ROLES[kind][0])))
 
 
 def transaction_body(text):
@@ -228,7 +389,7 @@ def load_migration_manifest(verify=True):
             raise ValueError('Invalid migration checksum: ' + identity)
         if verify and digest is not None and (not path.is_file() or sha256(path) != digest):
             raise ValueError('Migration checksum drift: ' + identity)
-    expected = {'common:0001', 'compat:m1_pre_v2_0016'} | {'m1:%04d' % n for n in range(2, 5)} | {'v2:%04d' % n for n in range(2, 20)}
+    expected = {'common:0001', 'compat:m1_pre_v2_0016', 'compat:m1_pre_v2_0017'} | {'m1:%04d' % n for n in range(2, 7)} | {'v2:%04d' % n for n in range(2, 21)}
     if ids != expected:
         raise ValueError('Incomplete or unknown manifest identities')
     return entries
@@ -248,12 +409,22 @@ def migration_plan(entries, lineage='v2', through=None, applied=()):
         raise ValueError('Complete historical M1 through m1:0004 before V2 upgrade')
     ids = ['common:0001']
     if lineage == 'm1':
-        ids += ['m1:%04d' % n for n in range(2, 5)]
+        ids += ['m1:%04d' % n for n in range(2, 7)]
     else:
+        # Finish a historical-only checkpoint before entering V2. Never replay
+        # historical DDL on any V2 schema, including old 0004-converged ledgers.
+        if upgrade and not any(i.startswith('v2:') for i in applied):
+            ids += ['m1:0005', 'm1:0006']
         ids += ['v2:%04d' % n for n in range(2, 16)]
         if upgrade:
             ids += ['compat:m1_pre_v2_0016']
-        ids += ['v2:0016', 'v2:0017', 'v2:0018', 'v2:0019']
+        ids += ['v2:0016']
+        # Retention-hold preservation must run immediately before published 0017
+        # on BOTH V2 paths (fresh and historical upgrade): 0017 drops the
+        # historical renewal staging relation, and the bridge is a no-op when
+        # that relation never existed. It is additive, never historical replay.
+        ids += ['compat:m1_pre_v2_0017']
+        ids += ['v2:0017', 'v2:0018', 'v2:0019', 'v2:0020']
     if through:
         target = through if ':' in through else ('common:0001' if through == '0001' else lineage + ':' + through)
         if target not in ids:
@@ -295,8 +466,13 @@ def validate_migration_history(entries, legacy_rows, lineage_rows, schema_has_ob
         if m1 != ['m1:%04d' % n for n in range(2, 2 + len(m1))]:
             raise ValueError('Gapped M1 history')
         v2 = sorted(i for i in applied if i.startswith('v2:'))
-        if m1 and v2 and m1 != ['m1:0002','m1:0003','m1:0004']:
-            raise ValueError('Complete historical M1 predecessors required for V2 history')
+        historical = sorted(i for i in applied if i.startswith(('v2:', 'compat:')))
+        # Only the published legacy checkpoint (0002..0004) or the complete
+        # current chain (0002..0006) may coexist with V2 rows. A 0005-only tail
+        # is neither: it is a partial current lineage whose 0006 would be a late
+        # historical replay if applied after V2.
+        if m1 and historical and len(m1) not in (3, 5):
+            raise ValueError('Complete historical M1 through m1:0006 required before V2 history')
         if v2 != ['v2:%04d' % n for n in range(2, 2 + len(v2))]:
             raise ValueError('Gapped V2 history')
         bridge = 'compat:m1_pre_v2_0016' in applied
@@ -402,7 +578,7 @@ def migrate(database, through=None, lineage='v2'):
                         (identity,filename,checksum,exc.sqlstate))
                     print('FAILED ' + filename + ' SQLSTATE=' + str(exc.sqlstate), file=sys.stderr)
                     raise
-            if upgrading and 'v2:0019' in applied:
+            if upgrading and 'v2:0020' in applied:
                 verify_lineage_security(database)
                 if not external_quarantine:
                     open_after_restore(database)
@@ -488,7 +664,7 @@ def tests(pattern):
         raise SystemExit(completed.returncode)
 
 
-def reset(database, allow_dev=False):
+def reset(database, allow_dev=False, bootstrap_schema=True):
     if database == 'dev' and not allow_dev:
         raise ValueError('Development reset requires --allow-dev; test reset is isolated')
     assert_container(database)
@@ -496,6 +672,11 @@ def reset(database, allow_dev=False):
         # Dedicated database only; never drop cluster roles or any other database.
         conn.execute('DROP SCHEMA IF EXISTS ap_m1 CASCADE')
         conn.execute('DROP SCHEMA IF EXISTS ma_migrations CASCADE')
+    # A replay needs the bootstrap state back: schema owner, extensions and the
+    # restricted logins' connect grants are dropped with the schemas. A backup
+    # restore recreates the schema from the dump itself, so it opts out.
+    if bootstrap_schema:
+        bootstrap(database)
     print('Reset synthetic schema in ' + DATABASES[database])
 
 
@@ -583,7 +764,7 @@ def restore(database, path, allow_dev=False, lineage='v2'):
             tombstones += conn.execute('SELECT child_id,erased_at,reason_code FROM ma_recovery.erasure_ledger').fetchall()
     merged = {str(row[0]):[str(row[0]),str(row[1]),row[2]] for row in previous + tombstones}
     private_write(ledger_path,json.dumps(list(merged.values()),indent=2)+'\n')
-    reset(database, allow_dev)
+    reset(database, allow_dev, bootstrap_schema=False)
     with path.open('rb') as stream:
         subprocess.run(['docker','exec','-i',container_for(database),'pg_restore','-U','postgres','-d',DATABASES[database],'--exit-on-error'],stdin=stream,check=True)
     # Upgrade an older backup while the database is still closed to runtime.
@@ -620,7 +801,7 @@ def legacy_test():
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command',choices=['init','start','start-memory-test','create','migrate','verify','seed','test','reset','backup','restore','export-ledger','legacy-test','stop','psql','exec-test'])
+    parser.add_argument('command',choices=['init','start','start-memory-test','ci-config','create','migrate','verify','seed','test','reset','backup','restore','export-ledger','legacy-test','stop','psql','exec-test'])
     parser.add_argument('--database', choices=DATABASES, default='test')
     parser.add_argument('--lineage', choices=('m1','v2'), default='v2')
     parser.add_argument('--through')
@@ -633,6 +814,7 @@ def main():
     if args.command=='init': init()
     elif args.command=='start': start()
     elif args.command=='start-memory-test': start_memory_test()
+    elif args.command=='ci-config': ci_config()
     elif args.command=='create': create()
     elif args.command=='migrate': migrate(args.database,args.through,args.lineage)
     elif args.command=='verify': verify(args.database)

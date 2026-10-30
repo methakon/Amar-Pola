@@ -51,7 +51,8 @@ std::string connectionInfoFromEnvironment() {
     const auto user = environment("DB_USER", "madalasa_dev");
     const auto password = environment("DB_PASSWORD", "");
     const auto port = environment("DB_PORT", "15432");
-    if (host != "127.0.0.1" || (port != "15432" && !(port == "15433" && database == "madalasa_alarka_test")) ||
+    if (host != "127.0.0.1" ||
+        !(port == "15432" || (database == "madalasa_alarka_test" && (port == "15433" || port == "15434"))) ||
         (database != "madalasa_alarka_dev" && database != "madalasa_alarka_test") ||
         user != "madalasa_dev" || password.empty())
         throw std::runtime_error("Local backend requires named loopback database and restricted runtime role");
@@ -69,6 +70,11 @@ Database::Database(const std::string &connectionInfo)
         throw std::runtime_error("Backend database role is not restricted");
 }
 
+void Database::expectPrincipal(std::string principalId) {
+    if (!validUuid(principalId)) throw std::runtime_error("Expected principal must be a UUID");
+    expected_principal_ = std::move(principalId);
+}
+
 std::shared_ptr<drogon::orm::Transaction> Database::authenticated(const std::string &token) {
     if (token.size() < 32 || token.size() > 2048 || token.find_first_of("\r\n\0", 0, 3) != std::string::npos)
         throw ApiError(401, "AUTHENTICATION_REQUIRED", "Valid server-issued session required");
@@ -79,8 +85,13 @@ std::shared_ptr<drogon::orm::Transaction> Database::authenticated(const std::str
     // The token is opaque and hash-checked against issuer-only session storage.
     // Neither URL nor request body can select an adult, family or device identity.
     tx->execSqlSync("SELECT set_config('ap.session_token',$1,true)", token);
-    const auto actor = tx->execSqlSync("SELECT ap_m1.ctx_principal() IS NOT NULL AND ap_m1.ctx_device() IS NULL");
-    if (!actor[0][0].as<bool>()) { tx->rollback(); throw ApiError(401, "AUTHENTICATION_REQUIRED", "Valid parent session required"); }
+    // Identity is the opaque session row only; the caller never supplies it.
+    // An optional harness pin narrows acceptance further and can never widen it.
+    const auto actor = tx->execSqlSync("SELECT ap_m1.ctx_principal()::text, ap_m1.ctx_device()");
+    if (actor.empty() || actor[0][0].isNull() || !actor[0][1].isNull() ||
+        (!expected_principal_.empty() && actor[0][0].as<std::string>() != expected_principal_)) {
+        tx->rollback(); throw ApiError(401, "AUTHENTICATION_REQUIRED", "Valid parent session required");
+    }
     return tx;
 }
 

@@ -13,7 +13,7 @@ import physical_schema as ps  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 MAPPING = ROOT / "docs" / "data-model" / "M1_PHYSICAL_TO_LOGICAL_CATALOG.json"
-REPORT = ROOT / "docs" / "data-model" / "historical-m1" / "PHYSICAL_TABLE_CATALOG.md"
+REPORT = ROOT / "docs" / "M1_PHYSICAL_TABLE_CATALOG.md"
 
 
 def check(mapping, erd, physical, logical):
@@ -67,18 +67,20 @@ def render(mapping, erd, physical, logical):
     mapped = {t["logical"] for t in mapping["tables"]}
     L = []
     a = L.append
-    a("# Historical M1 physical table catalog (generated)")
+    a("# M1 physical table catalog (generated)")
     a("")
     a("Generated from `docs/data-model/M1_PHYSICAL_TO_LOGICAL_CATALOG.json` by `backend/tests/check_physical_catalog.py --write`. "
       "**Do not edit by hand**; edit the JSON and regenerate. CI fails if this file is stale or if the migrations or the ERD drift from the mapping.")
     a("")
-    a(f"- Physical tables (schema `{mapping['schema']}`, manifest-selected `m1` lineage): **{len(physical)}**")
+    a(f"- Physical tables (schema `{mapping['schema']}`, manifest-selected common + M1 through0006 only): **{len(physical)}**")
     a(f"- Logical ERD entities: **{len(logical)}**; mapped to a physical table: **{len(mapped)}**; not yet physical (M2 and later, design only): **{len(logical) - len(mapped)}**")
     a(f"- Physical tables with no ERD entity: **{len(mapping.get('physical_without_entity', []))}**")
     a("")
     a("The ERD is a conceptual design; the migrations are what actually exists. Every difference below is known and recorded. "
-      "The largest one is the tenant model: M1 is family-scoped with forced row-level security, while the owner-approved ERD V2 is child-scoped. "
-      "This is the historical M1-only checkpoint, not the converged runtime. See `../local-postgresql/README.md` for V2 execution evidence.")
+      "The largest one is the tenant model: M1 is family-scoped with forced row-level security, while the owner-approved ERD V2 is child-scoped "
+      "(see `ADR_2026_10_28_BLEND_FAMILY_V2`). This report describes the historical M1 baseline through0006, not the converged V2 runtime. "
+      "See `data-model/local-postgresql/README.md` for separately scoped V2 execution evidence; "
+      "`data-model/historical-m1/PHYSICAL_TABLE_CATALOG.md` is the frozen source-through0004 snapshot, not a second current report.")
     a("")
     a("| Physical table | ERD entity | Renamed columns | Physical only | ERD only |")
     a("|---|---|---|---|---|")
@@ -111,10 +113,9 @@ def main(argv):
         if errors:
             print("PHYSICAL CATALOG CHECK FAILED; generated report not written:\n- " + "\n- ".join(errors))
             return 1
-        REPORT.parent.mkdir(parents=True, exist_ok=True)
         REPORT.write_text(text)
     elif not REPORT.exists() or REPORT.read_text() != text:
-        errors.append("historical-m1/PHYSICAL_TABLE_CATALOG.md is stale: run backend/tests/check_physical_catalog.py --write")
+        errors.append("docs/M1_PHYSICAL_TABLE_CATALOG.md is stale: run backend/tests/check_physical_catalog.py --write")
     if errors:
         print("PHYSICAL CATALOG CHECK FAILED:\n- " + "\n- ".join(errors))
         return 1

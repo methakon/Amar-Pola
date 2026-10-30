@@ -26,10 +26,18 @@ class HttpIntegration(unittest.TestCase):
         with psycopg.connect(os.environ['MA_AUTH_DSN'], autocommit=True) as issuer:
             for actor, family in [('a', 'family_a'), ('b', 'family_b')]:
                 cls.tokens[actor] = issuer.execute('SELECT ap_m1.mint_session(%s::uuid,%s::uuid,NULL)', (cls.ids[actor], cls.ids[family])).fetchone()[0]
-        executable = ROOT / '.local-db/build/madalasa_backend'
+        executable = Path(os.environ.get('MA_PROBE_BINARY') or ROOT / '.local-db/build/ma_local_db_read_probe')
         if not executable.exists():
-            raise RuntimeError('Compile the real backend before HTTP acceptance; no mock server substituted')
+            if fixtures.ci_mode():
+                # The CI database job intentionally does not link Drogon; the real
+                # probe HTTP acceptance is built and executed in local evidence.
+                raise unittest.SkipTest('probe binary is not built in the CI database job; '
+                                         'local probe HTTP acceptance is recorded separately')
+            raise RuntimeError('Build the real probe first (tools/database/build_backend.py --probe); no mock server substituted')
         with socket.socket() as probe:
+            # Allow binding over a TIME_WAIT socket from an immediately preceding
+            # run; a live listener still refuses the bind on Linux.
+            probe.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             probe.bind(('127.0.0.1',18080))
         sys.path.insert(0,str(ROOT/'tools/database'))
         import build_backend

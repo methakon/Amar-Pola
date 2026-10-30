@@ -26,6 +26,30 @@
       "published": true
     },
     {
+      "id": "m1:0005",
+      "path": "backend/persistence/migrations/0005_m1_family_provisioning.sql",
+      "sha256": "50cafd71be8cae7974336aed399f5d6b2ab891da09a644844090b05ee429a825",
+      "published": true
+    },
+    {
+      "id": "m1:0006",
+      "path": "backend/persistence/migrations/0006_m1_concurrency_and_retention_holds.sql",
+      "sha256": "7d52f28a22e283bc4a2a528b4033e4fcc18ed8e0ee69dbc9833070b96f5363ca",
+      "published": true
+    },
+    {
+      "id": "compat:m1_pre_v2_0016",
+      "path": "backend/persistence/migrations/compat/m1_pre_v2_0016.sql",
+      "sha256": "6c94148e287076a508a505ebe8070d297c869376e56b5f731d0b8410c4bfdd3b",
+      "published": true
+    },
+    {
+      "id": "compat:m1_pre_v2_0017",
+      "path": "backend/persistence/migrations/compat/m1_pre_v2_0017.sql",
+      "sha256": "ad184d3642ea975ee654182768c3b0ff3d4006a92e71b2b907129c6907267c2e",
+      "published": true
+    },
+    {
       "id": "v2:0002",
       "path": "backend/persistence/migrations/0002_child_scoped_cross_family_guardians.sql",
       "sha256": "83d8b9e952314654deb58e32c41fc5177d5885447d0630f05072da88acf2f23c",
@@ -128,15 +152,15 @@
       "published": true
     },
     {
-      "id": "compat:m1_pre_v2_0016",
-      "path": "backend/persistence/migrations/compat/m1_pre_v2_0016.sql",
-      "sha256": "6c94148e287076a508a505ebe8070d297c869376e56b5f731d0b8410c4bfdd3b",
-      "published": true
-    },
-    {
       "id": "v2:0019",
       "path": "backend/persistence/migrations/0019_reconciliation_and_child_binding.sql",
       "sha256": "7089fe231c80046cfef7a9d984cc0ff176bf7d3a5b29e6f59011e0ce66b7ac7c",
+      "published": true
+    },
+    {
+      "id": "v2:0020",
+      "path": "backend/persistence/migrations/0020_m1_current_lineage_convergence.sql",
+      "sha256": "530a34923a140d631c0804dc5cafa4a5f20bf2b0bfd38753a6da2da18a775728",
       "published": true
     }
   ]

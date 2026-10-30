@@ -3,7 +3,7 @@
   "date": "2026-10-27",
   "source_commit": "b3cddfc45ddb1c99bb545ddc5a7828fe534fe772",
   "document_count": 72,
-  "description": "Canonical full texts moved into phase/category folders; docs root preserves compatibility pointers; original GitHub paths have not been deleted",
+  "description": "Canonical texts remain in phase/category folders; former docs-root forwarding pages consolidated into legacy-root-links. Original GitHub root URLs no longer resolve directly.",
   "unchanged_locations": [
     "docs/openapi-m1.yaml",
     "docs/openapi.yaml",
@@ -20,7 +20,8 @@
       "proposed_owner_role": "Project owner",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/MASTER_MILESTONE_IMPLEMENTATION_AND_RELEASE_PLAN.md"
     },
     {
       "registry_id": "DOC-002",
@@ -32,7 +33,8 @@
       "proposed_owner_role": "Project owner",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/BLOCKERS_AND_OWNER_DECISIONS.md"
     },
     {
       "registry_id": "DOC-003",
@@ -44,7 +46,8 @@
       "proposed_owner_role": "Project owner",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/DISCUSSION.md"
     },
     {
       "registry_id": "DOC-004",
@@ -56,7 +59,8 @@
       "proposed_owner_role": "Project owner",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/PROJECT_DOCUMENTS_INDEX_2026.md"
     },
     {
       "registry_id": "DOC-005",
@@ -68,7 +72,8 @@
       "proposed_owner_role": "Project owner",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/REPOSITORY_ABOUT_AND_TOPICS.md"
     },
     {
       "registry_id": "DOC-006",
@@ -80,7 +85,8 @@
       "proposed_owner_role": "Project owner",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/REPOSITORY_GAP_AND_DELIVERY_AUDIT_2026-10-27.md"
     },
     {
       "registry_id": "DOC-007",
@@ -92,7 +98,8 @@
       "proposed_owner_role": "Project owner",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/REPOSITORY_RENAME_TO_MADALASA_ALARKA.md"
     },
     {
       "registry_id": "DOC-008",
@@ -104,7 +111,8 @@
       "proposed_owner_role": "Project owner",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/UPLOADED_GOVERNANCE_DOCUMENTS_REVIEW_2026-10-27.md"
     },
     {
       "registry_id": "DOC-009",
@@ -116,7 +124,8 @@
       "proposed_owner_role": "Project owner",
       "review_status": "TEMPLATE_OR_EVIDENCE_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/AUDIT_REMEDIATION_STATUS.md"
     },
     {
       "registry_id": "DOC-010",
@@ -128,7 +137,8 @@
       "proposed_owner_role": "Project owner",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/TECHNICAL_DOCUMENT_AUDIT_GAPS_2026.md"
     },
     {
       "registry_id": "DOC-011",
@@ -140,7 +150,8 @@
       "proposed_owner_role": "Product + finance",
       "review_status": "TEMPLATE_OR_EVIDENCE_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/FEASIBILITY_CONDITIONS_AND_EVIDENCE.md"
     },
     {
       "registry_id": "DOC-012",
@@ -152,7 +163,8 @@
       "proposed_owner_role": "Product + finance",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/WHOLE_PROJECT_FEASIBILITY_GATE_2026.md"
     },
     {
       "registry_id": "DOC-013",
@@ -164,7 +176,8 @@
       "proposed_owner_role": "Product + finance",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/COMPETITOR_FEATURE_COMPARISON_AND_ADOPTION_2026.md"
     },
     {
       "registry_id": "DOC-014",
@@ -176,7 +189,8 @@
       "proposed_owner_role": "Product + finance",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/MARKET_FEEDBACK_GAPS_AND_DIFFERENTIATION_2026.md"
     },
     {
       "registry_id": "DOC-015",
@@ -188,7 +202,8 @@
       "proposed_owner_role": "Product + finance",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md"
     },
     {
       "registry_id": "DOC-016",
@@ -200,7 +215,8 @@
       "proposed_owner_role": "Privacy counsel + owner",
       "review_status": "DRAFT_LEGAL_REVIEW_REQUIRED",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/DPIA.md"
     },
     {
       "registry_id": "DOC-017",
@@ -212,7 +228,8 @@
       "proposed_owner_role": "Privacy counsel + owner",
       "review_status": "DRAFT_LEGAL_REVIEW_REQUIRED",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/DATA_RETENTION_SCHEDULE.md"
     },
     {
       "registry_id": "DOC-018",
@@ -224,7 +241,8 @@
       "proposed_owner_role": "Privacy counsel + owner",
       "review_status": "DRAFT_LEGAL_REVIEW_REQUIRED",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md"
     },
     {
       "registry_id": "DOC-019",
@@ -236,7 +254,8 @@
       "proposed_owner_role": "Privacy counsel + owner",
       "review_status": "DRAFT_LEGAL_REVIEW_REQUIRED",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/INDIA_GOVERNMENT_LEGAL_GOOGLE_PLAY_PROJECT_RISK_ASSESSMENT_2026.md"
     },
     {
       "registry_id": "DOC-020",
@@ -248,7 +267,8 @@
       "proposed_owner_role": "Privacy counsel + owner",
       "review_status": "DRAFT_LEGAL_REVIEW_REQUIRED",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/INDIA_REGION_AND_M0_OWNER_DECISION_GATE.md"
     },
     {
       "registry_id": "DOC-021",
@@ -260,7 +280,8 @@
       "proposed_owner_role": "Privacy counsel + owner",
       "review_status": "DRAFT_LEGAL_REVIEW_REQUIRED",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/GRIEVANCE_OFFICER_AND_REDRESSAL_PROCESS.md"
     },
     {
       "registry_id": "DOC-022",
@@ -272,7 +293,8 @@
       "proposed_owner_role": "Privacy counsel + owner",
       "review_status": "DRAFT_LEGAL_REVIEW_REQUIRED",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/VERIFIABLE_PARENTAL_CONSENT_AND_GUARDIAN_AUTHORITY.md"
     },
     {
       "registry_id": "DOC-023",
@@ -284,7 +306,8 @@
       "proposed_owner_role": "Privacy counsel + owner",
       "review_status": "DRAFT_LEGAL_REVIEW_REQUIRED",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/VENDOR_DPA_AND_PROCESSOR_REGISTER.md"
     },
     {
       "registry_id": "DOC-024",
@@ -296,7 +319,8 @@
       "proposed_owner_role": "Privacy counsel + owner",
       "review_status": "DRAFT_LEGAL_REVIEW_REQUIRED",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/LICENSING_DECISION_AND_IP_REGISTER.md"
     },
     {
       "registry_id": "DOC-025",
@@ -308,7 +332,8 @@
       "proposed_owner_role": "Privacy counsel + owner",
       "review_status": "NON_OPERATIVE_LICENSE_REVIEW",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/LICENSE"
     },
     {
       "registry_id": "DOC-026",
@@ -320,7 +345,8 @@
       "proposed_owner_role": "Engineering lead",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/SRS.md"
     },
     {
       "registry_id": "DOC-027",
@@ -332,7 +358,8 @@
       "proposed_owner_role": "Engineering lead",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/REQUIREMENTS_TRACEABILITY.md"
     },
     {
       "registry_id": "DOC-028",
@@ -344,7 +371,8 @@
       "proposed_owner_role": "Engineering lead",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/TECHNICAL_SPECIFICATION.md"
     },
     {
       "registry_id": "DOC-029",
@@ -356,7 +384,8 @@
       "proposed_owner_role": "Engineering lead",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/IMPLEMENTATION_TECHNICAL_SPECIFICATION.md"
     },
     {
       "registry_id": "DOC-030",
@@ -368,7 +397,8 @@
       "proposed_owner_role": "Engineering lead",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/M1_ANDROID_CPP_ARCHITECTURE_AND_IMPLEMENTATION.md"
     },
     {
       "registry_id": "DOC-031",
@@ -380,7 +410,8 @@
       "proposed_owner_role": "Engineering lead",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/BUILD_AND_RUN.md"
     },
     {
       "registry_id": "DOC-032",
@@ -392,7 +423,8 @@
       "proposed_owner_role": "Engineering lead",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/DEVELOPER_ONBOARDING_AND_CODING_STANDARDS.md"
     },
     {
       "registry_id": "DOC-033",
@@ -404,7 +436,8 @@
       "proposed_owner_role": "Engineering lead",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/BRANCHING_VERSIONING_AND_RELEASE_PROCESS.md"
     },
     {
       "registry_id": "DOC-034",
@@ -416,7 +449,8 @@
       "proposed_owner_role": "Engineering lead",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/THIRD_PARTY_DEPENDENCY_AND_SBOM_REGISTER.md"
     },
     {
       "registry_id": "DOC-035",
@@ -428,7 +462,8 @@
       "proposed_owner_role": "Engineering lead",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/ANDROID_M1_SOURCE_BOOTSTRAP_AND_BUILD_GATE_2026-10-27.md"
     },
     {
       "registry_id": "DOC-036",
@@ -440,7 +475,8 @@
       "proposed_owner_role": "Security + Android/backend",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/SECURITY.md"
     },
     {
       "registry_id": "DOC-037",
@@ -452,7 +488,8 @@
       "proposed_owner_role": "Security + Android/backend",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/THREAT_MODEL_STRIDE.md"
     },
     {
       "registry_id": "DOC-038",
@@ -464,7 +501,8 @@
       "proposed_owner_role": "Security + Android/backend",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/APP_SIGNING_AND_KEY_MANAGEMENT_POLICY.md"
     },
     {
       "registry_id": "DOC-039",
@@ -476,7 +514,8 @@
       "proposed_owner_role": "Security + Android/backend",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/DATA_AUTHORIZATION_AND_RECOVERY_CONTRACT.md"
     },
     {
       "registry_id": "DOC-040",
@@ -488,7 +527,8 @@
       "proposed_owner_role": "Security + Android/backend",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/CAPABILITY_DISCOVERY_PERMISSION_SYNC_ADR_2026-10-27.md"
     },
     {
       "registry_id": "DOC-041",
@@ -500,7 +540,8 @@
       "proposed_owner_role": "Security + Android/backend",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/ANDROID_COMPATIBILITY_MATRIX.md"
     },
     {
       "registry_id": "DOC-042",
@@ -512,7 +553,8 @@
       "proposed_owner_role": "Engineering lead",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/TRACKING_RUNTIME_AND_ALGORITHM_CONTRACT.md"
     },
     {
       "registry_id": "DOC-043",
@@ -524,7 +566,8 @@
       "proposed_owner_role": "Engineering lead",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/ADAPTIVE_MOVEMENT_CPP_SERVER_ARCHITECTURE.md"
     },
     {
       "registry_id": "DOC-044",
@@ -536,7 +579,8 @@
       "proposed_owner_role": "Engineering lead",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/POSTGRES_DURABLE_INBOX_BULK_GPS_USAGE_INGESTION_ADR_2026-10-27.md"
     },
     {
       "registry_id": "DOC-045",
@@ -548,7 +592,8 @@
       "proposed_owner_role": "Engineering lead",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/LIVE_TRIP_ROUTE_NAMED_PLACES_BATTERY_SPECIFICATION.md"
     },
     {
       "registry_id": "DOC-046",
@@ -560,7 +605,8 @@
       "proposed_owner_role": "Engineering lead",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/COMMAND_SOS_USAGE_QUEUE_CONTRACT.md"
     },
     {
       "registry_id": "DOC-047",
@@ -572,7 +618,8 @@
       "proposed_owner_role": "Engineering lead",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/SOS_ESCALATION_AND_INDEPENDENT_DELIVERY_DESIGN.md"
     },
     {
       "registry_id": "DOC-048",
@@ -584,7 +631,8 @@
       "proposed_owner_role": "Engineering lead",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/ACCOUNT_DELETION_DESIGN.md"
     },
     {
       "registry_id": "DOC-049",
@@ -596,7 +644,8 @@
       "proposed_owner_role": "Product + finance",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/SUBSCRIPTION_PLANS_PRICING_AND_RULES_2026.md"
     },
     {
       "registry_id": "DOC-050",
@@ -608,7 +657,8 @@
       "proposed_owner_role": "Product + finance",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/PRICE_BREAK_EVEN_STAFFING_AND_DELIVERY_CAPACITY.md"
     },
     {
       "registry_id": "DOC-051",
@@ -620,7 +670,8 @@
       "proposed_owner_role": "Product + finance",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/THIRD_PARTY_SERVICES_COST_ANALYSIS_2026.md"
     },
     {
       "registry_id": "DOC-052",
@@ -632,7 +683,8 @@
       "proposed_owner_role": "Engineering lead",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/OCI_CHICAGO_DEPLOYMENT_AND_FINANCIAL_PLAN.md"
     },
     {
       "registry_id": "DOC-053",
@@ -644,7 +696,8 @@
       "proposed_owner_role": "Engineering lead",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/OCI_CHICAGO_RECOVERY_AND_PILOT_READINESS.md"
     },
     {
       "registry_id": "DOC-054",
@@ -656,7 +709,8 @@
       "proposed_owner_role": "SRE + incident lead",
       "review_status": "TEMPLATE_OR_EVIDENCE_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/BACKUP_RESTORE_TEST_EVIDENCE.md"
     },
     {
       "registry_id": "DOC-055",
@@ -668,7 +722,8 @@
       "proposed_owner_role": "SRE + incident lead",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/MONITORING_ALERTING_SLO_SLA.md"
     },
     {
       "registry_id": "DOC-056",
@@ -680,7 +735,8 @@
       "proposed_owner_role": "SRE + incident lead",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/OPERATIONS_RUNBOOKS.md"
     },
     {
       "registry_id": "DOC-057",
@@ -692,7 +748,8 @@
       "proposed_owner_role": "SRE + incident lead",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/INCIDENT_AND_BREACH_RESPONSE_PROCEDURE.md"
     },
     {
       "registry_id": "DOC-058",
@@ -704,7 +761,8 @@
       "proposed_owner_role": "SRE + incident lead",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/SUPPORT_AND_ESCALATION_SOP.md"
     },
     {
       "registry_id": "DOC-059",
@@ -716,7 +774,8 @@
       "proposed_owner_role": "SRE + incident lead",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/SECURITY_AND_OPERATIONS.md"
     },
     {
       "registry_id": "DOC-060",
@@ -728,7 +787,8 @@
       "proposed_owner_role": "QA + security",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/TEST_STRATEGY_UNIT_INTEGRATION_LOAD_SECURITY.md"
     },
     {
       "registry_id": "DOC-061",
@@ -740,7 +800,8 @@
       "proposed_owner_role": "QA + security",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/VALIDATION_AND_RELEASE_PLAN.md"
     },
     {
       "registry_id": "DOC-062",
@@ -752,7 +813,8 @@
       "proposed_owner_role": "Play release owner + counsel",
       "review_status": "DRAFT_LEGAL_REVIEW_REQUIRED",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/GOOGLE_PLAY_PUBLISHING_REQUIREMENTS.md"
     },
     {
       "registry_id": "DOC-063",
@@ -764,7 +826,8 @@
       "proposed_owner_role": "Play release owner + counsel",
       "review_status": "DRAFT_LEGAL_REVIEW_REQUIRED",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/PLAY_CONSOLE_DECLARATIONS_AND_REVIEWER_PACK.md"
     },
     {
       "registry_id": "DOC-064",
@@ -776,7 +839,8 @@
       "proposed_owner_role": "Play release owner + counsel",
       "review_status": "DRAFT_LEGAL_REVIEW_REQUIRED",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/PLAY_STORE_LISTING_AND_REVIEWER_GUIDE.md"
     },
     {
       "registry_id": "DOC-065",
@@ -788,7 +852,8 @@
       "proposed_owner_role": "Play release owner + counsel",
       "review_status": "DRAFT_LEGAL_REVIEW_REQUIRED",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/DATA_SAFETY_WORKSHEET.md"
     },
     {
       "registry_id": "DOC-066",
@@ -800,7 +865,8 @@
       "proposed_owner_role": "Privacy counsel + owner",
       "review_status": "DRAFT_LEGAL_REVIEW_REQUIRED",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/PRIVACY_POLICY_DRAFT.md"
     },
     {
       "registry_id": "DOC-067",
@@ -812,7 +878,8 @@
       "proposed_owner_role": "Privacy counsel + owner",
       "review_status": "DRAFT_LEGAL_REVIEW_REQUIRED",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/TERMS_AND_SUBSCRIPTIONS_DRAFT.md"
     },
     {
       "registry_id": "DOC-068",
@@ -824,7 +891,8 @@
       "proposed_owner_role": "Engineering lead",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/DEPLOYMENT_RELEASE_READINESS_CHECKLIST.md"
     },
     {
       "registry_id": "DOC-069",
@@ -836,7 +904,8 @@
       "proposed_owner_role": "Product + security/privacy",
       "review_status": "DEFERRED_RESEARCH_DESIGN",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/MEDIA_CAPABILITY_PARENT_REASON_AND_RUNTIME_DECISION_2026.md"
     },
     {
       "registry_id": "DOC-070",
@@ -848,7 +917,8 @@
       "proposed_owner_role": "Product + security/privacy",
       "review_status": "DEFERRED_RESEARCH_DESIGN",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/MEDIA_ACTIVITY_AUDIT_LOGGING_AND_REPORTING_2026.md"
     },
     {
       "registry_id": "DOC-071",
@@ -860,7 +930,8 @@
       "proposed_owner_role": "Product + security/privacy",
       "review_status": "DEFERRED_RESEARCH_DESIGN",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/ADMIN_PANEL_SPECIFICATION_2026.md"
     },
     {
       "registry_id": "DOC-072",
@@ -872,7 +943,8 @@
       "proposed_owner_role": "Engineering lead",
       "review_status": "DOCUMENTED_REVIEW_PENDING",
       "owner_assignment": "UNASSIGNED",
-      "approver_signature": "NOT_RECORDED"
+      "approver_signature": "NOT_RECORDED",
+      "compatibility_pointer_path": "docs/legacy-root-links/ERASER_HLD_LLD_DIAGRAM_INDEX.md"
     }
   ],
   "phase_dirs": {
@@ -888,5 +960,6 @@
     "M9": "M9-play-release",
     "P3": "P3-deferred-research",
     "CROSS": "cross-milestone-references"
-  }
+  },
+  "compatibility_location": "docs/legacy-root-links/"
 }

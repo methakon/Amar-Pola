@@ -17,23 +17,78 @@ ROOT = Path(__file__).resolve().parents[3]
 NS = UUID(os.environ['MA_TEST_NAMESPACE']) if os.environ.get('MA_TEST_NAMESPACE') else uuid4()
 
 
+def ci_mode():
+    """Mirror of the runner gate; a partial opt-in fails closed, never ignored."""
+    if os.environ.get('MA_LOCAL_DB_CI') != '1':
+        return False
+    if os.environ.get('GITHUB_ACTIONS') != 'true' or os.environ.get('MA_CI_SYNTHETIC') != '1':
+        raise ValueError('MA_LOCAL_DB_CI requires GITHUB_ACTIONS=true and MA_CI_SYNTHETIC=1')
+    return True
+
+
+_CI_VERIFIED = set()
+
+
 def validate_test_dsn(dsn):
     """Reject unsafe direct unittest targets before opening any connection."""
     values = psycopg.conninfo.conninfo_to_dict(dsn)
+    ci = ci_mode()
+    ports = ('15432','15433','5432') if ci else ('15432','15433')
+    alternate = os.environ.get('MA_LOCAL_DB_DIR')
+    # CI authenticates the Actions service from the server itself; there is no
+    # local container to inspect, so an ambient alternate-config checkout must
+    # not take precedence over the CI identity proof.
+    if alternate and not ci:
+        import sys
+        if str(ROOT) not in sys.path:
+            sys.path.insert(0, str(ROOT))
+        from tools.database import manage
+        local = manage.local_directory()
+        if local != (ROOT / '.local-db').resolve():
+            if local != manage.LOCAL.resolve():
+                raise ValueError('Database config environment changed after runner import')
+            manage.validate_target(values)
+            manage.assert_container('test')
+            return dsn
     if (values.get('host') not in ('127.0.0.1','localhost','::1')
         or values.get('hostaddr',values.get('host')) not in ('127.0.0.1','localhost','::1')
-        or values.get('port') not in ('15432','15433')
+        or values.get('port') not in ports
         or values.get('dbname') != 'madalasa_alarka_test'
         or values.get('service')):
-        raise ValueError('Tests require the dedicated loopback test database on port 15432 or 15433')
+        raise ValueError('Tests require the dedicated loopback test database on port ' + ' or '.join(ports))
+    if ci:
+        verify_ci_target_once()
     return dsn
+
+
+def verify_ci_target_once():
+    """Prove the Actions service identity once, not once per fixture connection."""
+    key = os.environ.get('MA_LOCAL_DB_CONFIG', '')
+    if not key or key in _CI_VERIFIED:
+        return None
+    import sys
+    if str(ROOT) not in sys.path:
+        sys.path.insert(0, str(ROOT))
+    from tools.database import manage
+    manage.assert_ci_database('test')
+    _CI_VERIFIED.add(key)
+    return key
 
 
 def _dsn(kind):
     env = {'admin': 'MA_TEST_DSN', 'runtime': 'MA_RUNTIME_DSN', 'auth': 'MA_AUTH_DSN'}[kind]
     if os.environ.get(env):
         return validate_test_dsn(os.environ[env])
-    path = ROOT / '.local-db' / 'connection.json'
+    if os.environ.get('MA_LOCAL_DB_CONFIG'):
+        path = Path(os.environ['MA_LOCAL_DB_CONFIG'])
+    elif os.environ.get('MA_LOCAL_DB_DIR'):
+        import sys
+        if str(ROOT) not in sys.path:
+            sys.path.insert(0,str(ROOT))
+        from tools.database import manage
+        path = manage.local_directory() / 'connection.json'
+    else:
+        path = ROOT / '.local-db' / 'connection.json'
     if not path.exists():
         raise RuntimeError(f'{env} or ignored .local-db/connection.json is required')
     if path.stat().st_mode & 0o077:
