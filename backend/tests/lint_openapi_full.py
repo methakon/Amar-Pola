@@ -10,6 +10,7 @@ import json
 import re
 import sys
 from pathlib import Path
+from check_erd_references import validate as validate_erd
 
 ROOT = Path(__file__).resolve().parents[2]
 API = ROOT / "docs/openapi.yaml"
@@ -43,6 +44,7 @@ def main() -> int:
     require(str(spec.get("openapi", "")).startswith("3.1"), "Expected OpenAPI 3.1", errors)
     require(audit.get("counts", {}).get("screens") == 187, "Wrong Figma screen inventory", errors)
     require(db.get("domainCount") == 11 and db.get("tableCount") == 120, "Logical schema addendum missing", errors)
+    errors.extend(validate_erd(db))
     schemes = set(spec.get("components", {}).get("securitySchemes", {}))
     schemas = spec.get("components", {}).get("schemas", {})
     ids: set[str] = set()
