@@ -71,7 +71,13 @@ int main() {
     LOG_WARN << "MA_PG_DB not set: routes that need the database answer 503";
   }
 
-  auto authenticate = ma::select_authenticator();
+  ma::Authenticator authenticate;
+  try {
+    authenticate = ma::select_authenticator();
+  } catch (const std::invalid_argument&) {
+    std::cerr << "invalid Google OIDC client configuration" << std::endl;
+    return 78;
+  }
   app().registerHandler(
       "/v1/families",
       [authenticate](HttpRequestPtr req) -> Task<HttpResponsePtr> { co_return co_await ma::create_family(std::move(req), authenticate); },

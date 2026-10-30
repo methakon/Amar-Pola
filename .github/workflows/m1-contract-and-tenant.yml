@@ -128,7 +128,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: System packages
-        run: sudo apt-get update && sudo apt-get install -y libpq-dev uuid-dev zlib1g-dev libssl-dev cmake g++
+        run: sudo apt-get update && sudo apt-get install -y libpq-dev uuid-dev zlib1g-dev libssl-dev libcurl4-openssl-dev cmake g++
       - name: Cache pinned dependencies
         id: deps-cache
         uses: actions/cache@v4
