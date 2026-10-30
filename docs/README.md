@@ -16,6 +16,10 @@ The 72 root-level compatibility pointers were consolidated into [legacy-root-lin
 
 [MA-P2P-ADR-004](phases/P3-deferred-research/01-media-and-administrator-research/P2P_MEDIA_AND_LIVE_LOCATION_TRANSPORT_ARCHITECTURE_2026-10-31.md): WebRTC ICE/STUN direct, TURN relay when necessary, existing Drogon signaling, no custom VPN for these features; separate durable GPS pipeline. **Documentation only:** Android/Indian counsel/Play gate approvals remain OPEN and child capture release OFF.
 
+## X-02 Google Play G01/G04 decision pack — 2026-10-31
+
+[Official-policy review, evidence checklist and existing-support-case status](phases/M9-play-release/01-play-and-data-safety/X02_FAMILIES_LOCATION_AND_MONITORING_POLICY_REVIEW_2026-10-31.md): Alarka true-audience and precise-location Families eligibility must be resolved **before** separate background-location declaration. Monitoring-app flag alone does not exempt location; both decisions remain open and no child release is authorized. No duplicate support case created.
+
 ## X-03 Indian child-data lawfulness — clarification 2026-10-31
 
 [Independent primary-text DPDP Act/Rules review and feature matrix](phases/M0-foundation-and-approvals/03-legal-and-privacy/INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md#2026-10-31-first-party-primary-law-review-no-mandatory-paid-counsel-opinion) replaces the compulsory-paid-lawyer-paperwork assumption; substantive child-data lawfulness remains gated.

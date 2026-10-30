@@ -101,12 +101,16 @@ Source and decision owner: explicit project-owner instruction dated 2026-10-30. 
 | **E-13** | Medium | Play Billing and optional Drive/provider integrations | Sandbox payment and OAuth revocation results | Integrations |
 | **E-14** | High | End-to-end FR-to-test traceability and CI evidence | All release-scope requirements traceable to passing tests | QA/architect |
 
+## X-02 Google Play G01/G04 review progress — 2026-10-31
+
+**Official-policy desktop review documented:** [X-02 product-specific Families/monitoring/background-location pack](../../M9-play-release/01-play-and-data-safety/X02_FAMILIES_LOCATION_AND_MONITORING_POLICY_REVIEW_2026-10-31.md). **G01 OPEN** pending human outcome in owner-created support case; Play Console AI answer **not approval**; do not change existing ticket or send duplicate inquiries. **G04 NOT SUBMITTED and NOT APPROVED** until G01 resolution and real AAB/disclosure/short video/reviewer evidence. Both are external release gates; synthetic C++/Android/API implementation and review preparation continue. No paid paperwork can substitute for Play decision.
+
 ## C. Compliance and external prerequisites (X-03 is **not** a compulsory external approval)
 
 | ID | Blocker | What must happen | Who can unblock |
 |---|---|---|---|
 | **X-01** | **Publisher identity CLOSED; payment verification IN PROGRESS** | **X-01A CLOSED:** developer identity completed per owner. **X-01B:** BillDesk/payment verification submitted, response awaited. **X-01C:** separately verify any needed Google Payments merchant activation, account/target-app/package availability, app signing and upload setup. Never treat BillDesk submission as merchant approval. | Owner / BillDesk or actual payments provider / Google Play |
-| **X-02** | Sensitive background-location/monitoring policy | Real app disclosure, persistent notification, video, permission declarations, reviewer access and approval | Release / Play |
+| **X-02** | **G01 Families location eligibility + G04 background location separate reviews OPEN; documentation prepared** | **First** obtain actual Alarka audience/precise-location eligibility determination from Google Play in already-open support case; **then** if eligible submit one-core-feature background-location declaration with signed build, prominent consent, public HTML privacy, real Android video and reviewer access. Monitoring `isMonitoringTool` designation does not waive Families location ban. T-X02-01…10 planned/unexecuted. [X-02 policy pack](../../M9-play-release/01-play-and-data-safety/X02_FAMILIES_LOCATION_AND_MONITORING_POLICY_REVIEW_2026-10-31.md) | Owner / Google Play; engineering and release prepare evidence |
 | **X-03** | **India child-data lawfulness assessment IN PROGRESS; optional advice requested via Tele-Law (registered) and MeitY (email sent)** | Document feature-specific applicable law and safeguards; optionally incorporate substantive counsel email/advice. A paid signed legal opinion or general government permit is **NOT a prescribed blanket requirement**. Do not launch legally unresolved child-data features. | Project owner accountable for legal compliance; optional qualified India lawyer / guidance bodies |
 | **X-04** | Public privacy and account deletion URLs | Functioning pages matching real data operations | Product/backend |
 | **X-05** | Optional Google Roads asset-tracking terms | Written provider license/caching/attribution review | Legal/Maps provider |
