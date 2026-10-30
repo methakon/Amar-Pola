@@ -2,6 +2,7 @@
 // No simulated successful DB result; synthetic identity is confined to this test executable.
 #include <drogon/drogon.h>
 #include "children_read.h"
+#include "parent_reads.h"
 #include <iostream>
 #include <optional>
 
@@ -30,7 +31,23 @@ int main() {
   check(unavailable->getJsonObject() &&
         (*unavailable->getJsonObject())["code"] == "SERVICE_UNAVAILABLE",
         "catalog error, not invented family data");
-  if (failed) return 1;
+  const auto fam = drogon::sync_wait(ma::list_families(request(), deny));
+  check(fam->statusCode() == drogon::k401Unauthorized,"listFamilies requires ParentOIDC");
+  const auto unavailable_fam = drogon::sync_wait(ma::list_families(request(), allow));
+  check(unavailable_fam->statusCode() == drogon::k503ServiceUnavailable,"listFamilies denies without DB");
+  const auto child_bad = drogon::sync_wait(ma::get_child(request(),"not-a-uuid",allow));
+  check(child_bad->statusCode() == drogon::k400BadRequest,"getChild invalid UUID");
+  const auto child_noauth = drogon::sync_wait(ma::get_child(request(),good_id,deny));
+  check(child_noauth->statusCode() == drogon::k401Unauthorized,"getChild requires ParentOIDC");
+  const auto child_offline = drogon::sync_wait(ma::get_child(request(),good_id,allow));
+  check(child_offline->statusCode() == drogon::k503ServiceUnavailable,"getChild denies without DB");
+  const auto devices_bad = drogon::sync_wait(ma::list_child_devices(request(),"not-a-uuid",allow));
+  check(devices_bad->statusCode() == drogon::k400BadRequest,"listChildDevices invalid UUID");
+  const auto devices_noauth = drogon::sync_wait(ma::list_child_devices(request(),good_id,deny));
+  check(devices_noauth->statusCode() == drogon::k401Unauthorized,"listChildDevices requires ParentOIDC");
+  const auto devices_offline = drogon::sync_wait(ma::list_child_devices(request(),good_id,allow));
+  check(devices_offline->statusCode() == drogon::k503ServiceUnavailable,"listChildDevices denies without DB");
+    if (failed) return 1;
   std::cout << "M1 children list negative tests PASS\n";
   return 0;
 }
