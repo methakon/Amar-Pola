@@ -95,10 +95,11 @@
    "physical_only": [
     "attempt_count",
     "created_at",
-    "family_id"
+    "family_id",
+    "retention_hold"
    ],
    "logical_only": [],
-   "note": "Physical adds family_id (RLS), attempt_count (20-attempt cap) and created_at."
+   "note": "Physical adds family_id (RLS), attempt_count (20-attempt cap), created_at and migration0006 retention_hold. The hold preserves this pairing artifact only; no redeemed-device FK is inferred."
   },
   {
    "physical": "devices",
@@ -108,6 +109,7 @@
     "algorithm",
     "created_at",
     "family_id",
+    "retention_hold",
     "spki_public_key"
    ],
    "logical_only": [
@@ -116,7 +118,7 @@
     "last_seen_at",
     "public_key_ref"
    ],
-   "note": "Physical stores the SPKI public key and algorithm directly; the ERD keeps only an opaque public_key_ref. android_api and device_mode live in capability_snapshots in M1; last_seen_at is not stored."
+   "note": "Physical stores the SPKI public key and algorithm directly; the ERD keeps only an opaque public_key_ref. android_api and device_mode live in capability_snapshots in M1; last_seen_at is not stored. Migration0006 retention_hold preserves the device and its credential/enrollment/renewal artifacts during cleanup; it grants no authentication or guardian authority."
   },
   {
    "physical": "enrollment_challenges",
@@ -126,13 +128,14 @@
    },
    "physical_only": [
     "created_at",
-    "redeemed_at"
+    "redeemed_at",
+    "retention_hold"
    ],
    "logical_only": [
     "audience",
     "state"
    ],
-   "note": "Physical records both consumed_at (challenge spent, migration 0001) and redeemed_at (activation completed, migration 0003) instead of a state enum, and has no audience column (one purpose in M1)."
+   "note": "Physical records both consumed_at (challenge spent, migration0001) and redeemed_at (activation completed, migration0003) instead of a state enum, and has no audience column (one purpose in M1). Migration0006 retention_hold prevents artifact deletion without extending validity."
   },
   {
    "physical": "device_key_records",
@@ -276,18 +279,19 @@
    },
    "physical_only": [
     "issued_at",
-    "issued_via"
+    "issued_via",
+    "retention_hold"
    ],
    "logical_only": [
     "latest_ip_hash"
    ],
-   "note": "Short-lived opaque device bearer credential (decision C-01). Physical adds issued_at and issued_via; latest_ip_hash is not stored."
+   "note": "Short-lived opaque device bearer credential (decision C-01). Physical adds issued_at, issued_via and migration0006 retention_hold; latest_ip_hash is not stored. A hold prevents cleanup, never revocation or expiry."
   }
  ],
  "physical_without_entity": [
   {
    "physical": "credential_renewal_challenges",
-   "reason": "Introduced by migrations 0002/0003 (device credential renewal). The ERD has no entity for single-use renewal challenges; add one next to device_sessions when the ERD is next revised."
+   "reason": "Introduced by migrations0002/0003 (device credential renewal), with retention_hold added by0006. The ERD has no entity for single-use renewal challenges; add one next to device_sessions when the ERD is next revised. This does not add a physical table or approve a conceptual ERD change."
   }
  ]
 }

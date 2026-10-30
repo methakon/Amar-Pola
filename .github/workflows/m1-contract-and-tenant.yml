@@ -71,6 +71,16 @@ jobs:
         run: psql -v ON_ERROR_STOP=1 -f backend/persistence/migrations/0004_m1_idempotency.sql
       - name: M1 PostgreSQL migration 0005 (family provisioning)
         run: psql -v ON_ERROR_STOP=1 -f backend/persistence/migrations/0005_m1_family_provisioning.sql
+      - name: M1 additive migration 0006 (serialized lifecycle and retention holds)
+        run: psql -v ON_ERROR_STOP=1 -f backend/persistence/migrations/0006_m1_concurrency_and_retention_holds.sql
+      - name: Retention lifecycle matrix and unauthorized hold mutation
+        run: psql -X -v ON_ERROR_STOP=1 -v retention_check_hold_acl=1 -f backend/tests/m1_retention_holds.sql
+      - name: Concurrent distinct-challenge renewal and five-open challenge limit
+        run: |
+          pip install 'psycopg[binary]==3.2.13'
+          python3 backend/tests/m1_credential_concurrency.py --migration backend/persistence/migrations/0006_m1_concurrency_and_retention_holds.sql
+      - name: Purge device-first ordering, hold races and pairing serialization
+        run: python3 backend/tests/m1_purge_concurrency.py
       - name: Two-family and child-scope isolation regression
         run: psql -v ON_ERROR_STOP=1 -f backend/tests/m1_tenant_isolation.sql
       - name: Device credential lifecycle and family listing regression

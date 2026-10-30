@@ -106,7 +106,8 @@ def database():
         # Historical M1 only: never concatenate an independently numbered lineage.
         for name in ('0001_m1_identity.sql', '0002_m1_device_credentials.sql',
                      '0003_m1_enrollment_and_credential_hardening.sql',
-                     '0004_m1_idempotency.sql', '0005_m1_family_provisioning.sql'):
+                     '0004_m1_idempotency.sql', '0005_m1_family_provisioning.sql',
+                     '0006_m1_concurrency_and_retention_holds.sql'):
             migration = migrations / name
             subprocess.run(['psql', '-X', '-q', '-v', 'ON_ERROR_STOP=1', '-d', db, '-f', str(migration)],
                            check=True, stdout=subprocess.DEVNULL, timeout=20)

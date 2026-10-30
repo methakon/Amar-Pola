@@ -141,3 +141,25 @@ Executed commands (all exit 0 unless explicitly noted):
 - Both OpenAPI lints, `check_physical_catalog.py`, `check_document_structure.py`, and `git diff --check`: exit 0 each. Documentation structure check validates the existing 72-document canonical relocation inventory, 12 phase indexes and 19 categories; it is not validation of the separate audit branch's later policy inventory.
 
 Raw local command logs remain ignored under `.dev-environment/phase1-*`; they contain synthetic fixtures only and are not a substitute for the final committed, redacted command/source/CI record. Full Phase 2 concurrency/hold/retention tests and real ParentOIDC implementation/verification remain pending. No merge or deployment is authorized by this checkpoint.
+
+## 10. Phase 2 combined local execution — supersedes inherited finding states
+
+Historical M1 receives additive `0006_m1_concurrency_and_retention_holds.sql`; 0001–0005 remain byte-identical to `c693899`. Separate V2 migrations/manifests are untouched. This migration preserves 18 physical tables and existing lifecycle/purge signatures, defaults, owners, ACLs, fixed search paths and the four-field credential-purge result. The new pairing purge requires explicit grace; it is optionally wired into the undeployed runner, never silently enabled by a new legal TTL.
+
+| Original finding | Correction | Regression and actual execution | Scope/status |
+|---|---|---|---|
+| M1-INHERITED-01: distinct renewal challenges can create two live credentials | Shared device-first lifecycle serialization; recheck state and wall-clock validity after waits, including credential locks | `m1_credential_concurrency.py`: historical baseline actually leaves two unrevoked credentials; combined0006 passes 17 barrier-driven renewal/enrollment/expiry/rollback/revocation/ACL cases | Local database behavior verified; final publication/CI acceptance pending |
+| M1-INHERITED-02: concurrent issuance exceeds five open challenges | Challenge count and insert under the same device lock | Same suite reproduces six baseline challenges and passes deterministic cap and burst tests after0006 | Local concurrency verified; not an HTTP rate-limit implementation |
+| M1-RET-01: incomplete enrollment/pairing retention | Completed enrollment cleanup, explicit-grace pairing cleanup, artifact/device holds, all direct device FK guards; no audit/key/revocation deletion | Fresh empty `ma_pr9_retention_*` replay: original five migrations fail completed-ACTIVE cleanup, exit3; combined0006 plus `m1_retention_holds.sql -v retention_check_hold_acl=1` passes twice, exit0 | Synthetic engineering retention only, no legal-policy approval |
+| Hold/purge and lifecycle lock-order integration | Device-first purge, target-row hold rechecks; optional safely quoted pairing runner; exactly three function grants and no purge-role table privileges | `m1_purge_concurrency.py`: 20 tests pass, exit0; `purge_job.sh` executed separately and passes optional/default jobs, counts, idempotence, denied roles/hold mutation, invalid/injection-shaped grace and bounded lock waits | Local runtime integration verified; no scheduling/deployment |
+
+Exact principal commands (project-local rootless psql PATH/LD_LIBRARY_PATH and the isolated PGHOST from section9):
+
+- `.dev-environment/concurrency-venv/bin/python backend/tests/m1_credential_concurrency.py`: exit1 on original five migrations (baseline RED); add `--migration backend/persistence/migrations/0006_m1_concurrency_and_retention_holds.sql`: exit0, 17 tests.
+- `psql -X -v ON_ERROR_STOP=1 -v retention_check_hold_acl=1 -f backend/tests/m1_retention_holds.sql`: exit0 twice on a fresh empty six-migration replay. The test refuses other database names or populated fixture databases before cleanup.
+- `.dev-environment/concurrency-venv/bin/python backend/tests/m1_purge_concurrency.py`: exit0, 20 tests; `bash backend/tests/purge_job.sh`: exit0, run serially because its synthetic fixture roles are cluster-wide.
+- Original five SQL suites, full Python discovery, HTTP database-failure/family integration, both OpenAPI lints, physical catalog and documentation structure checks were rerun successfully after the combined migration. Final all-checks source freeze remains pending ParentOIDC.
+
+One integration attempt ran the retention matrix on the already-used review database and failed its global fixture count. No assertion was weakened: a new empty isolated replay passed, and an explicit empty/dedicated-database preflight now rejects this misuse. SQL fixture failures during test development remain in ignored execution histories; they are not hidden as product failures or passing tests.
+
+Phase 1 publication at `d3a4682dd3790672f40fabc09b134097338cac9b` is verified remotely: [backend/contracts CI41049572540](https://github.com/methakon/Madalasa-Alarka/actions/runs/41049572540) and [documentation CI41049572707](https://github.com/methakon/Madalasa-Alarka/actions/runs/41049572707) are successful. Those runs do not certify this later Phase2 source. ParentOIDC remains pending. PR9 stays open; merge requires owner review.

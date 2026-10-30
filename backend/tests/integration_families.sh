@@ -53,7 +53,7 @@ DB_CREATED=true
 # Explicit historical M1 order, never an alphabetical replay of unrelated SQL.
 for name in 0001_m1_identity.sql 0002_m1_device_credentials.sql \
   0003_m1_enrollment_and_credential_hardening.sql 0004_m1_idempotency.sql \
-  0005_m1_family_provisioning.sql; do
+  0005_m1_family_provisioning.sql 0006_m1_concurrency_and_retention_holds.sql; do
   psql_admin -d "$DB" -f "$MIG/$name" >/dev/null
 done
 # Roles are NOLOGIN in the migrations; a test environment lets the runtime role log in.

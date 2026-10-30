@@ -4,6 +4,8 @@
 # The functions' own behaviour (floors, what is deleted) is covered by m1_enrollment.sql and m1_idempotency.sql; this checks the plumbing.
 # SYNTHETIC DATA ONLY.
 set -euo pipefail
+# Default compatibility is tested regardless of the caller's optional setting.
+unset MA_PURGE_PAIRING_GRACE
 HERE=$(cd "$(dirname "$0")" && pwd)
 ROOT="$HERE/../.."
 DB=ma_purge_it_$$
@@ -15,7 +17,15 @@ cleanup() { adm -d postgres -c "DROP DATABASE IF EXISTS $DB WITH (FORCE)" >/dev/
 trap cleanup EXIT
 cleanup
 adm -d postgres -c "CREATE DATABASE $DB" >/dev/null
-for f in "$ROOT"/backend/persistence/migrations/*.sql; do adm -d $DB -f "$f" >/dev/null; done
+for migration in \
+  0001_m1_identity.sql \
+  0002_m1_device_credentials.sql \
+  0003_m1_enrollment_and_credential_hardening.sql \
+  0004_m1_idempotency.sql \
+  0005_m1_family_provisioning.sql \
+  0006_m1_concurrency_and_retention_holds.sql; do
+  adm -d "$DB" -f "$ROOT/backend/persistence/migrations/$migration" >/dev/null
+done
 adm -d $DB -v ma_purge_password="$PW" -f "$ROOT/backend/deploy/ma_purge_role.sql" >/dev/null
 adm -d postgres -c "CREATE ROLE ma_nobody LOGIN PASSWORD '$PW'" >/dev/null
 adm -d $DB -c "GRANT USAGE ON SCHEMA ap_m1 TO ma_nobody" >/dev/null
@@ -70,11 +80,17 @@ for sql in "SELECT 1 FROM ap_m1.families" "SELECT 1 FROM ap_m1.idempotency_keys"
            "SET ROLE ap_m1_owner" "SET ROLE ap_m1_auth" "DELETE FROM ap_m1.families"; do
   if run_as ma_purge psql -X -q -At -c "$sql" >/dev/null 2>&1; then fail "ma_purge must NOT be able to run: $sql"; fi
 done
+for table in devices device_credentials credential_renewal_challenges enrollment_challenges pairing_codes; do
+  if run_as ma_purge psql -X -q -At -v ON_ERROR_STOP=1 \
+      -c "UPDATE ap_m1.$table SET retention_hold=false" >/dev/null 2>&1; then
+    fail "ma_purge must not mutate retention holds on $table"
+  fi
+done
 # direct privileges, from the catalog (an RLS policy can hide a table grant from a behavioural probe)
 [ "$(count "SELECT count(*) FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='ap_m1' AND c.relkind IN ('r','p','v','m','S') AND (has_table_privilege('ma_purge',c.oid,'SELECT,INSERT,UPDATE,DELETE,TRUNCATE,REFERENCES,TRIGGER') OR has_any_column_privilege('ma_purge',c.oid,'SELECT,INSERT,UPDATE,REFERENCES'))")" = "0" ] \
   || fail "ma_purge must have no privilege on any ap_m1 table, view or sequence"
-[ "$(count "SELECT string_agg(p.proname, ',' ORDER BY p.proname) FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='ap_m1' AND has_function_privilege('ma_purge',p.oid,'EXECUTE')")" = "purge_credential_artifacts,purge_idempotency_keys" ] \
-  || fail "ma_purge must be able to execute exactly the two purge functions"
+[ "$(count "SELECT string_agg(p.proname, ',' ORDER BY p.proname) FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='ap_m1' AND has_function_privilege('ma_purge',p.oid,'EXECUTE')")" = "purge_credential_artifacts,purge_idempotency_keys,purge_pairing_codes" ] \
+  || fail "ma_purge must be able to execute exactly the three purge functions"
 [ "$(count "SELECT rolinherit::text||rolbypassrls::text||rolsuper::text||rolcreaterole::text FROM pg_roles WHERE rolname='ma_purge'")" = "falsefalsefalsefalse" ] || fail "ma_purge must be NOINHERIT, NOBYPASSRLS, not superuser, cannot create roles"
 [ "$(count "SELECT count(*) FROM pg_auth_members m JOIN pg_roles r ON r.oid=m.member WHERE r.rolname='ma_purge'")" = "0" ] || fail "ma_purge must not be a member of any role"
 
@@ -111,4 +127,40 @@ wait $HOLD
 OUT7=$(run_as ma_purge bash "$ROOT/backend/scripts/run_purge.sh") || fail "job should succeed once the lock is released"
 [ "$(count "SELECT count(*) FROM ap_m1.idempotency_keys WHERE key_sha256=sha256('held'::bytea)")" = "0" ] || fail "the released key should be purged on the next run"
 
-echo "purge job PASS: deletes expired data, keeps recent data, idempotent, least-privilege role (catalog-checked), fails closed, bounded lock wait"
+# --- explicit pairing grace: no default TTL; old unheld only, count and replay
+adm -d "$DB" >/dev/null <<'SQL'
+INSERT INTO ap_m1.pairing_codes(id,family_id,child_id,issued_by,code_sha256,created_at,expires_at,retention_hold) VALUES
+ ('9a000000-0000-4000-8000-0000000000b1','9a000000-0000-4000-8000-000000000001','9a000000-0000-4000-8000-000000000003','9a000000-0000-4000-8000-000000000002',sha256('pair-old'::bytea),now()-interval '10 days',now()-interval '9 days',false),
+ ('9a000000-0000-4000-8000-0000000000b2','9a000000-0000-4000-8000-000000000001','9a000000-0000-4000-8000-000000000003','9a000000-0000-4000-8000-000000000002',sha256('pair-held'::bytea),now()-interval '10 days',now()-interval '9 days',true),
+ ('9a000000-0000-4000-8000-0000000000b3','9a000000-0000-4000-8000-000000000001','9a000000-0000-4000-8000-000000000003','9a000000-0000-4000-8000-000000000002',sha256('pair-recent'::bytea),now(),now()+interval '5 minutes',false);
+SQL
+# Unset mode must neither emit a third line nor delete any pairing fixture.
+OUTP=$(env -u MA_PURGE_PAIRING_GRACE PGUSER=ma_purge PGPASSWORD="$PW" PGDATABASE="$DB" bash "$ROOT/backend/scripts/run_purge.sh")
+printf '%s\n' "$OUTP" | python3 -I -c 'import json,sys; r=[json.loads(l) for l in sys.stdin]; assert [x["job"] for x in r]==["purge_credential_artifacts","purge_idempotency_keys"]'
+[ "$(count "SELECT count(*) FROM ap_m1.pairing_codes")" = 3 ] || fail "unset grace deleted pairing codes"
+for expected in 1 0; do
+  OUTP=$(MA_PURGE_PAIRING_GRACE='1 day' run_as ma_purge bash "$ROOT/backend/scripts/run_purge.sh") || fail "explicit pairing run failed"
+  printf '%s\n' "$OUTP" | python3 -I -c '
+import json,sys
+r=[json.loads(l) for l in sys.stdin]
+assert [x["job"] for x in r]==["purge_credential_artifacts","purge_idempotency_keys","purge_pairing_codes"],r
+assert all(x["status"]=="ok" for x in r),r
+assert r[2]["pairing_codes_deleted"]==int(sys.argv[1]),r
+' "$expected" || fail "pairing count/idempotence: $OUTP"
+done
+[ "$(count "SELECT string_agg(id::text,',' ORDER BY id) FROM ap_m1.pairing_codes")" = "9a000000-0000-4000-8000-0000000000b2,9a000000-0000-4000-8000-0000000000b3" ] || fail "held/recent pairing fixtures changed"
+for grace in '' '0 seconds' '-1 day' 'infinity' "1 day'); DELETE FROM ap_m1.pairing_codes; --"; do
+  set +e
+  OUTP=$(MA_PURGE_PAIRING_GRACE="$grace" run_as ma_purge bash "$ROOT/backend/scripts/run_purge.sh" 2>/dev/null); RCP=$?
+  set -e
+  [ "$RCP" -ne 0 ] || fail "invalid pairing grace accepted: $grace"
+  printf '%s\n' "$OUTP" | python3 -I -c '
+import json,sys
+r=[json.loads(l) for l in sys.stdin]
+assert len(r)==3 and all(x["status"]=="ok" for x in r[:2]),r
+assert r[2]=={"job":"purge_pairing_codes","status":"failed"},r
+' || fail "invalid grace must fail only the explicit pairing job: $OUTP"
+  [ "$(count "SELECT count(*) FROM ap_m1.pairing_codes")" = 2 ] || fail "invalid grace changed pairing fixtures"
+done
+
+echo "purge job PASS: default two-job compatibility, explicit pairing grace, held/recent preservation, idempotence, exact-three-function least privilege, fail closed, bounded lock wait"
