@@ -8,6 +8,12 @@
 
 Each blocker has an owner, decision or required evidence, and lifecycle: OPEN → DECIDED → IMPLEMENTED → VERIFIED → CLOSED. **Selecting a product option does not resolve software testing or Google Play review.**
 
+## X-03 legal/government consultation progress — 2026-10-31
+
+**Owner-reported, not independently acknowledged by the authorities:** A **Government Tele-Law case has been registered** for legal guidance on the proposed Indian child-safety/parental-monitoring application. The owner has **sent the MeitY Cyber Laws clarification email** requesting guidance/referral concerning the DPDP child-safety location exception, location history, app usage, optional microphone/camera/screen features and whether any official permission or procedure applies. **MeitY acknowledgement/response has NOT been reported; no case ID, personal correspondence or private details are included in Git.**
+
+**X-03 status:** CONSULTATIONS INITIATED / **IN PROGRESS — EXTERNAL ADVICE PENDING**. A sent inquiry or Tele-Law registration is not permission, a signed Indian counsel opinion, approval by a DPDP authority or clearance for children's-data processing. Keep the independent feature-by-feature legal assessment and documented release eligibility OPEN, with real-child media and unapproved monitoring OFF. Prepare technical/data-flow/legal-question packs and continue synthetic engineering independently while awaiting responses. Do not ask the owner to submit the same MeitY message again.
+
 ## X-01 updated status — 2026-10-31 (supersedes prior pending-identity wording)
 
 **Owner-confirmed outcome:** Google Play **developer/publisher identity verification COMPLETED** (owner previously provided an identity-status screenshot; no personal document or screenshot is saved in this public repository). **Remove identity verification as an active blocker.** The owner's **BillDesk/payment verification has been SUBMITTED and is AWAITING THE PROVIDER'S RESPONSE**; merchant/payment activation is NOT CONFIRMED, and no payment account is assumed ready. BillDesk submission is not by itself proof that a separately required Google Payments merchant account/profile is activated; verify that independently if applicable.
@@ -89,7 +95,7 @@ Source and decision owner: explicit project-owner instruction dated 2026-10-30. 
 |---|---|---|---|
 | **X-01** | **Publisher identity CLOSED; payment verification IN PROGRESS** | **X-01A CLOSED:** developer identity completed per owner. **X-01B:** BillDesk/payment verification submitted, response awaited. **X-01C:** separately verify any needed Google Payments merchant activation, account/target-app/package availability, app signing and upload setup. Never treat BillDesk submission as merchant approval. | Owner / BillDesk or actual payments provider / Google Play |
 | **X-02** | Sensitive background-location/monitoring policy | Real app disclosure, persistent notification, video, permission declarations, reviewer access and approval | Release / Play |
-| **X-03** | Country-specific child privacy/guardianship | Independent legal review of launch territories, age and authority | Legal counsel |
+| **X-03** | **India child-data legal review IN PROGRESS; Tele-Law case registered and MeitY clarification email SENT (owner-reported, 2026-10-31)** | Await MeitY guidance/referral and Tele-Law consultation; obtain qualified counsel's written feature-specific legal opinion, including authority/consent, DPDP child location/media/usage eligibility, notices/retention/deletion and applicable commencement. Neither inquiry is a license or release clearance. | Owner / Tele-Law counsel / MeitY (guidance or referral only) |
 | **X-04** | Public privacy and account deletion URLs | Functioning pages matching real data operations | Product/backend |
 | **X-05** | Optional Google Roads asset-tracking terms | Written provider license/caching/attribution review | Legal/Maps provider |
 | **X-06** | Cloud/SDK subprocessors | Region choices and processor contract/data safety evaluation | Operations/legal |
