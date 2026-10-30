@@ -17,7 +17,6 @@
 
 namespace ma {
 
-inline constexpr std::size_t kMaxBodyBytes = 64 * 1024;
 inline constexpr const char* kCreateFamilyNamespace = "POST /families";
 
 inline drogon::HttpResponsePtr family_response(const Json::Value& family, const std::string& rid) {
