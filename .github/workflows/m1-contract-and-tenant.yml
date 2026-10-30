@@ -6,8 +6,14 @@ on:
       - "docs/openapi.yaml"
       - "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json"
       - "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json"
+      - "docs/data-model/M1_PHYSICAL_TO_LOGICAL_CATALOG.json"
+      - "docs/M1_PHYSICAL_TABLE_CATALOG.md"
       - "backend/persistence/migrations/**"
       - "backend/tests/**"
+      - "backend/src/**"
+      - "backend/scripts/**"
+      - "backend/deploy/**"
+      - "backend/CMakeLists.txt"
       - ".github/workflows/m1-contract-and-tenant.yml"
   pull_request:
     paths:
@@ -15,8 +21,14 @@ on:
       - "docs/openapi.yaml"
       - "docs/audits/FIGMA_SCREEN_API_DB_AUDIT_2026-10-28.json"
       - "docs/data-model/MADALASA_ALARKA_FIGMA_LOGICAL_ERD_V1_2026.json"
+      - "docs/data-model/M1_PHYSICAL_TO_LOGICAL_CATALOG.json"
+      - "docs/M1_PHYSICAL_TABLE_CATALOG.md"
       - "backend/persistence/migrations/**"
       - "backend/tests/**"
+      - "backend/src/**"
+      - "backend/scripts/**"
+      - "backend/deploy/**"
+      - "backend/CMakeLists.txt"
 jobs:
   contracts-and-isolation:
     runs-on: ubuntu-latest
@@ -41,6 +53,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Structural OpenAPI M1 lint
         run: python3 backend/tests/lint_openapi_m1.py docs/openapi-m1.yaml
+      - name: Physical tables and columns against the logical ERD (reviewed mapping)
+        run: |
+          python3 backend/tests/check_physical_catalog.py
+          python3 -m unittest backend.tests.test_physical_catalog -v
       - name: Whole OpenAPI and Figma screen-to-DB contract lint (spec only)
         run: python3 backend/tests/lint_openapi_full.py
       - name: OpenAPI linter unit tests (the linter must also fail broken contracts)
@@ -51,13 +67,92 @@ jobs:
         run: psql -v ON_ERROR_STOP=1 -f backend/persistence/migrations/0002_m1_device_credentials.sql
       - name: M1 PostgreSQL migration 0003 (enrollment flow, commit-safe renewal, retention, PUBLIC lockdown)
         run: psql -v ON_ERROR_STOP=1 -f backend/persistence/migrations/0003_m1_enrollment_and_credential_hardening.sql
+      - name: M1 PostgreSQL migration 0004 (idempotency keys)
+        run: psql -v ON_ERROR_STOP=1 -f backend/persistence/migrations/0004_m1_idempotency.sql
+      - name: M1 PostgreSQL migration 0005 (family provisioning)
+        run: psql -v ON_ERROR_STOP=1 -f backend/persistence/migrations/0005_m1_family_provisioning.sql
+      - name: M1 additive migration 0006 (serialized lifecycle and retention holds)
+        run: psql -v ON_ERROR_STOP=1 -f backend/persistence/migrations/0006_m1_concurrency_and_retention_holds.sql
+      - name: Retention lifecycle matrix and unauthorized hold mutation
+        run: psql -X -v ON_ERROR_STOP=1 -v retention_check_hold_acl=1 -f backend/tests/m1_retention_holds.sql
+      - name: Concurrent distinct-challenge renewal and five-open challenge limit
+        run: |
+          pip install 'psycopg[binary]==3.2.13'
+          python3 backend/tests/m1_credential_concurrency.py --migration backend/persistence/migrations/0006_m1_concurrency_and_retention_holds.sql
+      - name: Purge device-first ordering, hold races and pairing serialization
+        run: python3 backend/tests/m1_purge_concurrency.py
       - name: Two-family and child-scope isolation regression
         run: psql -v ON_ERROR_STOP=1 -f backend/tests/m1_tenant_isolation.sql
       - name: Device credential lifecycle and family listing regression
         run: psql -v ON_ERROR_STOP=1 -f backend/tests/m1_credential_lifecycle.sql
       - name: Enrollment flow, first credential and retention regression
         run: psql -v ON_ERROR_STOP=1 -f backend/tests/m1_enrollment.sql
+      - name: Idempotency keys regression
+        run: psql -v ON_ERROR_STOP=1 -f backend/tests/m1_idempotency.sql
+      - name: Family provisioning regression
+        run: psql -v ON_ERROR_STOP=1 -f backend/tests/m1_family_provisioning.sql
+      - name: Idempotency concurrency regression
+        run: bash backend/tests/m1_idempotency_concurrency.sh
+      - name: Scheduled purge job (least-privilege role, deletes, fails closed, bounded waits)
+        run: bash backend/tests/purge_job.sh
+      - name: Deployment units
+        run: python3 -m unittest backend.tests.test_deploy_units -v
+      - name: Error catalog sync (C++ table, OpenAPI enum, document)
+        run: |
+          pip install pyyaml
+          python3 -m unittest backend.tests.test_error_catalog_sync -v
       - name: Verify no sensitive production fixture paths
         run: |
           test -f backend/tests/M1_ACCEPTANCE_TEST_CASES.md
           ! grep -q 'BEGIN PRIVATE KEY' backend/tests/M1_ACCEPTANCE_TEST_CASES.md
+
+  backend-build:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: synthetic_test_only_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s --health-timeout 5s --health-retries 10
+    env:
+      PGHOST: 127.0.0.1
+      PGPORT: "5432"
+      PGUSER: postgres
+      PGPASSWORD: synthetic_test_only_password
+    steps:
+      - uses: actions/checkout@v4
+      - name: System packages
+        run: sudo apt-get update && sudo apt-get install -y libpq-dev uuid-dev zlib1g-dev libssl-dev cmake g++
+      - name: Cache pinned dependencies
+        id: deps-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/ma-deps
+          key: ma-deps-${{ hashFiles('backend/scripts/build_deps.sh') }}
+      - name: Build Drogon and jsoncpp (pinned)
+        if: steps.deps-cache.outputs.cache-hit != 'true'
+        run: PREFIX=$HOME/ma-deps MA_DROGON_PG=ON bash backend/scripts/build_deps.sh
+      - name: Build backend
+        run: |
+          cmake -S backend -B build -DCMAKE_PREFIX_PATH=$HOME/ma-deps -DCMAKE_BUILD_RPATH=$HOME/ma-deps/lib
+          cmake --build build -j2
+      - name: Unit tests
+        run: cd build && ctest --output-on-failure
+      - name: HTTP smoke test
+        run: bash backend/tests/smoke_backend.sh build/ma_backend
+      - name: Build the test-only variant (synthetic authentication)
+        run: |
+          cmake -S backend -B build-it -DCMAKE_PREFIX_PATH=$HOME/ma-deps -DCMAKE_BUILD_RPATH=$HOME/ma-deps/lib -DMA_SYNTHETIC_AUTH=ON
+          cmake --build build-it -j2 --target ma_backend
+      - name: Synthetic-auth exclusion with real test-build negative control
+        run: bash backend/scripts/check_production_auth.sh build/ma_backend build-it/ma_backend
+      - name: Cleanup failure paths and fail-closed marker gate regressions
+        run: python3 -m unittest backend.tests.test_integration_cleanup backend.tests.test_production_auth_gate -v
+      - name: Authenticated dependency failures and effective database deadlines
+        run: python3 backend/tests/integration_db_failures.py build-it/ma_backend --case all
+      - name: End-to-end createFamily against PostgreSQL
+        run: bash backend/tests/integration_families.sh build-it/ma_backend

@@ -100,7 +100,7 @@ A mobile client WILL retry after a lost response. A retry must not create a seco
 |---|---|
 | First request with this key | Processed normally; response stored. |
 | Same key, same body, original finished | The stored status and body are returned again. No second row. |
-| Same key, same body, original still running | `409 CONFLICT` with `retryable: true`. |
+| Same key, same body, original still running | The second request **waits** (database `lock_timeout` 5 s) and then receives the stored response. Only if the wait times out: `409 CONFLICT` with `retryable: true`. |
 | Same key, different body | `409 IDEMPOTENCY_KEY_REUSED`. |
 | After 24 hours | Key forgotten; treated as new. |
 
@@ -152,7 +152,7 @@ A mobile client WILL retry after a lost response. A retry must not create a seco
 
 ## 11. How this is enforced
 
-**Now (automatic, in CI):** the OpenAPI linter requires: `Error.code` equals the 12 catalog codes; every response declares `X-Request-Id`; every `429` declares `Retry-After`; the three create operations take `Idempotency-Key`; every non-2xx response uses the shared `Error` schema; each operation lists only errors it can return; `410` only where a one-time code or challenge exists.
+**Now (automatic, in CI):** the OpenAPI linter requires: `Error.code` equals the 12 catalog codes; every response declares `X-Request-Id`; every `429` declares `Retry-After`; the three create operations take `Idempotency-Key`; every non-2xx response uses the shared `Error` schema and declares `x-error-codes` that its status allows (G-6); each operation lists only errors it can return; `410` only where a one-time code or challenge exists.
 
 **To write with the backend (tests, before M1 sign-off):**
 1. Every error response body validates against `Error` and its `request_id` equals the `X-Request-Id` header.
@@ -165,12 +165,14 @@ A mobile client WILL retry after a lost response. A retry must not create a seco
 
 | ID | Gap | Recommendation |
 |---|---|---|
-| G-1 | No table stores idempotency keys yet. | Add a migration (key, caller, route, body hash, response, expiry) before implementing the three create handlers. |
+| G-1 | ~~No table stores idempotency keys.~~ **Closed** by migration `0004_m1_idempotency.sql` (tests `m1_idempotency.sql` ID_01-ID_11 and `m1_idempotency_concurrency.sh`). Claim, create and record happen in one transaction; a rolled-back create leaves no claim; a committed claim without a result (`PENDING`) is a backend bug and is answered `500 INTERNAL_ERROR`. | Handlers must call `idempotency_claim` first and `idempotency_record` last in the same transaction. |
+| P-1 | **Open decision:** `issuePairingCode` returns a one-time secret, which is never stored (`p_omit_body`). A replay therefore cannot return the same code. | Recommended: a replay returns `200` with a new code issued for the same child and cancels the earlier unredeemed one. Alternative: replay returns `409 CONFLICT` and the parent app issues a new code. Owner/security decision before the handler is written. |
 | G-2 | `ALREADY_RECORDED` for capabilities needs a uniqueness rule; `capability_snapshots` has none. | Add a unique constraint on (device, `observed_at`) in a migration. |
 | G-3 | Technical specification §7 calls for a stable `event_id` on device observations; M1 `Health` and `Capabilities` have none. | Use (device, `observed_at`) in M1; add `event_id` when batches arrive in M2. |
 | G-4 | `public_key_spki_base64` is standard base64; every other binary field is base64url. | Decide **before the first client is built** (renaming later is a breaking change). Recommended: switch to base64url. |
 | G-5 | `redeemEnrollmentCode` and `finishEnrollmentProof` declare separate `404`, `409` and `410` outcomes, but the database functions return no row for unknown, used, expired and exhausted alike, so the backend cannot produce them. | Recommended: one status for all invalid-code cases (less information leaked). Alternative: have the functions return a reason, accepting a small oracle on pairing codes. Owner and security decision. |
-| G-6 | The linter checks the enum and headers but not that each operation uses only the right `code` for each status. | Add a status-to-code table check when handlers exist. |
+| G-6 | ~~The linter did not check that each operation uses only the right `code` for each status.~~ **Closed.** Every non-2xx response in `openapi-m1.yaml` declares `x-error-codes`; the linter requires each to be allowed for that status (table in `lint_openapi_m1.py`, kept equal to section 5.2 and the C++ catalog by tests) and requires `IDEMPOTENCY_KEY_REUSED` on the 409 of the three retryable creates and nowhere else. | Handlers must return one of the declared codes; add a handler-level test when routes exist. |
 | G-7 | Clock-skew and size-cap rules are not implemented anywhere yet. | Backend work item with tests 11.5 and the caps in section 8. |
+| G-8 | **ParentOIDC token validation is not implemented.** `createFamily` is the first handler. Its authentication seam (`backend/src/auth.h`) answers `401` to every request in a normal build; a header-based test authenticator exists only when compiled with `-DMA_SYNTHETIC_AUTH=ON` and switched on with `MA_AUTH_MODE=synthetic_test`, and CI checks that the deployable binary does not contain it. | Needs the identity-provider decision (issuer, audience, client registration), JWKS fetching with caching, clock-skew and revocation rules, then tests for expired, wrong-audience and forged tokens. Blocks any real use. |
 
 Two contradictions found while writing this were fixed in the contract: the credential challenge no longer returns a separate `422` for a wrong key fingerprint, and renewal no longer returns `404` for unknown devices (both would have revealed whether a device exists).
