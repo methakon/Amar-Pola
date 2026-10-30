@@ -67,3 +67,4 @@ tmp/
 .DS_Store
 Thumbs.db
 # Synthetic fixtures, migrations and technical documentation remain versioned
+/.local-db/
