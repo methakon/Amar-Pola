@@ -55,7 +55,7 @@ Do not run the manual merges on `main`. On `main`, `git fetch origin main dev &&
 - The **five working branches persist**; do **not** delete them after each task. `main` also persists.
 - **New temporary branches are forbidden without explicit owner instruction** identifying scope/reason. For owner-approved exceptional work, use `temp/<task-slug>`, base it on `main`, record owner authorization and PR, and promote through **temp → dev → main** using the same reviews and tests. Temporary PRs must carry the `owner-approved-temporary` label; the label is a CI routing signal and **does not prove approval** without the owner's recorded instruction.
 - After a temporary branch's complete unique work is verified on `main`, delete it promptly and record deletion/commit traceability. If any unique data, failing tests or unresolved PRs remain, retain it with an explicit blocker until resolved; never force-delete work.
-- **Legacy exception:** `feat/local-postgresql-physical-schema` predates this policy and is retained under draft [PR #11](https://github.com/methakon/Madalasa-Alarka/pull/11). Reconcile SQL and backend conflicts; route its integration through `dev` (not directly to `main`), move any docs edits separately to `main`, and delete the old branch **only after** tested `main` integration.
+- **Legacy exception (CLOSED 2026-10-31):** `feat/local-postgresql-physical-schema` predated this policy. It was reconciled, routed through [PR #11](https://github.com/methakon/Madalasa-Alarka/pull/11) → `dev`, promoted via PR #13 → `main` (`2a8d9d4`), with documentation and evidence landed separately on `main`, and deleted only after `main` verification. Record: [PR11 acceptance](../../../../evidence/local/database/PR11_RECONCILIATION_ACCEPTANCE_2026-10-30.md).
 - Administrator must configure protected/ruleset-enforced `main` and `dev` PR checks, review requirements, push restrictions and bypass controls. [Branch-route CI](../../../../.github/workflows/branch-governance.yml) validates PR routing/doc isolation but **cannot prevent direct pushes or certify approvals without GitHub rulesets**.
 - Legal/Google Play policy blockers remain separate: merging synthetic software does not authorize real-child location, screen/media capture, billing or production release.
 
@@ -63,7 +63,7 @@ Do not run the manual merges on `main`. On `main`, `git fetch origin main dev &&
 
 ### Initial branch inventory / transition
 
-As inspected immediately before adoption, only `main` and retained `feat/local-postgresql-physical-schema` existed. The five named work branches were **created from the same `main` commit `903136f` on 2026-10-31** and verified against live GitHub. Together with `main`, there are six permanent branches, plus one separately retained legacy PostgreSQL branch pending safe integration. During legacy reconciliation a seventh branch can temporarily exist, but it must not be mistaken for a permanent sixth workstream. PR #11 remains a draft and is not merge-ready until the current M1/V2 migration tests and integration gate pass.
+As inspected immediately before adoption, only `main` and the retained legacy `feat/local-postgresql-physical-schema` existed. The five named work branches were **created from the same `main` commit `903136f` on 2026-10-31** and verified against live GitHub. The legacy PostgreSQL branch has since been reconciled, merged (`2a8d9d4`) and removed, so the permanent inventory is now exactly `main`, `dev`, `api`, `parent`, `child` and `admin-web`.
 
 ---
 
