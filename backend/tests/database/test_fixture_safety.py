@@ -42,7 +42,12 @@ class FixtureTargetSafetyTests(unittest.TestCase):
                 with self.assertRaises(ValueError): fixtures.admin_connection()
             connect.assert_not_called()
             with patch('tools.database.manage.assert_container') as guard:
-                with patch('tools.database.manage.configuration',return_value={'test':{'container':'madalasa-pr11-test-postgres'}}):
+                # The alternate-config guard compares the live directory with the
+                # one resolved at import, so pin both consistently here.
+                pr11 = fixtures.ROOT / '.local-db/pr11-runtime'
+                with patch('tools.database.manage.configuration',return_value={'test':{'container':'madalasa-pr11-test-postgres'}}), \
+                     patch('tools.database.manage.LOCAL', pr11), \
+                     patch('tools.database.manage.ci_mode', return_value=False):
                     self.assertEqual(fixtures._dsn('admin'),dsn)
                 guard.assert_called_once_with('test')
 
