@@ -55,6 +55,10 @@ add_executable(test_device_endpoints tests/cpp/test_device_endpoints.cc)
 target_link_libraries(test_device_endpoints PRIVATE ma_core OpenSSL::Crypto)
 add_test(NAME device_endpoints COMMAND test_device_endpoints)
 
+add_executable(test_children_read tests/cpp/test_children_read.cc)
+target_link_libraries(test_children_read PRIVATE ma_core ma_oidc)
+add_test(NAME children_read_negative COMMAND test_children_read)
+
 add_executable(test_oidc_http tests/cpp/test_oidc_http.cc)
 target_link_libraries(test_oidc_http PRIVATE ma_core ma_oidc)
 add_test(NAME oidc_http COMMAND test_oidc_http)

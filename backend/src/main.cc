@@ -11,6 +11,7 @@
 #include "device_credentials.h"
 #include "enrollment.h"
 #include "families.h"
+#include "children_read.h"
 #include "http_support.h"
 #include "pairing.h"
 
@@ -86,6 +87,13 @@ int main() {
       "/v1/families",
       [authenticate](HttpRequestPtr req) -> Task<HttpResponsePtr> { co_return co_await ma::create_family(std::move(req), authenticate); },
       {Post});
+
+  app().registerHandler(
+      "/v1/families/{familyId}/children",
+      [authenticate](HttpRequestPtr req, std::string familyId) -> Task<HttpResponsePtr> {
+        co_return co_await ma::list_children(std::move(req), std::move(familyId), authenticate);
+      },
+      {Get});
 
   app().registerHandler(
       "/v1/children/{childId}/pairing-codes",

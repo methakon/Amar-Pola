@@ -59,6 +59,41 @@ int main() {
   auto auth=make_google_oidc_authenticator(config,lookup,{},now);
   auto signed_token=sign(key.get(),claims);
   auto req=request("Bearer "+signed_token);
+  // Provider-validation negative matrix: real RSA signatures over synthetic
+  // locally generated claims. No real Google account, network or user data.
+  auto must_deny = [&](const Json::Value& candidate) {
+    CHECK(!auth(request("Bearer " + sign(key.get(), candidate))));
+  };
+  {
+    Json::Value tampered = claims;
+    tampered["iss"] = "https://attacker.invalid";
+    must_deny(tampered);
+    tampered = claims;
+    tampered["aud"] = "unapproved-oauth-client";
+    must_deny(tampered);
+    tampered = claims;
+    tampered["exp"] = Json::Int64(1700000100);
+    must_deny(tampered);  // exp is exclusive
+    tampered = claims;
+    tampered["iat"] = Json::Int64(1700000101);
+    must_deny(tampered);  // future issued-at
+    tampered = claims;
+    tampered["nbf"] = Json::Int64(1700000101);
+    must_deny(tampered);  // future not-before
+    tampered = claims;
+    tampered.removeMember("sub");
+    must_deny(tampered);
+    tampered = claims;
+    tampered["aud"] = Json::arrayValue;
+    tampered["aud"].append("http-fixture-client");
+    tampered["aud"].append("other-oauth-client");
+    must_deny(tampered);  // multiple audiences without authorized presenter
+    auto forged = signed_token;
+    forged.back() = forged.back() == 'A' ? 'B' : 'A';
+    CHECK(!auth(request("Bearer " + forged)));
+    CHECK(!auth(request("Bearer " + signed_token + ".extra")));
+    CHECK(!auth(request("Bearer " + signed_token + " ")));
+  }
   auto principal=auth(req);
   CHECK(principal && principal->issuer=="https://accounts.google.com" && principal->subject=="synthetic-opaque-subject");
   // An accepted identity reaches the real next stage (missing DB), not an invented 201.
