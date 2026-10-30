@@ -232,3 +232,19 @@ This AI response is not a human policy-team determination, app review decision o
 | **G04 / R07** | **HIGH OPEN / separate approval gate.** Background location is not automatically permitted. A runtime permission grant or monitoring declaration is not Play approval. | Submit the Play Console location-permissions declaration; provide core-feature rationale, prominent in-app disclosure, runtime permission flow, demonstration video, accurate listing and public privacy policy; obtain required Play review approval before release. |
 
 **Owner/project instruction:** keep real-child GPS collection disabled until G01 is resolved and all applicable legal/Play gates are satisfied. Treat background-location approval separately from G01. Keep the target-audience declaration truthful; do not add older age groups solely to bypass Families policy. Synthetic-data engineering and non-production OS tests may continue. A human support response is still pending; the AI answer alone closes neither gate.
+
+## 2026-10-30 G02 — Indian DPDP child-location legal interpretation and commencement timing
+
+**Primary-text timing correction:** The commencement notifications schedule DPDP Act section 9 (sections 7–10) and DPDP Rules 2025 Rule 12 (within Rules 3, 5–16) to commence eighteen months after Gazette publication on 13 November 2025. The calendar computation is **13 May 2027**. Accordingly, on 30 October 2026 these provisions are scheduled but **not yet in force** under G.S.R. 843(E) and G.S.R. 846(E). Counsel must confirm the operative date, corrigenda and any later notifications before launch. This timing does not remove the need to assess other laws, Google Play policy, Android OS limits or future compliance readiness.
+
+**Substantive G02 question:** Once operative, section 9(3) generally prohibits tracking/behavioural monitoring of children; section 9(4) allows prescribed purposes subject to conditions. Rule 12 / Fourth Schedule Part B item 4 specifies determination of a child's real-time location, restricted to real-time tracking in the child's safety/protection or security interest, as a purpose for which section 9(1) and 9(3) do not apply. This is a narrow purpose-specific provision, not a blanket approval for historical route reconstruction, school/stop profiling, geofences, app usage, behavioural analytics, media capture, broad guardian sharing or indefinite retention. Section 9(2)'s detrimental-effect prohibition remains a separate issue.
+
+**G02 remains CRITICAL OPEN.** Obtain a signed Indian privacy-counsel opinion addressing:
+- whether this commercial parent/guardian service qualifies for the real-time child-safety location purpose;
+- whether it permits only on-demand current location or also periodic/background collection;
+- permissible precision, cadence, offline device queue, PostgreSQL inbox, derived data, history, retention and guardian access;
+- separate treatment of app usage/behavioural monitoring, geofences, SOS, media and admin access;
+- section 9(2), guardian authority/consent, child notice, revocation and custody disputes;
+- commencement dates, transitional/corrigendum position, other applicable Indian laws, subprocessors and cross-border processing.
+
+Required output: feature-by-feature GREEN / CONDITIONAL / PROHIBITED classification with lawful purpose, conditions, retention and evidence. Until counsel signs off, real-minor data ingestion and unapproved child tracking/usage remain OFF; synthetic-data engineering may continue. The existing India DPDP child privacy issue brief remains the detailed design reference.
