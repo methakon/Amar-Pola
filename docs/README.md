@@ -1,6 +1,6 @@
 # Madalasa–Alarka — Project Documentation Library
 
-**Organized:** 2026-10-27 · **Updated:** 2026-10-30 · **Scope:** controlled specifications and scoped engineering evidence, not whole-product or release acceptance. Canonical source documents are organized **by M0–M9 project phase, then by category** using the repository's [master milestone plan](phases/M0-foundation-and-approvals/01-project-governance/MASTER_MILESTONE_IMPLEMENTATION_AND_RELEASE_PLAN.md). P3 research remains outside the launch milestones.
+**Organized:** 2026-10-27 · **Updated:** 2026-10-31 · **Scope:** controlled specifications and scoped engineering evidence, not whole-product or release acceptance. Canonical source documents are organized **by M0–M9 project phase, then by category** using the repository's [master milestone plan](phases/M0-foundation-and-approvals/01-project-governance/MASTER_MILESTONE_IMPLEMENTATION_AND_RELEASE_PLAN.md). P3 research remains outside the launch milestones.
 
 The 72 root-level compatibility pointers were consolidated into [legacy-root-links](legacy-root-links/README.md), while their canonical M0–M9 full documents and the two OpenAPI files remain in place. Old direct GitHub root-level pointers should now be replaced by canonical document links.
 
@@ -16,12 +16,16 @@ The 72 root-level compatibility pointers were consolidated into [legacy-root-lin
 
 [MA-P2P-ADR-004](phases/P3-deferred-research/01-media-and-administrator-research/P2P_MEDIA_AND_LIVE_LOCATION_TRANSPORT_ARCHITECTURE_2026-10-31.md): WebRTC ICE/STUN direct, TURN relay when necessary, existing Drogon signaling, no custom VPN for these features; separate durable GPS pipeline. **Documentation only:** Android/Indian counsel/Play gate approvals remain OPEN and child capture release OFF.
 
-## Current progress — Google Payments identity pending
+## X-01 status — 2026-10-31
+
+**Google Play publisher identity: COMPLETED (owner-confirmed).** BillDesk/payment verification: **SUBMITTED; AWAITING PROVIDER RESPONSE**. Distinct merchant/payment account activation: **NOT CONFIRMED**. Identity verification is removed from the active blockers; related payment activation remains a separate external dependency. [Canonical X-01 breakdown](phases/M0-foundation-and-approvals/01-project-governance/BLOCKERS_AND_OWNER_DECISIONS.md).
+
+## Historical 2026-10-30 progress (prior identity statuses superseded)
 
 - [2026-10-30 cross-phase progress, changed documents, decisions and next work](phases/M0-foundation-and-approvals/01-project-governance/PENDING_IDENTITY_PROGRESS_2026-10-30.md).
 - [Historical exact-revision PR9 M1 stack review and PostgreSQL16/CI evidence](phases/M1-secure-platform-foundation/02-development-process/M1_STACK_PR9_REVIEW_2026-10-30.md). Later owner-authorized M1/OIDC integration and verified remote cleanup are recorded in the [current branch register](phases/M1-secure-platform-foundation/02-development-process/BRANCHING_VERSIONING_AND_RELEASE_PROCESS.md); V2 database convergence remains blocked and its unique branch retained. Merge authorization is not deployment or release approval.
 - [Canonical feature-by-feature Android feasibility matrix](phases/M1-secure-platform-foundation/03-security-and-permissions/ANDROID_COMPATIBILITY_MATRIX.md), [Play reviewer pack](phases/M9-play-release/01-play-and-data-safety/PLAY_CONSOLE_DECLARATIONS_AND_REVIEWER_PACK.md), [billing policy](phases/M7-commercial-integrations/01-commercial-plans-and-costing/SUBSCRIPTION_PLANS_PRICING_AND_RULES_2026.md), and [security evidence queue](phases/M8-operational-readiness/03-quality-and-evidence/TEST_STRATEGY_UNIT_INTEGRATION_LOAD_SECURITY.md).
-- Publisher decision: **SWARNA SEKHAR DHAR**, individual, India; same legal and Play publisher. Payments identity verification, merchant setup and legal review remain pending; public support contact awaits confirmation. These pending external gates do not stop synthetic tests, compliance analysis or documentation preparation. No Android implementation or real-child release is approved by this checkpoint.
+- Publisher decision: **SWARNA SEKHAR DHAR**, individual, India; same legal and Play publisher. **2026-10-31 update:** Play publisher identity COMPLETED (owner-confirmed); BillDesk/payment submitted with review pending; separate merchant activation not confirmed; legal review and public support contact remain pending. These pending external gates do not stop synthetic tests, compliance analysis or documentation preparation. No Android implementation or real-child release is approved by this checkpoint.
 
 ## Repository Subfolder Structure
 
@@ -58,7 +62,7 @@ The 72 root-level compatibility pointers were consolidated into [legacy-root-lin
 
 Filing into a phase/category is not a claim of internal sign-off. Every migrated document has a navigation-only header linking the [Master Document Control Register](MASTER_DOCUMENT_CONTROL_REGISTER.md), with a **proposed owner role** and conservative approval state. No individual has been assigned or signed a decision by this reorganization. The [Control Policy](DOCUMENT_CONTROL_POLICY.md) specifies IDs, versioning, accountability, review records, baselines and supersession.
 
-**Critical open gates:** India children's location/usage lawfulness and Play eligibility; external publisher verification and lawful guardian authority (publisher choice is recorded); category retention; processor DPAs/deployment region; production incident/support contacts; licensing; genuine provider-issued OIDC acceptance, V2 convergence and full Android/backend acceptance. The real OIDC verifier/JWKS implementation has scoped local/CI evidence, not genuine-user/provider-to-database or full-product acceptance. M5 has no dedicated standalone technical design and is explicitly flagged in its phase index. All real-child pilot/release gates remain blocked until actual evidence and approval.
+**Critical open gates:** India children's location/usage lawfulness and Play eligibility; separate merchant/payment activation and lawful guardian authority (Play publisher identity is completed per owner); category retention; processor DPAs/deployment region; production incident/support contacts; licensing; genuine provider-issued OIDC acceptance, V2 convergence and full Android/backend acceptance. The real OIDC verifier/JWKS implementation has scoped local/CI evidence, not genuine-user/provider-to-database or full-product acceptance. M5 has no dedicated standalone technical design and is explicitly flagged in its phase index. All real-child pilot/release gates remain blocked until actual evidence and approval.
 
 **Stable paths:** `docs/openapi-m1.yaml` and `docs/openapi.yaml` remain unchanged so existing CI/requirements contracts are not silently broken. `docs/ui/` remains in its established Figma/tldraw handoff layout.
 
