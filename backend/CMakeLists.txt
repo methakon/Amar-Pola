@@ -34,6 +34,11 @@ if(MA_SYNTHETIC_AUTH)
   target_compile_definitions(ma_backend PRIVATE MA_SYNTHETIC_AUTH=1)
 endif()
 
+# Frozen 14-operation OpenAPI surface must match real route registration.
+# Static coverage alone cannot prove handlers are integrated or authorized.
+add_test(NAME m1_route_registration
+         COMMAND python3 ${CMAKE_CURRENT_SOURCE_DIR}/tests/check_m1_route_coverage.py)
+
 add_executable(test_core tests/cpp/test_core.cc)
 target_link_libraries(test_core PRIVATE ma_core)
 add_test(NAME core COMMAND test_core)
