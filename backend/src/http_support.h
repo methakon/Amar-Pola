@@ -11,6 +11,7 @@ namespace ma {
 
 inline constexpr const char* kRequestIdHeader = "X-Request-Id";
 inline constexpr const char* kRequestIdAttr = "ma.request_id";
+inline constexpr std::size_t kMaxBodyBytes = 64 * 1024;
 
 // Always server-generated: a client-supplied X-Request-Id is ignored so it cannot forge log correlation.
 inline std::string new_request_id() { return drogon::utils::getUuid(true); }  // lower-case hyphenated
