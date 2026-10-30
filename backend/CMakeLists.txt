@@ -51,6 +51,10 @@ add_executable(test_crypto tests/cpp/test_crypto.cc)
 target_link_libraries(test_crypto PRIVATE ma_core OpenSSL::Crypto)
 add_test(NAME crypto COMMAND test_crypto)
 
+add_executable(test_capabilities_validation tests/cpp/test_capabilities_validation.cc)
+target_link_libraries(test_capabilities_validation PRIVATE ma_core)
+add_test(NAME capabilities_validation COMMAND test_capabilities_validation)
+
 add_executable(test_device_endpoints tests/cpp/test_device_endpoints.cc)
 target_link_libraries(test_device_endpoints PRIVATE ma_core OpenSSL::Crypto)
 add_test(NAME device_endpoints COMMAND test_device_endpoints)

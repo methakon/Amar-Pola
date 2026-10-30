@@ -13,6 +13,7 @@
 #include "families.h"
 #include "children_read.h"
 #include "parent_reads.h"
+#include "device_capabilities.h"
 #include "http_support.h"
 #include "pairing.h"
 
@@ -149,6 +150,13 @@ int main() {
       "/v1/devices/{deviceId}/credential/renew",
       [](HttpRequestPtr req, std::string deviceId) -> Task<HttpResponsePtr> {
         co_return co_await ma::renew_device_credential(std::move(req), std::move(deviceId));
+      },
+      {Post});
+
+  app().registerHandler(
+      "/v1/devices/{deviceId}/capabilities",
+      [](HttpRequestPtr req, std::string deviceId) -> Task<HttpResponsePtr> {
+        co_return co_await ma::record_capabilities(std::move(req), std::move(deviceId));
       },
       {Post});
 
