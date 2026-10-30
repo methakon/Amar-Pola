@@ -31,7 +31,7 @@
 - Added family/child reads and negative cases; corrected stale GET-families smoke test (it now requires \`401\`, while unknown paths remain \`404\`).
 - Added capability ingestion and schema validation, secure device revocation route, synthetic child profile creation and health Receipt repair.
 - [CI success at 7d48e57](https://github.com/methakon/Madalasa-Alarka/actions/runs/41143343437): workflow completed **SUCCESS** (C++ build/tests, synthetic HTTP, M1 DB and V2 lineage jobs). This checkpoint predates the additional route-registration assertion.
-- Added [offline frozen M1 route coverage check](https://github.com/methakon/Madalasa-Alarka/blob/api/backend/tests/check_m1_route_coverage.py), registered in \`ctest\`. Its current-code CI run must independently finish before route-coverage test is marked verified.
+- Added [offline frozen M1 route coverage check](https://github.com/methakon/Madalasa-Alarka/blob/api/backend/tests/check_m1_route_coverage.py), registered in \`ctest\`. **VERIFIED**: the [api HEAD 0831367 M1 pipeline](https://github.com/methakon/Madalasa-Alarka/actions/runs/41143455623) completed **SUCCESS** across backend build/ctest (including route registration), M1 contract/tenant tests and V2 database-lineage checks. This is not a positive V2 trusted-session or real-child release test.
 - Historical red workflows on intermediate commits reflected a now-corrected GET-families expectation and Drogon \`orm::Result\` construction error; **do not conceal failures or count an earlier failed SHA as green**.
 
 ## Gaps that still block a real-child/prod-ready E-02 close
