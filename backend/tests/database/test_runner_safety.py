@@ -131,6 +131,10 @@ class RunnerSafety(unittest.TestCase):
                                 manage.conninfo_to_dict(written['runtime'])['password'])
 
     def test_private_pr11_config_accepts_only_owned_test_container_and_port(self):
+        with patch.object(manage, 'ci_mode', return_value=False):
+            self._pr11_config_checks()
+
+    def _pr11_config_checks(self):
         target = {'host':'127.0.0.1','port':15434,'dbname':'madalasa_alarka_test'}
         # Under the default configuration 15434 is never a valid target, no matter
         # what MA_LOCAL_DB_DIR the suite inherited.
@@ -183,7 +187,8 @@ class RunnerSafety(unittest.TestCase):
                 manage.validate_target({'host': '127.0.0.1', 'port': 15432, 'dbname': db})
         # Default-port semantics are asserted against the default configuration,
         # independent of whatever MA_LOCAL_DB_DIR the running suite inherited.
-        with patch.object(manage, 'LOCAL', manage.DEFAULT_LOCAL):
+        with patch.object(manage, 'LOCAL', manage.DEFAULT_LOCAL), \
+             patch.object(manage, 'ci_mode', return_value=False):
             manage.validate_target({'host': '127.0.0.1', 'port': 15432, 'dbname': 'madalasa_alarka_test'})
 
     def test_historical_transaction_removed_not_function_body(self):
@@ -194,7 +199,8 @@ class RunnerSafety(unittest.TestCase):
         self.assertIn('\nBEGIN\nNULL;', result)
 
     def test_memory_port_is_only_for_the_exact_test_database(self):
-        with patch.object(manage, 'LOCAL', manage.DEFAULT_LOCAL):
+        with patch.object(manage, 'LOCAL', manage.DEFAULT_LOCAL), \
+             patch.object(manage, 'ci_mode', return_value=False):
             manage.validate_target({'host':'127.0.0.1','port':15433,'dbname':'madalasa_alarka_test'})
             for target in (
                 {'host':'127.0.0.1','hostaddr':'192.0.2.1','port':15433,'dbname':'madalasa_alarka_test'},

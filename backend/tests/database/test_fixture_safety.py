@@ -36,7 +36,8 @@ class FixtureTargetSafetyTests(unittest.TestCase):
     def test_pr11_fixture_checks_labels_before_connection(self):
         dsn = 'host=127.0.0.1 port=15434 dbname=madalasa_alarka_test'
         env = {'MA_TEST_DSN':dsn,'MA_LOCAL_DB_DIR':'.local-db/pr11-runtime'}
-        with patch.dict(os.environ,env), patch.object(fixtures.psycopg,'connect') as connect:
+        with patch.dict(os.environ,env), patch.object(fixtures,'ci_mode',return_value=False), \
+             patch.object(fixtures.psycopg,'connect') as connect:
             with patch('tools.database.manage.assert_container',side_effect=ValueError('wrong checkout')):
                 with self.assertRaises(ValueError): fixtures.admin_connection()
             connect.assert_not_called()
@@ -48,11 +49,13 @@ class FixtureTargetSafetyTests(unittest.TestCase):
     def test_pr11_port_requires_exact_explicit_config(self):
         dsn = 'host=127.0.0.1 port=15434 dbname=madalasa_alarka_test'
         for value in ('', '.local-db/other', '/etc'):
-            with patch.dict(os.environ,{'MA_TEST_DSN':dsn,'MA_LOCAL_DB_DIR':value}):
+            with patch.dict(os.environ,{'MA_TEST_DSN':dsn,'MA_LOCAL_DB_DIR':value}), \
+                 patch.object(fixtures,'ci_mode',return_value=False):
                 with self.assertRaises(ValueError): fixtures._dsn('admin')
 
     def test_default_ports_still_require_exact_loopback_test_db(self):
-        with patch.dict(os.environ,{'MA_LOCAL_DB_DIR':''}):
+        with patch.dict(os.environ,{'MA_LOCAL_DB_DIR':''}), \
+             patch.object(fixtures,'ci_mode',return_value=False):
             for port in ('15432','15433'):
                 dsn = f'host=127.0.0.1 port={port} dbname=madalasa_alarka_test'
                 self.assertEqual(fixtures.validate_test_dsn(dsn),dsn)
@@ -64,5 +67,6 @@ class FixtureTargetSafetyTests(unittest.TestCase):
             'host=127.0.0.1 port=15432 dbname=madalasa_alarka_dev',
             'host=127.0.0.1 hostaddr=192.0.2.1 port=15432 dbname=madalasa_alarka_test',
         ):
-            with self.subTest(dsn=dsn), patch.dict(os.environ, {'MA_TEST_DSN':dsn}):
+            with self.subTest(dsn=dsn), patch.dict(os.environ, {'MA_TEST_DSN':dsn}), \
+                 patch.object(fixtures,'ci_mode',return_value=False):
                 with self.assertRaises(ValueError):fixtures._dsn('admin')

@@ -17,6 +17,15 @@ import manage
 
 
 class BackupRestoreTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        if fixtures.ci_mode():
+            # The dump/restore drill drives the labelled local container. The
+            # executed drill is recorded in local evidence; CI covers lineage,
+            # ACL and the versioned regression suite instead.
+            raise unittest.SkipTest('backup/restore needs the local container; '
+                                    'local executed drill recorded in evidence')
+
     def test_backup_restore_preserves_schema_and_quarantines_runtime(self):
         fixtures.seed_core()
         def snapshot():
