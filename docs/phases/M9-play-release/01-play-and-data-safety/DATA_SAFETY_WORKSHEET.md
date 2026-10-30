@@ -110,9 +110,9 @@ For **every** shipped data category answer and document:
 | Firebase Cloud Messaging | Command wake signals | Optional, not integrated | Audit SDK and registration tokens |
 | Google Play Billing | Paid digital access | Planned | Audit purchase metadata and SDK data |
 | Google Drive API | Parent media backup | Planned | OAuth scope and token storage review |
-| Authentication provider | Parent sign-in | TBD | Name actual operator and vendor |
-| Crash reporting | Reliability | TBD | Off by default in specification until selected |
-| Hosting/database provider | Telemetry storage | TBD | Region, DPA, access and retention |
+| Authentication provider | Parent sign-in | PROPOSED Google Sign-In via Credential Manager | Confirm vendor terms and what Google receives |
+| Crash reporting | Reliability | None selected; off | Decide before any SDK is added; child location must never reach it |
+| Hosting/database provider | Telemetry storage | PROPOSED Oracle OCI Mumbai | Region, DPA, access and retention |
 
 ## 4. Permission mapping to function
 
@@ -131,17 +131,20 @@ For **every** shipped data category answer and document:
 
 ## 5. Retention and security blanks (must complete)
 
-- Default location retention: **TBD**
-- Default usage retention: **TBD**
-- Media retention and Drive copy ownership: **TBD**
-- Audit/security logs retention: **TBD**
-- Backup deletion lag: **TBD**
-- Primary hosting region: **TBD**
-- Publisher/controller: **SWARNA SEKHAR DHAR, Individual, India**; public contact/address and legal controller review pending
-- Subprocessors and DPAs: **TBD**
-- Whether encryption covers all endpoints and backups: **Requires verification**
-- Deletion request completion SLA and legal exceptions: **TBD**
-- Parent authentication and age/authority verification policy: **TBD**
+Values marked **PROPOSED** come from [Owner and legal recommended resolutions](../../../OWNER_AND_LEGAL_RECOMMENDED_RESOLUTIONS_2026-10-27.md).
+They are engineering proposals, **not approvals**: do not submit them to Google Play until the owner signs and counsel reviews.
+
+- Default location retention: **PROPOSED raw GPS 14 days** (blocker B-07)
+- Default usage retention: **PROPOSED off by default; if enabled 90 days** (B-07)
+- Media retention and Drive copy ownership: **OPEN** (media release is not decided, B-16)
+- Audit/security logs retention: **PROPOSED 365 days** (legal minimum under review, G03)
+- Backup deletion lag: **PROPOSED 30 days**
+- Primary hosting region: **PROPOSED OCI Mumbai ap-mumbai-1, Hyderabad fallback** (B-08, not provisioned)
+- Company/controller legal name and contact: **OPEN, owner must supply** (B-01)
+- Subprocessors and DPAs: **PROPOSED list**: Oracle (hosting), Google (sign-in, FCM, Play Billing); DPAs not signed
+- Whether encryption covers all endpoints and backups: **Requires verification** (TLS in transit is in the contract; backup encryption unbuilt)
+- Deletion request completion SLA and legal exceptions: **PROPOSED 30 days; backups roll off within the backup window; legal holds listed in the deletion page** (counsel to confirm)
+- Parent authentication and age/authority verification policy: **PROPOSED Google Sign-In plus an adult/guardian declaration; verified-consent method OPEN with counsel** (OCI-06)
 
 ## 6. Final signoff record template
 

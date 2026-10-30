@@ -1,6 +1,6 @@
 # M1 stack PR #9 — independent review and PostgreSQL16 evidence
 
-**Date:** 2026-10-30. **Status:** REVIEW_COMPLETE / FINDINGS_OPEN; owner merge approval NOT_REQUESTED_BY_AUTOMATION / NOT_GRANTED. **Scope:** source review, verified hosted CI and independent synthetic local SQL execution; not production, legal, Android or authentication acceptance. Proposed review owners: backend/security; independent sign-off unassigned. [Master register](../../../MASTER_DOCUMENT_CONTROL_REGISTER.md) · [Current blockers](../../M0-foundation-and-approvals/01-project-governance/BLOCKERS_AND_OWNER_DECISIONS.md).
+**Date:** 2026-10-30. **Status:** REMEDIATION_IN_PROGRESS; Phase 1 local regressions executed successfully and source committed as `d7f133ad1d04938b46e536fd417eb1274b5e1585`; Phase 2/ParentOIDC and final source/CI acceptance pending. Owner merge approval NOT_GRANTED. **Scope:** synthetic local and separately pinned hosted evidence, not production/legal/Android acceptance. Sections 1–8 preserve the original `c693899` review; section 9 records remediation and supersedes those four findings' original execution states only within its stated local scope. Proposed review owners: backend/security; independent sign-off unassigned. [Master register](../../../MASTER_DOCUMENT_CONTROL_REGISTER.md) · [Current blockers](../../M0-foundation-and-approvals/01-project-governance/BLOCKERS_AND_OWNER_DECISIONS.md).
 
 [Machine-readable execution record](../../../../evidence/local/reviews/PR9_REVIEW_2026-10-30.json) preserves commands, exit codes, source SHA and local/hosted scope; no private logs or credentials are committed.
 
@@ -115,3 +115,51 @@ The six-gate handoff was read at existing PR1 head `59125d402b07c20aaf6ecb13d695
 6. Owner reviews these findings before any PR9 merge. Reconcile M1 0005, V2 grants/manifests and backend/contracts without duplicating published histories.
 
 No infrastructure deployment, Android implementation, new production credentials, real-child processing, Console declaration/payment change, Android app build, purchase or PR merge was performed. Product/production/legal/Play readiness remains **NOT_READY**; the tested local/CI slices are **VERIFIED only within their stated scope**.
+
+## 9. Remediation checkpoint — Phase 1 local execution
+
+The existing `feat/m1-create-family` branch is reused. Tests below exercised source subsequently committed as `d7f133ad1d04938b46e536fd417eb1274b5e1585` against pinned Drogon **1.9.14**, JsonCpp **1.9.5**, and a fresh isolated PostgreSQL **16.15** container named `madalasa-pr9-remediation-pg16` (network none, no published ports). [Phase 1 command/source record](../../../../evidence/local/reviews/PR9_PHASE1_REMEDIATION_2026-10-30.json). CI publication is pending; these are not final task PASS records. Original migrations 0001–0005 were replayed explicitly and byte-compared against `c693899e4b411cbadd1639f0bcb642844af50ea9`. The separate V2 worktree was not modified.
+
+| Finding | Code correction | Regression and actual execution | Remaining status |
+|---|---|---|---|
+| PR9-01 — cleanup can signal PID 0 | `integration_families.sh` records positive spawned PIDs, TERM/bounded wait/KILL/reap, preserves original exit, and cleans project-TMPDIR artifacts | `test_integration_cleanup.py`: early failure, failure before second server, uncooperative child; isolated caller and unrelated sibling survival checked before emergency harness cleanup. Combined shell/gate suite: 9 tests, exit 0 | Local correction exercised; final immutable source/hosted acceptance pending |
+| PR9-02 — absent-client lookup precedes availability check | `families.h` calls `hasDbClient()` before acquisition; authenticated missing configuration returns catalog-compliant retryable 503 | `integration_db_failures.py --case all`: authenticated missing DB returns 503; unauthenticated remains 401; no process termination, exit 0 | Assertion-enabled dependency failure remains source-confirmed, not locally reproduced: baseline with Release-built dependency already returned 503 |
+| PR9-03 — fail-open marker pipeline | `check_production_auth.sh` consumes inspection output, distinguishes absence from tool errors; CI uses a real synthetic-build control | Nine combined unit tests, exit 0; actual production binary with synthetic auth OFF passes, actual synthetic binary presented as production is rejected with exit 1, combined real-binary control exits 0 | Marker exclusion only; not ParentOIDC acceptance |
+| PR9-04 — unbounded acquisition/statements | `db_config.h`, `main.cc`, `families.h`, `db_support.h`: bounded validated limits, finite acquisition/execution/commit waits, server statement/lock deadlines, controlled retryable dependency errors | Immutable baseline fails both `--case unreachable` and `--case slow` with client timeouts (exit 1 each). Corrected `--case all` exits 0: invalid configuration, authenticated missing DB, unreachable DB, slow nonlocking statement, exhausted pool, lock timeout | Local deadline behavior exercised; final immutable source/hosted acceptance pending |
+
+Executed commands (all exit 0 unless explicitly noted):
+
+- `/usr/bin/python3 -m unittest discover -s backend/tests -p 'test_*.py' -v`: **70 tests**.
+- `python3 backend/tests/integration_db_failures.py .dev-environment/pr9-baseline-build/ma_backend --case unreachable` and `--case slow`: **exit 1 each**, expected baseline regression failures.
+- `python3 backend/tests/integration_db_failures.py "$PWD/.dev-environment/pr9-fixed-build/ma_backend" --case all`: six reported cases.
+- `bash .dev-environment/build-pr9-backend.sh "$PWD" "$PWD/.dev-environment/pr9-fixed-build" ON` and the analogous `pr9-production-build OFF`: both builds and CTest exit 0.
+- `bash backend/scripts/check_production_auth.sh .dev-environment/pr9-production-build/ma_backend .dev-environment/pr9-fixed-build/ma_backend`: exit 0.
+- `bash backend/scripts/check_production_auth.sh .dev-environment/pr9-baseline-build/ma_backend`: **exit 1**, required rejection.
+- `bash backend/tests/integration_families.sh "$PWD/.dev-environment/pr9-fixed-build/ma_backend"`: exit 0.
+- `psql -X -v ON_ERROR_STOP=1 -f backend/tests/<suite>.sql` for `m1_tenant_isolation`, `m1_credential_lifecycle`, `m1_enrollment`, `m1_idempotency`, `m1_family_provisioning`: five exit-0 runs.
+- `bash backend/tests/m1_idempotency_concurrency.sh`; `bash backend/tests/purge_job.sh`: exit 0 each.
+- Both OpenAPI lints, `check_physical_catalog.py`, `check_document_structure.py`, and `git diff --check`: exit 0 each. Documentation structure check validates the existing 72-document canonical relocation inventory, 12 phase indexes and 19 categories; it is not validation of the separate audit branch's later policy inventory.
+
+Raw local command logs remain ignored under `.dev-environment/phase1-*`; they contain synthetic fixtures only and are not a substitute for the final committed, redacted command/source/CI record. Full Phase 2 concurrency/hold/retention tests and real ParentOIDC implementation/verification remain pending. No merge or deployment is authorized by this checkpoint.
+
+## 10. Phase 2 combined local execution — supersedes inherited finding states
+
+Historical M1 receives additive `0006_m1_concurrency_and_retention_holds.sql`; 0001–0005 remain byte-identical to `c693899`. Separate V2 migrations/manifests are untouched. This migration preserves 18 physical tables and existing lifecycle/purge signatures, defaults, owners, ACLs, fixed search paths and the four-field credential-purge result. The new pairing purge requires explicit grace; it is optionally wired into the undeployed runner, never silently enabled by a new legal TTL.
+
+| Original finding | Correction | Regression and actual execution | Scope/status |
+|---|---|---|---|
+| M1-INHERITED-01: distinct renewal challenges can create two live credentials | Shared device-first lifecycle serialization; recheck state and wall-clock validity after waits, including credential locks | `m1_credential_concurrency.py`: historical baseline actually leaves two unrevoked credentials; combined0006 passes 17 barrier-driven renewal/enrollment/expiry/rollback/revocation/ACL cases | Local database behavior verified; final publication/CI acceptance pending |
+| M1-INHERITED-02: concurrent issuance exceeds five open challenges | Challenge count and insert under the same device lock | Same suite reproduces six baseline challenges and passes deterministic cap and burst tests after0006 | Local concurrency verified; not an HTTP rate-limit implementation |
+| M1-RET-01: incomplete enrollment/pairing retention | Completed enrollment cleanup, explicit-grace pairing cleanup, artifact/device holds, all direct device FK guards; no audit/key/revocation deletion | Fresh empty `ma_pr9_retention_*` replay: original five migrations fail completed-ACTIVE cleanup, exit3; combined0006 plus `m1_retention_holds.sql -v retention_check_hold_acl=1` passes twice, exit0 | Synthetic engineering retention only, no legal-policy approval |
+| Hold/purge and lifecycle lock-order integration | Device-first purge, target-row hold rechecks; optional safely quoted pairing runner; exactly three function grants and no purge-role table privileges | `m1_purge_concurrency.py`: 20 tests pass, exit0; `purge_job.sh` executed separately and passes optional/default jobs, counts, idempotence, denied roles/hold mutation, invalid/injection-shaped grace and bounded lock waits | Local runtime integration verified; no scheduling/deployment |
+
+Exact principal commands (project-local rootless psql PATH/LD_LIBRARY_PATH and the isolated PGHOST from section9):
+
+- `.dev-environment/concurrency-venv/bin/python backend/tests/m1_credential_concurrency.py`: exit1 on original five migrations (baseline RED); add `--migration backend/persistence/migrations/0006_m1_concurrency_and_retention_holds.sql`: exit0, 17 tests.
+- `psql -X -v ON_ERROR_STOP=1 -v retention_check_hold_acl=1 -f backend/tests/m1_retention_holds.sql`: exit0 twice on a fresh empty six-migration replay. The test refuses other database names or populated fixture databases before cleanup.
+- `.dev-environment/concurrency-venv/bin/python backend/tests/m1_purge_concurrency.py`: exit0, 20 tests; `bash backend/tests/purge_job.sh`: exit0, run serially because its synthetic fixture roles are cluster-wide.
+- Original five SQL suites, full Python discovery, HTTP database-failure/family integration, both OpenAPI lints, physical catalog and documentation structure checks were rerun successfully after the combined migration. Final all-checks source freeze remains pending ParentOIDC.
+
+One integration attempt ran the retention matrix on the already-used review database and failed its global fixture count. No assertion was weakened: a new empty isolated replay passed, and an explicit empty/dedicated-database preflight now rejects this misuse. SQL fixture failures during test development remain in ignored execution histories; they are not hidden as product failures or passing tests.
+
+Phase 1 publication at `d3a4682dd3790672f40fabc09b134097338cac9b` is verified remotely: [backend/contracts CI41049572540](https://github.com/methakon/Madalasa-Alarka/actions/runs/41049572540) and [documentation CI41049572707](https://github.com/methakon/Madalasa-Alarka/actions/runs/41049572707) are successful. Those runs do not certify this later Phase2 source. ParentOIDC remains pending. PR9 stays open; merge requires owner review.

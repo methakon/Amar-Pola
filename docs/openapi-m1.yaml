@@ -3,7 +3,7 @@
   "info": {
     "title": "Madalasa–Alarka M1 Secure Foundation API",
     "version": "1.0.0-m1-draft",
-    "description": "M1 only. Synthetic test identities. All ParentOIDC operations require live family + child-specific scope. Device token must match path identity and be bound to Android Keystore key proof. A Google ID token is not legal guardian evidence.\n\nProduct display names: Madalasa (guardian Android app), Alarka (child Android companion). The GitHub repo is Madalasa-Alarka. Naming does not change API paths, auth audiences or package IDs; legal under-18 gates remain required."
+    "description": "M1 only. Synthetic test identities. All ParentOIDC operations require live family + child-specific scope. Device token must match path identity and be bound to Android Keystore key proof. A Google ID token is not legal guardian evidence.\n\nProduct display names: Madalasa (guardian Android app), Alarka (child Android companion). The GitHub repo is Madalasa-Alarka. Naming does not change API paths, auth audiences or package IDs; legal under-18 gates remain required.\n\nDevice credentials are short-lived and renewed with a Keystore key proof (requestCredentialChallenge, renewDeviceCredential); see docs/M1_DEVICE_CREDENTIAL_LIFECYCLE.md. Each operation lists only the errors it can return. Conventions (error catalog, idempotency, pagination, versioning, time and ID formats): docs/API_CONVENTIONS_AND_ERROR_CATALOG.md."
   },
   "servers": [
     {
@@ -51,13 +51,32 @@
         "additionalProperties": false,
         "properties": {
           "code": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "INVALID_REQUEST",
+              "UNAUTHENTICATED",
+              "FORBIDDEN",
+              "NOT_FOUND",
+              "CONFLICT",
+              "IDEMPOTENCY_KEY_REUSED",
+              "CODE_EXPIRED_OR_USED",
+              "PAYLOAD_TOO_LARGE",
+              "VALIDATION_FAILED",
+              "RATE_LIMITED",
+              "INTERNAL_ERROR",
+              "SERVICE_UNAVAILABLE"
+            ],
+            "description": "Stable machine-readable code. Clients branch on this, never on message. Catalog and HTTP status mapping: docs/API_CONVENTIONS_AND_ERROR_CATALOG.md"
           },
           "message": {
-            "type": "string"
+            "type": "string",
+            "maxLength": 300,
+            "description": "Short English text for logs and developers. Never contains secrets or other tenants' identifiers. Not localized and not for programmatic use."
           },
           "request_id": {
-            "type": "string"
+            "type": "string",
+            "format": "uuid",
+            "description": "Same value as the X-Request-Id response header. Quote it to support."
           },
           "retryable": {
             "type": "boolean"
@@ -306,18 +325,14 @@
           "expires_at": {
             "type": "string",
             "format": "date-time"
-          },
-          "device_proof_required": {
-            "type": "boolean",
-            "const": true
           }
         },
         "required": [
           "device_id",
           "credential_token",
-          "expires_at",
-          "device_proof_required"
-        ]
+          "expires_at"
+        ],
+        "description": "Short-lived opaque bearer credential. There is no per-request signing: the device proves key possession only at enrollment and when renewing (see /devices/{deviceId}/credential/*). Renew before expires_at."
       },
       "FeatureState": {
         "type": "string",
@@ -479,6 +494,162 @@
         "required": [
           "items"
         ]
+      },
+      "FamilyMembership": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ACTIVE",
+              "SUSPENDED"
+            ]
+          },
+          "membership_role": {
+            "type": "string",
+            "enum": [
+              "OWNER",
+              "GUARDIAN"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "label",
+          "status",
+          "membership_role"
+        ]
+      },
+      "ListFamilies": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FamilyMembership"
+            }
+          }
+        },
+        "required": [
+          "items"
+        ]
+      },
+      "CredentialChallengeRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "key_fingerprint_sha256_base64url": {
+            "type": "string",
+            "minLength": 43,
+            "maxLength": 43,
+            "description": "SHA-256 of the device's enrolled SPKI key, base64url without padding. The server compares it with the active key before issuing a challenge."
+          }
+        },
+        "required": [
+          "key_fingerprint_sha256_base64url"
+        ]
+      },
+      "CredentialChallenge": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "challenge_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "device_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "nonce_base64url": {
+            "type": "string",
+            "minLength": 24,
+            "maxLength": 200
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "challenge_context": {
+            "type": "string",
+            "enum": [
+              "amar-pola-m1-device-renew-v1"
+            ],
+            "description": "Signed together with the nonce so an enrollment proof can never be replayed as a renewal proof."
+          }
+        },
+        "required": [
+          "challenge_id",
+          "device_id",
+          "nonce_base64url",
+          "expires_at",
+          "challenge_context"
+        ]
+      },
+      "CredentialRenewal": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "challenge_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "nonce_base64url": {
+            "type": "string",
+            "minLength": 24,
+            "maxLength": 200
+          },
+          "signature_base64url": {
+            "type": "string",
+            "minLength": 48,
+            "maxLength": 4096
+          }
+        },
+        "required": [
+          "challenge_id",
+          "nonce_base64url",
+          "signature_base64url"
+        ]
+      }
+    },
+    "headers": {
+      "RequestId": {
+        "description": "Server-generated UUID for this response; identical to Error.request_id on failures.",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "RetryAfter": {
+        "description": "Seconds the client must wait before retrying.",
+        "schema": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 86400
+        }
+      }
+    },
+    "parameters": {
+      "IdempotencyKey": {
+        "name": "Idempotency-Key",
+        "in": "header",
+        "required": true,
+        "description": "Client-generated UUID, new for each logical create and reused unchanged on retries. Replays within 24 hours return the original result.",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
       }
     }
   },
@@ -496,7 +667,11 @@
           }
         ],
         "x-required-scope": "CREATE_FAMILY",
-        "parameters": [],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
         "responses": {
           "201": {
             "description": "Successful",
@@ -506,67 +681,67 @@
                   "$ref": "#/components/schemas/Family"
                 }
               }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
             }
           },
           "400": {
-            "description": "Malformed request",
+            "description": "Malformed request or invalid identifier",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "INVALID_REQUEST"
+            ]
           },
           "401": {
-            "description": "Authentication invalid",
+            "description": "Missing, expired or invalid credential",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "403": {
-            "description": "Scope denied",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
               }
-            }
-          },
-          "404": {
-            "description": "Not found or object hidden from caller",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "x-error-codes": [
+              "UNAUTHENTICATED"
+            ]
           },
           "409": {
-            "description": "Replay/conflict",
+            "description": "Family already exists for this request",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "410": {
-            "description": "Expired enrollment/code",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
               }
-            }
+            },
+            "x-error-codes": [
+              "CONFLICT",
+              "IDEMPOTENCY_KEY_REUSED"
+            ]
           },
           "413": {
             "description": "Body too large",
@@ -576,17 +751,33 @@
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "PAYLOAD_TOO_LARGE"
+            ]
           },
           "422": {
-            "description": "Validated but unsupported",
+            "description": "Well-formed but unsupported or out of range",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "VALIDATION_FAILED"
+            ]
           },
           "429": {
             "description": "Rate limit",
@@ -596,7 +787,18 @@
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "Retry-After": {
+                "$ref": "#/components/headers/RetryAfter"
+              }
+            },
+            "x-error-codes": [
+              "RATE_LIMITED"
+            ]
           },
           "503": {
             "description": "Service unavailable",
@@ -606,7 +808,18 @@
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "Retry-After": {
+                "$ref": "#/components/headers/RetryAfter"
+              }
+            },
+            "x-error-codes": [
+              "SERVICE_UNAVAILABLE"
+            ]
           }
         },
         "requestBody": {
@@ -628,6 +841,97 @@
                 ]
               }
             }
+          }
+        }
+      },
+      "get": {
+        "operationId": "listFamilies",
+        "tags": [
+          "Families"
+        ],
+        "summary": "List the families the signed-in parent belongs to",
+        "description": "Needed after a reinstall or on a second phone: every other family route requires a familyId the parent may no longer know. Returns only families where the caller has a live membership.",
+        "security": [
+          {
+            "ParentOIDC": []
+          }
+        ],
+        "x-required-scope": "LIST_OWN_FAMILIES",
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListFamilies"
+                }
+              }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, expired or invalid credential",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "UNAUTHENTICATED"
+            ]
+          },
+          "429": {
+            "description": "Rate limit",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "Retry-After": {
+                "$ref": "#/components/headers/RetryAfter"
+              }
+            },
+            "x-error-codes": [
+              "RATE_LIMITED"
+            ]
+          },
+          "503": {
+            "description": "Service unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "Retry-After": {
+                "$ref": "#/components/headers/RetryAfter"
+              }
+            },
+            "x-error-codes": [
+              "SERVICE_UNAVAILABLE"
+            ]
           }
         }
       }
@@ -654,6 +958,9 @@
               "type": "string",
               "format": "uuid"
             }
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
           }
         ],
         "responses": {
@@ -665,67 +972,103 @@
                   "$ref": "#/components/schemas/Child"
                 }
               }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
             }
           },
           "400": {
-            "description": "Malformed request",
+            "description": "Malformed request or invalid identifier",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "INVALID_REQUEST"
+            ]
           },
           "401": {
-            "description": "Authentication invalid",
+            "description": "Missing, expired or invalid credential",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "UNAUTHENTICATED"
+            ]
           },
           "403": {
-            "description": "Scope denied",
+            "description": "Caller lacks the required child scope",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "FORBIDDEN"
+            ]
           },
           "404": {
-            "description": "Not found or object hidden from caller",
+            "description": "Not found or hidden from caller",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "NOT_FOUND"
+            ]
           },
           "409": {
-            "description": "Replay/conflict",
+            "description": "Conflict with current state",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "410": {
-            "description": "Expired enrollment/code",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
               }
-            }
+            },
+            "x-error-codes": [
+              "CONFLICT",
+              "IDEMPOTENCY_KEY_REUSED"
+            ]
           },
           "413": {
             "description": "Body too large",
@@ -735,17 +1078,33 @@
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "PAYLOAD_TOO_LARGE"
+            ]
           },
           "422": {
-            "description": "Validated but unsupported",
+            "description": "Well-formed but unsupported or out of range",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "VALIDATION_FAILED"
+            ]
           },
           "429": {
             "description": "Rate limit",
@@ -755,7 +1114,18 @@
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "Retry-After": {
+                "$ref": "#/components/headers/RetryAfter"
+              }
+            },
+            "x-error-codes": [
+              "RATE_LIMITED"
+            ]
           },
           "503": {
             "description": "Service unavailable",
@@ -765,7 +1135,18 @@
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "Retry-After": {
+                "$ref": "#/components/headers/RetryAfter"
+              }
+            },
+            "x-error-codes": [
+              "SERVICE_UNAVAILABLE"
+            ]
           }
         },
         "requestBody": {
@@ -822,87 +1203,84 @@
                   "$ref": "#/components/schemas/ListChildren"
                 }
               }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
             }
           },
           "400": {
-            "description": "Malformed request",
+            "description": "Malformed request or invalid identifier",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "INVALID_REQUEST"
+            ]
           },
           "401": {
-            "description": "Authentication invalid",
+            "description": "Missing, expired or invalid credential",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "UNAUTHENTICATED"
+            ]
           },
           "403": {
-            "description": "Scope denied",
+            "description": "Caller lacks the required child scope",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "FORBIDDEN"
+            ]
           },
           "404": {
-            "description": "Not found or object hidden from caller",
+            "description": "Not found or hidden from caller",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "409": {
-            "description": "Replay/conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
               }
-            }
-          },
-          "410": {
-            "description": "Expired enrollment/code",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "413": {
-            "description": "Body too large",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validated but unsupported",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "x-error-codes": [
+              "NOT_FOUND"
+            ]
           },
           "429": {
             "description": "Rate limit",
@@ -912,7 +1290,18 @@
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "Retry-After": {
+                "$ref": "#/components/headers/RetryAfter"
+              }
+            },
+            "x-error-codes": [
+              "RATE_LIMITED"
+            ]
           },
           "503": {
             "description": "Service unavailable",
@@ -922,7 +1311,18 @@
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "Retry-After": {
+                "$ref": "#/components/headers/RetryAfter"
+              }
+            },
+            "x-error-codes": [
+              "SERVICE_UNAVAILABLE"
+            ]
           }
         }
       }
@@ -960,87 +1360,84 @@
                   "$ref": "#/components/schemas/Child"
                 }
               }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
             }
           },
           "400": {
-            "description": "Malformed request",
+            "description": "Malformed request or invalid identifier",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "INVALID_REQUEST"
+            ]
           },
           "401": {
-            "description": "Authentication invalid",
+            "description": "Missing, expired or invalid credential",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "UNAUTHENTICATED"
+            ]
           },
           "403": {
-            "description": "Scope denied",
+            "description": "Caller lacks the required child scope",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "FORBIDDEN"
+            ]
           },
           "404": {
-            "description": "Not found or object hidden from caller",
+            "description": "Not found or hidden from caller",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "409": {
-            "description": "Replay/conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
               }
-            }
-          },
-          "410": {
-            "description": "Expired enrollment/code",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "413": {
-            "description": "Body too large",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validated but unsupported",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "x-error-codes": [
+              "NOT_FOUND"
+            ]
           },
           "429": {
             "description": "Rate limit",
@@ -1050,7 +1447,18 @@
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "Retry-After": {
+                "$ref": "#/components/headers/RetryAfter"
+              }
+            },
+            "x-error-codes": [
+              "RATE_LIMITED"
+            ]
           },
           "503": {
             "description": "Service unavailable",
@@ -1060,7 +1468,18 @@
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "Retry-After": {
+                "$ref": "#/components/headers/RetryAfter"
+              }
+            },
+            "x-error-codes": [
+              "SERVICE_UNAVAILABLE"
+            ]
           }
         }
       }
@@ -1098,87 +1517,84 @@
                   "$ref": "#/components/schemas/ListDevices"
                 }
               }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
             }
           },
           "400": {
-            "description": "Malformed request",
+            "description": "Malformed request or invalid identifier",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "INVALID_REQUEST"
+            ]
           },
           "401": {
-            "description": "Authentication invalid",
+            "description": "Missing, expired or invalid credential",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "UNAUTHENTICATED"
+            ]
           },
           "403": {
-            "description": "Scope denied",
+            "description": "Caller lacks the required child scope",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "FORBIDDEN"
+            ]
           },
           "404": {
-            "description": "Not found or object hidden from caller",
+            "description": "Not found or hidden from caller",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "409": {
-            "description": "Replay/conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
               }
-            }
-          },
-          "410": {
-            "description": "Expired enrollment/code",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "413": {
-            "description": "Body too large",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validated but unsupported",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "x-error-codes": [
+              "NOT_FOUND"
+            ]
           },
           "429": {
             "description": "Rate limit",
@@ -1188,7 +1604,18 @@
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "Retry-After": {
+                "$ref": "#/components/headers/RetryAfter"
+              }
+            },
+            "x-error-codes": [
+              "RATE_LIMITED"
+            ]
           },
           "503": {
             "description": "Service unavailable",
@@ -1198,7 +1625,18 @@
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "Retry-After": {
+                "$ref": "#/components/headers/RetryAfter"
+              }
+            },
+            "x-error-codes": [
+              "SERVICE_UNAVAILABLE"
+            ]
           }
         }
       }
@@ -1225,6 +1663,9 @@
               "type": "string",
               "format": "uuid"
             }
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
           }
         ],
         "responses": {
@@ -1236,67 +1677,103 @@
                   "$ref": "#/components/schemas/PairingCode"
                 }
               }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
             }
           },
           "400": {
-            "description": "Malformed request",
+            "description": "Malformed request or invalid identifier",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "INVALID_REQUEST"
+            ]
           },
           "401": {
-            "description": "Authentication invalid",
+            "description": "Missing, expired or invalid credential",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "UNAUTHENTICATED"
+            ]
           },
           "403": {
-            "description": "Scope denied",
+            "description": "Caller lacks the required child scope",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "FORBIDDEN"
+            ]
           },
           "404": {
-            "description": "Not found or object hidden from caller",
+            "description": "Not found or hidden from caller",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "NOT_FOUND"
+            ]
           },
           "409": {
-            "description": "Replay/conflict",
+            "description": "An unexpired code already exists for this child",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "410": {
-            "description": "Expired enrollment/code",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
               }
-            }
+            },
+            "x-error-codes": [
+              "CONFLICT",
+              "IDEMPOTENCY_KEY_REUSED"
+            ]
           },
           "413": {
             "description": "Body too large",
@@ -1306,17 +1783,33 @@
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "PAYLOAD_TOO_LARGE"
+            ]
           },
           "422": {
-            "description": "Validated but unsupported",
+            "description": "Well-formed but unsupported or out of range",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "VALIDATION_FAILED"
+            ]
           },
           "429": {
             "description": "Rate limit",
@@ -1326,7 +1819,18 @@
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "Retry-After": {
+                "$ref": "#/components/headers/RetryAfter"
+              }
+            },
+            "x-error-codes": [
+              "RATE_LIMITED"
+            ]
           },
           "503": {
             "description": "Service unavailable",
@@ -1336,7 +1840,18 @@
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "Retry-After": {
+                "$ref": "#/components/headers/RetryAfter"
+              }
+            },
+            "x-error-codes": [
+              "SERVICE_UNAVAILABLE"
+            ]
           }
         },
         "requestBody": {
@@ -1381,67 +1896,84 @@
                   "$ref": "#/components/schemas/Challenge"
                 }
               }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
             }
           },
           "400": {
-            "description": "Malformed request",
+            "description": "Malformed request or invalid identifier",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "401": {
-            "description": "Authentication invalid",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
               }
-            }
-          },
-          "403": {
-            "description": "Scope denied",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "x-error-codes": [
+              "INVALID_REQUEST"
+            ]
           },
           "404": {
-            "description": "Not found or object hidden from caller",
+            "description": "Unknown code (not distinguished from other invalid codes)",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "NOT_FOUND"
+            ]
           },
           "409": {
-            "description": "Replay/conflict",
+            "description": "Code already used",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "CONFLICT"
+            ]
           },
           "410": {
-            "description": "Expired enrollment/code",
+            "description": "Code expired",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "CODE_EXPIRED_OR_USED"
+            ]
           },
           "413": {
             "description": "Body too large",
@@ -1451,17 +1983,33 @@
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "PAYLOAD_TOO_LARGE"
+            ]
           },
           "422": {
-            "description": "Validated but unsupported",
+            "description": "Well-formed but unsupported or out of range",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "VALIDATION_FAILED"
+            ]
           },
           "429": {
             "description": "Rate limit",
@@ -1471,7 +2019,18 @@
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "Retry-After": {
+                "$ref": "#/components/headers/RetryAfter"
+              }
+            },
+            "x-error-codes": [
+              "RATE_LIMITED"
+            ]
           },
           "503": {
             "description": "Service unavailable",
@@ -1481,7 +2040,18 @@
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "Retry-After": {
+                "$ref": "#/components/headers/RetryAfter"
+              }
+            },
+            "x-error-codes": [
+              "SERVICE_UNAVAILABLE"
+            ]
           }
         },
         "requestBody": {
@@ -1525,67 +2095,102 @@
                   "$ref": "#/components/schemas/DeviceToken"
                 }
               }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
             }
           },
           "400": {
-            "description": "Malformed request",
+            "description": "Malformed request or invalid identifier",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "INVALID_REQUEST"
+            ]
           },
           "401": {
-            "description": "Authentication invalid",
+            "description": "Signature or nonce invalid",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "403": {
-            "description": "Scope denied",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
               }
-            }
+            },
+            "x-error-codes": [
+              "UNAUTHENTICATED"
+            ]
           },
           "404": {
-            "description": "Not found or object hidden from caller",
+            "description": "Not found or hidden from caller",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "NOT_FOUND"
+            ]
           },
           "409": {
-            "description": "Replay/conflict",
+            "description": "Enrollment not awaiting proof",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "CONFLICT"
+            ]
           },
           "410": {
-            "description": "Expired enrollment/code",
+            "description": "Challenge expired or already used",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "CODE_EXPIRED_OR_USED"
+            ]
           },
           "413": {
             "description": "Body too large",
@@ -1595,17 +2200,33 @@
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "PAYLOAD_TOO_LARGE"
+            ]
           },
           "422": {
-            "description": "Validated but unsupported",
+            "description": "Well-formed but unsupported or out of range",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "VALIDATION_FAILED"
+            ]
           },
           "429": {
             "description": "Rate limit",
@@ -1615,7 +2236,18 @@
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "Retry-After": {
+                "$ref": "#/components/headers/RetryAfter"
+              }
+            },
+            "x-error-codes": [
+              "RATE_LIMITED"
+            ]
           },
           "503": {
             "description": "Service unavailable",
@@ -1625,7 +2257,18 @@
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "Retry-After": {
+                "$ref": "#/components/headers/RetryAfter"
+              }
+            },
+            "x-error-codes": [
+              "SERVICE_UNAVAILABLE"
+            ]
           }
         },
         "requestBody": {
@@ -1673,67 +2316,84 @@
                   "$ref": "#/components/schemas/Receipt"
                 }
               }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
             }
           },
           "400": {
-            "description": "Malformed request",
+            "description": "Malformed request or invalid identifier",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "INVALID_REQUEST"
+            ]
           },
           "401": {
-            "description": "Authentication invalid",
+            "description": "Credential missing, expired or device revoked",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "UNAUTHENTICATED"
+            ]
           },
           "403": {
-            "description": "Scope denied",
+            "description": "Credential belongs to a different device than the path",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "FORBIDDEN"
+            ]
           },
           "404": {
-            "description": "Not found or object hidden from caller",
+            "description": "Not found or hidden from caller",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "409": {
-            "description": "Replay/conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
               }
-            }
-          },
-          "410": {
-            "description": "Expired enrollment/code",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "x-error-codes": [
+              "NOT_FOUND"
+            ]
           },
           "413": {
             "description": "Body too large",
@@ -1743,17 +2403,33 @@
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "PAYLOAD_TOO_LARGE"
+            ]
           },
           "422": {
-            "description": "Validated but unsupported",
+            "description": "Well-formed but unsupported or out of range",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "VALIDATION_FAILED"
+            ]
           },
           "429": {
             "description": "Rate limit",
@@ -1763,7 +2439,18 @@
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "Retry-After": {
+                "$ref": "#/components/headers/RetryAfter"
+              }
+            },
+            "x-error-codes": [
+              "RATE_LIMITED"
+            ]
           },
           "503": {
             "description": "Service unavailable",
@@ -1773,7 +2460,18 @@
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "Retry-After": {
+                "$ref": "#/components/headers/RetryAfter"
+              }
+            },
+            "x-error-codes": [
+              "SERVICE_UNAVAILABLE"
+            ]
           }
         },
         "requestBody": {
@@ -1821,67 +2519,84 @@
                   "$ref": "#/components/schemas/Receipt"
                 }
               }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
             }
           },
           "400": {
-            "description": "Malformed request",
+            "description": "Malformed request or invalid identifier",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "INVALID_REQUEST"
+            ]
           },
           "401": {
-            "description": "Authentication invalid",
+            "description": "Credential missing, expired or device revoked",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "UNAUTHENTICATED"
+            ]
           },
           "403": {
-            "description": "Scope denied",
+            "description": "Credential belongs to a different device than the path",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "FORBIDDEN"
+            ]
           },
           "404": {
-            "description": "Not found or object hidden from caller",
+            "description": "Not found or hidden from caller",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "409": {
-            "description": "Replay/conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
               }
-            }
-          },
-          "410": {
-            "description": "Expired enrollment/code",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "x-error-codes": [
+              "NOT_FOUND"
+            ]
           },
           "413": {
             "description": "Body too large",
@@ -1891,17 +2606,33 @@
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "PAYLOAD_TOO_LARGE"
+            ]
           },
           "422": {
-            "description": "Validated but unsupported",
+            "description": "Well-formed but unsupported or out of range",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "VALIDATION_FAILED"
+            ]
           },
           "429": {
             "description": "Rate limit",
@@ -1911,7 +2642,18 @@
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "Retry-After": {
+                "$ref": "#/components/headers/RetryAfter"
+              }
+            },
+            "x-error-codes": [
+              "RATE_LIMITED"
+            ]
           },
           "503": {
             "description": "Service unavailable",
@@ -1921,7 +2663,18 @@
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "Retry-After": {
+                "$ref": "#/components/headers/RetryAfter"
+              }
+            },
+            "x-error-codes": [
+              "SERVICE_UNAVAILABLE"
+            ]
           }
         },
         "requestBody": {
@@ -1962,87 +2715,84 @@
         ],
         "responses": {
           "204": {
-            "description": "Revoked"
+            "description": "Revoked",
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            }
           },
           "400": {
-            "description": "Malformed request",
+            "description": "Malformed request or invalid identifier",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "INVALID_REQUEST"
+            ]
           },
           "401": {
-            "description": "Authentication invalid",
+            "description": "Missing, expired or invalid credential",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "UNAUTHENTICATED"
+            ]
           },
           "403": {
-            "description": "Scope denied",
+            "description": "Caller lacks REVOKE_CHILD_DEVICE for this child",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "FORBIDDEN"
+            ]
           },
           "404": {
-            "description": "Not found or object hidden from caller",
+            "description": "Not found or hidden from caller",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "409": {
-            "description": "Replay/conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
               }
-            }
-          },
-          "410": {
-            "description": "Expired enrollment/code",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "413": {
-            "description": "Body too large",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validated but unsupported",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "x-error-codes": [
+              "NOT_FOUND"
+            ]
           },
           "429": {
             "description": "Rate limit",
@@ -2052,7 +2802,18 @@
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "Retry-After": {
+                "$ref": "#/components/headers/RetryAfter"
+              }
+            },
+            "x-error-codes": [
+              "RATE_LIMITED"
+            ]
           },
           "503": {
             "description": "Service unavailable",
@@ -2062,7 +2823,346 @@
                   "$ref": "#/components/schemas/Error"
                 }
               }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "Retry-After": {
+                "$ref": "#/components/headers/RetryAfter"
+              }
+            },
+            "x-error-codes": [
+              "SERVICE_UNAVAILABLE"
+            ]
+          }
+        }
+      }
+    },
+    "/devices/{deviceId}/credential/challenge": {
+      "post": {
+        "operationId": "requestCredentialChallenge",
+        "tags": [
+          "Devices"
+        ],
+        "summary": "Request a one-use challenge to renew the short-lived device credential",
+        "description": "Anonymous by necessity: the expired token cannot authenticate. Protected by the enrolled Keystore key (the next call needs a signature), a single-use short-lived challenge and rate limits. Unknown and revoked devices are not distinguished.",
+        "security": [],
+        "x-required-scope": "ONE_USE_RENEWAL_CHALLENGE",
+        "parameters": [
+          {
+            "name": "deviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
             }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CredentialChallengeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CredentialChallenge"
+                }
+              }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed request or invalid identifier",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "INVALID_REQUEST"
+            ]
+          },
+          "404": {
+            "description": "Unknown, inactive or revoked device, or key fingerprint does not match (not distinguished)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "NOT_FOUND"
+            ]
+          },
+          "413": {
+            "description": "Body too large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "PAYLOAD_TOO_LARGE"
+            ]
+          },
+          "422": {
+            "description": "Well-formed but out of range",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "VALIDATION_FAILED"
+            ]
+          },
+          "429": {
+            "description": "Rate limit",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "Retry-After": {
+                "$ref": "#/components/headers/RetryAfter"
+              }
+            },
+            "x-error-codes": [
+              "RATE_LIMITED"
+            ]
+          },
+          "503": {
+            "description": "Service unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "Retry-After": {
+                "$ref": "#/components/headers/RetryAfter"
+              }
+            },
+            "x-error-codes": [
+              "SERVICE_UNAVAILABLE"
+            ]
+          }
+        }
+      }
+    },
+    "/devices/{deviceId}/credential/renew": {
+      "post": {
+        "operationId": "renewDeviceCredential",
+        "tags": [
+          "Devices"
+        ],
+        "summary": "Exchange a signed challenge for a new short-lived device credential",
+        "description": "The device signs context + nonce with its Keystore key. On success the previous credential for the device is revoked and a new one is returned. A revoked or unknown device receives the same failure as a bad signature.",
+        "security": [],
+        "x-required-scope": "ONE_TIME_SIGNED_CHALLENGE",
+        "parameters": [
+          {
+            "name": "deviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CredentialRenewal"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceToken"
+                }
+              }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed request or invalid identifier",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "INVALID_REQUEST"
+            ]
+          },
+          "401": {
+            "description": "Any failure, not distinguished: bad signature or nonce, unknown or used or expired challenge, unknown or inactive or revoked device",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "UNAUTHENTICATED"
+            ]
+          },
+          "413": {
+            "description": "Body too large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "PAYLOAD_TOO_LARGE"
+            ]
+          },
+          "422": {
+            "description": "Well-formed but unsupported or out of range",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "x-error-codes": [
+              "VALIDATION_FAILED"
+            ]
+          },
+          "429": {
+            "description": "Rate limit",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "Retry-After": {
+                "$ref": "#/components/headers/RetryAfter"
+              }
+            },
+            "x-error-codes": [
+              "RATE_LIMITED"
+            ]
+          },
+          "503": {
+            "description": "Service unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "Retry-After": {
+                "$ref": "#/components/headers/RetryAfter"
+              }
+            },
+            "x-error-codes": [
+              "SERVICE_UNAVAILABLE"
+            ]
           }
         }
       }
