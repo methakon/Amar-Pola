@@ -167,8 +167,10 @@ post cap11 422 it-cap "$(newkey)" '{"label":"Cap 11"}'; assert_error cap11 VALID
 post cap_replay 201 it-cap "$FIRST" '{"label":"Cap 1"}'
 [ "$(jget cap_replay label)" = "Cap 1" ] || fail "a replay must still work at the cap"
 
-# --- an unrelated method/route stays catalog-shaped
-req e_get 404 $U/v1/families; assert_error e_get NOT_FOUND false
+# GET /v1/families is now an authenticated frozen M1 route; no principal must fail closed.
+req e_get 401 $U/v1/families; assert_error e_get UNAUTHENTICATED false
+# Unknown route remains catalog-shaped.
+req e_unknown 404 $U/v1/not-an-m1-route; assert_error e_unknown NOT_FOUND false
 
 # --- second instance: no database configured and no synthetic mode
 MA_LISTEN_PORT=$PORT2 "$BIN" >"$OUT/backend2.log" 2>&1 & PID2=$!
