@@ -70,6 +70,22 @@ class BranchRoutesTests(unittest.TestCase):
                     "delete_temp_only_after_verified_main_integration", "keep_permanent_work_branches"):
             self.assertIs(self.rules[key], True, key)
 
+    def test_owner_prework_pull_both_branches_before_every_segment(self):
+        sync = self.rules["prework_sync"]
+        self.assertIs(sync["required"], True)
+        self.assertEqual(sync["repetition"], ["before_task_start", "before_task_resume", "before_code_pr"])
+        self.assertEqual(sync["fetch_refs"], ["main", "dev"])
+        self.assertEqual(sync["workstream_merge_order"], ["main", "dev"])
+        self.assertEqual(sync["integration_dev_merges"], ["main"])
+        self.assertEqual(sync["canonical_main_dev_action"], "fetch_and_inspect_only")
+        self.assertIs(sync["require_clean_worktree"], True)
+        self.assertIs(sync["stop_on_conflicts"], True)
+        self.assertIs(sync["forbid_force"], True)
+        self.assertIn("origin/dev_sha", sync["evidence"])
+        self.assertIn("origin/main_sha", sync["evidence"])
+        self.assertIn("utc_timestamp", sync["evidence"])
+        self.assertIn("test_results", sync["evidence"])
+
 
 if __name__ == "__main__":
     unittest.main()

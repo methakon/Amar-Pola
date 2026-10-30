@@ -52,5 +52,38 @@
   "require_dev_approval": true,
   "require_owner_instruction_for_temp": true,
   "delete_temp_only_after_verified_main_integration": true,
-  "keep_permanent_work_branches": true
+  "keep_permanent_work_branches": true,
+  "prework_sync": {
+    "required": true,
+    "repetition": [
+      "before_task_start",
+      "before_task_resume",
+      "before_code_pr"
+    ],
+    "fetch_refs": [
+      "main",
+      "dev"
+    ],
+    "remote": "origin",
+    "require_clean_worktree": true,
+    "branch_fast_forward_pull": true,
+    "workstream_merge_order": [
+      "main",
+      "dev"
+    ],
+    "integration_dev_merges": [
+      "main"
+    ],
+    "canonical_main_dev_action": "fetch_and_inspect_only",
+    "stop_on_conflicts": true,
+    "forbid_force": true,
+    "evidence": [
+      "origin/main_sha",
+      "origin/dev_sha",
+      "working_branch_sha",
+      "utc_timestamp",
+      "test_results"
+    ],
+    "script": "docs/tools/sync_work_branch.sh"
+  }
 }

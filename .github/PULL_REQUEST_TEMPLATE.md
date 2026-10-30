@@ -1,3 +1,10 @@
+## Pre-work synchronization evidence (MANDATORY for all workstreams)
+
+- [ ] Before starting/resuming this segment, executed `bash docs/tools/sync_work_branch.sh <current-branch>` (safely fetched and synchronized **both** origin/main and origin/dev; current branch fast-forward-pulled).
+- [ ] Repeated the same sync immediately before proposing/updating this code PR; `dev` already includes latest `main`.
+- [ ] Source `origin/main` SHA: **[record]**; `origin/dev` SHA: **[record]**; work branch SHA: **[record]**; UTC run time: **[record]**.
+- [ ] Conflicts resolved without force/discard; all affected tests rerun. Note commands, exits and CI URLs; if blocked, stop the PR.
+
 ## Mandatory branch-route checkpoint
 
 - [ ] Source is `api`, `parent`, `child` or `admin-web`; base is `dev`; OR this is the cleared promotion `dev` → `main`.

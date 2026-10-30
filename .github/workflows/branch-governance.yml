@@ -17,6 +17,8 @@ jobs:
           fetch-depth: 0
       - name: Run owner-approved branch policy negative tests
         run: python3 -m unittest discover -s docs/tools -p 'test_branch_routes.py' -v
+      - name: Syntax-check mandatory task-start preflight
+        run: bash -n docs/tools/sync_work_branch.sh
       - name: Verify PR route and changes
         shell: bash
         env:

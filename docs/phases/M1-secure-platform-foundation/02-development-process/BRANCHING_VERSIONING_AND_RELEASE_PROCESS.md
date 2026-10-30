@@ -19,6 +19,27 @@ The owner specifies **five persistent working branches**, all initialized from `
 
 **Documentation rule:** All canonical documentation, plans, architecture decisions, legal drafts, branch registers and documentation verification tools must be authored, committed and maintained on `main` only. Do not modify `docs/**`, `AGENTS.md`, root governance Markdown or the PR template from workstream/`dev` branches. Workers needing document changes submit a proposal and relevant code/test references; a documentation maintainer updates `main`, and workers synchronize their code branches with the updated `main`. The documentation and branch-routing governance CI files are managed on `main`. `public/legal/` and web FAQ/support pages are **frontend artifacts** owned by `admin-web`; no live publication or legal approval is inferred by merging markup.
 
+### Mandatory pre-work synchronization from BOTH `main` and `dev` (owner addendum 2026-10-31)
+
+**No worker may start or resume a task, edit application code, or open/update a code PR before checking and synchronizing both remote branches.** Apply this to `api`, `parent`, `child`, `admin-web`, exceptional temporary branches, and `dev` integration work. Repeat the check when a task resumes after a pause and immediately before submitting its PR. Capture the exact `origin/main`, `origin/dev` and working-branch SHAs in task/PR evidence; a stale source branch is NOT cleared for review.
+
+**Preferred one-command preflight** (from a clean checkout, while on the chosen branch): `bash docs/tools/sync_work_branch.sh <branch-name>`. For workstream and authorized temporary code branches, it fetches and fast-forward-pulls their own remote tip, then **non-destructively merges up-to-date `origin/main` first and `origin/dev` second**. For the `dev` integrator, it fetches/pulls `dev`, then merges latest `main` into `dev`. Both refs are always fetched before any changes. This is the owner's requested pull from **both** branches; explicit fetch + merge avoids ambiguous `git pull` rebase behaviour. Inspect/resolve conflicts without force or automatically choosing `ours`/`theirs`; run affected tests after any merge. If the worktree is dirty, stop, preserve changes and coordinate rather than stashing/deleting unowned work.
+
+**For documentation/planning work on `main`:** fetch/inspect `dev` and fast-forward-pull `main`, **but never merge `dev` into `main` as part of this preflight**. Development changes enter `main` only after tested reviewed `dev` → `main` promotion. This deliberately preserves the owner's final verification and documentation-only-on-main rules.
+
+Manual equivalent for a workstream branch, after verifying a clean checkout on that branch:
+
+```bash
+git fetch --prune origin main dev "<workstream-branch>"
+git pull --ff-only origin "<workstream-branch>"
+git merge --no-edit origin/main
+git merge --no-edit origin/dev
+# Verify both parents: git merge-base --is-ancestor origin/main HEAD
+# and git merge-base --is-ancestor origin/dev HEAD.
+```
+
+Do not run the manual merges on `main`. On `main`, `git fetch origin main dev && git pull --ff-only origin main` is the safe preflight; inspect dev separately. On `dev`, fetch both, fast-forward-pull `dev`, merge `origin/main`, and test the integrated tree. GitHub CI cannot prove that a local preflight was actually executed: the PR template requires its timestamp and SHAs, and reviewer checks them; the automated negative regression tests verify the policy and script behaviour. No permission to process real-child data or deploy is implied.
+
 ### Ordered implementation, integration and verification
 
 1. A worker checks `AGENTS.md`, this policy, the live GitHub branch/PR inventory and the dependency graph. Choose `api`, `parent`, `child` or `admin-web`; start from latest `main` when initializing, and synchronize upstream changes without force-pushing another worker's commits. Coordinate concurrent workers sharing one branch.
@@ -42,7 +63,7 @@ The owner specifies **five persistent working branches**, all initialized from `
 
 ### Initial branch inventory / transition
 
-As inspected immediately before adoption, only `main` and retained `feat/local-postgresql-physical-schema` existed. The five working branches were **requested**; creation should be verified against GitHub after this documentation is committed. During legacy reconciliation a seventh branch can temporarily exist, but it must not be mistaken for a permanent sixth workstream. PR #11 remains a draft and is not merge-ready until the current M1/V2 migration tests and integration gate pass.
+As inspected immediately before adoption, only `main` and retained `feat/local-postgresql-physical-schema` existed. The five named work branches were **created from the same `main` commit `903136f` on 2026-10-31** and verified against live GitHub. Together with `main`, there are six permanent branches, plus one separately retained legacy PostgreSQL branch pending safe integration. During legacy reconciliation a seventh branch can temporarily exist, but it must not be mistaken for a permanent sixth workstream. PR #11 remains a draft and is not merge-ready until the current M1/V2 migration tests and integration gate pass.
 
 ---
 
