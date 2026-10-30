@@ -11,4 +11,4 @@ This directory contains design tokens, screen inventories, story frameworks, and
 | [Reference Screenshots & Workflows](REFERENCE_SCREENSHOTS_FEATURE_WORKFLOWS_2026.md) | Visual reference inventory capturing essential parent and child feature user journeys |
 | [Figma Functional Handoff](figma-functional-handoff/README.md) | Developer handoff guidance, design frame mappings, and asset export specifications |
 | [tldraw Visual Diagrams](tldraw/README.md) | Architecture flowcharts and freeform whiteboard diagrams for UI interaction state machines |
-| [UI Audits](audits/2026-10-28/validation/README.md) | Automated validation records and test execution logs for UI design elements |
+| [UI Audits](../audits/FINAL_FIGMA_SCREEN_BY_SCREEN_API_DB_REPORT_2026-10-28.md) | Automated validation records and test execution logs for UI design elements |

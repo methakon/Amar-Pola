@@ -2,7 +2,7 @@
 
 > **Current app roles:** **Madalasa** = parent/guardian Android app; **Alarka** = child device companion. Canonical GitHub repository: https://github.com/methakon/Madalasa-Alarka. Test IDs, synthetic family names and M1 API routes are unchanged by the brand rename.
 
-**Scope:** canonical [M1 plan](../../docs/MASTER_MILESTONE_IMPLEMENTATION_AND_RELEASE_PLAN.md) and [M1-only OpenAPI](../../docs/openapi-m1.yaml). 
+**Scope:** canonical [M1 plan](../../docs/phases/M0-foundation-and-approvals/01-project-governance/MASTER_MILESTONE_IMPLEMENTATION_AND_RELEASE_PLAN.md) and [M1-only OpenAPI](../../docs/openapi-m1.yaml).
 **Status:** TEST CASES WRITTEN, **NOT EXECUTED on Android or running C++ APIs**; SQL isolation test runs when PostgreSQL CI is available.
 **Data safety:** fake guardian subjects, synthesized child aliases/UUIDs only. Never real child GPS, camera/mic/usage or ID documents.
 

@@ -138,7 +138,7 @@ The project owner selected **native parent Android**, **managed-device provision
 ## Oracle Chicago hosting and per-child finances (2026-10-25)
 
 > **Historical.** The owner has since preferred Indian-region hosting (Mumbai, Hyderabad fallback; see the current
-> hosting plan below and [Blocker register §J](docs/BLOCKERS_AND_OWNER_DECISIONS.md)). Chicago figures remain only as a cost
+> hosting plan below and [Blocker register §J](docs/phases/M0-foundation-and-approvals/01-project-governance/BLOCKERS_AND_OWNER_DECISIONS.md)). Chicago figures remain only as a cost
 > comparison. Nothing is provisioned in any region.
 
 **Hosting decision (plan, not provisioned):** Oracle OCI home region **US Midwest Chicago, us-chicago-1**, first attempting Always Free Ampere A1 **2 OCPU / 12 GB** with C++20 Drogon API, C++ reconstruction worker, and PostgreSQL/PostGIS on the **same ARM64 VM**. [OCI Chicago Deployment and Financial Plan](docs/phases/M8-operational-readiness/01-cloud-infrastructure/OCI_CHICAGO_DEPLOYMENT_AND_FINANCIAL_PLAN.md) documents provider sources, account/AD availability blockers, free vs paid A1 allowances, estimated monthly compute/storage/contingencies, one-subscription-per-child finances and upgrade triggers. PAYG 4/24 may remain inside the **paid-account** published A1 free-hour allowance if independently confirmed. This is a forecast, **not a billed deployment or observed capacity benchmark**.

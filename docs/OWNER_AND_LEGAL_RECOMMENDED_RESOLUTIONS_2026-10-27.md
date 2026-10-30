@@ -3,7 +3,7 @@
 **Status: PROPOSALS. Not approvals, not legal advice.** Engineering cannot close these. Each row gives a concrete recommended
 answer so the owner can reply "approved" or edit it, plus what evidence closes it. Nothing here authorizes real child data.
 Statements about Indian law and Google Play policy come from earlier research in this repo
-([risk assessment](INDIA_GOVERNMENT_LEGAL_GOOGLE_PLAY_PROJECT_RISK_ASSESSMENT_2026.md)) and were **not verified against primary
+([risk assessment](phases/M0-foundation-and-approvals/03-legal-and-privacy/INDIA_GOVERNMENT_LEGAL_GOOGLE_PLAY_PROJECT_RISK_ASSESSMENT_2026.md)) and were **not verified against primary
 text**; counsel and Google must confirm them.
 
 ## 1. Decisions the owner can make now

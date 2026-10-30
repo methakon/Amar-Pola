@@ -13,4 +13,4 @@ Project changes are recorded here using an adapted Keep a Changelog structure. N
 - M1 11-operation `docs/openapi-m1.yaml`, synthetically tested PostgreSQL identity/RLS migration and CI workflow.
 - Original Android/Play and Indian legal gates remain open.
 
-For formal releases, see [Branching and Release](docs/BRANCHING_VERSIONING_AND_RELEASE_PROCESS.md).
+For formal releases, see [Branching and Release](docs/phases/M1-secure-platform-foundation/02-development-process/BRANCHING_VERSIONING_AND_RELEASE_PROCESS.md).
