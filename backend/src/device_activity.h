@@ -100,34 +100,40 @@ inline drogon::Task<drogon::HttpResponsePtr> record_device_health(
 
     co_await trans->execSqlCoro("SELECT set_config('ap.device_id', $1, true)", *normalized_device);
 
-    drogon::orm::Result stored;
+    std::string recorded_at;
     if (battery_null) {
-      stored = co_await trans->execSqlCoro(
+      auto stored = co_await trans->execSqlCoro(
           "INSERT INTO ap_m1.device_health(device_id, observed_at, battery_percent, charging, permission_revision) "
           "VALUES($1::uuid, $2::timestamptz, NULL, $3::boolean, $4::integer) "
           "ON CONFLICT(device_id) DO UPDATE SET observed_at=EXCLUDED.observed_at, recorded_at=clock_timestamp(), "
           "battery_percent=NULL, charging=EXCLUDED.charging, permission_revision=EXCLUDED.permission_revision "
           "RETURNING to_char(recorded_at AT TIME ZONE 'UTC','YYYY-MM-DD\"T\"HH24:MI:SS\"Z\"') AS recorded_at",
           *normalized_device, observed_at, charging, perm_rev);
+      if (stored.empty()) {
+        rollback_quietly(trans);
+        co_return error_response("INTERNAL_ERROR","missing device-health database receipt",rid);
+      }
+      recorded_at = stored.at(0)["recorded_at"].as<std::string>();
     } else {
-      stored = co_await trans->execSqlCoro(
+      auto stored = co_await trans->execSqlCoro(
           "INSERT INTO ap_m1.device_health(device_id, observed_at, battery_percent, charging, permission_revision) "
           "VALUES($1::uuid, $2::timestamptz, $3::integer, $4::boolean, $5::integer) "
           "ON CONFLICT(device_id) DO UPDATE SET observed_at=EXCLUDED.observed_at, recorded_at=clock_timestamp(), "
           "battery_percent=EXCLUDED.battery_percent, charging=EXCLUDED.charging, permission_revision=EXCLUDED.permission_revision "
           "RETURNING to_char(recorded_at AT TIME ZONE 'UTC','YYYY-MM-DD\"T\"HH24:MI:SS\"Z\"') AS recorded_at",
           *normalized_device, observed_at, battery_percent, charging, perm_rev);
-    }
-    if (stored.empty()) {
-      rollback_quietly(trans);
-      co_return error_response("INTERNAL_ERROR","missing device-health database receipt",rid);
+      if (stored.empty()) {
+        rollback_quietly(trans);
+        co_return error_response("INTERNAL_ERROR","missing device-health database receipt",rid);
+      }
+      recorded_at = stored.at(0)["recorded_at"].as<std::string>();
     }
     // The M1 frozen response is Receipt {id,state,recorded_at}, NOT a
     // location-batch receipt. Correlation id is the server-generated UUID.
     Json::Value receipt(Json::objectValue);
     receipt["id"] = rid;
     receipt["state"] = "ACCEPTED";
-    receipt["recorded_at"] = stored.at(0)["recorded_at"].as<std::string>();
+    receipt["recorded_at"] = recorded_at;
 
     if (!(co_await commit(std::move(trans))))
       co_return error_response("SERVICE_UNAVAILABLE","database commit unavailable; retry request",rid,true);
