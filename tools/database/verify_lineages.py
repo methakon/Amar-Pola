@@ -15,7 +15,7 @@ sys.path.insert(0, str(ROOT / 'backend/tests/database'))
 sys.path.insert(0, str(ROOT / 'backend/tests'))
 import manage as db
 
-from test_m1_compatibility import seed_historical_compatibility, assert_historical_compatibility
+from test_m1_current_convergence import seed_current_upgrade, assert_current_upgrade
 from physical_schema import physical_tables
 
 
@@ -60,7 +60,45 @@ def application_shape(conn):
                 policies=policies,views=views,column_acl=column_acl,roles=roles,memberships=memberships,schema_acl=schema_acl)
 
 
+def ledger_rows(conn):
+    return conn.execute('SELECT version,filename,checksum,status,executed_at FROM ma_migrations.lineage_history ORDER BY version').fetchall()
+
+
+def assert_current_m1_ledger(conn):
+    ids = [r[0] for r in conn.execute('SELECT version FROM ma_migrations.lineage_history ORDER BY version')]
+    assert ids == ['common:0001'] + ['m1:%04d' % n for n in range(2, 7)], ids
+
+
+def assert_runtime_closed(database, closed):
+    with db.connect(database, 'admin') as conn:
+        for kind in ('runtime', 'auth', 'billing'):
+            granted = conn.execute("SELECT has_database_privilege(%s,current_database(),'CONNECT')", (db.ROLES[kind][0],)).fetchone()[0]
+            assert granted is not closed, kind
+    assert db.quarantine_marker(database).exists() is closed
+
+
+def legacy_converged_plan(conn):
+    """Read-only: a published 0004-converged ledger must never replay history late.
+
+    Applies to any ledger that mixes historical M1 with V2 rows, including the
+    older 0002..0004 checkpoint produced by the previous published runner.
+    """
+    rows = conn.execute('SELECT version,filename,checksum,status FROM ma_migrations.lineage_history').fetchall()
+    if not rows:
+        return None
+    entries = db.load_migration_manifest()
+    applied = db.validate_migration_history(entries, [], rows)
+    if not any(i.startswith('m1:') for i in applied) or not any(i.startswith('v2:') for i in applied):
+        return None
+    plan = [e['id'] for e in db.migration_plan(entries, applied=applied)]
+    assert not any(i.startswith(('m1:', 'compat:')) for i in plan), 'late historical replay on converged ledger'
+    print('Converged ledger: no late historical replay; pending ' + str(plan), flush=True)
+    return plan
+
+
 def main():
+    if db.ci_mode():
+        raise RuntimeError('verify_lineages replays historical M1 through docker exec and is local/PR11 only; run the unit suites in CI')
     for role in ('admin', *db.ROLES):
         target = db.conninfo_to_dict(db.configuration()['test'][role])
         db.validate_target(target)
@@ -86,15 +124,30 @@ def main():
                 actual[table].add(col)
         assert actual == physical_tables(), 'historical M1 live/static catalog divergence'
         assert len(actual) == 18, 'historical checkpoint is exactly 18 tables'
-        expected = seed_historical_compatibility(conn)
+        assert_current_m1_ledger(conn)
+        expected = seed_current_upgrade(conn)
         conn.commit()
-    print('Historical M1: original SQL + concurrency + 18-table live catalog PASS', flush=True)
+    print('Historical M1: original SQL + concurrency + 18-table live catalog + m1 0002..0006 ledger PASS', flush=True)
     historical_backup = db.backup('test')
+    # Staged completion: the database must stay closed until the final bridge is
+    # applied, and a second run must be a no-op rather than a replay.
+    db.migrate('test', through='0019')
+    assert_runtime_closed('test', True)
+    print('Upgrade through 0019: runtime still closed, bridge 0020 pending PASS', flush=True)
     db.migrate('test')
+    assert_runtime_closed('test', False)
     db.verify_lineage_security('test')
     with db.connect('test','admin',autocommit=False) as conn:
-        assert_historical_compatibility(conn, expected)
+        assert_current_upgrade(conn, expected)
         upgraded_shape = application_shape(conn)
+        first = ledger_rows(conn)
+        assert any(r[0] == 'v2:0020' for r in first), 'final convergence migration not applied'
+        conn.commit()
+    db.migrate('test')
+    with db.connect('test','admin') as conn:
+        assert ledger_rows(conn) == first, 'repeat migrate rewrote the ledger'
+        legacy_converged_plan(conn)
+    print('Idempotent re-migrate: ledger bytes unchanged; no late historical replay PASS', flush=True)
     print('Populated M1 -> V2: rows, device/key state and fail-closed credentials PASS', flush=True)
     db.restore('test',historical_backup,lineage='m1')
     with db.connect('test','admin') as conn:
@@ -111,7 +164,7 @@ def main():
     with patch.object(db,'migrate',side_effect=observe_closed_upgrade):
         db.restore('test',historical_backup)
     with db.connect('test','admin') as conn:
-        assert_historical_compatibility(conn,expected)
+        assert_current_upgrade(conn,expected)
     print('Historical restore selection + V2 upgrade closed until ledger suppression PASS',flush=True)
     db.reset('test')
     db.create(targets=['test'])
@@ -132,7 +185,7 @@ def main():
     db.migrate('test')
     with db.connect('test','admin',autocommit=False) as conn:
         assert conn.execute('SELECT * FROM ma_migrations.history ORDER BY version').fetchall() == old
-        assert conn.execute('SELECT count(*) FROM ma_migrations.lineage_history').fetchone()[0] == 19
+        assert conn.execute('SELECT count(*) FROM ma_migrations.lineage_history').fetchone()[0] == 21
     print('Clean V2 convergence + exact legacy adoption without history mutation PASS', flush=True)
     return 0
 

@@ -40,12 +40,61 @@ SPEC.loader.exec_module(manage)
 
 
 class MigrationLineages(unittest.TestCase):
+    def test_replanning_a_fully_applied_lineage_is_a_noop(self):
+        entries = self.entries()
+        full = {e['id'] for e in manage.migration_plan(entries, 'm1')} | {
+            e['id'] for e in manage.migration_plan(entries)} | {
+            'compat:m1_pre_v2_0016', 'compat:m1_pre_v2_0017'}
+        # Unpublished sources cannot legally appear in a ledger yet.
+        full = {i for i in full if {e['id']: e for e in entries}[i]['sha256']}
+        plan = manage.migration_plan(entries, applied=full)
+        pending = {e['id'] for e in plan if e['id'] not in full}
+        # Only unpublished sources may still be pending; once every entry is
+        # pinned this set is empty and the plan is a true no-op.
+        self.assertEqual(pending, {e['id'] for e in entries if e['sha256'] is None})
+        again = manage.validate_migration_history(entries, [], self.ledger_rows(full))
+        self.assertEqual(again, full)
+        # A historical-only ledger must not acquire V2 compatibility bridges.
+        self.assertNotIn('compat:m1_pre_v2_0016',
+                         [e['id'] for e in manage.migration_plan(entries, 'm1')])
+
+    def test_legacy_partial_tail_with_v2_is_rejected_not_repaired(self):
+        entries = self.entries()
+        ledger = self.ledger_rows(['common:0001','m1:0002','m1:0003','m1:0004','m1:0005','v2:0002'])
+        with self.assertRaisesRegex(ValueError, 'm1:0006'):
+            manage.validate_migration_history(entries, [], ledger)
+
+    def test_current_m1_completes_before_v2_but_never_late_on_converged_history(self):
+        entries = self.entries()
+        m1 = ['common:0001'] + ['m1:%04d' % n for n in range(2, 7)]
+        self.assertEqual([e['id'] for e in manage.migration_plan(entries, 'm1')], m1)
+        for end in (4, 5, 6):
+            applied = set(m1[:end])
+            plan = [e['id'] for e in manage.migration_plan(entries, applied=applied)]
+            self.assertEqual(plan[:3], ['common:0001', 'm1:0005', 'm1:0006'])
+            self.assertLess(plan.index('compat:m1_pre_v2_0017'), plan.index('v2:0017'))
+            self.assertEqual(plan[-1], 'v2:0020')
+        old = set(m1[:4]) | {'v2:%04d' % n for n in range(2, 20)} | {'compat:m1_pre_v2_0016'}
+        manage.validate_migration_history(entries, [], self.ledger_rows(old))
+        plan = [e['id'] for e in manage.migration_plan(entries, applied=old)]
+        self.assertFalse(any(i.startswith('m1:') for i in plan))
+        # The old checkpoint converged without m1:0005/0006, so the additive
+        # reconciliation bridge must still be selected; the historical DDL is not.
+        self.assertIn('compat:m1_pre_v2_0017', plan)
+        self.assertLess(plan.index('compat:m1_pre_v2_0017'), plan.index('v2:0017'))
+        self.assertEqual(plan[-1], 'v2:0020')
+
+    def ledger_rows(self, ids):
+        known = {e['id']: e for e in self.entries()}
+        return [(i, Path(known[i]['path']).name, known[i]['sha256'], 'APPLIED') for i in sorted(ids)]
+
     def test_m1_is_only_original_chain_and_v2_never_replays_it(self):
         entries = manage.load_migration_manifest(verify=False)
         self.assertEqual([e['id'] for e in manage.migration_plan(entries, 'm1')],
-                         ['common:0001', 'm1:0002', 'm1:0003', 'm1:0004'])
+                         ['common:0001'] + ['m1:%04d' % n for n in range(2, 7)])
         clean = manage.migration_plan(entries, 'v2')
-        self.assertEqual([e['id'] for e in clean], ['common:0001'] + ['v2:%04d' % n for n in range(2, 20)])
+        self.assertEqual([e['id'] for e in clean], ['common:0001'] + ['v2:%04d' % n for n in range(2, 17)]
+                         + ['compat:m1_pre_v2_0017'] + ['v2:%04d' % n for n in range(17, 21)])
         self.assertEqual([e['id'] for e in manage.migration_plan(entries, 'v2', through='0001')], ['common:0001'])
 
     def entries(self):
@@ -66,8 +115,12 @@ class MigrationLineages(unittest.TestCase):
     def test_m1_upgrade_order_and_downgrade_block(self):
         applied = manage.validate_migration_history(self.entries(), self.rows(['common:0001','m1:0002','m1:0003','m1:0004']), [])
         plan = [e['id'] for e in manage.migration_plan(self.entries(), applied=applied)]
-        self.assertEqual(plan[-6:], ['v2:0015', 'compat:m1_pre_v2_0016', 'v2:0016', 'v2:0017', 'v2:0018', 'v2:0019'])
-        self.assertFalse(any(i.startswith('m1:') for i in plan))
+        self.assertEqual(plan[-6:], ['v2:0016', 'compat:m1_pre_v2_0017', 'v2:0017', 'v2:0018', 'v2:0019', 'v2:0020'])
+        self.assertEqual([e['id'] for e in manage.migration_plan(self.entries(), applied={
+            'common:0001','m1:0002','m1:0003','m1:0004'})][:4],
+            ['common:0001', 'm1:0005', 'm1:0006', 'v2:0002'])
+        self.assertFalse({'m1:0002','m1:0003','m1:0004'} & set(plan))
+        self.assertEqual([i for i in plan if i.startswith('m1:')], ['m1:0005', 'm1:0006'])
         with self.assertRaises(ValueError):
             manage.migration_plan(self.entries(), 'm1', applied={'common:0001', 'v2:0002'})
 
@@ -141,7 +194,9 @@ class MigrationLineages(unittest.TestCase):
             reopen.assert_not_called()
         self.assertLess(events.index('quarantine'), events.index('ddl'))
         new_rows = [p for q,p in conn.calls if 'INSERT INTO ma_migrations.history(' in q]
-        self.assertTrue(all(p[0].startswith(('v2:', 'compat:')) for p in new_rows))
+        # A 0004 checkpoint may finish historical M1 before V2; nothing else may.
+        self.assertEqual([p[0] for p in new_rows][:2], ['m1:0005', 'm1:0006'])
+        self.assertTrue(all(p[0].startswith(('m1:0005', 'm1:0006', 'v2:', 'compat:')) for p in new_rows))
         upgrade_rows = [(p[0],p[1],p[2],'APPLIED') for p in new_rows]
         manage.validate_migration_history(entries, rows + upgrade_rows, [])
 
@@ -163,8 +218,10 @@ class MigrationLineages(unittest.TestCase):
 
     def test_completed_resumed_upgrade_verifies_then_reopens(self):
         entries = [dict(e, sha256=e['sha256'] or '1'*64) for e in self.entries()]
-        ids = ['common:0001','m1:0002','m1:0003','m1:0004'] + [e['id'] for e in manage.migration_plan(entries)[1:]]
+        ids = ['common:0001'] + ['m1:%04d' % n for n in range(2, 7)] + [e['id'] for e in manage.migration_plan(entries)[1:]]
+        ids = list(dict.fromkeys(ids))
         ids.insert(ids.index('v2:0016'), 'compat:m1_pre_v2_0016')
+        ids = list(dict.fromkeys(ids))
         known = {e['id']:e for e in entries}
         ledger = [(i,Path(known[i]['path']).name,known[i]['sha256'],'APPLIED') for i in ids]
         conn = RecordingConnection(ledger=ledger)
