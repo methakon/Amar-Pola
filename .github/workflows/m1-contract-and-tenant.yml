@@ -188,7 +188,6 @@ jobs:
       MA_LOCAL_DB_CI: "1"
       MA_CI_SYNTHETIC: "1"
       MA_CI_ADMIN_PASSWORD: synthetic_test_only_password
-      MA_LOCAL_DB_CONFIG: ${{ runner.temp }}/ma-connection.json
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -197,7 +196,9 @@ jobs:
       - name: Install the pinned PostgreSQL client driver
         run: python3 -m pip install 'psycopg[binary]==3.3.6'
       - name: Write the private CI connection config
-        run: python3 tools/database/manage.py ci-config
+        run: |
+          echo "MA_LOCAL_DB_CONFIG=$RUNNER_TEMP/ma-connection.json" >> "$GITHUB_ENV"
+          python3 tools/database/manage.py ci-config
       - name: Create the synthetic database, roles and extensions
         run: python3 tools/database/manage.py create
       - name: Replay the complete ordered lineage from a clean V2 install
