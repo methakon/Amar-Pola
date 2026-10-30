@@ -385,3 +385,12 @@ backend/
 ```
 
 **Incremental implementation acceptance:** add at least one end-to-end module vertical slice (HTTP→domain service→repository→SQL) and one independent worker with inbox→transaction→idempotent result; build/run them independently, restart the worker with backlog and demonstrate no lost/duplicated effects. Test dependency-injected fakes and real PostgreSQL role/RLS. Do not mark architecture `IMPLEMENTED` merely because these documents or folders exist. Preserve current M1 migration numbering/active Git branch dependencies.
+
+
+## 2026-10-31 — P2P-first WebRTC media and live-GPS transport (design only)
+
+Owner-selected [MA-P2P-ADR-004](../../P3-deferred-research/01-media-and-administrator-research/P2P_MEDIA_AND_LIVE_LOCATION_TRANSPORT_ARCHITECTURE_2026-10-31.md) refines the prior media research decision: retain **Drogon C++20 authenticated signaling/control, short-lived WebRTC ICE/STUN direct audio/video/screen peer paths and quota-limited TURN fallback**. No new custom VPN, default WireGuard/libp2p/QUIC ladder, VPS-stored media or guaranteed always-awake Android socket. The child Kotlin runtime owns OS-visible microphone/camera, typed FGS and fresh-per-session MediaProjection consent, with actual verified capture states and explicit Stop. No Play launch FR-009/010 change.
+
+**High-detail live GPS** over an optional WebRTC DataChannel is only a bounded, Android- and policy-eligible transient view, not a replacement for encrypted child queue → Drogon inbox → PostgreSQL/PostGIS, alerts, history or erasure. Security: binding session and verified child grant, refusal/revocation, no unreviewed financial/`FLAG_SECURE` screen capture, ephemeral TURN creds, no full SDP/candidate logs. Cost and capacity are hypotheses pending path, concurrency, battery and TURN metering.
+
+**Gates A/B/C remain OPEN:** actual Android/OEM tests; Indian legal counsel; Google Play monitoring/Families/FGS approval. Research-only adult test devices and synthetic data; production child audio/camera/screen capture OFF; no permissions merely hidden behind UI flags. All documentation on `main`, code `api`/`parent`/`child` → `dev` → `main`. DB-01 must be reconciled before new migrations.
