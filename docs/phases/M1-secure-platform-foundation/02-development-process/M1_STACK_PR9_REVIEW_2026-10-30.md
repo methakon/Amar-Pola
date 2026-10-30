@@ -1,6 +1,6 @@
 # M1 stack PR #9 — independent review and PostgreSQL16 evidence
 
-**Date:** 2026-10-30. **Status:** REMEDIATION_IN_PROGRESS; Phase 1 local regressions executed successfully in the uncommitted PR9 worktree; Phase 2/ParentOIDC and final source/CI acceptance pending. Owner merge approval NOT_GRANTED. **Scope:** synthetic local and separately pinned hosted evidence, not production/legal/Android acceptance. Sections 1–8 preserve the original `c693899` review; section 9 records remediation and supersedes those four findings' original execution states only within its stated local scope. Proposed review owners: backend/security; independent sign-off unassigned. [Master register](../../../MASTER_DOCUMENT_CONTROL_REGISTER.md) · [Current blockers](../../M0-foundation-and-approvals/01-project-governance/BLOCKERS_AND_OWNER_DECISIONS.md).
+**Date:** 2026-10-30. **Status:** REMEDIATION_IN_PROGRESS; Phase 1 local regressions executed successfully and source committed as `d7f133ad1d04938b46e536fd417eb1274b5e1585`; Phase 2/ParentOIDC and final source/CI acceptance pending. Owner merge approval NOT_GRANTED. **Scope:** synthetic local and separately pinned hosted evidence, not production/legal/Android acceptance. Sections 1–8 preserve the original `c693899` review; section 9 records remediation and supersedes those four findings' original execution states only within its stated local scope. Proposed review owners: backend/security; independent sign-off unassigned. [Master register](../../../MASTER_DOCUMENT_CONTROL_REGISTER.md) · [Current blockers](../../M0-foundation-and-approvals/01-project-governance/BLOCKERS_AND_OWNER_DECISIONS.md).
 
 [Machine-readable execution record](../../../../evidence/local/reviews/PR9_REVIEW_2026-10-30.json) preserves commands, exit codes, source SHA and local/hosted scope; no private logs or credentials are committed.
 
@@ -118,7 +118,7 @@ No infrastructure deployment, Android implementation, new production credentials
 
 ## 9. Remediation checkpoint — Phase 1 local execution
 
-The existing `feat/m1-create-family` branch is reused. Tests below exercised its modified working tree against pinned Drogon **1.9.14**, JsonCpp **1.9.5**, and a fresh isolated PostgreSQL **16.15** container named `madalasa-pr9-remediation-pg16` (network none, no published ports). Source/CI publication is pending; these are not final task PASS records. Original migrations 0001–0005 were replayed explicitly and byte-compared against `c693899e4b411cbadd1639f0bcb642844af50ea9`. The separate V2 worktree was not modified.
+The existing `feat/m1-create-family` branch is reused. Tests below exercised source subsequently committed as `d7f133ad1d04938b46e536fd417eb1274b5e1585` against pinned Drogon **1.9.14**, JsonCpp **1.9.5**, and a fresh isolated PostgreSQL **16.15** container named `madalasa-pr9-remediation-pg16` (network none, no published ports). [Phase 1 command/source record](../../../../evidence/local/reviews/PR9_PHASE1_REMEDIATION_2026-10-30.json). CI publication is pending; these are not final task PASS records. Original migrations 0001–0005 were replayed explicitly and byte-compared against `c693899e4b411cbadd1639f0bcb642844af50ea9`. The separate V2 worktree was not modified.
 
 | Finding | Code correction | Regression and actual execution | Remaining status |
 |---|---|---|---|
