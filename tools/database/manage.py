@@ -352,6 +352,12 @@ def bootstrap(database):
         # No runtime user is a member of any function-owner role.
         conn.execute('ALTER DATABASE ' + DATABASES[database] + " SET timezone TO 'UTC'")
         conn.execute('REVOKE ALL ON DATABASE ' + DATABASES[database] + ' FROM PUBLIC')
+        # The migration login must be able to create the application schemas even
+        # when an operator (or a CI service) already created the database, where
+        # it is not the owner. CREATE on the database is the minimum that allows
+        # the ordered replay and nothing else.
+        conn.execute(sql.SQL('GRANT CONNECT, CREATE, TEMPORARY ON DATABASE {} TO {}').format(
+            sql.Identifier(DATABASES[database]), sql.Identifier(ROLES['migration'][0])))
         for kind in ROLES:
             if kind != 'migration' and quarantine_marker(database).exists():
                 continue
