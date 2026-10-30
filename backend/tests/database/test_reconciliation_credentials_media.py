@@ -62,7 +62,13 @@ class FragmentSource(unittest.TestCase):
 
     def setUp(self):
         if not FRAGMENT.exists():
-            raise unittest.SkipTest('reconciliation fragment is an uncommitted local scratch artifact; covered by 0019')
+            # The reviewed fragment is an untracked working artifact: 0019 and the
+            # additive 0020 carry its guarantees in the tracked tree, and the
+            # manifest checksum gate proves published migrations are unedited.
+            # The database-level media/credential tests below still run.
+            raise unittest.SkipTest('reviewed reconciliation fragment is not in the tracked '
+                                    'tree; its guarantees live in published 0019/0020 and the '
+                                    'manifest checksum gate')
         self.text = FRAGMENT.read_text()
         self.code = _code(self.text)
 

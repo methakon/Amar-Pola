@@ -65,6 +65,13 @@ All commands ran in `/home/swarna-sekhar-dhar/projects/mypola/Madalasa-Alarka-db
 | 20 | OpenAPI lints | `lint_openapi_m1.py`, `lint_openapi_full.py` | 14 M1 operations / 171 draft operations — contract only |
 | 21 | Documentation | `check_document_structure.py`, `docs/tools/check_documentation.py` | 72 canonical docs; 253 files, 1,937 local links, 0 errors |
 | 22 | Native build + CTest (probe ON) | cmake/ctest | 6/6: core, oidc, jwks, jwks_fetch, oidc_http, database_config |
+| 23 | Native builds (probe OFF) | production (`MA_SYNTHETIC_AUTH=OFF`) and synthetic (`ON`) | 5/5 CTest each; marker gate PASS; HTTP smoke PASS |
+| 24 | Family provisioning over HTTP | `integration_families.sh build-syn/ma_backend` | exit 0 — order/length checks, 201 shape, replay, key reuse, principal isolation, hashed keys, 8-way concurrency, cap, catalog errors |
+| 25 | Authenticated DB failure matrix | `integration_db_failures.py build-syn/ma_backend --case all` | exit 0 — all cases PASS |
+| 26 | CI-equivalent run (loopback 5432, service-style DB) | `MA_LOCAL_DB_CI=1 … ci-config/create/migrate/verify/test` | 224 tests OK, 7 documented skips (container-driven restore drill, absent review fragments) |
+| 27 | Catalog export drift | `export_schema.py` + `--check` | 7 artifacts exported and verified against the recorded instance |
+
+CI-mode skips are deliberate and named: the two container-driven backup/restore tests (the executed drill is row 18) and the fragment-source guards whose reviewed SQL lives only in the untracked working directory (its guarantees are carried by published `0019`/`0020` and the manifest checksum gate). Byte-level catalog drift stays a local gate: `pg_get_constraintdef` renders nested `AND` groups differently on separate clusters, so byte equality across a different cluster is not a valid CI assertion.
 
 Failed attempts are preserved, not hidden: the first fresh-V2 suite run had 1 failure + 4 errors, all caused by tests inheriting the suite's own `MA_LOCAL_DB_DIR` (fixed by pinning default-config assertions and by giving CI precedence over alternate config in the fixture validator); the first restore attempt failed because `reset` re-created `ap_m1` before `pg_restore` (fixed by splitting schema bootstrap from reset and opting the restore path out); the first probe HTTP run failed because `connectionInfoFromEnvironment` rejected port 15434, and a subsequent run hit a `TIME_WAIT` bind (fixed by allowing only the exact test database on 15434 and by `SO_REUSEADDR`).
 
