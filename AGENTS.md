@@ -2,6 +2,10 @@
 
 This file is the **entrypoint for coding agents**. Work locally using synthetic data, not on production servers or live child devices.
 
+## Mandatory branch discipline (owner direction 2026-10-29)
+
+Before committing or creating branches, read [the canonical branch policy and active branch/PR register](docs/phases/M1-secure-platform-foundation/02-development-process/BRANCHING_VERSIONING_AND_RELEASE_PROCESS.md). **Reuse an appropriate existing tracked branch/PR by default.** A new task or agent does not automatically justify a new branch. Inspect live branches, PR bases, uncommitted work and dependency order; maintain the single register whenever creating, merging, retargeting, or closing work. Do not accidentally discard work in stacked PRs: merging into another feature branch is not the same as merging into `main`. New branches are appropriate only when there is a concrete independent-review/conflict/release need; record reason and owner. Never automatically delete branches or force-push another agent's commits. Normal commits and PR updates are welcome, subject to existing review and security rules.
+
 ## Read first
 
 1. docs/roadmap/LOCAL_TASK_GRAPH_2026-10-28.json — 262 task IDs, dependencies, acceptance, source paths and evidence destinations.
@@ -50,3 +54,15 @@ Before coding, read [post-remediation report](docs/audits/POST_REMEDIATION_SCREE
 ## Latest owner direction (2026-10-28) — overrides earlier Family Link/hosting text
 
 Do not require third-party Google Family Link parent-role verification. Google Sign-In authenticates each adult only, and Madalasa uses an invitation accepted for one **exact child** plus approved authority/consent when legally required, not billing-family membership. Production child-data processing still needs legal review. `0001_m1_identity.sql` is historical; V2 blended-family grants must be a separate migration with SQL RLS and negative tests. OCI production region, cloud tenancy and final bandwidth economics are reserved for deployment; write environment-agnostic, locally benchmarked code without these being prerequisites. [ADR](docs/phases/M1-secure-platform-foundation/03-security-and-permissions/ADR_2026_10_28_BLEND_FAMILY_V2_AND_NO_FAMILY_LINK_DEPENDENCY.md) · [Play sandbox/evidence](docs/roadmap/IMPLEMENTATION_PROOF_AND_PLAY_SANDBOX_HANDOFF_2026-10-28.md).
+
+## Owner-approved backend architecture (2026-10-29)
+
+Use **Option C**: **Drogon C++20 for the HTTP API**, with independently executable **C++ background workers**, organized as **SOLID, HMVC-style domain modules**. Begin with a modular API and a small number of separate worker processes; do not create a microservice for every screen or introduce userver without a measured requirement. Use narrow interfaces, dependency injection, domain services and adapter/repository boundaries. Modules own their persistence, tests and API contracts; workers use durable transactional inbox/outbox, idempotency, child-level RLS and auditable retries. See [canonical TSD architecture decision](docs/phases/M1-secure-platform-foundation/01-requirements-and-architecture/TECHNICAL_SPECIFICATION.md#owner-architecture-decision--2026-10-29-option-c-solid--hmvc--independently-deployable-c-workers). Follow existing branch reuse rules.
+
+## Physical schema audit handoff (2026-10-29)
+
+Before schema changes, read [deep physical schema audit and remediation](docs/data-model/PHYSICAL_SCHEMA_DEEP_AUDIT_AND_REMEDIATION_2026-10-29.md). The V1 ERD JSON has corrected two dangling references to the existing `location_ingest_batches` and `admin_permissions` entities; the Figma canvas still needs sync. Preserve the 18-table M1 physical catalog and its strict CI checks when integrating stacked #3/#4/#5; 103 conceptual entities are not 103 tables to generate automatically. Implement explicit child ownership, typed columns/enums, retention category per physical table, and secure V2 grant migration with executable SQL tests. Reuse existing Git branches by default.
+
+## 2026-10-29 database implementation branch collision — read before SQL work
+
+The live Figma ERD page `92:2` has been synchronized for its two formerly broken references; see [physical schema deep audit](docs/data-model/PHYSICAL_SCHEMA_DEEP_AUDIT_AND_REMEDIATION_2026-10-29.md). **Important:** `feat/local-postgresql-physical-schema` already holds SQL migrations 0002–0015 with schema-completion tests, whereas the M1 PR #3/#4 line independently uses 0002–0004. Do not generate new migrations under these numbers or assume 103 missing ERD entities require separate physical tables. First reconcile histories, dependencies, naming, normalized aliases and physical FK/RLS tests. Do not overwrite or delete the existing local schema branch. Keep branch inventory updated in the canonical branching process.

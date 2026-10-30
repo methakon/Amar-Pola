@@ -306,7 +306,7 @@
           "label": "RETRYABLE",
           "columns": [
             "PK (batch_id, event_id)",
-            "FK batch_id → ingest_batches",
+            "FK batch_id → location_ingest_batches",
             "device_event_id : uuid",
             "observed_at : timestamptz",
             "decode_status : enum"
@@ -1357,7 +1357,7 @@
           "columns": [
             "PK (role_id, permission_code)",
             "FK role_id → admin_roles",
-            "FK permission_code → permissions"
+            "FK permission_code → admin_permissions"
           ]
         },
         {

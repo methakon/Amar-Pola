@@ -1,14 +1,49 @@
-# Madalasa–Alarka — ₹50/₹500 Break-Even, Staffing and Capacity Gate
+# Madalasa–Alarka — Prepaid Pricing, Break-Even, Staffing and Capacity Gate
 
 > **Document control:** M7 / 01-commercial-plans-and-costing · Proposed owner: Product + finance (not assigned) · Registry: DOCUMENTED_REVIEW_PENDING; approval not recorded. [Master register](../../../MASTER_DOCUMENT_CONTROL_REGISTER.md).
 
 > **Current app names:** **Madalasa** (guardian/parent), **Alarka** (child companion). GitHub repository [Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka), renamed 2026-10-26. [Source story and naming contract](../../M0-foundation-and-approvals/02-market-and-feasibility/BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
 **Status:** decision model; not validated profit forecast, not a hiring plan.  
-**Date:** 2026-10-26 | **Authoritative sale-price proposal:** [Subscription Plans](SUBSCRIPTION_PLANS_PRICING_AND_RULES_2026.md).  
+**Date:** 2026-10-26; canonical reconciliation 2026-10-30 | **Authoritative owner price policy:** [Subscription Plans — current reconciliation](SUBSCRIPTION_PLANS_PRICING_AND_RULES_2026.md#current-canonical-reconciliation--2026-10-30).
 **Cost sources:** [OCI hosting](../../M8-operational-readiness/01-cloud-infrastructure/OCI_CHICAGO_DEPLOYMENT_AND_FINANCIAL_PLAN.md) and [Third-party provider SKU model](THIRD_PARTY_SERVICES_COST_ANALYSIS_2026.md). Old **₹149/month** in those reports is **historical sensitivity only**.
 
-## 1. At 1,000 paying child seats the cash arithmetic
+## Current commercial and costing boundary — 2026-10-30
+
+**Owner policy, unchanged:** prepaid manual purchase/top-up, **no auto-renew**; regular **₹99/month or ₹999/year per paid child**; founding **₹50/month or ₹500/year** for the first **1,008 DISTINCT successfully paying families**, counting a family **once**, including eligible children added later. Existing customers retain their applicable pricing; no repricing is approved here. A family can pay for multiple selected children, so **family count, paid child-seat count, purchase count and simultaneous viewer count are different denominators**. Adding a child, guardian, top-up or device must not consume a second founding-family rank. Trial does not qualify as paid.
+
+**Publisher/setup:** individual **SWARNA SEKHAR DHAR, India**, same legal entity as Play publisher (owner-reported). **Payments identity pending; merchant pending; tax/accountant not approved.** These are release/commercial gates, not evidence of a functioning merchant or tax position.
+
+**Provider verification dated 2026-10-30:** Play documents prepaid monthly/yearly base plans and manual time-extension top-ups; top-up extends the same subscription rather than establishing additional concurrent child capacity.[3] General Help copy mentions offers broadly, but its specific Offer note restricts offers to auto-renewing base plans and applies new prices to prepaid top-ups.[4] Thus neither founding prepaid price preservation nor repeatable child seats is a proven provider feature. Actual capacity catalog, founding access for later children and unchanged existing prices must be sandbox-proven; recommend a separately reviewed prepaid catalog/eligibility mapping, **not switching owner policy to auto-renew**.
+
+**Historical model quarantine:** sections 1–6 below are the **2026-10-26 auto-renew/universal ₹50/₹500 sensitivity**, not current public pricing, prepaid fee evidence, an approved staffing budget or a demonstrated break-even. Current remaining-market fee guidance explicitly states 15% for automatically renewing subscriptions; do not inherit that as the prepaid/one-time rate without publisher-specific verification.[12] Sandbox test purchases do not compute taxes, so test checkout cannot establish final GST-inclusive proceeds or settlements.[8] No new numerical forecast is certified by this review.
+
+### Required recalculation and evidence (recommendation; NOT executed)
+
+| Input/control | Required evidence before financial acceptance |
+|---|---|
+| Cohort and term mix | Separate founding/regular paid child-months and child-years; deduplicate founding family qualification, not revenue seats. Include later-added eligible children, lapse/rejoin, churn and manual top-up success. Resolve refund/fraud disqualification and slot-recycling policy with owner/finance. |
+| Customer charge vs earned revenue vs cash | Use actual Play total/currency and verified covered dates. Annual upfront receipts and manual top-ups are not monthly recurring cash or immediate profit. Allocate revenue/support obligations over coverage, with settlement delay and refunds separately reconciled. |
+| Fees/tax/merchant | Actual applicable prepaid and consumable fee tier/base, consumer GST treatment, service-fee tax, credits/withholding, refunds/chargebacks and settlement currency; accountant approval and merchant identity completion. Do not apply a blanket 15% or add tax twice. |
+| Capacity and lineage | Sandbox same-account multi-child purchase/repetition/replacement; reviewed product→capacity mapping and child allocation ledger. New top-up token means more time, not automatically more seats; duplicate RTDN/restore never increases revenue or capacity twice. |
+| Extra viewer | **₹100 once / 100 consecutive calendar days / +1 child-scoped premium viewer / +30 combined pooled A/V minutes TOTAL**; repeatable one-time consumable is candidate only. Base lapse is dormant while clock continues. Do not book ₹100 each month or refill minutes per renewal. No production media revenue while legal/Android/Play gates keep media **OFF**. |
+| True incremental cost | Measured base and extra-viewer fan-out, relay ratio, bitrate/minutes, compute, storage/retention/deletion, backup/recovery, fraud/support/refunds and independent security/legal/Android QA. Historical media reserve or shared egress allowance is not proof of profitable capacity. |
+| Deployment separation | Hosting jurisdiction/provider, bandwidth economics and tenancy headroom remain owner deployment decisions. They do not block portable synthetic billing tests and are not fixed to historical Chicago estimates. |
+
+**Recalculation model (not a result):** sum verified net proceeds over each founding/regular term and product, subtract observed variable costs, hosting/HA, support/staffing, legal/security, acquisition, refund liabilities and reserves without double-counting credits or allocations. Retain cost provenance and reconciliation date. Do not divide one family's revenue by its guardian count or model all founding families as one paid child each.
+
+**Acceptance:** use the [sandbox lifecycle/negative checklist](../../../roadmap/PLAY_BILLING_SANDBOX_ACCESS_CHECKLIST_NO_SECRETS_2026-10-29.md#phase-c-traceable-sandbox-lifecycle-and-negative-acceptance--not-run) and canonical subscription reconciliation. All provider/runtime cases are **NOT RUN** in this review; no products, purchases, credentials, Console changes, staffing commitments or deployments were made.
+
+## Sources
+
+Official sources retrieved **2026-10-30**; numbering follows the canonical subscription reconciliation. Historical sensitivities below are not freshly certified.
+
+[3] https://support.google.com/googleplay/android-developer/answer/140504
+[4] https://support.google.com/googleplay/android-developer/answer/12154973
+[8] https://developer.android.com/google/play/billing/test
+[12] https://support.google.com/googleplay/android-developer/answer/112622
+
+## 1. Historical sensitivity: at 1,000 paying child seats the cash arithmetic
 
 Assume 1,000 enrolled **paid** child seats (not necessarily 1,000 families), Google Play **15%** auto-renewing subscription service fee (subject to country/contract), modelled existing OCI hosting cash **reserve** ₹3,238.47 per month, and no paid Maps-overage/SMS/identity/HA/support/engineering. We do **not** know actual support costs or commercial production reliability costs.
 
@@ -111,13 +146,13 @@ No real phone inventory has been supplied to the repo. Accept **emulators/synthe
 | TEAM-03 | Support channels, response hours, custody/legal escalations and planned paid SOS scope | Cannot price support/incident coverage |
 | TEAM-04 | Real hardware list/API/OEM plus safe-to-reset device | Cannot pass Android lifecycle/DPC acceptance |
 | TEAM-05 | India-qualified DPDP lawyer/tax accountant and paid review budget | Cannot pass real child data legal gate |
-| TEAM-06 | Subscription collection reality: ₹50/₹500 tax inclusive, free trials, churn, refunds and actual Play settlements | Revenue estimates unverified |
+| TEAM-06 | Current prepaid collection: founding ₹50/₹500 vs regular ₹99/₹999, actual tax-inclusive status, manual top-ups, trial conversion, churn, refunds and Play settlements | Revenue estimates unverified; former universal-price auto-renew case is historical |
 | TEAM-07 | Maximum hosting+provider+staff spend for pilot, and go/no-go thresholds | No credible release cash plan |
 | TEAM-08 | Phone-first vs managed DPC vs Wear in launch; fixed milestone responsibilities | Avoid costly spread of thin team |
 
-**Recommended gate order:** decide legal entity/India purpose/Chicago; approve limited child/guardian/retention scope and login; list hardware and owner/QA engineers; implement synthetic-data vertical slice; fund independent security/Android/device testing and real backup recovery; pilot with written consent/counsel; reprice only after measured invoices and churn.
+**Recommended gate order (corrected 2026-10-30):** retain owner-reported individual publisher entity, complete Payments/merchant and tax review; approve limited child/guardian/retention scope and login; list hardware and owner/QA engineers; implement synthetic-data vertical slice; fund independent security/Android/device testing and real backup recovery; pilot only after written legal/owner clearance. Hosting region/costs are deployment decisions, not a Chicago prerequisite for local coding. Review economics after measured invoices and churn; **no repricing or existing-price change is authorized**.
 
-This document answers the specific gap: **₹50/month and ₹500/year are proposed product prices, not demonstrated sustainable all-in costs.**
+This document answers the specific gap: **founding ₹50/month and ₹500/year are owner policy, not demonstrated sustainable all-in costs; regular ₹99/₹999 is also not a verified profit forecast.**
 
 ## 2026-10-27 media event history and restricted admin UI new scope cost reminder
 
@@ -166,4 +201,4 @@ Owner changed +1 premium simultaneous viewer to **100 calendar days**, valid ind
 
 **Network math per extra receiving device:** 30minutes of 1Mbps encoded AV is ~0.225GB (225MB); 2Mbps is ~0.45GB. A hypothetically unmetered 1Mbps stream used continuously for all 100 days reaches ~1,080GB (1.08TB) **per viewer**, so 100-day long concurrent-screen validity must NEVER mean unmetered 100-day live video/screen time. A guardian may duplicate the base child's monthly media transmissions over more than one main-plan renewal, so add base-quota fan-out, screen-view quota and relay fraction to traffic model. Oracle's first 10TB/month outbound tier is a SHARED tenancy allowance, not a per-user free pool. North America outbound beyond 10TB is published around ₹0.77/GB; compute, load balancing, logging, maps, operations and support are separate. Source: https://www.oracle.com/in/cloud/price-list/ and https://www.oracle.com/cloud/networking/virtual-cloud-network/pricing/.
 
-**Conservative operating decision:** ₹100 likely covers ordinary low-bandwidth live-map viewing plus 30 capped pooled AV minutes while OCI 10TB egress headroom and available relay compute exist; **not proven** for high sustained streaming or peak concurrent calls. Only sell after measuring p50/p95 extra-viewer bitrates, minutes, child base media fan-out, 100-day utilization, TURN relay rate, 10TB shared allowance, burst CPU and refunds. Restrict active AV sessions to quota, keep screen-view and photo quota unchanged, disallow free-tier unlimited media, and cap maximum additional viewers via measured server capacity. Review add-on profit as **incremental true cost vs net proceeds**, separately from historical ₹3,238/month OCI allocation for 1,000 paid children (which excluded media). https://github.com/methakon/Madalasa-Alarka/blob/main/docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md.
+**Historical hypothesis, NOT owner-approved operating decision or verified viability:** ₹100 might cover ordinary low-bandwidth live-map viewing plus 30 capped pooled AV minutes if shared egress headroom and relay compute exist; **not proven** for ordinary use, high sustained streaming or peak concurrent calls. Only sell after measuring p50/p95 extra-viewer bitrates, minutes, child base media fan-out, 100-day utilization, TURN relay rate, 10TB shared allowance, burst CPU and refunds. Restrict active AV sessions to quota, keep screen-view and photo quota unchanged, disallow free-tier unlimited media, and cap maximum additional viewers via measured server capacity. Review add-on profit as **incremental true cost vs net proceeds**, separately from historical ₹3,238/month OCI allocation for 1,000 paid children (which excluded media). https://github.com/methakon/Madalasa-Alarka/blob/main/docs/phases/M7-commercial-integrations/01-commercial-plans-and-costing/CHILD_SPECIFIC_GOOGLE_PARENT_SHARING_AND_CONCURRENT_SCREEN_ADDONS_2026.md.

@@ -2,7 +2,7 @@
 
 > **Document control:** M8 / 02-operations-and-support · Proposed owner: SRE + incident lead (not assigned) · Registry: TEMPLATE_OR_EVIDENCE_PENDING; approval not recorded. [Master register](../../../MASTER_DOCUMENT_CONTROL_REGISTER.md).
 
-**Status:** NOT EXECUTED. No verified OCI deployment, off-host encrypted archive or RPO/RTO demonstration exists. This template is *not* proof of a successful test.
+**Status (2026-10-30):** production/off-host drill NOT_EXECUTED. No verified OCI deployment, independently secured off-host archive or production RPO/RTO demonstration exists. This template is *not* proof of such a test. Earlier synthetic PostgreSQL V2 restore checks exist only on the separate database branch, and the [local upload-key recovery drill](../../M1-secure-platform-foundation/03-security-and-permissions/MADALASA_UPLOAD_KEY_SETUP_2026-10-30.md) verified local decryption/private-key possession but remains blocked on independent custody. Neither substitutes for the exercise below. PR9 CI has no backup/recovery test.
 
 ## Required execution record
 

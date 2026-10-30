@@ -11,7 +11,9 @@ on:
       - "CONTRIBUTING.md"
       - "LICENSE"
       - ".github/workflows/documentation-structure.yml"
+      - "backend/tests/test_pending_identity_documentation.py"
   pull_request:
+    # Documentation-inventory verifier changes must trigger this check too.
     paths:
       - "docs/**"
       - "android/**"
@@ -21,8 +23,10 @@ on:
       - "CONTRIBUTING.md"
       - "LICENSE"
       - ".github/workflows/documentation-structure.yml"
+      - "backend/tests/test_pending_identity_documentation.py"
 
 permissions:
+  # No credentials or publishing permissions are needed by inventory validation.
   contents: read
 
 jobs:
@@ -45,3 +49,5 @@ jobs:
         run: python3 backend/tests/check_document_structure.py
       - name: M1 structural contract smoke
         run: python3 backend/tests/lint_openapi_m1.py docs/openapi-m1.yaml
+      - name: Verify feasibility and reviewer evidence inventory (not feature acceptance)
+        run: python3 -m unittest backend.tests.test_pending_identity_documentation -v

@@ -1,10 +1,12 @@
 # India child-data privacy: consent, retention, deletion — implementation and signoff brief
 
-**Date:** 2026-10-28. **Status:** compliance preparation, NOT legal advice or legal approval. Local coding agents may implement synthetic test scaffolding while sensitive production features remain disabled until independent review.
+**Date:** 2026-10-28; reconciled **2026-10-30 IST**. **Status:** compliance preparation, NOT legal advice or legal approval. Local coding may use synthetic test scaffolding only while sensitive real-child features remain OFF until independent review.
+
+**Current owner facts:** **Individual SWARNA SEKHAR DHAR, India**, same intended legal/Play publisher; declaration, not verified account/legal evidence. Payments identity, merchant setup, public support confirmation and legal review remain pending. India-only launch and ages 0–17 are owner-decided; no company/GST/address/email is inferred. No Family Link dependency; exact-child invitation acceptance and approved authority/consent where required remain separate from Google account authentication. The [current legal-source review](INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md#current-source-grounded-review--2026-10-30) takes precedence on commencement/corrigendum, existing IT/SPDI/CERT-In applicability, future Rule 8(3) personal-data retention and unresolved questions. **Real child-data release OFF.**
 
 ## Current statute and commencement
 
-The Digital Personal Data Protection Act, 2023, Section 9 addresses processing of children's data and verifiable parental/lawful guardian consent, and restricts detrimental processing and tracking/behavioural monitoring, with narrow statutory and prescribed exceptions. DPDP Rules 2025 were notified on 14 November 2025. The statutory 13 November 2025 commencement notification schedules key provisions, including Section 9, for **18 months after Gazette publication: 13 May 2027**. This phased commencement does not remove current Google Play requirements, other applicable Indian legal duties or privacy/security commitments.
+The Digital Personal Data Protection Act, 2023, Section 9 addresses processing of children's data and verifiable parental/lawful guardian consent, and restricts detrimental processing and tracking/behavioural monitoring, with narrow statutory and prescribed exceptions. DPDP Rules 2025 were notified on 14 November 2025. The statutory 13 November 2025 commencement notification schedules key provisions, including Section 9, for **18 months after Gazette publication**; the earlier unqualified **13 May 2027** calculation is superseded by the current legal gate's publication-date assessment and counsel confirmation. This phased commencement does not remove current Google Play requirements, other applicable Indian legal duties or privacy/security commitments.
 
 Authoritative sources:
 - https://www.meity.gov.in/documents/act-and-policies/digital-personal-data-protection-rules-2025-gDOxUjMtQWa
@@ -12,7 +14,7 @@ Authoritative sources:
 - https://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf (rules)
 - https://www.meity.gov.in/static/uploads/2024/02/Digital-Personal-Data-Protection-Act-2023.pdf (Act Section 9)
 
-**Critical:** Dropping the *Google Family Link relationship API* is not dropping verifiable parent/guardian consent or lawful access. Verified Google login proves adult account identity, not age/authority. Any mechanism satisfying the legal parental-authority and consent obligation must be separately designed/approved. Primary parent's invitation by itself may be insufficient, especially in contested custody. Counsel must assess applicable exemptions for real-time safety by fiduciary type, purpose and conditions; a consumer monitoring app cannot presume blanket coverage for live GPS, history, behavioural usage, media and app blocking.
+**Critical:** Dropping the *Google Family Link relationship API* is not dropping verifiable parent/guardian consent or lawful access. Verified Google login authenticates an account used in the adult workflow, not verified adult age or parent/guardian authority. Any mechanism satisfying the legal parental-authority and consent obligation must be separately designed/approved. Primary parent's invitation by itself may be insufficient, especially in contested custody. Counsel must assess applicable exemptions for real-time safety by fiduciary type, purpose and conditions; a consumer monitoring app cannot presume blanket coverage for live GPS, history, behavioural usage, media and app blocking.
 
 ## Required design controls by category
 
@@ -33,7 +35,7 @@ Implement policy-as-data: `consent_record(id, child_id, authorized_adult_id, pur
 
 ## Owner and qualified counsel decisions required
 
-1. Identify Indian publisher/data fiduciary, target countries and ages, lawful basis, adult identity/age and parent/guardian authority method.
+1. Verify declared Individual SWARNA SEKHAR DHAR as legal/Play publisher and record India-only ages 0–17; complete pending Payments/merchant/public-support evidence. Counsel must approve lawful purposes, adult identity/age and exact-child parent/guardian authority method.
 2. Approve purposes per data class and assess DPDP tracking/monitoring exceptions with citation to applicable rule/schedule, not a blanket label “parental safety”.
 3. Decide separate retention durations for location, route, media metadata, support, billing, backups/WAL, deletion audit and trial replay resistance; audit necessity and data-minimization.
 4. Approve clear child/parent privacy notices, consent/withdraw and rights handling, dispute resolution, child transparency, exports, grievance response, breach response and deletion commitments.

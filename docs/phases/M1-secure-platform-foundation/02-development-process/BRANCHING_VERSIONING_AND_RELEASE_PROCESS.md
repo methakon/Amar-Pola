@@ -28,3 +28,41 @@ Tag immutable annotated release, note commit SHA, CI results, source provenance/
 
 ## Signoff
 Owner/product, Android/backend, security/privacy and legal/Play leads sign a release checklist. All roles **unassigned today**; no automatic approval inferred by writing this policy.
+
+
+## Branch ownership, minimal branching and recovery (owner direction 2026-10-29)
+
+**Purpose:** keep work discoverable and reduce the risk of abandoned work or mistaken branch deletion. Branch creation is **not** the default for every task, agent session or document change. Reuse the existing active work branch when the change fits its purpose, can be reviewed in its existing PR, and does not create avoidable conflicts. Use `main` as the integration target after PR review/CI; keep integration history and branch naming visible.
+
+### Mandatory steps before creating any branch
+
+1. Run `git status --short --branch`, `git branch -a -vv`, `git fetch --all --prune` (prunes stale local remote-tracking references, **not actual remote branches**), and review active GitHub PRs, bases, commits and CI.
+2. Check this register and the active PR discussion. Choose an existing branch whose scope matches the work, or propose a change to an existing PR. Do not start a new branch merely because a task has a new title, date, agent, or conversation.
+3. Create a new branch only for a distinct change that genuinely requires independent review/integration, conflict isolation, different release timing, or a safety-sensitive experiment. Record its base, owner/agent, scope, dependent PRs, expected integration target and cleanup status **at creation** in the register.
+4. Before changing an existing branch, inspect any uncommitted/unpushed work and do not overwrite another agent's changes. Coordinate shared-branch writes; avoid force pushing shared branches or silently rebasing stacked PRs. Do not impose a blanket no-commit rule: commit work to the correct tracked branch.
+5. Every working PR should cite its parent/base and its follow-up; update the register when created, retargeted, merged, abandoned or closed. Use descriptive commits and CI results as the evidence trail. A PR merged **into another feature branch** is not yet included in `main`.
+6. Merge in dependency order; after each merge, verify downstream diffs, retarget stacked PRs to `main` when appropriate, rerun checks, and confirm commit ancestry. Delete only an *already merged and verified* redundant branch after owner/team review; preserve unresolved commits and document alternatives before cleanup.
+
+### Current known branch and PR register (snapshot verified 2026-10-30)
+
+| Branch | PR / base | Purpose | Status / action |
+|---|---|---|---|
+| `main` | integration base | Stable source of truth | `0a6be11ca811e842cc9839ab623ec118514020dd`; includes #3, not complete #4–#8 stack |
+| `fix/m1-lint-credential-lifecycle` | [#3](https://github.com/methakon/Madalasa-Alarka/pull/3) → `main` | Credential lifecycle, M1 migration 0002/0003, lints | **MERGED** into main as `0a6be11`; branch later advanced to `2821a8a` via #4, which is NOT thereby on main |
+| `feat/m1-backend-skeleton-idempotency` | [#4](https://github.com/methakon/Madalasa-Alarka/pull/4) → `fix/m1-lint-credential-lifecycle` | Migration 0004, Drogon skeleton, tests | **MERGED** into feature branch as `2821a8a`; branch later advanced to `58ba650` via #6 |
+| `feat/m1-physical-table-catalog` | [#5](https://github.com/methakon/Madalasa-Alarka/pull/5) → `feat/m1-backend-skeleton-idempotency` | 18-table catalog, mapping and CI check | **MERGED** as `ddbb25a`; included in PR9 ancestry, not current main |
+| `feat/m1-g6-lint` | [#6](https://github.com/methakon/Madalasa-Alarka/pull/6) → `feat/m1-backend-skeleton-idempotency` | G-6 lint | **MERGED** as `58ba650`; #7 later merged into this branch as `62a33a6` |
+| `feat/m1-create-family` | [#7](https://github.com/methakon/Madalasa-Alarka/pull/7) → `feat/m1-g6-lint`; [#9](https://github.com/methakon/Madalasa-Alarka/pull/9) → `main` | createFamily, M1 0005 provisioning, final stack integration | #7 **MERGED into feature branch**; #9 **OPEN** at `c693899e4b411cbadd1639f0bcb642844af50ea9`; detailed review and explicit owner merge approval required |
+| `feat/m1-purge-jobs` | [#8](https://github.com/methakon/Madalasa-Alarka/pull/8) → `feat/m1-create-family` | Restricted purge role, jobs, units and tests | **MERGED** as `c693899`; its tree equals PR9 head; nothing scheduled/deployed |
+| `docs/2026-10-29-six-gate-owner-handoff` | [#1](https://github.com/methakon/Madalasa-Alarka/pull/1) → `main` | Six architecture/release gates | **OPEN**; consolidate/review rather than duplicate |
+| `audit/2026-10-29-final-screen-api-db-reconciliation` | [#2](https://github.com/methakon/Madalasa-Alarka/pull/2) → `main` | Figma/API/DB audit and these branch governance rules | **OPEN**; existing documentation branch reused |
+| `feat/local-postgresql-physical-schema` | No open PR found at snapshot | Synthetic V2 DB through 0019; original M1 and namespaced lineage/checksum adoption | `b507e5f`; preserve published bytes and existing manifest, **do not renumber or replay alphabetically**. PR9's historical M1 0005 and conflicting backend/catalog still need semantic integration |
+| `docs/phase-category-reorganization-2026-10-27` | No open PR found at snapshot | Older documentation reorganization | **REVIEW REQUIRED**; inspect unique commits before merge/archive, do not assume obsolete |
+
+**Updated sequence:** #3 is on main; #4–#8 were merged into feature branches after their parents had already merged, so the previous #3→#4→#6 advice is superseded. Review [PR9](M1_STACK_PR9_REVIEW_2026-10-30.md) → report findings → obtain explicit owner approval before any merge → reconcile the separate V2 DB branch using its immutable namespaced runner, including new M1 0005 and backend conflicts. Documentation work reuses existing PR2; PR1 remains a separate six-gate source. Do **not** automatically merge, close, retarget or delete branches. No branch was created for this review.
+
+### Ongoing maintenance
+
+- Treat this table as a dated snapshot, not a live API. Reconcile against `git branch -r` and GitHub PR statuses before acting; update the table whenever status changes.
+- Each task's evidence should include branch, base, PR, commit SHA, tests, and integration/merge status. An agent must never describe a feature as on `main` merely because an upstream/stacked PR closed.
+- Keep one shared, searchable branch register here rather than independent spreadsheets per agent. Document branch conflicts, abandoned sessions, and recovery commits here before deleting anything.

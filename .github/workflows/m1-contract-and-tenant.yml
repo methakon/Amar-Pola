@@ -59,9 +59,11 @@ jobs:
           python3 -m unittest backend.tests.test_physical_catalog -v
       - name: Whole OpenAPI and Figma screen-to-DB contract lint (spec only)
         run: python3 backend/tests/lint_openapi_full.py
-      - name: OpenAPI linter unit tests (the linter must also fail broken contracts)
-        run: python3 backend/tests/test_lint_openapi_m1.py
-      - name: M1 PostgreSQL migration 0001 (identity)
+      - name: ERD cross-reference integrity and negative regression tests
+        run: |
+          python3 backend/tests/check_erd_references.py
+          python3 -m unittest discover -s backend/tests -p 'test_erd_references.py' -v
+      - name: M1 PostgreSQL migration
         run: psql -v ON_ERROR_STOP=1 -f backend/persistence/migrations/0001_m1_identity.sql
       - name: M1 PostgreSQL migration 0002 (device credentials)
         run: psql -v ON_ERROR_STOP=1 -f backend/persistence/migrations/0002_m1_device_credentials.sql

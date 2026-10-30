@@ -12,6 +12,17 @@ GoogleService-Info.plist
 *.pfx
 *.jks
 *.keystore
+*.jceks
+*.password
+*.password.txt
+*.recovery-secret
+*.jks.gpg
+*.p12.gpg
+*.signing-backup.tar.gpg
+signing-private/
+.signing/
+keystore.properties
+key.properties
 *.asc
 *service-account*.json
 *.key

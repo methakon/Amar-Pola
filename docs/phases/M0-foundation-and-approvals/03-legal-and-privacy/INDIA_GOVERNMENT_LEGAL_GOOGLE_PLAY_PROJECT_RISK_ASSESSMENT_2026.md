@@ -7,6 +7,14 @@
 
 **Decision:** NO-GO for real-minor monitoring and Google Play release while the critical approvals below remain open. GO for synthetic-data engineering and security tests. **Scope rule:** A feature must pass Indian law, Google Play policy and Android OS restrictions separately; a parent granting OS permissions is not enough.
 
+## Current legal and owner reconciliation — 2026-10-30
+
+Owner-declared publisher: **Individual SWARNA SEKHAR DHAR, India**, same intended legal/Google Play publisher. India-only first release and children ages **0–17** are owner-decided; **identity evidence, Payments identity, merchant setup, public support confirmation and legal review remain pending**. No company, GST registration, public address/email, grievance appointment or counsel approval is inferred. **Real child-data release OFF.**
+
+The [current source-grounded legal gate](INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md#current-source-grounded-review--2026-10-30) takes precedence over earlier legal summaries here: it records notified DPDP phases, December 2025 corrigendum, PIB guidance versus Gazette law, current IT/SPDI applicability/retrieval limits, **2026-amended** intermediary grievance clocks if applicable, CERT-In directions/FAQ, and future Rule 8(3)'s express personal-data/traffic/processing-log retention scope. Candidate short GPS/backup TTLs remain unadopted pending reconciliation. Play/Android findings below are historical research, not a newly performed platform-policy certification.
+
+No Google Family Link dependency: Google sign-in is account authentication, not adult-age or parent/guardian proof. Sharing requires acceptance for **one exact child**, authorized inviter and approved authority/consent where required; no siblings or automatic billing-family access. Final production region/tenancy/economics are deployment decisions, not prerequisites to synthetic local coding.
+
 ## 1. Highest priority findings
 
 **R-01 — Google Play child app + GPS conflict (CRITICAL).** Google Play Families Policy states **apps solely targeted at children may not request location permission or collect, use or transmit precise location** [P1]. Alarka is to be installed on children's phones. Google's separate monitoring-app exception for parent-to-child monitoring [P2,P3] has **not** been shown to override that Families condition for our actual child companion. Written product-specific Play classification is therefore required BEFORE promising/implementing an Alarka GPS launch. **Do not falsely label the app adult-targeted to get around policy.**
@@ -54,7 +62,7 @@
 | R01 | **CRITICAL** | Alarka child audience and precise location vs Families restriction [P1,P2] | BLOCK child GPS Play launch; obtain real-use eligibility decision; never misstate audience | Written Play classification for actual target ages/manifest |
 | R02 | **CRITICAL** | Historic tracking, inferred stops/behavior vs narrow DPDP real-time exception [L1,L3] | OFF for minors until case-specific legal purpose decision | Qualified India counsel memo per feature |
 | R03 | **CRITICAL** | Parent OIDC and device permission are not verified adult/custody consent [L1,L3] | Independent lawful guardian identity and authority verification | Approved adult-age, parent proof and contested-custody workflow |
-| R04 | **CRITICAL** | Publisher, age band, retention, notice incomplete | No real child data before M0 owner/legal signature | Named legal operator, public contacts, B-01/B-02 |
+| R04 | **CRITICAL** | Individual publisher / India ages 0–17 owner-decided; verification, retention, notice and legal approval incomplete | No real child data before M0 owner/legal signature | Publisher evidence, Payments/merchant/public support, B-01/B-02 implementation and counsel review |
 | R05 | **CRITICAL** | Hidden Alarka/stealth monitoring vs stalkerware [P2,P3] | Visible icon, persistent monitoring notification while running, clear child-accessible purpose statement | APK + actual notification/listing video |
 | R06 | HIGH | Madalasa claims to remotely grant child Android permissions [A1,P5] | Parent guide only; child Android Settings grants and rechecks | Real phone deny/grant/OS_REJECTED test |
 | R07 | HIGH | Background GPS without Play core-feature approval [P4] | Conditional on R01/R02, then Play form, prominent disclosure and video | Play policy response, runtime permission video |
@@ -110,7 +118,7 @@
 
 **Log retention:** Rule 6 safeguarding and Rule 8(3) specified one-year processing/traffic/log retention require a legal classification assessment; not blanket permission to keep raw kid GPS in accessible product history. Prior suggestions: raw location 14d, derived route 90d, backup 30d, audit 365d — ALL **candidates**, not legally signed. Build matrix by class: current fix, raw GPS, route/usage, consent, guardian ACL, access logs, auth events, traffic/security logs, SOS, backups; capture purpose, legal minimum/maximum, India region/subprocessors, secure readers, erasure trigger and no-resurrection evidence.
 
-**India hosting:** OCI Mumbai preferred, Hyderabad fallback; no tenancy or off-host recovery proven. Google identity/FCM/Maps/Billing/SMS/support may process abroad, so do not claim all data remains in India. Keep third-party contracts/dataflow and backups in review.
+**India hosting — historical preference clarified 2026-10-30:** Mumbai/Hyderabad are scenarios, not final deployment choices; no tenancy or off-host recovery is certified here. Google identity/FCM/Maps/Billing/SMS/support may process abroad, so do not claim all data remains in India. Keep third-party contracts/dataflow and backups in review.
 
 ## 7. Minimum viable product recommendations (NOT approval)
 
@@ -126,7 +134,7 @@
 |---|---|---|
 | G01 Play child location **CRITICAL** | Product owner / Play policy liaison | Actual child audience and monitoring classification; written location eligibility review |
 | G02 India child legal **CRITICAL** | Qualified India privacy counsel | Purposes, safety exception, history/usage, guardian verification/consent, correct dates |
-| G03 Publisher/ages/guardian | Founder / legal | Legal entity B-01; exact ages B-02; custody/pickup/revoke B-09/18; OCI-06 adult identity |
+| G03 Publisher/ages/guardian | Owner / legal | Verify declared individual B-01; India ages 0–17 B-02 decided; Payments/merchant/public-support pending; custody/pickup/revoke B-09/18 and adult verification remain separate |
 | G04 Play package/submission | Android+Play lead | Final Alarka/Madalasa manifests, age labels, MonitoringTool, disclosures, background video, Data Safety |
 | G05 Devices | Android QA | API 29/30/34/36 coverage; actual resettable DPC phone; native 16KB; OS deny/revoke behaviors |
 | G06 Security | Backend + independent QA | PostgreSQL two-family RLS PASS, Keystore PoP, replay, scopes, revoke, sanitized logs |

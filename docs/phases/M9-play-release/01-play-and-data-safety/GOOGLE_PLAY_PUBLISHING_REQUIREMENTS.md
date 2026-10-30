@@ -4,6 +4,68 @@
 
 > **Product names:** **Madalasa** (parent app), **Alarka** (child app). Desired repository name **Madalasa-Alarka** is **completed GitHub repository rename**. Use the verified new repository URL for all current documentation and integrations. [Naming rationale](../../M0-foundation-and-approvals/02-market-and-feasibility/BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
+## Current release preparation and owner dependencies — 2026-10-30
+
+**NO-GO / preparation only. No credentials created, Android build run, Console read/write, upload, identity/merchant change or release submission performed by this assessment.** Publisher is the owner-selected **Individual SWARNA SEKHAR DHAR, India**; not a company. Planned child scope is **India 0–17**. These owner choices are decided; their legal/Play consequences are not. Public support/privacy/grievance contacts, publishable address and effective dates remain pending confirmation; never invent them or expose private verification documents.
+
+### Publisher, Payments and merchant identity are distinct gates
+
+Google uses a linked Payments profile to verify a developer's legal name/address; monetization additionally requires a merchant account/payment setup, which may use the same or a different Payments profile. An owner declaration of the Individual publisher name is **not evidence that either verification has completed**. Owner Payments identity verification **PENDING**, merchant setup **PENDING**, legal/tax review **PENDING**. Do not create a fictitious organization, infer GST status, copy a personal address into drafts or request identity/bank documents in chat. Owner records only redacted status/outcome and approved public particulars in the handoff.[29][30]
+
+| Dependency | PREP now (no account action) | BUILD / evidence later | CONSOLE OWNER / counsel only |
+|---|---|---|---|
+| Publisher identity | Use exact Individual name/country; list pending public contact/address | Notices and URLs match approved identity | Verify real profile/legal name/address/contact; approve any required public display; identity evidence kept private |
+| Merchant/Payments | Document pending identity/merchant/tax/currency and consumer support | Real sandbox verified purchase lifecycle/ledger | Verify merchant/payment eligibility/method, tax/country and catalog; no finance changes delegated here |
+| Separate apps | Distinct Madalasa/Alarka purpose, age/privacy/permission/declaration worksheets | Read applicationId/manifests/versionCode/target/native SDKs from signed candidates | Confirm listings, track access, signing and upload authorization; existing local key material is not release evidence |
+| Audience/Families | Parent adult purpose vs child-companion 0–17 truthful assessment; English story art does not decide audience | Actual content/flows/SDK/permission audit | Resolve Families-location incompatibility; no age misdeclaration or inferred monitoring exemption[10][17] |
+| Monitoring | Declare all tracking functions; recognizable Alarka launcher, disclosure and persistent monitoring notice | Inspect actual monitoring metadata/type/notice on every active track; denial behavior | Complete monitoring designation and review actual policy outcome[9][18] |
+| Location | Separate live safety/history/usage purposes; child prominent background disclosure/video storyboard | Foreground then separate background grant; location FGS; OEM/force-stop/Doze/revoke and late queue proof | Location form/video and policy clarification; India legal purpose/consent before real child processing[12] |
+| FGS/sensors | Only enabled feature types/permissions; camera/mic/projection OFF | Match service type, trigger, stop, prerequisites/boot restrictions, verified visible behavior to each form | Complete actual FGS forms/use-case videos; approve any future media scope separately[1][2] |
+| Privacy/Data Safety | Separate worksheets, real recipients/retention pending, deletion/contact drafts | Manifest/SDK/traffic, encryption, web+in-app deletion and restore-safe erasure tests | Approve public policy/terms/contact/retention and final per-package responses[13][14] |
+| Commerce | Preserve prepaid prices/quotas/seat/add-on rules; stop/top-up/refund explanations | Server purchase verification, timely acknowledgment, pending/refund/revoke/expiry; capability preflight | Verify prepaid SKUs/seat/offer/add-on architecture in actual sandbox, not assume Play native prepaid add-ons support[16] |
+| Testing/review | Synthetic reviewer scenarios/accounts/video scripts, no secrets | Real signed build/synthetic backend/device/video evidence, cross-family negative tests | Determine account testing applicability; personal accounts after 2023-11-13: 12 opted-in testers continuously 14 days, then production-access application, not automatic approval[15] |
+| Release/native | Manifest/library/SBOM/evidence acceptance list | Target API36+ phone candidate; native 16KB proof if native libraries ship; final binary checked | Owner upload/track/review/staged rollout only after legal/security gates; policy recheck at submission[11][26] |
+
+### Explicit release boundaries
+
+- **Remote media OFF**, including paid/trial quota UI. Review of full planned/candidate inventory is not permission to implement or publish all features. No alternate noncompliant APK, hidden launcher, notification suppression, sensor indicator bypass, Accessibility spy/block/capture workaround, root or exploit.[9]
+- Backend preflights exact app/version/OS/capability-report freshness and schema, enrolled role, exact-child action scope, release flags/authority and verified entitlement/budget **before ACCEPT**, not only at purchase or after command delivery. Alarka rechecks OS eligibility at execution. FCM/delivery is not actual capture, saved file, viewing or emergency receipt.
+- Financial/banking/wallet/UPI/payment/credential screens **must never be captured**, including transitions/overlays/previews. Unknown classification fails closed before capture/transmission; respect secure surfaces, protect own sensitive windows. A universal safe classifier is not demonstrated: MediaProjection remains OFF until leak-negative proof, per-session consent and independent legal/Play approval. DeviceOwner status is no privacy bypass.
+- STANDARD cannot promise app suspension, anti-uninstall or universal background sensor startup. Optional genuine managed DPC enrollment/reset/exit is separately unresolved; no provisioning/lock/wipe is authorized here.
+- Live/history/usage/media need independent India child-purpose review; Google Sign-In authenticates an adult, not parenthood. Exact-child accepted invitation/grant is the design, **no Family Link API dependency**. Final processor/hosting region and transfer/economics are deployment decisions, not prerequisites for synthetic documentation work.
+
+### Commercial wording that must survive all forms
+
+Prepaid/manual renewal **only**. Public **₹99/month / ₹999/year** per paid child; founding **₹50/month / ₹500/year** for first **1,008** distinct successfully paying families. One **48h** family trial, no auto-conversion. Free reduced adaptive location and last **six hours visible history**, not unlimited retention. One included premium viewer per active paid child, optional **₹100 once / 100 days / +30 combined audio-video minutes**; dormant on base lapse, original day-100 expiry unchanged. Payment never grants guardian scope or Android permissions. Store's technical term “prepaid subscription” must not be rewritten as auto-renew; choose/confirm actual eligible products in sandbox. Existing trial/paid media allocations remain conditional/OFF, not a promise of media availability.[16]
+
+### Submission acceptance (still open)
+
+Use the complete **P01–P20** and **C01–C20** independent [reviewer checklists](PLAY_CONSOLE_DECLARATIONS_AND_REVIEWER_PACK.md), [Data Safety rows DS01–DS18](DATA_SAFETY_WORKSHEET.md) and [91-row feature assessment](../../M1-secure-platform-foundation/03-security-and-permissions/ANDROID_COMPATIBILITY_MATRIX.md). Required record per package: exact candidate SHA/version/manifest/SDKs, enabled inventory rows, actual device results, public URLs, redacted reviewer video/access steps, declaration answers/IDs, account testing outcome, India legal/privacy/security signoffs, owner submission authorization and actual Play result. **No release-ready count or PASS is asserted.**
+
+### Official sources (retrieved 2026-10-30)
+
+## Sources
+
+[1] https://developer.android.com/develop/background-work/services/fgs/restrictions-bg-start
+[2] https://developer.android.com/develop/background-work/services/fgs/service-types
+[9] https://support.google.com/googleplay/android-developer/answer/9888380
+[10] https://support.google.com/googleplay/android-developer/answer/9893335
+[11] https://support.google.com/googleplay/android-developer/answer/11926878
+[12] https://support.google.com/googleplay/android-developer/answer/9799150
+[13] https://support.google.com/googleplay/android-developer/answer/10787469
+[14] https://support.google.com/googleplay/android-developer/answer/13327111
+[15] https://support.google.com/googleplay/android-developer/answer/14151465
+[16] https://developer.android.com/google/play/billing/subscriptions
+[17] https://support.google.com/googleplay/android-developer/answer/13393723
+[18] https://support.google.com/googleplay/android-developer/answer/12955211
+[26] https://developer.android.com/guide/practices/page-sizes
+[29] https://support.google.com/googleplay/android-developer/answer/13628312
+[30] https://support.google.com/googleplay/android-developer/answer/16260648?hl=en
+
+---
+
+## Retained detailed preparation guidance (current direction above takes precedence)
+
 **Madalasa–Alarka | 2026-10-25 | Draft only — not a publication approval**
 
 Applies separately to a parent client and a child agent if distributed as separate packages. Final answers must be based on the **actual shipped manifests, SDKs, backend behavior and every active Play track**.
@@ -133,7 +195,7 @@ Create screenshots only from a real release candidate. List supported device req
 - [ ] Target API 36+ and native 16 KB page-size compatibility confirmed.
 - [ ] Data safety matches the app, SDKs, backend and released feature flags.
 - [ ] Privacy and account deletion URLs are public and operative.
-- [ ] Play Billing/subscriptions integrated and server-validated.
+- [ ] Play Billing **manual prepaid** purchase/top-up/expiry/refund integrated and server-validated; no automatic renewal.
 - [ ] Background-location demo video and declarations ready.
 - [ ] Reviewer onboarding and app access instructions tested.
 - [ ] Functional and device matrix tests passed.

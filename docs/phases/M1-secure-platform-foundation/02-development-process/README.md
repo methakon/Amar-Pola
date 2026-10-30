@@ -4,6 +4,8 @@
 
 [M1 phase](../README.md) · [Docs home](../../../README.md) · [Master register](../../../MASTER_DOCUMENT_CONTROL_REGISTER.md)
 
+**2026-10-30 supporting review:** [M1 stack PR9 review, findings and PostgreSQL16/CI evidence](M1_STACK_PR9_REVIEW_2026-10-30.md). Tests are scoped VERIFIED; findings and real ParentOIDC remain OPEN, and PR9 merge needs owner approval. [Branch register](BRANCHING_VERSIONING_AND_RELEASE_PROCESS.md) records the actual #3–#9 ancestry and existing V2 lineage boundary.
+
 | Document | Registry state | Proposed owner role |
 |---|---|---|
 | [BUILD_AND_RUN.md](BUILD_AND_RUN.md) | DOCUMENTED_REVIEW_PENDING | Engineering lead (unassigned) |

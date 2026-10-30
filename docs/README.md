@@ -1,10 +1,31 @@
 # Madalasa–Alarka — Project Documentation Library
 
-**Organized:** 2026-10-27 · **Scope:** documentation-first planning, **not software implementation**. Canonical source documents are organized **by M0–M9 project phase, then by category** using the repository's [master milestone plan](phases/M0-foundation-and-approvals/01-project-governance/MASTER_MILESTONE_IMPLEMENTATION_AND_RELEASE_PLAN.md). P3 research remains outside the launch milestones.
+**Organized:** 2026-10-27 · **Updated:** 2026-10-30 · **Scope:** controlled specifications and scoped engineering evidence, not whole-product or release acceptance. Canonical source documents are organized **by M0–M9 project phase, then by category** using the repository's [master milestone plan](phases/M0-foundation-and-approvals/01-project-governance/MASTER_MILESTONE_IMPLEMENTATION_AND_RELEASE_PLAN.md). P3 research remains outside the launch milestones.
+
+The 72 root-level compatibility pointers were consolidated into [legacy-root-links](legacy-root-links/README.md), while their canonical M0–M9 full documents and the two OpenAPI files remain in place. Old direct GitHub root-level pointers should now be replaced by canonical document links.
 
 ## Start here
 
 [Master Document Control Register](MASTER_DOCUMENT_CONTROL_REGISTER.md) · [Document Control Policy](DOCUMENT_CONTROL_POLICY.md) · [Phase Coverage Matrix](PHASE_DOCUMENTATION_COVERAGE_MATRIX.md) · [Relocation Manifest](DOCUMENT_RELOCATION_MANIFEST.json) · [M1 OpenAPI contract](openapi-m1.yaml) · [Whole-project API design](openapi.yaml) · [Figma design handoff](ui/figma-functional-handoff/README.md)
+
+## Current progress — Google Payments identity pending
+
+- [2026-10-30 cross-phase progress, changed documents, decisions and next work](phases/M0-foundation-and-approvals/01-project-governance/PENDING_IDENTITY_PROGRESS_2026-10-30.md).
+- [Detailed PR9 M1 stack review and PostgreSQL16/CI evidence](phases/M1-secure-platform-foundation/02-development-process/M1_STACK_PR9_REVIEW_2026-10-30.md); no merge authorized.
+- [Canonical feature-by-feature Android feasibility matrix](phases/M1-secure-platform-foundation/03-security-and-permissions/ANDROID_COMPATIBILITY_MATRIX.md), [Play reviewer pack](phases/M9-play-release/01-play-and-data-safety/PLAY_CONSOLE_DECLARATIONS_AND_REVIEWER_PACK.md), [billing policy](phases/M7-commercial-integrations/01-commercial-plans-and-costing/SUBSCRIPTION_PLANS_PRICING_AND_RULES_2026.md), and [security evidence queue](phases/M8-operational-readiness/03-quality-and-evidence/TEST_STRATEGY_UNIT_INTEGRATION_LOAD_SECURITY.md).
+- Publisher decision: **SWARNA SEKHAR DHAR**, individual, India; same legal and Play publisher. Payments identity verification, merchant setup and legal review remain pending; public support contact awaits confirmation. These pending external gates do not stop synthetic tests, compliance analysis or documentation preparation. No Android implementation or real-child release is approved by this checkpoint.
+
+## Repository Subfolder Structure
+
+| Directory | Scope & Contents | Index |
+|---|---|---|
+| [`phases/`](phases/README.md) | Canonical M0–M9 phase specifications, architecture contracts, and governance | [Browse Phases](phases/README.md) |
+| [`roadmap/`](roadmap/README.md) | Local task graph, DAG execution status, decision ledger, and test evidence rules | [Browse Roadmap](roadmap/README.md) |
+| [`data-model/`](data-model/README.md) | Logical 11-domain ERD, physical schema mappings, and relational audit reports | [Browse Data Model](data-model/README.md) |
+| [`audits/`](audits/README.md) | 187-screen Figma audits, 171 API contract crosswalks, and blocker reports | [Browse Audits](audits/README.md) |
+| [`ui/`](ui/README.md) | Figma screen indexes, Theme C narrative, design tokens, and functional handoffs | [Browse UI](ui/README.md) |
+| [`legacy-root-links/`](legacy-root-links/README.md) | Consolidated redirect pointers preserving historical root documentation links | [Browse Legacy Links](legacy-root-links/README.md) |
+| [`tools/`](tools/README.md) | Automated document validation, reorganization verification, and check scripts | [Browse Tools](tools/README.md) |
 
 ## Milestones and folders
 
@@ -23,13 +44,13 @@
 | **P3** | Deferred media experiments, activity metadata and admin-panel research | 3 | [P3-deferred-research](phases/P3-deferred-research/README.md) |
 | **CROSS** | Cross-milestone diagrams and existing Figma architecture indexes | 1 | [cross-milestone-references](phases/cross-milestone-references/README.md) |
 
-**72 canonical full-text source documents**, plus [two root OpenAPI contracts](openapi-m1.yaml), existing [Figma/tldraw handoffs](ui/), and root repository governance files. The older `docs/<file>.md` entries are **short forwarding pages**, not duplicate authoritative versions; this deliberately keeps previously shared GitHub URLs usable.
+**72 migrated canonical full-text source documents** (historical relocation baseline), plus subsequently registered supporting records, [two root OpenAPI contracts](openapi-m1.yaml), existing [Figma/tldraw handoffs](ui/), and root repository governance files. Historical forwarding pages are consolidated under `legacy-root-links/`; use canonical phase/category URLs rather than retired direct root paths.
 
 ## Professional control and approval approach
 
 Filing into a phase/category is not a claim of internal sign-off. Every migrated document has a navigation-only header linking the [Master Document Control Register](MASTER_DOCUMENT_CONTROL_REGISTER.md), with a **proposed owner role** and conservative approval state. No individual has been assigned or signed a decision by this reorganization. The [Control Policy](DOCUMENT_CONTROL_POLICY.md) specifies IDs, versioning, accountability, review records, baselines and supersession.
 
-**Critical open decisions:** India children's location/usage lawfulness and Play eligibility; publisher/guardian verification; GPS 14-vs-30-day raw retention; processor DPAs/region; production incident/support contacts; licensing; Android/C++ implementation; CI evidence. M5 has no dedicated standalone technical design and is explicitly flagged in its phase index. All real-child pilot/release gates remain blocked until actual evidence and approval.
+**Critical open gates:** India children's location/usage lawfulness and Play eligibility; external publisher verification and lawful guardian authority (publisher choice is recorded); category retention; processor DPAs/deployment region; production incident/support contacts; licensing; real ParentOIDC and full Android/backend acceptance. Narrow PR9 CI exists and is linked above, not equivalent to full-product evidence. M5 has no dedicated standalone technical design and is explicitly flagged in its phase index. All real-child pilot/release gates remain blocked until actual evidence and approval.
 
 **Stable paths:** `docs/openapi-m1.yaml` and `docs/openapi.yaml` remain unchanged so existing CI/requirements contracts are not silently broken. `docs/ui/` remains in its established Figma/tldraw handoff layout.
 

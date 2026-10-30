@@ -4,6 +4,8 @@
 
 [M0 phase](../README.md) · [Docs home](../../../README.md) · [Master register](../../../MASTER_DOCUMENT_CONTROL_REGISTER.md)
 
+**2026-10-30 reconciliation:** [Individual publisher/India owner gate](INDIA_REGION_AND_M0_OWNER_DECISION_GATE.md), [official legal commencement and child-safety gate](INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md), consent, retention, grievance and processor documents now distinguish recorded owner facts from legal interpretation and pending evidence. Qualified Indian counsel approval remains required; no company, public address or support email is invented.
+
 | Document | Registry state | Proposed owner role |
 |---|---|---|
 | [DPIA.md](DPIA.md) | DRAFT_LEGAL_REVIEW_REQUIRED | Privacy counsel + owner (unassigned) |

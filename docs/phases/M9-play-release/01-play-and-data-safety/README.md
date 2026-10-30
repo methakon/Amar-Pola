@@ -4,6 +4,8 @@
 
 [M9 phase](../README.md) · [Docs home](../../../README.md) · [Master register](../../../MASTER_DOCUMENT_CONTROL_REGISTER.md)
 
+**2026-10-30 preparation:** [Separate Madalasa/Alarka reviewer checklist](PLAY_CONSOLE_DECLARATIONS_AND_REVIEWER_PACK.md), [Data Safety worksheet](DATA_SAFETY_WORKSHEET.md) and [publishing requirements](GOOGLE_PLAY_PUBLISHING_REQUIREMENTS.md) distinguish prepare-now work from signed-build evidence and owner-held Console actions. Identity verification is pending; declarations are NOT_SUBMITTED, and no approval is claimed.
+
 | Document | Registry state | Proposed owner role |
 |---|---|---|
 | [GOOGLE_PLAY_PUBLISHING_REQUIREMENTS.md](GOOGLE_PLAY_PUBLISHING_REQUIREMENTS.md) | DRAFT_LEGAL_REVIEW_REQUIRED | Play release owner + counsel (unassigned) |
