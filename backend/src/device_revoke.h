@@ -45,9 +45,15 @@ inline drogon::Task<drogon::HttpResponsePtr> revoke_device(
                                  pr.at(0)["id"].as<std::string>());
     // RLS visible only to a principal with exact-child VIEW_CHILD_DEVICES.
     // No device/custody information is returned on a missing RLS grant.
+    // Serialize repeat/concurrent DELETE without requiring direct UPDATE
+    // privilege on devices (revoked from ap_m1_api in V2). The domain
+    // SECURITY DEFINER mutator acquires its own device row lock.
+    co_await trans->execSqlCoro(
+        "SELECT pg_advisory_xact_lock(hashtextextended('ma.m1.revoke.device:' || $1,0))",
+        *device);
     auto visible = co_await trans->execSqlCoro(
         "SELECT child_id::text AS child_id,family_id::text AS family_id,enrollment_state "
-        "FROM ap_m1.devices WHERE id=$1::uuid FOR UPDATE",*device);
+        "FROM ap_m1.devices WHERE id=$1::uuid",*device);
     if (visible.empty()) {
       rollback_quietly(trans);
       co_return error_response("NOT_FOUND","device not found",rid);
