@@ -1,10 +1,56 @@
 # Branching, Versioning, CI and Release Process
 
+## ACTIVE OWNER-APPROVED BRANCH POLICY — 2026-10-31 (READ FIRST)
+
+**This section is authoritative and supersedes all older feature/direct-to-main branch suggestions below and elsewhere in the repository.** Older consolidation tables are historical evidence only. GitHub rulesets are a separate administrator action; writing this policy and adding CI does not by itself protect refs from direct pushes.
+
+### Six repository branches: five working branches plus main
+
+The owner specifies **five persistent working branches**, all initialized from `main`, **plus** the `main` source-of-truth branch (six total). Exact names, scope and routes:
+
+| Branch | Purpose | Incoming changes | Outgoing promotion |
+|---|---|---|---|
+| `api` | C++20 Drogon API, C++ workers, PostgreSQL/PostGIS, migrations, API tests | Implementation for API/database work | PR to `dev` |
+| `parent` | Madalasa guardian/parent Android app | Parent app implementation and tests | PR to `dev` |
+| `child` | Alarka child Android app and Android runtime tests | Child app implementation and tests | PR to `dev` |
+| `admin-web` | Admin panel and public web frontend pages (Terms & Conditions, FAQ, customer care, legal/support UI) | Frontend/admin implementation, assets, tests; legal content requires separate legal approval | PR to `dev` |
+| `dev` | Shared code integration, cross-module test and security/quality clearance | Reviewed PRs from four workstreams; owner-authorized short-lived exceptions | Only cleared integrated changes by PR to `main` |
+| `main` | Canonical specifications, all planning/documentation, production candidate and final independent acceptance | **Documentation and planning directly on main**, or verified `dev` → `main` code promotion | No automatic live release or deployment |
+
+**Documentation rule:** All canonical documentation, plans, architecture decisions, legal drafts, branch registers and documentation verification tools must be authored, committed and maintained on `main` only. Do not modify `docs/**`, `AGENTS.md`, root governance Markdown or the PR template from workstream/`dev` branches. Workers needing document changes submit a proposal and relevant code/test references; a documentation maintainer updates `main`, and workers synchronize their code branches with the updated `main`. The documentation and branch-routing governance CI files are managed on `main`. `public/legal/` and web FAQ/support pages are **frontend artifacts** owned by `admin-web`; no live publication or legal approval is inferred by merging markup.
+
+### Ordered implementation, integration and verification
+
+1. A worker checks `AGENTS.md`, this policy, the live GitHub branch/PR inventory and the dependency graph. Choose `api`, `parent`, `child` or `admin-web`; start from latest `main` when initializing, and synchronize upstream changes without force-pushing another worker's commits. Coordinate concurrent workers sharing one branch.
+2. Implement, run branch-local tests and commit code/tests on the correct workstream branch. Keep CI fixtures synthetic; do not commit documentation changes there. Submit a PR **workstream → dev**. No code PR targets `main` directly.
+3. Review the PR for contracts, permissions, authentication, cross-child isolation, migrations and backwards compatibility. Run affected unit, build, integration and regression tests on the actual candidate merge result in `dev`; record exact commands, exit codes, SHA and CI URLs. A passing branch-only test does not count as passing `dev`.
+4. Keep `dev` promotion-ready: do not advance `dev` → `main` while it contains unapproved, partially tested or blocked changes. If multiple code PRs are integrated, validate the **entire cumulative `dev` tree**, not individual PRs in isolation.
+5. After explicit clearance, PR **dev → main** with linked source PRs, change inventory, security signoff, migration and rollback assessment and verified `dev` CI. Never overwrite `main` or bypass independent review; changes reach `main` through the reviewed promotion only.
+6. **After merge**, run final verification on the actual `main` commit (build, impacted tests, DB migrations/restore where relevant, API/Android/admin regression and CI). Log PASS/FAIL with exact commit SHA and links. If final `main` verification fails, do not certify/release; remediate via the same workstream → dev → main route, or apply an approved rollback plan.
+7. Synchronize persistent work branches and `dev` from `main` non-destructively for the next cycle. Never rewrite published migration bytes, discard other workers' commits, or assume branch divergence implies all changes are unmerged.
+
+### Exception and retirement policy
+
+- The **five working branches persist**; do **not** delete them after each task. `main` also persists.
+- **New temporary branches are forbidden without explicit owner instruction** identifying scope/reason. For owner-approved exceptional work, use `temp/<task-slug>`, base it on `main`, record owner authorization and PR, and promote through **temp → dev → main** using the same reviews and tests. Temporary PRs must carry the `owner-approved-temporary` label; the label is a CI routing signal and **does not prove approval** without the owner's recorded instruction.
+- After a temporary branch's complete unique work is verified on `main`, delete it promptly and record deletion/commit traceability. If any unique data, failing tests or unresolved PRs remain, retain it with an explicit blocker until resolved; never force-delete work.
+- **Legacy exception:** `feat/local-postgresql-physical-schema` predates this policy and is retained under draft [PR #11](https://github.com/methakon/Madalasa-Alarka/pull/11). Reconcile SQL and backend conflicts; route its integration through `dev` (not directly to `main`), move any docs edits separately to `main`, and delete the old branch **only after** tested `main` integration.
+- Administrator must configure protected/ruleset-enforced `main` and `dev` PR checks, review requirements, push restrictions and bypass controls. [Branch-route CI](../../../../.github/workflows/branch-governance.yml) validates PR routing/doc isolation but **cannot prevent direct pushes or certify approvals without GitHub rulesets**.
+- Legal/Google Play policy blockers remain separate: merging synthetic software does not authorize real-child location, screen/media capture, billing or production release.
+
+**Machine-readable policy and regression checks:** [branch governance manifest](../../../branch-governance.json) and `python3 -m unittest discover -s docs/tools -p 'test_*.py' -v`. Change this policy and its tests **together on main only**. Maintain the live branch inventory below as a factual, dated register; do not rewrite historical evidence.
+
+### Initial branch inventory / transition
+
+As inspected immediately before adoption, only `main` and retained `feat/local-postgresql-physical-schema` existed. The five working branches were **requested**; creation should be verified against GitHub after this documentation is committed. During legacy reconciliation a seventh branch can temporarily exist, but it must not be mistaken for a permanent sixth workstream. PR #11 remains a draft and is not merge-ready until the current M1/V2 migration tests and integration gate pass.
+
+---
+
 > **Document control:** M1 / 02-development-process · Proposed owner: Engineering lead (not assigned) · Registry: DOCUMENTED_REVIEW_PENDING; approval not recorded. [Master register](../../../MASTER_DOCUMENT_CONTROL_REGISTER.md).
 
 **Status:** process and integration record, not an app release. Current `main` contains the scoped Drogon M1 backend, independently reviewed Google OIDC/JWKS implementation and synthetic PostgreSQL acceptance. No genuine Google-user login, Android release, OCI production deployment, Play approval or signed distribution is certified by this record.
 
-## Git branches
+## Historical branch model (SUPERSEDED by the 2026-10-31 policy above)
 - `main`: protected and reviewed; all changes via PR when branch protection/ownership is enabled. The CODEOWNERS file is a proposed map; GitHub does not create users or branch rules automatically.
 - `feature/<issue>-slug`, `fix/<issue>-slug`, `docs/<issue>-slug` for scoped work.
 - `release/vMAJOR.MINOR.PATCH` only after releasable tested artifacts exist; `hotfix/<id>` from tagged release when necessary.
@@ -30,7 +76,7 @@ Tag immutable annotated release, note commit SHA, CI results, source provenance/
 Owner/product, Android/backend, security/privacy and legal/Play leads sign a release checklist. All roles **unassigned today**; no automatic approval inferred by writing this policy.
 
 
-## Branch ownership, minimal branching and recovery (owner direction 2026-10-29)
+## Historical branch ownership and recovery (SUPERSEDED where inconsistent)
 
 **Purpose:** keep work discoverable and reduce the risk of abandoned work or mistaken branch deletion. Branch creation is **not** the default for every task, agent session or document change. Reuse the existing active work branch when the change fits its purpose, can be reviewed in its existing PR, and does not create avoidable conflicts. Use `main` as the integration target after PR review/CI; keep integration history and branch naming visible.
 
