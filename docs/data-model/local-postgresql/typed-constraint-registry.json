@@ -1,6 +1,6 @@
 {
   "source": "POSTGRESQL_CATALOG_NOT_APPLICATION_ROWS",
-  "table_count": 143,
+  "table_count": 144,
   "tables": [
     {
       "table": "ap_m1.account_deletion_requests",
@@ -5652,6 +5652,12 @@
           "type": "bytea",
           "not_null": false,
           "default": null
+        },
+        {
+          "name": "retention_hold",
+          "type": "boolean",
+          "not_null": true,
+          "default": "false"
         }
       ],
       "check_constraints": [
@@ -5786,6 +5792,12 @@
           "type": "bytea",
           "not_null": false,
           "default": null
+        },
+        {
+          "name": "retention_hold",
+          "type": "boolean",
+          "not_null": true,
+          "default": "false"
         }
       ],
       "check_constraints": [
@@ -6327,6 +6339,12 @@
           "type": "bigint",
           "not_null": true,
           "default": "1"
+        },
+        {
+          "name": "retention_hold",
+          "type": "boolean",
+          "not_null": true,
+          "default": "false"
         }
       ],
       "check_constraints": [
@@ -6512,6 +6530,12 @@
           "type": "timestamp with time zone",
           "not_null": false,
           "default": null
+        },
+        {
+          "name": "retention_hold",
+          "type": "boolean",
+          "not_null": true,
+          "default": "false"
         }
       ],
       "check_constraints": [
@@ -8914,6 +8938,26 @@
       "value_interpretation": "RAW_CATALOG_SQL_ONLY; no unchecked text values inferred"
     },
     {
+      "table": "ap_m1.m1_renewal_hold_preservation",
+      "columns": [
+        {
+          "name": "challenge_id",
+          "type": "uuid",
+          "not_null": true,
+          "default": null
+        },
+        {
+          "name": "retention_hold",
+          "type": "boolean",
+          "not_null": true,
+          "default": null
+        }
+      ],
+      "check_constraints": [],
+      "foreign_keys": [],
+      "value_interpretation": "RAW_CATALOG_SQL_ONLY; no unchecked text values inferred"
+    },
+    {
       "table": "ap_m1.media_access_audit",
       "columns": [
         {
@@ -10263,6 +10307,12 @@
           "type": "timestamp with time zone",
           "not_null": true,
           "default": "now()"
+        },
+        {
+          "name": "retention_hold",
+          "type": "boolean",
+          "not_null": true,
+          "default": "false"
         }
       ],
       "check_constraints": [

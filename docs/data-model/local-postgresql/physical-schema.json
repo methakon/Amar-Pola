@@ -5518,6 +5518,12 @@
           "type": "bytea",
           "not_null": false,
           "default": null
+        },
+        {
+          "name": "retention_hold",
+          "type": "boolean",
+          "not_null": true,
+          "default": "false"
         }
       ],
       "constraints": [
@@ -5644,6 +5650,12 @@
           "type": "bytea",
           "not_null": false,
           "default": null
+        },
+        {
+          "name": "retention_hold",
+          "type": "boolean",
+          "not_null": true,
+          "default": "false"
         }
       ],
       "constraints": [
@@ -6160,6 +6172,12 @@
           "type": "bigint",
           "not_null": true,
           "default": "1"
+        },
+        {
+          "name": "retention_hold",
+          "type": "boolean",
+          "not_null": true,
+          "default": "false"
         }
       ],
       "constraints": [
@@ -6370,6 +6388,12 @@
           "type": "timestamp with time zone",
           "not_null": false,
           "default": null
+        },
+        {
+          "name": "retention_hold",
+          "type": "boolean",
+          "not_null": true,
+          "default": "false"
         }
       ],
       "constraints": [
@@ -8890,6 +8914,36 @@
     },
     {
       "schema": "ap_m1",
+      "name": "m1_renewal_hold_preservation",
+      "kind": "r",
+      "rls": true,
+      "forced_rls": true,
+      "columns": [
+        {
+          "name": "challenge_id",
+          "type": "uuid",
+          "not_null": true,
+          "default": null
+        },
+        {
+          "name": "retention_hold",
+          "type": "boolean",
+          "not_null": true,
+          "default": null
+        }
+      ],
+      "constraints": [
+        {
+          "name": "m1_renewal_hold_preservation_pkey",
+          "kind": "p",
+          "definition": "PRIMARY KEY (challenge_id)",
+          "validated": true
+        }
+      ],
+      "partition_key": null
+    },
+    {
+      "schema": "ap_m1",
       "name": "media_access_audit",
       "kind": "r",
       "rls": true,
@@ -10136,6 +10190,12 @@
           "type": "timestamp with time zone",
           "not_null": true,
           "default": "now()"
+        },
+        {
+          "name": "retention_hold",
+          "type": "boolean",
+          "not_null": true,
+          "default": "false"
         }
       ],
       "constraints": [
@@ -15807,6 +15867,12 @@
     },
     {
       "schema": "ap_m1",
+      "table": "m1_renewal_hold_preservation",
+      "name": "m1_renewal_hold_preservation_pkey",
+      "definition": "CREATE UNIQUE INDEX m1_renewal_hold_preservation_pkey ON ap_m1.m1_renewal_hold_preservation USING btree (challenge_id)"
+    },
+    {
+      "schema": "ap_m1",
       "table": "media_access_audit",
       "name": "media_access_audit_pkey",
       "definition": "CREATE UNIQUE INDEX media_access_audit_pkey ON ap_m1.media_access_audit USING btree (id)"
@@ -17481,6 +17547,16 @@
     },
     {
       "schema": "ap_m1",
+      "name": "_m1_device_has_dependents",
+      "signature": "p_device uuid",
+      "security_definer": true,
+      "owner": "ap_db_executor",
+      "settings": [
+        "search_path=pg_catalog, ap_m1"
+      ]
+    },
+    {
+      "schema": "ap_m1",
       "name": "_m1_key_live",
       "signature": "p_device uuid, p_key uuid",
       "security_definer": true,
@@ -17807,6 +17883,16 @@
       "owner": "ap_db_executor",
       "settings": [
         "search_path=pg_catalog, ap_m1, public"
+      ]
+    },
+    {
+      "schema": "ap_m1",
+      "name": "create_family",
+      "signature": "p_label text",
+      "security_definer": true,
+      "owner": "ap_db_executor",
+      "settings": [
+        "search_path=pg_catalog, ap_m1"
       ]
     },
     {
@@ -18212,6 +18298,16 @@
     },
     {
       "schema": "ap_m1",
+      "name": "purge_pairing_codes",
+      "signature": "p_grace interval",
+      "security_definer": true,
+      "owner": "ap_db_executor",
+      "settings": [
+        "search_path=pg_catalog, ap_m1"
+      ]
+    },
+    {
+      "schema": "ap_m1",
       "name": "read_media_activity",
       "signature": "target_child uuid, before_time timestamp with time zone, page_size integer",
       "security_definer": true,
@@ -18471,6 +18567,16 @@
       "owner": "ap_db_executor",
       "settings": [
         "search_path=pg_catalog, ap_m1, public"
+      ]
+    },
+    {
+      "schema": "ap_m1",
+      "name": "resolve_parent_principal",
+      "signature": "p_issuer text, p_subject text",
+      "security_definer": true,
+      "owner": "ap_db_executor",
+      "settings": [
+        "search_path=pg_catalog, ap_m1"
       ]
     },
     {

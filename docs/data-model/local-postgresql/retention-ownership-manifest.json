@@ -2,7 +2,7 @@
   "real_child_release": "OFF",
   "policy_approval": "NONE",
   "erasure_inventory_captured": true,
-  "table_count": 143,
+  "table_count": 144,
   "tables": [
     {
       "schema": "ap_m1",
@@ -2551,6 +2551,30 @@
         "operation": "CONFIGURED_PRIMARY_PURGE"
       },
       "erasure_strategy_unknown_reason": null,
+      "backup_restore_effect": "PRIMARY_PURGE_NOT_BACKUP_ERASURE; RESTORE_SUPPRESSION_REQUIRES_INDEPENDENT_LEDGER_AND_VERIFICATION",
+      "audit_legal_hold_exception": "PENDING_CONFIGURED_POLICY",
+      "partition_policy": "NONE",
+      "partition_key": null
+    },
+    {
+      "schema": "ap_m1",
+      "table": "ap_m1.m1_renewal_hold_preservation",
+      "module_owner": [
+        "backend/persistence/migrations/0020_m1_current_lineage_convergence.sql",
+        "backend/persistence/migrations/compat/m1_pre_v2_0017.sql"
+      ],
+      "module_owner_basis": "DECLARING_MIGRATION_FILES_OR_DOCUMENTED_MANUAL_MAP",
+      "child_data": null,
+      "child_owner_path": null,
+      "child_data_unknown_reason": "No catalog child identifier/outbound FK path; manual classification required",
+      "retention_category": "UNCLASSIFIED_POLICY_PENDING",
+      "time_column": null,
+      "retention_clock": "configuration",
+      "clock_basis": "NO_APPROVED_DATA_CLOCK; configuration placeholder, not TTL",
+      "candidate_period": null,
+      "approval_state": "OWNER_COUNSEL_PENDING",
+      "erasure_strategy": null,
+      "erasure_strategy_unknown_reason": "Not in captured inventory; null does not mean exempt or unimplemented",
       "backup_restore_effect": "PRIMARY_PURGE_NOT_BACKUP_ERASURE; RESTORE_SUPPRESSION_REQUIRES_INDEPENDENT_LEDGER_AND_VERIFICATION",
       "audit_legal_hold_exception": "PENDING_CONFIGURED_POLICY",
       "partition_policy": "NONE",
