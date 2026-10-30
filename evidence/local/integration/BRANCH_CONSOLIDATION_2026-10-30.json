@@ -1,6 +1,6 @@
 {
   "date": "2026-10-30",
-  "status": "IN_PROGRESS_OLD_DOC_TOOLING_PENDING_DB_RETAINED",
+  "status": "SAFE_REMOTE_CLEANUP_COMPLETE_V2_INTEGRATION_BLOCKED",
   "original_main": "754fea90a67350af9d63b38762162ebf2369855b",
   "verified_runtime_main": "9c5b9bd2ff2a4a789e54e1fdf37377dd68d125fc",
   "new_branches_created": 0,
@@ -26,8 +26,10 @@
     {
       "branch": "docs/phase-category-reorganization-2026-10-27",
       "original_head": "09689396ac87cc427e9de51b0e6adc1a2dc85e4c",
-      "status": "retained",
-      "reason": "Unique documentation control/parser tooling is being selectively integrated and tested; canonical bodies already represented or superseded. Retain until current validation passes."
+      "status": "consolidated and deleted",
+      "verified_main": "1312dac9889f8ecd83fe106aaf874c7ca933802d",
+      "reason": "All12 source-only paths independently hash-checked and imported, adapted or explicitly archived; newer canonical policy preserved.22 tests and exact-source hosted CI passed before deletion; remote absence read back.",
+      "evidence": "evidence/local/integration/DOCUMENTATION_CONSOLIDATION_2026-10-30.json"
     },
     {
       "branch": "feat/google-oidc",
@@ -44,7 +46,7 @@
     {
       "branch": "feat/m1-backend-skeleton-idempotency",
       "original_head": "58ba650ea5fc712ee2f78db8b026072eabb52983",
-      "status": "consolidated and deleted",
+      "status": "already integrated and deleted",
       "verified_main": "9c5b9bd2ff2a4a789e54e1fdf37377dd68d125fc"
     },
     {
@@ -56,29 +58,34 @@
     {
       "branch": "feat/m1-g6-lint",
       "original_head": "62a33a664bc8171315fecd152abf437264b375ea",
-      "status": "consolidated and deleted",
+      "status": "already integrated and deleted",
       "verified_main": "9c5b9bd2ff2a4a789e54e1fdf37377dd68d125fc"
     },
     {
       "branch": "feat/m1-physical-table-catalog",
       "original_head": "976805d52f5e35d5367fbc2025f1dffa4d175275",
-      "status": "consolidated and deleted",
+      "status": "already integrated and deleted",
       "verified_main": "9c5b9bd2ff2a4a789e54e1fdf37377dd68d125fc"
     },
     {
       "branch": "feat/m1-purge-jobs",
       "original_head": "61065423373be456c8355ea4cab66d5a3c108f06",
-      "status": "consolidated and deleted",
+      "status": "already integrated and deleted",
       "verified_main": "9c5b9bd2ff2a4a789e54e1fdf37377dd68d125fc"
     },
     {
       "branch": "fix/m1-lint-credential-lifecycle",
       "original_head": "2821a8a014ae4ef9ae8939ebfd2ab12026ae29e0",
-      "status": "consolidated and deleted",
+      "status": "already integrated and deleted",
       "verified_main": "9c5b9bd2ff2a4a789e54e1fdf37377dd68d125fc"
     }
   ],
   "ci": [
+    {
+      "url": "https://github.com/methakon/Madalasa-Alarka/actions/runs/41095355237",
+      "head": "1312dac9889f8ecd83fe106aaf874c7ca933802d",
+      "conclusion": "success"
+    },
     {
       "url": "https://github.com/methakon/Madalasa-Alarka/actions/runs/41091776173",
       "head": "9c5b9bd2ff2a4a789e54e1fdf37377dd68d125fc",
