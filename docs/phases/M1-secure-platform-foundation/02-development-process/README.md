@@ -6,10 +6,13 @@
 
 [M1 phase](../README.md) · [Docs home](../../../README.md) · [Master register](../../../MASTER_DOCUMENT_CONTROL_REGISTER.md)
 
+**2026-10-31 API progress:** [Frozen M1 14-operation implementation and V2 security limitations](M1_API_HANDLER_IMPLEMENTATION_STATUS_2026-10-31.md). All 14 routes are registered on `api`, not integrated into `dev`/production. Current code undergoes CI; V2 session-positive, granular RLS/scope and replay integration are OPEN. No real child data is permitted.
+
 **2026-10-30 supporting review:** [M1 stack PR9 review, findings and PostgreSQL16/CI evidence](M1_STACK_PR9_REVIEW_2026-10-30.md). Tests are scoped VERIFIED; findings and real ParentOIDC remain OPEN, and PR9 merge needs owner approval. [Branch register](BRANCHING_VERSIONING_AND_RELEASE_PROCESS.md) records the actual #3–#9 ancestry and existing V2 lineage boundary.
 
 | Document | Registry state | Proposed owner role |
 |---|---|---|
+| [M1_API_HANDLER_IMPLEMENTATION_STATUS_2026-10-31.md](M1_API_HANDLER_IMPLEMENTATION_STATUS_2026-10-31.md) | IMPLEMENTATION_IN_PROGRESS / V2_INTEGRATION_NOT_VERIFIED | Backend/security |
 | [BUILD_AND_RUN.md](BUILD_AND_RUN.md) | DOCUMENTED_REVIEW_PENDING | Engineering lead (unassigned) |
 | [DEVELOPER_ONBOARDING_AND_CODING_STANDARDS.md](DEVELOPER_ONBOARDING_AND_CODING_STANDARDS.md) | DOCUMENTED_REVIEW_PENDING | Engineering lead (unassigned) |
 | [BRANCHING_VERSIONING_AND_RELEASE_PROCESS.md](BRANCHING_VERSIONING_AND_RELEASE_PROCESS.md) | DOCUMENTED_REVIEW_PENDING | Engineering lead (unassigned) |

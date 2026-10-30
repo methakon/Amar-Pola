@@ -12,6 +12,10 @@ The 72 root-level compatibility pointers were consolidated into [legacy-root-lin
 
 [Current machine register](document-control-register.json) · [Evidence-separated phase checklist](DOCUMENTATION_PHASE_GATE_CHECKLIST.md) · [Documentation verification tools](tools/README.md)
 
+## M1 API coding progress — 2026-10-31
+
+[14-operation M1 route implementation matrix, latest synthetic CI checkpoint and unresolved security integration](phases/M1-secure-platform-foundation/02-development-process/M1_API_HANDLER_IMPLEMENTATION_STATUS_2026-10-31.md). Code lives on `api` only and is not merged. The wider Figma-linked API lists 171 *planned* operations, not completed endpoints. The V2 trusted-session issuer and positive role/tenant isolation tests still gate E-02.
+
 ## 2026-10-31 P2P-first media/live-location architecture
 
 [MA-P2P-ADR-004](phases/P3-deferred-research/01-media-and-administrator-research/P2P_MEDIA_AND_LIVE_LOCATION_TRANSPORT_ARCHITECTURE_2026-10-31.md): WebRTC ICE/STUN direct, TURN relay when necessary, existing Drogon signaling, no custom VPN for these features; separate durable GPS pipeline. **Documentation only:** Android/Indian counsel/Play gate approvals remain OPEN and child capture release OFF.

@@ -88,12 +88,16 @@ Source and decision owner: explicit project-owner instruction dated 2026-10-30. 
 
 **Risk/hardening:** Previously committed synthetic code may have stored a raw pairing secret in idempotency response bodies; code no longer returns such historical responses. Existing synthetic databases must be sanitized/recreated before any real deployment. M1 SQL migrations are versioned and not overwritten. Source: [P-1 resolution](../../../API_CONVENTIONS_AND_ERROR_CATALOG.md), [pending API implementation](https://github.com/methakon/Madalasa-Alarka/blob/api/backend/src/pairing.h). Runtime smoke and DB replay/one-active-code tests are still required; do not claim the pairing handler release-ready.
 
+## 2026-10-31 E-02 API implementation update (synthetic-only)
+
+**ALL 14 FROZEN M1 OPERATION ROUTES REGISTERED on `api`, not merged to `dev`/main; do not mark E-02 CLOSED.** [Operation-by-operation implementation/evidence register](../../M1-secure-platform-foundation/02-development-process/M1_API_HANDLER_IMPLEMENTATION_STATUS_2026-10-31.md). Added GET listFamilies/getChild/listChildDevices, POST createChild/recordCapabilities and DELETE revokeDevice, hardened issuePairingCode and corrected health Receipt, plus negative tests and static route-coverage assertion. The [7d48e57 API CI checkpoint](https://github.com/methakon/Madalasa-Alarka/actions/runs/41143343437) passed; the latest code SHA's CI must be verified separately. **V2 trusted session issuance, authority/guardian tests, end-to-end HTTP–PostgreSQL role/isolation, revokeDevice's extra VIEW scope and P-1 owner acceptance remain OPEN.** 171 broader/Figma-planned operations are NOT M1 implementation.
+
 ## B. Engineering blockers — resolved by building and testing, not by guessing
 
 | ID | Priority | Work and reason it blocks completion | Evidence required | Responsible role |
 |---|---|---|---|---|
 | **E-01** | Critical | Family/child/guardian grants, server authorization + RLS | Cross-family API, worker, cache and live-stream negative tests | Backend/security |
-| **E-02** | Critical | Complete versioned OpenAPI and real handlers | Contract lint, schema-negative and role tests | Backend |
+| **E-02** | Critical | **14/14 M1 handler routes registered on api; implementation/verification PARTIAL** | Latest SHA's CI, complete V2 issuer sessions, cross-tenant and guardian revocation HTTP/DB integration, full response contract, correct revoke scope, merge into dev (not completed) | Backend |
 | **E-03** | Critical | Durable GPS idempotence, partition dedup, per-device worker fences | Crash/duplicate/offline/late replay passes | C++/DB |
 | **E-04** | Critical | Revocation and deletion spanning raw/derived data, backups and offline devices | Restore and no-reingest proofs | Backend/privacy |
 | **E-05** | High | Android permission, typed FGS, foreground/background and OEM life cycle | Device API/OEM instrumentation evidence | Android |
