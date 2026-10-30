@@ -6,6 +6,8 @@ The 72 root-level compatibility pointers were consolidated into [legacy-root-lin
 
 ## Start here
 
+**Worker branch routing (mandatory):** [owner-approved workstream → dev → main policy](phases/M1-secure-platform-foundation/02-development-process/BRANCHING_VERSIONING_AND_RELEASE_PROCESS.md). All documentation and planning are authored on `main` only; the five persistent work branches are `api`, `parent`, `child`, `admin-web` and `dev`. This rule overrides older feature-branch guidance.
+
 [Master Document Control Register](MASTER_DOCUMENT_CONTROL_REGISTER.md) · [Document Control Policy](DOCUMENT_CONTROL_POLICY.md) · [Phase Coverage Matrix](PHASE_DOCUMENTATION_COVERAGE_MATRIX.md) · [Relocation Manifest](DOCUMENT_RELOCATION_MANIFEST.json) · [M1 OpenAPI contract](openapi-m1.yaml) · [Whole-project API design](openapi.yaml) · [Figma design handoff](ui/figma-functional-handoff/README.md)
 
 [Current machine register](document-control-register.json) · [Evidence-separated phase checklist](DOCUMENTATION_PHASE_GATE_CHECKLIST.md) · [Documentation verification tools](tools/README.md)

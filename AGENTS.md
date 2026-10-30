@@ -2,7 +2,17 @@
 
 This file is the **entrypoint for coding agents**. Work locally using synthetic data, not on production servers or live child devices.
 
-## Mandatory branch discipline (owner direction 2026-10-29)
+## MANDATORY: CURRENT BRANCH FLOW — OWNER APPROVED 2026-10-31
+
+**Read this section before any code, branch, documentation or PR action.** Exactly five permanent **working** branches are `api`, `parent`, `child`, `admin-web` and `dev`; `main` is the sixth, canonical branch. Backend/API/SQL goes to `api`; Madalasa Android to `parent`; Alarka Android to `child`; admin panel, Terms & Conditions, FAQ and customer-care frontend to `admin-web`. **ALL code commits and temporary task branches flow to `dev` for integrated testing/security clearance first, then a reviewed `dev` → `main` PR, followed by final tests on `main`.** Do not create additional branches unless the owner explicitly orders one; owner-approved temporary branches are merged through `dev`, then `main`, verified and promptly deleted. Preserve the existing unresolved PostgreSQL branch until its unique work passes this process.
+
+**ALL documentation, planning, governance decisions and docs tools are edited and committed ONLY on `main`.** On implementation branches propose doc changes separately; do not include canonical `docs/**` changes in their PRs. Actual web pages under `public/legal/` are implementation in `admin-web`, but legal signoff is independent. The mandatory [canonical branch policy](docs/phases/M1-secure-platform-foundation/02-development-process/BRANCHING_VERSIONING_AND_RELEASE_PROCESS.md) and [branch-route CI](.github/workflows/branch-governance.yml) govern every worker. Neither a PR merge nor passing CI grants Play/DPDP release permission.
+
+### HARD GATE BEFORE EVERY WORK SEGMENT — pull both `dev` and `main`
+
+Before **starting or resuming any task** on `api`, `parent`, `child`, `admin-web` or an approved temporary branch, use a **clean worktree** and run `bash docs/tools/sync_work_branch.sh <current-branch>`. This fetches both `origin/main` and `origin/dev`, fast-forward-pulls the current branch, then merges `main` followed by `dev` without force. Record the three SHAs and conflict/test outcomes before coding and again before each PR. On `dev`, use the same command with `dev` to sync `main`; before documentation work on `main`, use the command with `main` to pull `main` and **inspect but never merge `dev`**. Any conflicts, dirty worktree or failed sync block the task until safely resolved. [Full preflight rules](docs/phases/M1-secure-platform-foundation/02-development-process/BRANCHING_VERSIONING_AND_RELEASE_PROCESS.md#mandatory-pre-work-synchronization-from-both-main-and-dev-owner-addendum-2026-10-31).
+
+## Historical branch discipline (2026-10-29; superseded where inconsistent)
 
 Before committing or creating branches, read [the canonical branch policy and active branch/PR register](docs/phases/M1-secure-platform-foundation/02-development-process/BRANCHING_VERSIONING_AND_RELEASE_PROCESS.md). **Reuse an appropriate existing tracked branch/PR by default.** A new task or agent does not automatically justify a new branch. Inspect live branches, PR bases, uncommitted work and dependency order; maintain the single register whenever creating, merging, retargeting, or closing work. Do not accidentally discard work in stacked PRs: merging into another feature branch is not the same as merging into `main`. New branches are appropriate only when there is a concrete independent-review/conflict/release need; record reason and owner. Never automatically delete branches or force-push another agent's commits. Normal commits and PR updates are welcome, subject to existing review and security rules.
 

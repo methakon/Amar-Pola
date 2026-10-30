@@ -1,5 +1,7 @@
 # M1 / development process
 
+**MANDATORY UPDATED BRANCH POLICY (2026-10-31):** [Read current owner workflow](BRANCHING_VERSIONING_AND_RELEASE_PROCESS.md) before working. Code: four domain branches → dev → main. Documentation/planning: main only. Temporary branch only with owner instruction, then retire after verified merge. The earlier PR9 review paragraph below is archival, not today's integration state.
+
 **Canonical category folder.** Full project documents are below; older `docs/<filename>` locations contain backward-compatible navigation pointers. **No signatures/implementation are implied.**
 
 [M1 phase](../README.md) · [Docs home](../../../README.md) · [Master register](../../../MASTER_DOCUMENT_CONTROL_REGISTER.md)

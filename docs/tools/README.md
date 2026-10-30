@@ -1,5 +1,9 @@
 # Documentation Tools & Validation Scripts
 
+## Branch-policy tests and route validation
+
+Run `python3 -m unittest discover -s docs/tools -p 'test_*.py' -v` for branch manifest/routing negative tests (in addition to documentation tests). The [machine branch policy](../branch-governance.json), [canonical owner process](../phases/M1-secure-platform-foundation/02-development-process/BRANCHING_VERSIONING_AND_RELEASE_PROCESS.md) and [PR route validator](branch_routes.py) are maintained on `main` only; passing static checks alone does not implement GitHub branch protection.
+
 ## Current offline documentation checker
 
 Source-preserving CommonMark parser and regression cases imported from
