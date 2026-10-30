@@ -2,7 +2,7 @@
 
 > **Document control:** M1 / 02-development-process · Proposed owner: Engineering lead (not assigned) · Registry: DOCUMENTED_REVIEW_PENDING; approval not recorded. [Master register](../../../MASTER_DOCUMENT_CONTROL_REGISTER.md).
 
-**Status:** Proposed process, not an implemented app release. Current GitHub `main` contains docs/M1 contract and synthetic PostgreSQL tests. No Android releases/APKs, OCI production deployments or signed distribution.
+**Status:** process and integration record, not an app release. Current `main` contains the scoped Drogon M1 backend, independently reviewed Google OIDC/JWKS implementation and synthetic PostgreSQL acceptance. No genuine Google-user login, Android release, OCI production deployment, Play approval or signed distribution is certified by this record.
 
 ## Git branches
 - `main`: protected and reviewed; all changes via PR when branch protection/ownership is enabled. The CODEOWNERS file is a proposed map; GitHub does not create users or branch rules automatically.
@@ -43,7 +43,7 @@ Owner/product, Android/backend, security/privacy and legal/Play leads sign a rel
 5. Every working PR should cite its parent/base and its follow-up; update the register when created, retargeted, merged, abandoned or closed. Use descriptive commits and CI results as the evidence trail. A PR merged **into another feature branch** is not yet included in `main`.
 6. Merge in dependency order; after each merge, verify downstream diffs, retarget stacked PRs to `main` when appropriate, rerun checks, and confirm commit ancestry. Delete only an *already merged and verified* redundant branch after owner/team review; preserve unresolved commits and document alternatives before cleanup.
 
-### Current known branch and PR register (snapshot verified 2026-10-30)
+### Historical pre-consolidation branch register (superseded by the current register below)
 
 | Branch | PR / base | Purpose | Status / action |
 |---|---|---|---|
@@ -59,7 +59,28 @@ Owner/product, Android/backend, security/privacy and legal/Play leads sign a rel
 | `feat/local-postgresql-physical-schema` | No open PR found at snapshot | Synthetic V2 DB through 0019; original M1 and namespaced lineage/checksum adoption | `b507e5f`; preserve published bytes and existing manifest, **do not renumber or replay alphabetically**. PR9's historical M1 0005 and conflicting backend/catalog still need semantic integration |
 | `docs/phase-category-reorganization-2026-10-27` | No open PR found at snapshot | Older documentation reorganization | **REVIEW REQUIRED**; inspect unique commits before merge/archive, do not assume obsolete |
 
-**Updated sequence:** #3 is on main; #4–#8 were merged into feature branches after their parents had already merged, so the previous #3→#4→#6 advice is superseded. Review [PR9](M1_STACK_PR9_REVIEW_2026-10-30.md) → report findings → obtain explicit owner approval before any merge → reconcile the separate V2 DB branch using its immutable namespaced runner, including new M1 0005 and backend conflicts. Documentation work reuses existing PR2; PR1 remains a separate six-gate source. Do **not** automatically merge, close, retarget or delete branches. No branch was created for this review.
+**Historical sequence:** this described the review before the owner's consolidation authorization. It is preserved as history, not a current assertion that PR9/PR2 remain open. The current register and evidence below supersede its integration/deletion states; legal and production release gates remain separate.
+
+### Current consolidation register — owner authorization 2026-10-30
+
+The owner explicitly requested integration into `main`, followed by deletion of successfully integrated redundant remote branches. **No new working branches; preserve existing names; no force push or rewriting main; never delete main or unique/unverified work.** Source references were captured in a verified, private local Git bundle before operations. [Full original heads, deletion readbacks and verification record](../../../../evidence/local/integration/BRANCH_CONSOLIDATION_2026-10-30.json).
+
+| Original branch | Current disposition | Content / evidence |
+|---|---|---|
+| `main` | RETAINED — consolidated integration target | Runtime integration `9c5b9bd2ff2a4a789e54e1fdf37377dd68d125fc`; backend and documentation CI successful; later documentation/tooling checkpoints do not imply production readiness |
+| `audit/2026-10-29-final-screen-api-db-reconciliation` | **merged and deleted** remotely | PR2 merged as `de135f5`; full merged tree matched tested audit `3377338` |
+| `docs/2026-10-29-six-gate-owner-handoff` | **merged and deleted** remotely | Exact handoff preserved by `b91d0d0`; no owner decisions promoted to legal/Play approval |
+| `feat/google-oidc` | **merged and deleted** remotely | Independently reviewed `a0527a7`, integrated by `9c5b9bd`; five CTests, HTTP and marker exclusion gates passed |
+| `feat/m1-create-family` | **consolidated and deleted** remotely | Tip `7c8e2dc` has exactly the same full Git tree as OIDC `a0527a7`; no duplicate cherry-pick or competing authenticator introduced |
+| `feat/m1-backend-skeleton-idempotency` | **consolidated and deleted** remotely | No unique non-merge patches beyond tested M1 source `b1df657`, represented in main's foundation and later tested implementation |
+| `feat/m1-g6-lint` | **consolidated and deleted** remotely | Same patch-coverage proof; current contract lint retained |
+| `feat/m1-physical-table-catalog` | **consolidated and deleted** remotely | Same patch-coverage proof; current 18-table catalog includes additive hold columns and strict checks |
+| `feat/m1-purge-jobs` | **consolidated and deleted** remotely | Same patch-coverage proof; current restricted runner/role and retention/concurrency tests retained |
+| `fix/m1-lint-credential-lifecycle` | **consolidated and deleted** remotely | Same patch-coverage proof; published historical SQL unchanged and later additive fixes retained |
+| `docs/phase-category-reorganization-2026-10-27` | RETAINED — selective tooling integration in progress | All 72 canonical bodies represented or superseded; unique parser/control tools and navigation repairs must pass current checks before deletion |
+| `feat/local-postgresql-physical-schema` | **RETAINED — unsafe current-M1 convergence is blocked** | Source `b507e5f` pins historical M1 only through0004; published0017 omits newer renewal holds before dropping staging, misses newer mutator ACL normalization, and uses V2 opaque-session authorization incompatible with the M1 raw principal-GUC path. Additive compatibility and independently executed fresh/old/current-M1/restore equivalence are required before merging or deleting |
+
+OIDC identity contains only issuer/subject; it does not prove adulthood, legal guardianship, consent or child access. Its public-key fetch/cache tests and a positive public Google JWKS fetch are not genuine Google ID-token or adversarial live-TLS certification. The retained V2 database branch was source-reviewed only during this consolidation: its dated 205-test evidence is not current integrated acceptance, and no published migration was altered to force convergence.
 
 ### Ongoing maintenance
 
