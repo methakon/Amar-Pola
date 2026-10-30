@@ -34,6 +34,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: docs/tools/requirements.txt
+      - name: Install pinned offline documentation-parser dependencies
+        run: python3 -m pip install -r docs/tools/requirements.txt
+      - name: Verify documentation parser and negative controls
+        run: python3 -m unittest discover -s docs/tools -p 'test_*.py' -v
+      - name: Validate current document register and all local navigation
+        run: python3 docs/tools/check_documentation.py
       - name: Confirm project documentation and prevent false signed-off blanks
         run: |
           set -eu
