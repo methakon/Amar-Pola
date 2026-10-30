@@ -16,6 +16,7 @@ Each blocker has an owner, decision or required evidence, and lifecycle: OPEN â†
 
 **Development impact:** Identity is no longer blocking. API, Android, P2P, synthetic billing tests, legal pages and documentation proceed independently. Only actual provider/merchant enablement and subsequent release/billing prerequisites wait on the relevant provider's decision. No claim of Play approval, child-data authority, payment acceptance or production readiness.
 
+<a id="current-progress-while-google-identity-verification-is-pending--2026-10-30"></a>
 ## Historical checkpoint â€” 2026-10-30 (statuses superseded by 2026-10-31 above)
 
 Source and decision owner: explicit project-owner instruction dated 2026-10-30. **Recorded owner decision:** individual publisher **SWARNA SEKHAR DHAR**, country **India**, same legal individual as Google Play publisher. **At that 2026-10-30 checkpoint only:** Payments identity PENDING, merchant setup PENDING, legal review PENDING, public support contact PENDING CONFIRMATION. **Current X-01 outcome is recorded above.** No registered company, GST registration, legal address or support email is claimed. Do not put ID/PAN/bank details, sensitive screenshots, purchase tokens or credentials in GitHub.
