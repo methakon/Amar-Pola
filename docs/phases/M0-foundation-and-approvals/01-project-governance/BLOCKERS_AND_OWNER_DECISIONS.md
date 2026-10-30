@@ -4,7 +4,7 @@
 
 > **Current product:** **Madalasa** (parent app) + **Alarka** (child app); the GitHub repository is now **[Madalasa-Alarka](https://github.com/methakon/Madalasa-Alarka)**. [English mythological inspiration](../02-market-and-feasibility/BRAND_NAME_MADALASA_ALARKA_AND_MYTHOLOGY_CONCEPT.md).
 
-**Established:** 2026-10-25 | **Updated:** 2026-10-30 | **Version:** 1.1 | **State:** DOCUMENTED_REVIEW_PENDING | **Purpose:** actionable project-owner decisions and independently verifiable engineering/release gates. Current statements below supersede historical question/queue text; an owner decision is not external verification.
+**Established:** 2026-10-25 | **Updated:** 2026-10-30 | **Version:** 1.2 | **State:** DOCUMENTED_REVIEW_PENDING | **Purpose:** actionable project-owner decisions and independently verifiable engineering/release gates. Current statements below supersede historical question/queue text; an owner decision is not external verification.
 
 Each blocker has an owner, decision or required evidence, and lifecycle: OPEN → DECIDED → IMPLEMENTED → VERIFIED → CLOSED. **Selecting a product option does not resolve software testing or Google Play review.**
 
@@ -18,7 +18,7 @@ Source and decision owner: explicit project-owner instruction dated 2026-10-30. 
 | E-09 ParentOIDC | OPEN; default-deny implementation seam only | Provider-validation design and synthetic negative tests need not wait for Payments; real parent authentication and guardian authority remain separate |
 | E-01 / E-02 / PR9 | Local M1 SQL and hosted narrow backend gates VERIFIED at pinned PR head; PR9 NOT MERGED | [PR9 review](../../M1-secure-platform-foundation/02-development-process/M1_STACK_PR9_REVIEW_2026-10-30.md); owner approval required before merge, V2 co-parent/schema convergence still separate |
 | B-02 / B-03 / B-04 | OWNER_DECIDED: India0–17; transparent Alarka; complete inventory eligible for review only | Feature/platform/legal/Play disposition and evidence; no blanket release or Android implementation authorization |
-| B-05 | Financial-screen fail-closed protection APPROVED; managed provisioning details OPEN | Never capture financial screens; no protection bypass. Device Owner enrollment/reset/authority and signed-device proof still required |
+| B-05 | **OWNER DECIDED: standard installation first; Device Owner provisioning excluded from first release.** Read-only managed/Device Owner state detection may be designed; no elevation or silent conversion. | Never capture financial screens; no protection bypass. Future managed mode requires a separate owner decision, Android-supported provisioning, clear guardian involvement and physical-device verification |
 | B-06 / B-07 / B-09 / B-18 | OPEN | Child SOS interaction, purpose/category retention and exact-child guardian invite/revoke/history scopes; qualified counsel review |
 | B-14 / E-13 | Founding-family commercial rule OWNER_APPROVED; provider behavior UNVERIFIED | First 1,008 distinct paid families, one count per family, ₹50/month or ₹500/year for eligible paid children including later additions; no change to prices. Thirteen sandbox cases NOT_RUN; prepaid founding catalog and multi-child capacity unproven. Owner/finance must decide refund/fraud disqualification, slot recycling and checkout reservation/order; no automatic policy invented |
 | M8 / M9 | DOCUMENTED_REVIEW_PENDING; release NOT_READY | Threat/test/incident and reviewer-pack preparation now; builds, physical OS/OEM evidence, signed notices, provider tests and owner Console actions later |
@@ -34,7 +34,7 @@ Only owner-held identity/contact verification, merchant/payment setup and accoun
 | **B-02** | Critical | **OWNER DECIDED: India-only initial launch; children aged 0–17 inclusive (under 18)** | Product scope established; legal assessment and Play policy classification still OPEN | India-specific parental authority, age-appropriate permissions, monitoring exemptions, consent and policy review | Child privacy/legal |
 | **B-03** | Critical | **OWNER APPROVED: transparent background operation** — identifiable Alarka icon, prominent disclosure, applicable monitoring/FGS notifications, untouched OS privacy indicators, no stealth or permission bypass; Activity may close after setup, boot recovery only as Android permits | **DECIDED; Android/Play/India compliance evidence pending** | Android OS/OEM runtime tests, monitoring-app declaration, background-location review, child-privacy legal assessment | Play/Android UX |
 | **B-04** | High | **OWNER DECIDED: evaluate the complete previously planned feature inventory as first-release candidates** | No blanket feature shipping approval; each candidate must pass India legal, Google Play, Android OS and security/privacy acceptance gates | Feature-by-feature eligibility evidence and final surviving release list | Delivery budget/compliance |
-| **B-05** | High | Normal consumer phones, managed-device edition, or both? | Standard installation first; optional separate managed edition | Whether device-owner provisioning/reset is acceptable | Device blocking and distribution |
+| **B-05** | High | **OWNER DECIDED (2026-10-30): standard installation for first release; managed Device Owner provisioning deferred.** Alarka may read and report whether the device is already managed/Device Owner, but must not elevate itself or silently convert an already-configured phone. | Standard-mode permissions and compatibility still require device tests. A future managed edition requires a new owner decision, legitimate Android provisioning (normally eligible new/factory-reset device), guardian involvement and physical proof. | First-release scope; future managed edition |
 | **B-06** | High | Is optional child SOS/check-in/widget UI acceptable while main tracking Activity stays closed? | No continuously open Activity; optional action UI | Child interaction preferences | SOS and child UX |
 | **B-07** | High | Retention for raw GPS, trips, usage, audit and backups? | Planning candidates: raw 14d, derived 90d, usage 90d, audit 90d; **not approved** | Actual retention per category | Privacy/schema/cost |
 | **B-08** | High | Server provider and hosting/data-residency region? | No production deployment before selection | Hosting region/provider, budget | Deployment/processors |
@@ -100,13 +100,13 @@ This documentation refresh can remediate **design gaps** AG-001/002/003/006/007/
 
 Related: [Feasibility](../02-market-and-feasibility/WHOLE_PROJECT_FEASIBILITY_GATE_2026.md) · [Audit](TECHNICAL_DOCUMENT_AUDIT_GAPS_2026.md) · [SRS](../../M1-secure-platform-foundation/01-requirements-and-architecture/SRS.md).
 
-## F. Newly confirmed architecture constraints — 2026-10-25
+## F. Historical architecture direction — superseded by owner decision 2026-10-30
 
 The project owner has supplied these additional instructions. They update the **design direction** but do not certify platform capabilities or legal compliance:
 
 | Blocker | New information | Decision status | What remains open |
 |---|---|---|---|
-| **B-05** | Managed-device provisioning is available | **DIRECTION DECIDED:** plan optional fully managed child DPC path in addition to STANDARD app | Exact enrollment approach, factory reset acceptance and physical proof of device-owner authority |
+| **B-05** | Earlier proposal for optional fully managed child DPC path | **SUPERSEDED 2026-10-30:** first release is STANDARD only; Device Owner provisioning deferred. Read-only state detection may be included. | Any future managed-device edition needs a fresh owner decision and Android-compliant provisioning proof |
 | **B-10** | A mix of older and newer Android versions must be supported | **PARTIALLY DECIDED:** implement API-aware Android compatibility path, proposed minSdk 29 | Exact supported Android versions/OEM models, test fleet and capability pass evidence |
 | **B-19** | Parent interface is a **native Android app** | **DECIDED:** Kotlin/Jetpack Compose native client, no web parent client in M1 | None for architecture choice; production UI remains to be coded |
 | **B-03** | Transparent, permission-based monitoring is prioritized | **DIRECTION DECIDED:** identifiable child app and system monitoring notification are nonnegotiable | Exact localized disclosure, jurisdiction/consent and Play Console approval |
@@ -281,3 +281,14 @@ These **add to**, and do not close, B-01 legal publisher, B-02 exact launch ages
 5. **Independent of GPS.** Pausing screen transmission does not pause other individually authorized and lawful safety features such as GPS.
 
 **Decision status:** B-05 financial-screen guard APPROVED; B-05 overall optional Device Owner provisioning details remain OPEN. Prior B-05 standard-edition capability detection/no reset proposal has not been separately confirmed by the owner; do not silently treat it as approved. Update SRS/API status contracts (`SENSITIVE_APP_ACTIVE`, `SENSITIVE_SCREEN_UNKNOWN`, `CAPTURE_PAUSED`, etc.), Android implementation acceptance tests and privacy disclosures only when corresponding design work is authorized. No capture bypass or OS security circumvention.
+
+
+## I. Owner decision — Device Owner provisioning deferred from first release (2026-10-30)
+
+**Decision:** first release uses ordinary Android installation only. Device Owner / fully managed provisioning is **out of first-release scope**. Alarka may perform read-only checks to determine whether Android reports the app/device as managed or Device Owner and expose that state accurately to Madalasa. This is detection and reporting only; it is not a claim that the app can obtain Device Owner privileges.
+
+**Prohibited:** no silent elevation, no in-place conversion of an already-configured personal phone, no bypass of Android setup/provisioning, no hiding the app or monitoring indicators, and no bypass of financial-app protections. Granting ordinary runtime permissions or Device Administrator status must never be described as Device Owner enrollment.
+
+**Future path:** a separate managed-device edition may be reconsidered only after a new owner decision, documented Android-supported provisioning (typically during eligible new-device or factory-reset setup), explicit guardian involvement, supported-device/OEM validation and security/legal/Play review. No such provisioning implementation is authorized now.
+
+**Verification still required:** standard-install permission and background behavior on supported Android/OEM devices; accurate detection/reporting of managed state; negative tests proving no elevation attempt; financial-screen exclusion remains fail-closed. This owner decision resolves the product-scope choice only; it does not close Android, legal, Google Play or physical-device evidence gates.
