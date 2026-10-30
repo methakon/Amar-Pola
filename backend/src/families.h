@@ -49,6 +49,10 @@ inline drogon::Task<drogon::HttpResponsePtr> create_family(drogon::HttpRequestPt
   // 422
   if (check == LabelCheck::OutOfRange) co_return error_response("VALIDATION_FAILED", "label must be 1 to 100 characters", rid);
 
+  // getDbClient asserts (debug) or throws (release) for an unknown name.
+  // A null test after calling it does not protect an unconfigured service.
+  if (!app().hasDbClient(kDbClientName))
+    co_return error_response("SERVICE_UNAVAILABLE", "database not configured", rid, true);
   auto db = app().getDbClient(kDbClientName);
   if (!db) co_return error_response("SERVICE_UNAVAILABLE", "database not configured", rid, true);
 
@@ -57,7 +61,9 @@ inline drogon::Task<drogon::HttpResponsePtr> create_family(drogon::HttpRequestPt
   std::shared_ptr<orm::Transaction> trans;
   try {
     trans = co_await db->newTransactionCoro();
-    co_await trans->execSqlCoro("SET LOCAL lock_timeout = '5s'");
+    co_await trans->execSqlCoro(
+        "SELECT set_config('lock_timeout', $1, true), set_config('statement_timeout', $2, true)",
+        std::to_string(db_limits().lock_ms), std::to_string(db_limits().statement_ms));
     auto pr = co_await trans->execSqlCoro("SELECT ap_m1.resolve_parent_principal($1, $2)::text AS id", who->issuer, who->subject);
     const std::string principal = pr.at(0)["id"].as<std::string>();
     co_await trans->execSqlCoro("SELECT set_config('ap.principal_id', $1, true)", principal);
@@ -108,13 +114,16 @@ inline drogon::Task<drogon::HttpResponsePtr> create_family(drogon::HttpRequestPt
     }
     if (!(co_await commit(std::move(trans)))) {
       LOG_ERROR << "commit failed, request_id=" << rid;
-      co_return error_response("INTERNAL_ERROR", "unexpected server error", rid);
+      co_return error_response("SERVICE_UNAVAILABLE", "database commit unavailable; retry the same request", rid, true);
     }
     co_return family_response(family, rid);
   } catch (const orm::SqlError& e) {
     rollback_quietly(trans);
     LOG_ERROR << "sql error state=" << e.sqlState() << " request_id=" << rid;  // never the message: may carry data
     co_return response_for_sqlstate(e.sqlState(), rid);
+  } catch (const orm::TimeoutError&) {
+    rollback_quietly(trans);
+    co_return error_response("SERVICE_UNAVAILABLE", "database deadline exceeded", rid, true);
   } catch (const orm::BrokenConnection&) {
     rollback_quietly(trans);
     co_return error_response("SERVICE_UNAVAILABLE", "database unavailable", rid, true);

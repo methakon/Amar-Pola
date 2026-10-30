@@ -50,6 +50,7 @@ reports/
 artifacts/
 incident-evidence/
 private-fixtures/
+/.dev-environment/
 data/
 tmp/
 .DS_Store

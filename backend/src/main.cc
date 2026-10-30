@@ -12,6 +12,13 @@
 
 int main() {
   using namespace drogon;
+  // Parse once before registering any listener/client. Bad limits cannot silently disable deadlines.
+  try {
+    (void)ma::db_limits();
+  } catch (const std::invalid_argument&) {
+    std::cerr << "invalid database limit configuration" << std::endl;
+    return 78;
+  }
   const char* port_env = std::getenv("MA_LISTEN_PORT");
   const char* addr_env = std::getenv("MA_LISTEN_ADDR");
   const int port = port_env ? std::atoi(port_env) : 8080;
@@ -42,16 +49,23 @@ int main() {
     auto env = [](const char* k, const char* d) { const char* v = std::getenv(k); return std::string(v ? v : d); };
     drogon::orm::PostgresConfig cfg;
     cfg.host = env("MA_PG_HOST", "127.0.0.1");
-    cfg.port = static_cast<unsigned short>(std::atoi(env("MA_PG_PORT", "5432").c_str()));
+    cfg.port = static_cast<unsigned short>(ma::db_limits().port);
     cfg.databaseName = db;
     cfg.username = env("MA_PG_USER", "ap_m1_api");
     cfg.password = env("MA_PG_PASSWORD", "");
-    cfg.connectionNumber = static_cast<size_t>(std::atoi(env("MA_PG_CONNECTIONS", "4").c_str()));
+    cfg.connectionNumber = ma::db_limits().connections;
     cfg.name = ma::kDbClientName;
     cfg.isFast = false;
     cfg.characterSet = "";
-    cfg.timeout = -1.0;
+    // v1.9.14 DbClientImpl bounds both queued transaction acquisition and SQL
+    // execution with this value; each acquired Transaction inherits it.
+    cfg.timeout = ma::db_limits().client_seconds();
     cfg.autoBatch = false;
+    // v1.9.14 maps these to PostgreSQL startup -c options (not libpq keywords).
+    // Server-side cancellation frees the connection even after a client timeout.
+    cfg.connectOptions = {{"statement_timeout", std::to_string(ma::db_limits().statement_ms)},
+                          {"lock_timeout", std::to_string(ma::db_limits().lock_ms)},
+                          {"idle_in_transaction_session_timeout", "60000"}};
     app().addDbClient(cfg);
   } else {
     LOG_WARN << "MA_PG_DB not set: routes that need the database answer 503";

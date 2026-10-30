@@ -13,21 +13,61 @@ U=http://127.0.0.1:$PORT
 fail() { echo "INTEGRATION FAILURE: $*" >&2; exit 1; }
 psql_admin() { psql -X -q -At -v ON_ERROR_STOP=1 "$@"; }
 
+CHILD_PIDS=()
+OUT=""
+DB_CREATED=false
+cleanup() {
+  local status=$? pid attempt
+  trap - EXIT
+  set +e
+  for pid in "${CHILD_PIDS[@]}"; do
+    # Only this script's successfully spawned children; never process group 0.
+    [[ "$pid" =~ ^[1-9][0-9]*$ ]] || continue
+    kill -TERM "$pid" 2>/dev/null
+  done
+  for attempt in {1..20}; do
+    local alive=false
+    for pid in "${CHILD_PIDS[@]}"; do
+      [[ "$pid" =~ ^[1-9][0-9]*$ ]] || continue
+      kill -0 "$pid" 2>/dev/null && alive=true
+    done
+    "$alive" || break
+    sleep 0.05
+  done
+  for pid in "${CHILD_PIDS[@]}"; do
+    [[ "$pid" =~ ^[1-9][0-9]*$ ]] || continue
+    kill -KILL "$pid" 2>/dev/null
+    wait "$pid" 2>/dev/null
+  done
+  if "$DB_CREATED"; then
+    psql_admin -d postgres -c "DROP DATABASE IF EXISTS $DB WITH (FORCE)" >/dev/null 2>&1 || true
+  fi
+  [[ -z "$OUT" ]] || rm -rf -- "$OUT"
+  exit "$status"
+}
+trap cleanup EXIT
+# mktemp honors the caller's project TMPDIR; logs and responses share its scope.
+OUT=$(mktemp -d)
 psql_admin -d postgres -c "CREATE DATABASE $DB" >/dev/null
-trap 'kill ${PID:-0} ${PID2:-0} 2>/dev/null || true; psql_admin -d postgres -c "DROP DATABASE IF EXISTS $DB WITH (FORCE)" >/dev/null 2>&1 || true' EXIT
-for f in "$MIG"/*.sql; do psql_admin -d $DB -f "$f" >/dev/null; done
+DB_CREATED=true
+# Explicit historical M1 order, never an alphabetical replay of unrelated SQL.
+for name in 0001_m1_identity.sql 0002_m1_device_credentials.sql \
+  0003_m1_enrollment_and_credential_hardening.sql 0004_m1_idempotency.sql \
+  0005_m1_family_provisioning.sql; do
+  psql_admin -d "$DB" -f "$MIG/$name" >/dev/null
+done
 # Roles are NOLOGIN in the migrations; a test environment lets the runtime role log in.
 psql_admin -d $DB -c "ALTER ROLE ap_m1_api LOGIN PASSWORD 'synthetic_it_password'" >/dev/null
 Q() { psql_admin -d $DB -c "$1"; }
 
 MA_AUTH_MODE=synthetic_test MA_LISTEN_PORT=$PORT MA_PG_HOST=${PGHOST:-127.0.0.1} MA_PG_PORT=${PGPORT:-5432} MA_PG_DB=$DB \
-  MA_PG_USER=ap_m1_api MA_PG_PASSWORD=synthetic_it_password "$BIN" >/tmp/ma_it_backend.log 2>&1 & PID=$!
+  MA_PG_USER=ap_m1_api MA_PG_PASSWORD=synthetic_it_password "$BIN" >"$OUT/backend.log" 2>&1 & PID=$!
+CHILD_PIDS+=("$PID")
 for _ in $(seq 1 60); do curl -fs $U/healthz >/dev/null 2>&1 && break; sleep 0.2; done
-curl -fs $U/healthz >/dev/null || { cat /tmp/ma_it_backend.log; fail "backend did not start"; }
+curl -fs $U/healthz >/dev/null || { cat "$OUT/backend.log"; fail "backend did not start"; }
 
 UUID_RE='^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
 newkey() { python3 -c 'import uuid;print(uuid.uuid4())'; }
-OUT=$(mktemp -d)
 # req NAME EXPECTED_STATUS [curl args...] ; leaves $OUT/NAME.{status,body,hdr}
 req() {
   local name=$1 want=$2; shift 2
@@ -131,7 +171,8 @@ post cap_replay 201 it-cap "$FIRST" '{"label":"Cap 1"}'
 req e_get 404 $U/v1/families; assert_error e_get NOT_FOUND false
 
 # --- second instance: no database configured and no synthetic mode
-MA_LISTEN_PORT=$PORT2 "$BIN" >/tmp/ma_it_backend2.log 2>&1 & PID2=$!
+MA_LISTEN_PORT=$PORT2 "$BIN" >"$OUT/backend2.log" 2>&1 & PID2=$!
+CHILD_PIDS+=("$PID2")
 for _ in $(seq 1 60); do curl -fs http://127.0.0.1:$PORT2/healthz >/dev/null 2>&1 && break; sleep 0.2; done
 U2=http://127.0.0.1:$PORT2
 curl -s -o $OUT/p1.body -w '%{http_code}' -X POST $U2/v1/families "${H_JSON[@]}" -H 'X-Synthetic-Subject: it-a' -H "Idempotency-Key: $(newkey)" --data '{"label":"x"}' | grep -q '^401$' \
