@@ -52,14 +52,13 @@ inline drogon::Task<drogon::HttpResponsePtr> read_faqs(
         "FROM ap_m1.faq_entries e "
         "JOIN ap_m1.faq_revisions r ON r.id = "
         + std::string(admin_mode ? "e.current_revision_id " : "e.published_revision_id ")
-        + (admin_mode ?
-          "WHERE ($1::uuid IS NULL OR e.id=$1::uuid) " :
-          "WHERE e.state='PUBLISHED' AND ($1::uuid IS NULL OR e.id=$1::uuid) ")
+        + std::string(admin_mode ? "WHERE true " : "WHERE e.state='PUBLISHED' ")
+        + (faq_id ? "AND e.id=$1::uuid " : "")
         + "ORDER BY e.updated_at DESC,e.id DESC LIMIT 50";
-    // Casting NULL as UUID preserves one prepared statement; no dynamic
-    // interpolation of client strings or request parameters.
-    auto rows=co_await tx->execSqlCoro(sql,
-        faq_id.value_or("00000000-0000-0000-0000-000000000000"));
+    // Query structure, not user content, selects the optional exact-id filter.
+    // No SQL string concatenation with a client-controlled value.
+    auto rows = faq_id ? co_await tx->execSqlCoro(sql,*faq_id)
+                       : co_await tx->execSqlCoro(sql);
     Json::Value items(Json::arrayValue);
     for(const auto& row: rows) {
       Json::Value value(Json::objectValue);
