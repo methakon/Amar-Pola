@@ -1,6 +1,6 @@
 // Read-only FAQ endpoints. Public returns PUBLISHED revision only;
 // admin drafts require a revocable session and server-side FAQ_EDIT permission.
-// Publishing mutations are deliberately not added before CSRF/MFA integration.
+// Mutations (draft, publish) live in admin_backoffice.h behind CSRF and SQL permissions.
 #pragma once
 #include <drogon/drogon.h>
 #include <memory>
@@ -48,7 +48,9 @@ inline drogon::Task<drogon::HttpResponsePtr> read_faqs(
     // cannot leak into the public page before MFA-gated publication.
     const std::string sql =
         "SELECT e.id::text AS id,e.slug,e.category,e.state AS status,"
-        "e.revision,r.language,r.title,r.safe_body "
+        "e.revision,r.language,r.title,r.safe_body,"
+        "e.current_revision_id::text AS current_revision_id,"
+        "e.published_revision_id::text AS published_revision_id "
         "FROM ap_m1.faq_entries e "
         "JOIN ap_m1.faq_revisions r ON r.id = "
         + std::string(admin_mode ? "e.current_revision_id " : "e.published_revision_id ")
@@ -70,6 +72,12 @@ inline drogon::Task<drogon::HttpResponsePtr> read_faqs(
       value["language"]=row["language"].as<std::string>();
       value["title"]=row["title"].as<std::string>();
       value["safe_body"]=row["safe_body"].as<std::string>();
+      // Revision UUIDs are editor data; the public view exposes neither.
+      if(admin_mode) {
+        value["current_revision_id"]=row["current_revision_id"].as<std::string>();
+        value["published_revision_id"]=row["published_revision_id"].isNull()?
+            Json::Value(Json::nullValue):Json::Value(row["published_revision_id"].as<std::string>());
+      }
       items.append(value);
     }
     rollback_quietly(tx);
