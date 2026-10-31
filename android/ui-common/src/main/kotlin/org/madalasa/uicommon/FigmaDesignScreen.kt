@@ -50,7 +50,7 @@ fun FigmaDesignScreen(spec: FigmaScreenSpec, modifier: Modifier = Modifier) {
         Text(spec.headline, style = MaterialTheme.typography.bodyLarge, color = colors.onBackground)
         ScreenVisual(spec)
         Text("On this screen", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
-        spec.content.split(';').map(String::trim).filter(String::isNotEmpty).forEach { part ->
+        spec.content.split(';').map { it.trim() }.filter(String::isNotEmpty).forEach { part ->
             Surface(color = colors.surface, shape = RoundedCornerShape(16.dp),
                 modifier = Modifier.fillMaxWidth()) {
                 Row(Modifier.padding(16.dp), horizontalArrangement = Arrangement.spacedBy(12.dp),
