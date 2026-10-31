@@ -1,7 +1,7 @@
 {
   "name": "Madalasa–Alarka Local Agent Execution Status",
-  "as_of": "2026-10-29",
-  "note": "Individual DAG acceptance has not been reassessed; per-task statuses remain unchanged. Executed cross-cutting database setup is recorded separately below and does not imply completion of the 262-task roadmap.",
+  "as_of": "2026-11-01",
+  "note": "2026-11-01 repository inspection: Android source and backend implementation checkpoints added; individual 262 task acceptance evidence NOT revalidated and statuses remain NOT_STARTED. Workstream checkpoints do not imply PASS, build, visual fidelity, device testing or production readiness.",
   "workstream_checkpoints": {
     "synthetic_local_database_foundation": {
       "readiness": "LOCAL_READY",
@@ -10,6 +10,39 @@
       "evidence_path": "evidence/local/database/RECONCILIATION_ACCEPTANCE_2026-10-29.md",
       "verified_at_utc": "2026-10-29T17:40:00Z",
       "executed_checks": "205 unfiltered tests; four reproduced defects fixed additively in 0019; historical M1 to V2 upgrade and clean V2 converge on full policy/function/ACL state; native build/CTest; seven catalog exports",
+      "does_not_close_individual_dag_tasks": true
+    },
+    "android_ui_design_source": {
+      "readiness": "SOURCE_FILES_PRESENT_UNVERIFIED",
+      "scope": "60 distinct parent and 21 distinct child screen composables; template-based handoff interpretation, not Figma-accurate verified screens",
+      "parent_branch_commit": "8353ab68a10d9c16e663db644793498cb68c9011",
+      "child_branch_commit": "8dfe335cf496d2879968125119563c9fc5b8c1a1",
+      "source_paths": [
+        "android/madalasa/src/main/kotlin/org/madalasa/madalasa/ui/figma",
+        "android/alarka/src/main/kotlin/org/madalasa/alarka/ui/figma"
+      ],
+      "build_evidence": "NOT_VERIFIED",
+      "visual_fidelity_evidence": "NOT_VERIFIED",
+      "navigation_evidence": "NOT_VERIFIED",
+      "main_integration": "NOT_VERIFIED_FOR_81_SCREEN_COMMITS",
+      "does_not_close_individual_dag_tasks": true
+    },
+    "android_bootstrap": {
+      "readiness": "SOURCE_ON_MAIN",
+      "scope": "Gradle wrapper, parent and child application modules, ui-common library and initial app shell source exist; clean build/test evidence not independently assessed in this checkpoint",
+      "evidence_ref": "main:android/settings.gradle.kts and android/ui-common/build.gradle.kts",
+      "does_not_close_individual_dag_tasks": true
+    },
+    "parent_oidc_v2_session_bridge": {
+      "readiness": "MERGED_PR_IMPLEMENTATION",
+      "scope": "PR #16 merged, auth bridge and migration 0021 in repository; production Google sign-in and deployment remain unverified",
+      "evidence_ref": "https://github.com/methakon/Madalasa-Alarka/pull/16",
+      "does_not_close_individual_dag_tasks": true
+    },
+    "inactivity_location_sampling_7d": {
+      "readiness": "DOCUMENTED_NOT_CODED",
+      "scope": "Free versus paid location sampling after 168h without verified parent-app foreground event; no runtime collection enabled",
+      "design_document": "docs/phases/M2-location-collection/01-location-collection-and-ingestion/PARENT_APP_INACTIVITY_ADAPTIVE_LOCATION_POLICY_2026-11-01.md",
       "does_not_close_individual_dag_tasks": true
     }
   },
