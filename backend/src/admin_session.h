@@ -24,9 +24,9 @@ inline std::optional<std::string> admin_session_cookie(std::string_view cookie_h
     if (end == std::string_view::npos) end = cookie_header.size();
     auto part = cookie_header.substr(pos, end - pos);
     while (!part.empty() && part.front() == ' ') part.remove_prefix(1);
-    if (part.substr(0, 17) == "__Host-ma_admin_s=") {
-      if (found || part.size() != 17 + 64) return std::nullopt;
-      for (const unsigned char c : part.substr(17)) {
+    if (part.substr(0, 18) == "__Host-ma_admin_s=") {
+      if (found || part.size() != 18 + 64) return std::nullopt;
+      for (const unsigned char c : part.substr(18)) {
         if (!((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f')))
           return std::nullopt;
       }

@@ -11,6 +11,7 @@
 #include "google_oidc.h"
 #include "crypto_support.h"
 #include "idempotency_key.h"
+#include "validation.h"
 
 namespace ma {
 
@@ -72,7 +73,8 @@ inline std::optional<AdminGoogleIdentity> verify_admin_google_id_token(
   const auto iat = claims["iat"].asInt64();
   // Independent admin login freshness: Google ID token may still be valid,
   // but cannot be exchanged more than 5 minutes after its issued-at time.
-  if (iat > now_seconds || now_seconds - iat > 300) return std::nullopt;
+  if (iat > now_seconds || static_cast<std::uint64_t>(now_seconds) -
+      static_cast<std::uint64_t>(iat) > 300) return std::nullopt;
   return AdminGoogleIdentity{signed_identity->issuer, signed_identity->subject, email};
 }
 
