@@ -56,3 +56,12 @@ Source branch: [api](https://github.com/methakon/Madalasa-Alarka/tree/api); docu
 **Hard gates:** Authentic \`ap_auth_issuer\` login bridge must be isolated from \`ap_m1_api\`; admin-only OIDC issuer/audience/nonce/CSRF-state validation; secure single-use login challenge; server-minted HttpOnly/Secure/SameSite cookie; CSRF protection; owner MFA step-up; RLS/role-grant/epoch positive and negative tests. No direct frontend role elevation; no live family data; no claimed working production admin login.
 
 **Worker verification:** independent test prompts A01 (admin OIDC/cookie) and A02 (applicant/owner access) were supplied to project owner for separate testing branches and PR review. Their results have **not** been received. Implementation under review does not grant or imply external approval.
+
+
+### FAQ read integration checkpoint — 2026-10-31
+
+- Implemented \`GET /v1/faqs\` (public PUBLISHED revision only, RLS), \`GET /v1/admin/faqs\` (private current revisions) and \`GET /v1/admin/faqs/{faqId}\` (one FAQ). [Source](https://github.com/methakon/Madalasa-Alarka/blob/api/backend/src/admin_faq_read.h).
+- Admin reads are gated by an existing revocable admin cookie and live \`FAQ_EDIT\` permission, not by a frontend role. No published content is replaced by an unapproved draft.
+- CTest negative fixture [test_admin_faq.cc](https://github.com/methakon/Madalasa-Alarka/blob/api/backend/tests/cpp/test_admin_faq.cc) covers missing/invalid admin session, invalid FAQ path and DB unavailable; synthetic **positive** PostgreSQL/HTTP isolation remains for independent worker A03.
+- **Not implemented:** \`POST/PUT /admin/faqs\`, \`publish\` and \`unpublish\` on the server, authenticated CSRF-protected mutations, revision conflict handling over HTTP, pagination and production login. The database already has functions \`faq_draft\` and \`faq_transition\`, but these do not make HTTP endpoints automatically functional.
+- Code on \`api\`, not merged to \`dev\`. A03 worker test instructions supplied; test results pending. No real child data or live FAQ edits.

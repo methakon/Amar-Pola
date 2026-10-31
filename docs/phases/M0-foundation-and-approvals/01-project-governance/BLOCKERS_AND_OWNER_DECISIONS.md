@@ -96,6 +96,8 @@ Source and decision owner: explicit project-owner instruction dated 2026-10-30. 
 
 Source on `api` **not merged to dev**. [Status/evidence](../../M1-secure-platform-foundation/02-development-process/ADMIN_WEB_UI_AND_API_INTEGRATION_STATUS_2026-10-31.md#admin-authenticationaccess-api-implementation--2026-10-31-synthetic). Google admin OIDC verified-claims helper, revocable admin cookie self-status, applicant own profile/request and MFA-gated owner pending queue are implemented and negative-tested. [CI baseline](https://github.com/methakon/Madalasa-Alarka/actions/runs/41177258392) PASSED for auth/applicant code before subsequent owner queue revision change. **Trusted nonce challenge, issuer-only minting, actual admin login, CSRF, owner MFA flow, owner approval mutations and positive V2 integration remain OPEN.** Worker A01/A02 independent testing requested, results not yet received. No public admin access or child data.
 
+**FAQ read checkpoint (2026-10-31):** public published FAQ listing plus authenticated admin draft/list/detail handlers coded on `api`. [Evidence and remaining write gates](../../M1-secure-platform-foundation/02-development-process/ADMIN_WEB_UI_AND_API_INTEGRATION_STATUS_2026-10-31.md#faq-read-integration-checkpoint--2026-10-31). Publishing/CSRF/MFA HTTP integration is still OPEN; worker A03 tests requested, results not received.
+
 ## B. Engineering blockers — resolved by building and testing, not by guessing
 
 | ID | Priority | Work and reason it blocks completion | Evidence required | Responsible role |

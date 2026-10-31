@@ -6570,13 +6570,13 @@
           "AdminAccess"
         ],
         "summary": "GET /admin/faqs",
-        "description": "PLANNED ONLY. Request authorization must bind to the correct account, exact child/grant or owner role on the server; this OpenAPI contract is not proof of implementation. No child-private telemetry in staff or public outputs.",
+        "description": "SOURCE IMPLEMENTED on api branch as read-only Drogon/PostgreSQL RLS handler. Public: published revision only. Admin: requires live revocable admin cookie and database FAQ_EDIT permission. Single-page max 50; full pagination, trusted OIDC session issuance, positive V2/HTTP tests and writes remain outstanding. No production access approved.",
         "security": [
           {
             "AdminBearer": []
           }
         ],
-        "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
+        "x-implementation-status": "PARTIAL_READ_HANDLER_NOT_RELEASE_VERIFIED",
         "x-fail-closed-gates": [],
         "x-screen-ids": [
           "BO-05"
@@ -6605,7 +6605,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Draft contract; not an implemented handler",
+            "description": "Read handler present in api workstream; live authorization/DB end-to-end acceptance pending.",
             "content": {
               "application/json": {
                 "schema": {
@@ -14391,13 +14391,13 @@
           "AdminAccess"
         ],
         "summary": "GET /admin/faqs/{faqId}",
-        "description": "PLANNED ONLY. Request authorization must bind to the correct account, exact child/grant or owner role on the server; this OpenAPI contract is not proof of implementation. No child-private telemetry in staff or public outputs.",
+        "description": "SOURCE IMPLEMENTED on api branch as read-only Drogon/PostgreSQL RLS handler. Public: published revision only. Admin: requires live revocable admin cookie and database FAQ_EDIT permission. Single-page max 50; full pagination, trusted OIDC session issuance, positive V2/HTTP tests and writes remain outstanding. No production access approved.",
         "security": [
           {
             "AdminBearer": []
           }
         ],
-        "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
+        "x-implementation-status": "PARTIAL_READ_HANDLER_NOT_RELEASE_VERIFIED",
         "x-fail-closed-gates": [],
         "x-screen-ids": [
           "BO-05"
@@ -14415,7 +14415,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Draft contract; not an implemented handler",
+            "description": "Read handler present in api workstream; live authorization/DB end-to-end acceptance pending.",
             "content": {
               "application/json": {
                 "schema": {
@@ -17457,9 +17457,9 @@
           "FAQ"
         ],
         "summary": "GET /faqs",
-        "description": "PLANNED ONLY. Request authorization must bind to the correct account, exact child/grant or owner role on the server; this OpenAPI contract is not proof of implementation. No child-private telemetry in staff or public outputs.",
+        "description": "SOURCE IMPLEMENTED on api branch as read-only Drogon/PostgreSQL RLS handler. Public: published revision only. Admin: requires live revocable admin cookie and database FAQ_EDIT permission. Single-page max 50; full pagination, trusted OIDC session issuance, positive V2/HTTP tests and writes remain outstanding. No production access approved.",
         "security": [],
-        "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
+        "x-implementation-status": "PARTIAL_READ_HANDLER_NOT_RELEASE_VERIFIED",
         "x-fail-closed-gates": [],
         "x-screen-ids": [],
         "parameters": [
@@ -17486,7 +17486,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Draft contract; not an implemented handler",
+            "description": "Read handler present in api workstream; live authorization/DB end-to-end acceptance pending.",
             "content": {
               "application/json": {
                 "schema": {
