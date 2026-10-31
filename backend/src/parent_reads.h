@@ -6,6 +6,7 @@
 #include <memory>
 #include <string>
 #include "auth.h"
+#include "parent_session.h"
 #include "db_support.h"
 #include "http_support.h"
 #include "idempotency_key.h"
@@ -19,14 +20,14 @@ inline drogon::HttpResponsePtr m1_json_ok(const Json::Value& data, const std::st
   return resp;
 }
 
-// All queries below execute only after a ParentOIDC identity is verified.
-// In the V2 schema, set_config alone cannot create a trusted session; without
-// the separate approved issuer/session component these reads fail closed.
+// All queries below run only after PostgreSQL resolved the caller from the
+// presented V2 session (or, in the explicit M1 mode, a verified ID token).
+// set_config of a UUID alone never creates a trusted session.
 inline drogon::Task<drogon::HttpResponsePtr> list_families(
-    drogon::HttpRequestPtr req, Authenticator authenticate) {
+    drogon::HttpRequestPtr req, ParentAuth auth) {
   const auto rid = request_id_of(req);
-  auto who = authenticate(req);
-  if (!who) co_return error_response("UNAUTHENTICATED", "missing or invalid parent credential", rid);
+  auto credential = parent_credential(auth, req);
+  if (!credential) co_return error_response("UNAUTHENTICATED", "missing or invalid parent credential", rid);
   if (!drogon::app().hasDbClient(kDbClientName))
     co_return error_response("SERVICE_UNAVAILABLE", "database not configured", rid, true);
   auto db = drogon::app().getDbClient(kDbClientName);
@@ -36,12 +37,13 @@ inline drogon::Task<drogon::HttpResponsePtr> list_families(
     co_await trans->execSqlCoro(
         "SELECT set_config('lock_timeout',$1,true),set_config('statement_timeout',$2,true)",
         std::to_string(db_limits().lock_ms), std::to_string(db_limits().statement_ms));
-    auto p = co_await trans->execSqlCoro(
-        "SELECT ap_m1.resolve_parent_principal($1,$2)::text AS id",who->issuer,who->subject);
-    auto principal = p.at(0)["id"].as<std::string>();
-    co_await trans->execSqlCoro("SELECT set_config('ap.principal_id',$1,true)",principal);
-    // list_my_families is an audited M1↔V2 compatibility function. Its
-    // ctx_principal resolves only from an accepted V2 session in the full schema.
+    auto bound = co_await bind_parent_principal(trans, *credential);
+    if (!bound) {
+      rollback_quietly(trans);
+      co_return error_response("UNAUTHENTICATED", "missing, expired or invalid credential", rid);
+    }
+    // list_my_families is an audited M1<->V2 compatibility function keyed by
+    // ctx_principal, which resolves only from an accepted V2 session.
     auto rows = co_await trans->execSqlCoro(
         "SELECT id::text AS id,label,status,membership_role FROM ap_m1.list_my_families()");
     Json::Value body(Json::objectValue);
@@ -73,12 +75,12 @@ inline drogon::Task<drogon::HttpResponsePtr> list_families(
 }
 
 inline drogon::Task<drogon::HttpResponsePtr> get_child(
-    drogon::HttpRequestPtr req, std::string child_param, Authenticator authenticate) {
+    drogon::HttpRequestPtr req, std::string child_param, ParentAuth auth) {
   const auto rid = request_id_of(req);
   auto child = normalize_uuid(child_param);
   if (!child) co_return error_response("INVALID_REQUEST","childId must be a UUID",rid);
-  auto who = authenticate(req);
-  if (!who) co_return error_response("UNAUTHENTICATED","missing or invalid parent credential",rid);
+  auto credential = parent_credential(auth, req);
+  if (!credential) co_return error_response("UNAUTHENTICATED","missing or invalid parent credential",rid);
   if (!drogon::app().hasDbClient(kDbClientName))
     co_return error_response("SERVICE_UNAVAILABLE","database not configured",rid,true);
   auto db = drogon::app().getDbClient(kDbClientName);
@@ -88,10 +90,11 @@ inline drogon::Task<drogon::HttpResponsePtr> get_child(
     co_await trans->execSqlCoro(
         "SELECT set_config('lock_timeout',$1,true),set_config('statement_timeout',$2,true)",
         std::to_string(db_limits().lock_ms), std::to_string(db_limits().statement_ms));
-    auto p = co_await trans->execSqlCoro(
-        "SELECT ap_m1.resolve_parent_principal($1,$2)::text AS id",who->issuer,who->subject);
-    co_await trans->execSqlCoro("SELECT set_config('ap.principal_id',$1,true)",
-                                 p.at(0)["id"].as<std::string>());
+    auto bound = co_await bind_parent_principal(trans, *credential);
+    if (!bound) {
+      rollback_quietly(trans);
+      co_return error_response("UNAUTHENTICATED", "missing, expired or invalid credential", rid);
+    }
     // RLS children_r limits this to exact-child VIEW_CHILD_PROFILE.
     // Unknown and unauthorized children are deliberately indistinguishable.
     auto rows = co_await trans->execSqlCoro(
@@ -125,12 +128,12 @@ inline drogon::Task<drogon::HttpResponsePtr> get_child(
 }
 
 inline drogon::Task<drogon::HttpResponsePtr> list_child_devices(
-    drogon::HttpRequestPtr req, std::string child_param, Authenticator authenticate) {
+    drogon::HttpRequestPtr req, std::string child_param, ParentAuth auth) {
   const auto rid = request_id_of(req);
   auto child = normalize_uuid(child_param);
   if (!child) co_return error_response("INVALID_REQUEST","childId must be a UUID",rid);
-  auto who = authenticate(req);
-  if (!who) co_return error_response("UNAUTHENTICATED","missing or invalid parent credential",rid);
+  auto credential = parent_credential(auth, req);
+  if (!credential) co_return error_response("UNAUTHENTICATED","missing or invalid parent credential",rid);
   if (!drogon::app().hasDbClient(kDbClientName))
     co_return error_response("SERVICE_UNAVAILABLE","database not configured",rid,true);
   auto db = drogon::app().getDbClient(kDbClientName);
@@ -140,10 +143,11 @@ inline drogon::Task<drogon::HttpResponsePtr> list_child_devices(
     co_await trans->execSqlCoro(
         "SELECT set_config('lock_timeout',$1,true),set_config('statement_timeout',$2,true)",
         std::to_string(db_limits().lock_ms),std::to_string(db_limits().statement_ms));
-    auto p = co_await trans->execSqlCoro(
-        "SELECT ap_m1.resolve_parent_principal($1,$2)::text AS id",who->issuer,who->subject);
-    co_await trans->execSqlCoro("SELECT set_config('ap.principal_id',$1,true)",
-                                 p.at(0)["id"].as<std::string>());
+    auto bound = co_await bind_parent_principal(trans, *credential);
+    if (!bound) {
+      rollback_quietly(trans);
+      co_return error_response("UNAUTHENTICATED", "missing, expired or invalid credential", rid);
+    }
     // Separate authorization: VIEW_CHILD_DEVICES does not imply child profile
     // visibility. This helper checks current grants, consent and authority.
     auto allowed = co_await trans->execSqlCoro(

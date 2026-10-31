@@ -22,6 +22,7 @@
 #include "admin_faq_read.h"
 #include "http_support.h"
 #include "pairing.h"
+#include "parent_session.h"
 
 int main() {
   using namespace drogon;
@@ -30,6 +31,18 @@ int main() {
     (void)ma::db_limits();
   } catch (const std::invalid_argument&) {
     std::cerr << "invalid database limit configuration" << std::endl;
+    return 78;
+  }
+  // Parent authentication mode: V2 opaque sessions unless the frozen M1 schema
+  // is selected explicitly. Unknown values never fall back to a weaker mode.
+  const auto parent_mode = ma::parse_parent_auth_mode(std::getenv("MA_PARENT_AUTH_MODE"));
+  if (!parent_mode) {
+    std::cerr << "invalid MA_PARENT_AUTH_MODE (v2_session or m1_direct_oidc)" << std::endl;
+    return 78;
+  }
+  const auto session_ttl = ma::parse_parent_session_ttl(std::getenv("MA_PARENT_SESSION_TTL_SECONDS"));
+  if (!session_ttl) {
+    std::cerr << "invalid MA_PARENT_SESSION_TTL_SECONDS (300..43200)" << std::endl;
     return 78;
   }
   const char* port_env = std::getenv("MA_LISTEN_PORT");
@@ -80,6 +93,23 @@ int main() {
                           {"lock_timeout", std::to_string(ma::db_limits().lock_ms)},
                           {"idle_in_transaction_session_timeout", "60000"}};
     app().addDbClient(cfg);
+    // Session issuance uses a SEPARATE login (member of ap_auth_issuer only).
+    // The runtime role can never mint sessions, so the two must differ.
+    const char* auth_user = std::getenv("MA_PG_AUTH_USER");
+    if (*parent_mode == ma::ParentAuthMode::V2Session && auth_user && *auth_user) {
+      if (std::string(auth_user) == cfg.username) {
+        std::cerr << "MA_PG_AUTH_USER must differ from the runtime MA_PG_USER" << std::endl;
+        return 78;
+      }
+      drogon::orm::PostgresConfig issuer = cfg;
+      issuer.username = auth_user;
+      issuer.password = env("MA_PG_AUTH_PASSWORD", "");
+      issuer.connectionNumber = 2;
+      issuer.name = ma::kAuthDbClientName;
+      app().addDbClient(issuer);
+    } else if (*parent_mode == ma::ParentAuthMode::V2Session) {
+      LOG_WARN << "MA_PG_AUTH_USER not set: parent session exchange answers 503";
+    }
   } else {
     LOG_WARN << "MA_PG_DB not set: routes that need the database answer 503";
   }
@@ -90,6 +120,24 @@ int main() {
   } catch (const std::invalid_argument&) {
     std::cerr << "invalid Google OIDC client configuration" << std::endl;
     return 78;
+  }
+  const ma::ParentAuth parent{*parent_mode, authenticate};
+  if (*parent_mode == ma::ParentAuthMode::V2Session) {
+    // Identity exchange: verified ID token in, server-generated opaque session out.
+    app().registerHandler(
+        "/v1/auth/parent/google",
+        [parent, ttl = *session_ttl](HttpRequestPtr req) -> Task<HttpResponsePtr> {
+          co_return co_await ma::exchange_parent_session(std::move(req), parent, ttl);
+        },
+        {Post});
+    app().registerHandler(
+        "/v1/auth/session",
+        [parent](HttpRequestPtr req) -> Task<HttpResponsePtr> {
+          co_return co_await ma::revoke_parent_session(std::move(req), parent);
+        },
+        {Delete});
+  } else {
+    LOG_WARN << "M1 direct ParentOIDC mode: frozen M1 schema only, no V2 sessions";
   }
   app().registerHandler(
       "/v1/faqs",
@@ -139,48 +187,48 @@ int main() {
 
   app().registerHandler(
       "/v1/families",
-      [authenticate](HttpRequestPtr req) -> Task<HttpResponsePtr> { co_return co_await ma::create_family(std::move(req), authenticate); },
+      [parent](HttpRequestPtr req) -> Task<HttpResponsePtr> { co_return co_await ma::create_family(std::move(req), parent); },
       {Post});
 
   app().registerHandler(
       "/v1/families",
-      [authenticate](HttpRequestPtr req) -> Task<HttpResponsePtr> {
-        co_return co_await ma::list_families(std::move(req), authenticate);
+      [parent](HttpRequestPtr req) -> Task<HttpResponsePtr> {
+        co_return co_await ma::list_families(std::move(req), parent);
       },
       {Get});
 
   app().registerHandler(
       "/v1/children/{childId}",
-      [authenticate](HttpRequestPtr req, std::string childId) -> Task<HttpResponsePtr> {
-        co_return co_await ma::get_child(std::move(req), std::move(childId), authenticate);
+      [parent](HttpRequestPtr req, std::string childId) -> Task<HttpResponsePtr> {
+        co_return co_await ma::get_child(std::move(req), std::move(childId), parent);
       },
       {Get});
 
   app().registerHandler(
       "/v1/children/{childId}/devices",
-      [authenticate](HttpRequestPtr req, std::string childId) -> Task<HttpResponsePtr> {
-        co_return co_await ma::list_child_devices(std::move(req), std::move(childId), authenticate);
+      [parent](HttpRequestPtr req, std::string childId) -> Task<HttpResponsePtr> {
+        co_return co_await ma::list_child_devices(std::move(req), std::move(childId), parent);
       },
       {Get});
 
   app().registerHandler(
       "/v1/families/{familyId}/children",
-      [authenticate](HttpRequestPtr req, std::string familyId) -> Task<HttpResponsePtr> {
-        co_return co_await ma::create_child(std::move(req), std::move(familyId), authenticate);
+      [parent](HttpRequestPtr req, std::string familyId) -> Task<HttpResponsePtr> {
+        co_return co_await ma::create_child(std::move(req), std::move(familyId), parent);
       },
       {Post});
 
   app().registerHandler(
       "/v1/families/{familyId}/children",
-      [authenticate](HttpRequestPtr req, std::string familyId) -> Task<HttpResponsePtr> {
-        co_return co_await ma::list_children(std::move(req), std::move(familyId), authenticate);
+      [parent](HttpRequestPtr req, std::string familyId) -> Task<HttpResponsePtr> {
+        co_return co_await ma::list_children(std::move(req), std::move(familyId), parent);
       },
       {Get});
 
   app().registerHandler(
       "/v1/children/{childId}/pairing-codes",
-      [authenticate](HttpRequestPtr req, std::string childId) -> Task<HttpResponsePtr> {
-        co_return co_await ma::issue_pairing_code(std::move(req), std::move(childId), authenticate);
+      [parent](HttpRequestPtr req, std::string childId) -> Task<HttpResponsePtr> {
+        co_return co_await ma::issue_pairing_code(std::move(req), std::move(childId), parent);
       },
       {Post});
 
@@ -200,8 +248,8 @@ int main() {
 
   app().registerHandler(
       "/v1/devices/{deviceId}/pairing",
-      [authenticate](HttpRequestPtr req, std::string deviceId) -> Task<HttpResponsePtr> {
-        co_return co_await ma::revoke_device(std::move(req), std::move(deviceId), authenticate);
+      [parent](HttpRequestPtr req, std::string deviceId) -> Task<HttpResponsePtr> {
+        co_return co_await ma::revoke_device(std::move(req), std::move(deviceId), parent);
       },
       {Delete});
 

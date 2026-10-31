@@ -8,6 +8,7 @@
 #include <memory>
 #include <string>
 #include "auth.h"
+#include "parent_session.h"
 #include "db_support.h"
 #include "http_support.h"
 #include "idempotency_key.h"
@@ -22,13 +23,13 @@ inline drogon::HttpResponsePtr revoked_no_content(const std::string& rid) {
 }
 
 inline drogon::Task<drogon::HttpResponsePtr> revoke_device(
-    drogon::HttpRequestPtr req, std::string device_param, Authenticator authenticate) {
+    drogon::HttpRequestPtr req, std::string device_param, ParentAuth auth) {
   using namespace drogon;
   const auto rid = request_id_of(req);
   auto device = normalize_uuid(device_param);
   if (!device) co_return error_response("INVALID_REQUEST","deviceId must be a UUID",rid);
-  auto identity = authenticate(req);
-  if (!identity) co_return error_response("UNAUTHENTICATED","missing or invalid parent credential",rid);
+  auto credential = parent_credential(auth, req);
+  if (!credential) co_return error_response("UNAUTHENTICATED","missing or invalid parent credential",rid);
   if (!app().hasDbClient(kDbClientName))
     co_return error_response("SERVICE_UNAVAILABLE","database not configured",rid,true);
   auto db = app().getDbClient(kDbClientName);
@@ -38,11 +39,11 @@ inline drogon::Task<drogon::HttpResponsePtr> revoke_device(
     co_await trans->execSqlCoro(
         "SELECT set_config('lock_timeout',$1,true),set_config('statement_timeout',$2,true)",
         std::to_string(db_limits().lock_ms),std::to_string(db_limits().statement_ms));
-    auto pr = co_await trans->execSqlCoro(
-        "SELECT ap_m1.resolve_parent_principal($1,$2)::text AS id",
-        identity->issuer,identity->subject);
-    co_await trans->execSqlCoro("SELECT set_config('ap.principal_id',$1,true)",
-                                 pr.at(0)["id"].as<std::string>());
+    auto bound = co_await bind_parent_principal(trans, *credential);
+    if (!bound) {
+      rollback_quietly(trans);
+      co_return error_response("UNAUTHENTICATED", "missing, expired or invalid credential", rid);
+    }
     // RLS visible only to a principal with exact-child VIEW_CHILD_DEVICES.
     // No device/custody information is returned on a missing RLS grant.
     // Serialize repeat/concurrent DELETE without requiring direct UPDATE

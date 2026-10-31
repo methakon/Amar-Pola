@@ -92,6 +92,10 @@ add_executable(test_admin_oidc tests/cpp/test_admin_oidc.cc)
 target_link_libraries(test_admin_oidc PRIVATE ma_core ma_oidc)
 add_test(NAME admin_oidc_negative COMMAND test_admin_oidc)
 
+add_executable(test_parent_session tests/cpp/test_parent_session.cc)
+target_link_libraries(test_parent_session PRIVATE ma_core ma_oidc)
+add_test(NAME parent_session_bridge_negative COMMAND test_parent_session)
+
 add_executable(test_oidc_http tests/cpp/test_oidc_http.cc)
 target_link_libraries(test_oidc_http PRIVATE ma_core ma_oidc)
 add_test(NAME oidc_http COMMAND test_oidc_http)

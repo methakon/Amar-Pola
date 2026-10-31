@@ -60,7 +60,7 @@ done
 psql_admin -d $DB -c "ALTER ROLE ap_m1_api LOGIN PASSWORD 'synthetic_it_password'" >/dev/null
 Q() { psql_admin -d $DB -c "$1"; }
 
-MA_AUTH_MODE=synthetic_test MA_LISTEN_PORT=$PORT MA_PG_HOST=${PGHOST:-127.0.0.1} MA_PG_PORT=${PGPORT:-5432} MA_PG_DB=$DB \
+MA_AUTH_MODE=synthetic_test MA_PARENT_AUTH_MODE=m1_direct_oidc MA_LISTEN_PORT=$PORT MA_PG_HOST=${PGHOST:-127.0.0.1} MA_PG_PORT=${PGPORT:-5432} MA_PG_DB=$DB \
   MA_PG_USER=ap_m1_api MA_PG_PASSWORD=synthetic_it_password "$BIN" >"$OUT/backend.log" 2>&1 & PID=$!
 CHILD_PIDS+=("$PID")
 for _ in $(seq 1 60); do curl -fs $U/healthz >/dev/null 2>&1 && break; sleep 0.2; done

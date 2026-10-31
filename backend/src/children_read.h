@@ -10,6 +10,7 @@
 
 #include <drogon/drogon.h>
 #include "auth.h"
+#include "parent_session.h"
 #include "db_support.h"
 #include "http_support.h"
 #include "idempotency_key.h"
@@ -17,15 +18,15 @@
 namespace ma {
 
 inline drogon::Task<drogon::HttpResponsePtr> list_children(
-    drogon::HttpRequestPtr req, std::string family_id_param, Authenticator authenticate) {
+    drogon::HttpRequestPtr req, std::string family_id_param, ParentAuth auth) {
   using namespace drogon;
   const std::string rid = request_id_of(req);
 
   auto family_id = normalize_uuid(family_id_param);
   if (!family_id) co_return error_response("INVALID_REQUEST", "familyId must be a UUID", rid);
 
-  auto identity = authenticate(req);
-  if (!identity) co_return error_response("UNAUTHENTICATED", "missing, expired or invalid credential", rid);
+  auto credential = parent_credential(auth, req);
+  if (!credential) co_return error_response("UNAUTHENTICATED", "missing, expired or invalid credential", rid);
 
   if (!app().hasDbClient(kDbClientName))
     co_return error_response("SERVICE_UNAVAILABLE", "database not configured", rid, true);
@@ -38,16 +39,14 @@ inline drogon::Task<drogon::HttpResponsePtr> list_children(
     co_await transaction->execSqlCoro(
         "SELECT set_config('lock_timeout', $1, true), set_config('statement_timeout', $2, true)",
         std::to_string(db_limits().lock_ms), std::to_string(db_limits().statement_ms));
-    // Existing audited SECURITY DEFINER identity resolver is called only
-    // after a verified ParentOIDC identity. This read transaction is rolled
-    // back: it does not persist a new principal on a GET request.
-    auto principal_result = co_await transaction->execSqlCoro(
-        "SELECT ap_m1.resolve_parent_principal($1, $2)::text AS id",
-        identity->issuer, identity->subject);
-    const std::string principal_id = principal_result.at(0)["id"].as<std::string>();
-    co_await transaction->execSqlCoro(
-        "SELECT set_config('ap.principal_id', $1, true), set_config('ap.family_id', $2, true)",
-        principal_id, *family_id);
+    // PostgreSQL resolves the caller from the presented session (V2); the
+    // read transaction is rolled back and persists nothing.
+    auto bound = co_await bind_parent_principal(transaction, *credential, *family_id);
+    if (!bound) {
+      rollback_quietly(transaction);
+      co_return error_response("UNAUTHENTICATED", "missing, expired or invalid credential", rid);
+    }
+    const std::string principal_id = *bound;
     // Failure is deliberately indistinguishable from an unknown family.
     // The membership query itself is restricted by RLS.
     auto membership = co_await transaction->execSqlCoro(

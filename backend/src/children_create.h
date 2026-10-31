@@ -6,6 +6,7 @@
 #include <memory>
 #include <string>
 #include "auth.h"
+#include "parent_session.h"
 #include "db_support.h"
 #include "http_support.h"
 #include "idempotency_key.h"
@@ -15,7 +16,7 @@ namespace ma {
 inline constexpr const char* kCreateChildNamespace = "POST /families/{familyId}/children";
 
 inline drogon::Task<drogon::HttpResponsePtr> create_child(
-    drogon::HttpRequestPtr req, std::string family_param, Authenticator authenticate) {
+    drogon::HttpRequestPtr req, std::string family_param, ParentAuth auth) {
   using namespace drogon;
   const auto rid = request_id_of(req);
   if (req->body().size() > kMaxBodyBytes)
@@ -34,8 +35,8 @@ inline drogon::Task<drogon::HttpResponsePtr> create_child(
   const auto codepoints = utf8_codepoints(alias);
   if (!codepoints || alias.find('\0') != std::string::npos)
     co_return error_response("INVALID_REQUEST","invalid alias encoding",rid);
-  auto who = authenticate(req);
-  if (!who) co_return error_response("UNAUTHENTICATED","missing or invalid parent credential",rid);
+  auto credential = parent_credential(auth, req);
+  if (!credential) co_return error_response("UNAUTHENTICATED","missing or invalid parent credential",rid);
   if (*codepoints<1 || *codepoints>80)
     co_return error_response("VALIDATION_FAILED","alias must be 1..80 characters",rid);
   if (!app().hasDbClient(kDbClientName))
@@ -49,12 +50,13 @@ inline drogon::Task<drogon::HttpResponsePtr> create_child(
     co_await trans->execSqlCoro(
         "SELECT set_config('lock_timeout',$1,true),set_config('statement_timeout',$2,true)",
         std::to_string(db_limits().lock_ms),std::to_string(db_limits().statement_ms));
-    auto pr = co_await trans->execSqlCoro(
-        "SELECT ap_m1.resolve_parent_principal($1,$2)::text AS id",who->issuer,who->subject);
-    const std::string principal = pr.at(0)["id"].as<std::string>();
-    co_await trans->execSqlCoro(
-        "SELECT set_config('ap.principal_id',$1,true),set_config('ap.family_id',$2,true)",
-        principal,*family);
+    // Path familyId is only a selector; SQL honours it for a live membership.
+    auto bound = co_await bind_parent_principal(trans, *credential, *family);
+    if (!bound) {
+      rollback_quietly(trans);
+      co_return error_response("UNAUTHENTICATED", "missing, expired or invalid credential", rid);
+    }
+    const std::string principal = *bound;
     // The v2 family_owner function requires an authoritative session; setting
     // a client GUC without a valid issuer-approved token never grants authority.
     auto owner = co_await trans->execSqlCoro(

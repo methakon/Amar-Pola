@@ -15,10 +15,12 @@ int main() {
     req->setPath("/v1/families/00000000-0000-4000-8000-000000000001/children");
     return req;
   };
-  ma::Authenticator allow = [](const drogon::HttpRequestPtr&) -> std::optional<ma::Principal> {
+  ma::Authenticator allow_identity = [](const drogon::HttpRequestPtr&) -> std::optional<ma::Principal> {
     return ma::Principal{"https://synthetic.invalid", "test-only-principal"};
   };
-  ma::Authenticator deny = ma::reject_all_authenticator();
+  // Historical M1 per-request identity path (explicit mode, frozen M1 schema only).
+  const ma::ParentAuth allow{ma::ParentAuthMode::M1DirectOidc, allow_identity};
+  const ma::ParentAuth deny{ma::ParentAuthMode::M1DirectOidc, ma::reject_all_authenticator()};
   const std::string good_id = "00000000-0000-4000-8000-000000000001";
   int failed = 0;
   auto check = [&](bool ok, const char* label) {
@@ -74,6 +76,40 @@ int main() {
   check(revoke_anon->statusCode()==drogon::k401Unauthorized,"revokeDevice requires ParentOIDC");
   const auto revoke_offline = drogon::sync_wait(ma::revoke_device(request(),good_id,allow));
   check(revoke_offline->statusCode()==drogon::k503ServiceUnavailable,"revokeDevice no DB is fail closed");
+  // V2 session mode: an accepted ID token is NOT a session. Every parent route
+  // requires a 64-hex server-issued token; a well-formed one reaches the DB stage.
+  {
+    const ma::ParentAuth v2{ma::ParentAuthMode::V2Session, allow_identity};
+    auto with_bearer = [&](const std::string& value) {
+      auto q = request();
+      if (!value.empty()) q->addHeader("authorization", value);
+      return q;
+    };
+    const std::string session(64, 'a');
+    for (const std::string& header : {std::string(), std::string("Bearer"), "Bearer " + std::string(63, 'a'),
+                                      "Bearer " + std::string(65, 'a'), "Bearer " + std::string(64, 'A'),
+                                      "Bearer " + std::string(64, 'g'), "Basic " + session, "Bearer  " + session,
+                                      "Bearer header.payload.signature"}) {
+      check(drogon::sync_wait(ma::list_families(with_bearer(header), v2))->statusCode() == drogon::k401Unauthorized,
+            "V2 listFamilies rejects non-session credential");
+      check(drogon::sync_wait(ma::get_child(with_bearer(header), good_id, v2))->statusCode() == drogon::k401Unauthorized,
+            "V2 getChild rejects non-session credential");
+      check(drogon::sync_wait(ma::list_children(with_bearer(header), good_id, v2))->statusCode() == drogon::k401Unauthorized,
+            "V2 listChildren rejects non-session credential");
+      check(drogon::sync_wait(ma::revoke_device(with_bearer(header), good_id, v2))->statusCode() == drogon::k401Unauthorized,
+            "V2 revokeDevice rejects non-session credential");
+    }
+    for (const auto& scheme : {std::string("Bearer "), std::string("bearer "), std::string("BEARER ")}) {
+      check(drogon::sync_wait(ma::list_families(with_bearer(scheme + session), v2))->statusCode() ==
+                drogon::k503ServiceUnavailable, "V2 session token reaches database stage");
+    }
+    auto create_v2 = create_req();
+    create_v2->addHeader("authorization", "Bearer " + session);
+    check(drogon::sync_wait(ma::create_child(create_v2, good_id, v2))->statusCode() == drogon::k503ServiceUnavailable,
+          "V2 createChild fails closed without DB");
+    check(drogon::sync_wait(ma::create_child(create_req(), good_id, v2))->statusCode() == drogon::k401Unauthorized,
+          "V2 createChild ignores the identity authenticator");
+  }
     if (failed) return 1;
   std::cout << "M1 children list negative tests PASS\n";
   return 0;
