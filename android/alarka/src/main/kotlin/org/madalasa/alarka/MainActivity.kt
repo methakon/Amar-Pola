@@ -1,19 +1,24 @@
 package org.madalasa.alarka
 
-import android.app.Activity
 import android.os.Bundle
-import android.widget.TextView
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import org.madalasa.alarka.di.DefaultChildAppContainer
+import org.madalasa.alarka.ui.navigation.ChildNavHost
+import org.madalasa.alarka.ui.viewmodel.ChildViewModel
+import org.madalasa.uicommon.MadalasaTheme
 
-/**
- * Synthetic-only visible activity. No implicit permissions, sensors or live child-data access.
- */
-class MainActivity : Activity() {
+class MainActivity : ComponentActivity() {
+
+    private val appContainer by lazy { DefaultChildAppContainer() }
+    private val childViewModel by lazy { ChildViewModel(appContainer) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(TextView(this).apply {
-            text = getString(R.string.app_status)
-            textSize = 18f
-            setPadding(40, 80, 40, 40)
-        })
+        setContent {
+            MadalasaTheme {
+                ChildNavHost(viewModel = childViewModel)
+            }
+        }
     }
 }

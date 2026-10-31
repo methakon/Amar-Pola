@@ -1,18 +1,18 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
     namespace = "org.madalasa.alarka"
-    compileSdk = 36
+    compileSdk = 34
 
     defaultConfig {
-        // Intentionally non-production. Replace only after confirmed package identity
-        // and a completed release/permission review.
-        applicationId = "org.madalasa.alarka.synthetic"
+        // Non-production placeholder ID until publication authorization
+        applicationId = "in.berhampore.alarka.synthetic"
         minSdk = 29
-        targetSdk = 36
+        targetSdk = 34
         versionCode = 1
         versionName = "0.1.0-synthetic"
 
@@ -32,10 +32,27 @@ android {
         jvmTarget = "17"
     }
     buildFeatures {
+        compose = true
         buildConfig = false
     }
 }
 
 dependencies {
-    testImplementation("junit:junit:4.13.2")
+    implementation(project(":ui-common"))
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.kotlinx.coroutines.core)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
 }
