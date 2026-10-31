@@ -19,6 +19,7 @@
 #include "admin_session.h"
 #include "admin_applicant.h"
 #include "admin_owner.h"
+#include "admin_faq_read.h"
 #include "http_support.h"
 #include "pairing.h"
 
@@ -90,6 +91,25 @@ int main() {
     std::cerr << "invalid Google OIDC client configuration" << std::endl;
     return 78;
   }
+  app().registerHandler(
+      "/v1/faqs",
+      [](HttpRequestPtr req) -> Task<HttpResponsePtr> {
+        co_return co_await ma::read_faqs(std::move(req),false);
+      },
+      {Get});
+  app().registerHandler(
+      "/v1/admin/faqs",
+      [](HttpRequestPtr req) -> Task<HttpResponsePtr> {
+        co_return co_await ma::read_faqs(std::move(req),true);
+      },
+      {Get});
+  app().registerHandler(
+      "/v1/admin/faqs/{faqId}",
+      [](HttpRequestPtr req,std::string faqId) -> Task<HttpResponsePtr> {
+        co_return co_await ma::read_faqs(std::move(req),true,std::move(faqId));
+      },
+      {Get});
+
   app().registerHandler(
       "/v1/admin/owner/access-requests",
       [](HttpRequestPtr req) -> Task<HttpResponsePtr> {
