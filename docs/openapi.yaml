@@ -6852,13 +6852,13 @@
           "AdminAccess"
         ],
         "summary": "GET /admin/owner/access-requests",
-        "description": "PLANNED ONLY. Hard gates: OWNER_ONLY_MFA_STEP_UP. Request authorization must bind to the correct account, exact child/grant or owner role on the server; this OpenAPI contract is not proof of implementation. No child-private telemetry in staff or public outputs.",
+        "description": "PARTIALLY IMPLEMENTED in C++ on the api branch. Requires revocable server-minted admin session, verified owner issuer+subject, and active OWNER_MANAGE MFA window. Only pending requests, max 50, no cursor pagination yet; not production-approved until V2 positive tests and secure login issuance complete.",
         "security": [
           {
             "AdminBearer": []
           }
         ],
-        "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
+        "x-implementation-status": "PARTIAL_HANDLER_NOT_RELEASE_VERIFIED",
         "x-fail-closed-gates": [
           "OWNER_ONLY_MFA_STEP_UP"
         ],
@@ -6869,11 +6869,11 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "Draft contract; not an implemented handler",
+            "description": "Owner-only MFA-step-up protected applicant queue; limited to currently pending requests. Returns 50 items maximum at this stage; full pagination pending.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AdminAccessRequest"
+                  "$ref": "#/components/schemas/AdminAccessRequestPage"
                 }
               }
             }
@@ -27098,6 +27098,27 @@
                   "type": "boolean"
                 }
               }
+            }
+          },
+          "next_cursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      },
+      "AdminAccessRequestPage": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminAccessRequest"
             }
           },
           "next_cursor": {
