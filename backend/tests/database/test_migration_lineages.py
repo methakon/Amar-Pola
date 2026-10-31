@@ -94,7 +94,7 @@ class MigrationLineages(unittest.TestCase):
                          ['common:0001'] + ['m1:%04d' % n for n in range(2, 7)])
         clean = manage.migration_plan(entries, 'v2')
         self.assertEqual([e['id'] for e in clean], ['common:0001'] + ['v2:%04d' % n for n in range(2, 17)]
-                         + ['compat:m1_pre_v2_0017'] + ['v2:%04d' % n for n in range(17, 21)])
+                         + ['compat:m1_pre_v2_0017'] + ['v2:%04d' % n for n in range(17, 22)])
         self.assertEqual([e['id'] for e in manage.migration_plan(entries, 'v2', through='0001')], ['common:0001'])
 
     def entries(self):

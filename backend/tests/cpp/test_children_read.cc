@@ -89,7 +89,7 @@ int main() {
     for (const std::string& header : {std::string(), std::string("Bearer"), "Bearer " + std::string(63, 'a'),
                                       "Bearer " + std::string(65, 'a'), "Bearer " + std::string(64, 'A'),
                                       "Bearer " + std::string(64, 'g'), "Basic " + session, "Bearer  " + session,
-                                      "Bearer header.payload.signature"}) {
+                                      std::string("Bearer header.payload.signature")}) {
       check(drogon::sync_wait(ma::list_families(with_bearer(header), v2))->statusCode() == drogon::k401Unauthorized,
             "V2 listFamilies rejects non-session credential");
       check(drogon::sync_wait(ma::get_child(with_bearer(header), good_id, v2))->statusCode() == drogon::k401Unauthorized,

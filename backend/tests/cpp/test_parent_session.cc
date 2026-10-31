@@ -77,7 +77,7 @@ int main() {
   CHECK(digest != to_pg_bytea(sha256_bytes("a.b.c")));
 
   // Logout route offline negatives.
-  for (const std::string& bad : {std::string(), "Bearer header.payload.signature", "Bearer " + std::string(64, 'A')}) {
+  for (const std::string& bad : {std::string(), std::string("Bearer header.payload.signature"), "Bearer " + std::string(64, 'A')}) {
     auto denied = drogon::sync_wait(revoke_parent_session(with_authorization(bad), v2));
     CHECK(denied->statusCode() == drogon::k401Unauthorized);
     CHECK(denied->getHeader("cache-control") == "no-store");
