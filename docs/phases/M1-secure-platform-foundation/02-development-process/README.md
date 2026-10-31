@@ -6,6 +6,8 @@
 
 [M1 phase](../README.md) · [Docs home](../../../README.md) · [Master register](../../../MASTER_DOCUMENT_CONTROL_REGISTER.md)
 
+**2026-10-31 admin-web implementation:** [Figma BO-01–BO-09 responsive UI + typed API adapter and unfinished trusted backend integration](ADMIN_WEB_UI_AND_API_INTEGRATION_STATUS_2026-10-31.md). Synthetic-only on admin-web; not a production-ready administrator service.
+
 **2026-10-31 Swagger integration:** [Local Swagger UI dev server for frozen M1 and design-only Figma API](SWAGGER_OPENAPI_DEV_WORKFLOW_2026-10-31.md); source on `api`, loopback-only, Try it out disabled by default and planned operations never executable. [Latest api Swagger CI](https://github.com/methakon/Madalasa-Alarka/actions/runs/41168787562) **PASSED**; production/UI browser rendering remains independently unverified.
 
 **2026-10-31 API progress:** [Frozen M1 14-operation implementation and V2 security limitations](M1_API_HANDLER_IMPLEMENTATION_STATUS_2026-10-31.md). All 14 routes are registered on `api`, not integrated into `dev`/production. Current code undergoes CI; V2 session-positive, granular RLS/scope and replay integration are OPEN. No real child data is permitted.
