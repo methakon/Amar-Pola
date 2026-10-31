@@ -27,7 +27,7 @@
 
 ## Swagger UI added — developer-only OpenAPI renderer
 
-The API branch now contains [local Swagger dev tooling](https://github.com/methakon/Madalasa-Alarka/blob/api/backend/scripts/swagger_dev.py), which renders both existing OpenAPI 3.1 files as separate views. **M1 only:** 14 contract operations, optionally executable against synthetic localhost backend with explicit opt-in. **Planned only:** 171 Figma-wide operations, always read-only. No production Swagger endpoint, no API-key storage, and no claim of implementation beyond the M1 route registry. [Full setup/security runbook](SWAGGER_OPENAPI_DEV_WORKFLOW_2026-10-31.md). Its CI results are tracked separately from previous M1 green evidence.
+The API branch now contains [local Swagger dev tooling](https://github.com/methakon/Madalasa-Alarka/blob/api/backend/scripts/swagger_dev.py), which renders both existing OpenAPI 3.1 files as separate views. **M1 only:** 14 contract operations, optionally executable against synthetic localhost backend with explicit opt-in. **Planned only:** 171 Figma-wide operations, always read-only. No production Swagger endpoint, no API-key storage, and no claim of implementation beyond the M1 route registry. [Full setup/security runbook](SWAGGER_OPENAPI_DEV_WORKFLOW_2026-10-31.md). [Latest Swagger integration CI](https://github.com/methakon/Madalasa-Alarka/actions/runs/41168787562) **PASSED** (3/3 jobs) at api SHA b1348c6. Source is on api only; live browser rendering and real-child/V2 issuer remain unverified.
 
 ## Changes / verification anchors
 

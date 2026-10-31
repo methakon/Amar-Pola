@@ -6,7 +6,7 @@
 
 [M1 phase](../README.md) · [Docs home](../../../README.md) · [Master register](../../../MASTER_DOCUMENT_CONTROL_REGISTER.md)
 
-**2026-10-31 Swagger integration:** [Local Swagger UI dev server for frozen M1 and design-only Figma API](SWAGGER_OPENAPI_DEV_WORKFLOW_2026-10-31.md); source on `api`, loopback-only, Try it out disabled by default and planned operations never executable. CI verification follows the `api` branch.
+**2026-10-31 Swagger integration:** [Local Swagger UI dev server for frozen M1 and design-only Figma API](SWAGGER_OPENAPI_DEV_WORKFLOW_2026-10-31.md); source on `api`, loopback-only, Try it out disabled by default and planned operations never executable. [Latest api Swagger CI](https://github.com/methakon/Madalasa-Alarka/actions/runs/41168787562) **PASSED**; production/UI browser rendering remains independently unverified.
 
 **2026-10-31 API progress:** [Frozen M1 14-operation implementation and V2 security limitations](M1_API_HANDLER_IMPLEMENTATION_STATUS_2026-10-31.md). All 14 routes are registered on `api`, not integrated into `dev`/production. Current code undergoes CI; V2 session-positive, granular RLS/scope and replay integration are OPEN. No real child data is permitted.
 
@@ -14,7 +14,7 @@
 
 | Document | Registry state | Proposed owner role |
 |---|---|---|
-| [SWAGGER_OPENAPI_DEV_WORKFLOW_2026-10-31.md](SWAGGER_OPENAPI_DEV_WORKFLOW_2026-10-31.md) | SOURCE_COMMITTED / API CI VERIFICATION PENDING | Backend/API |
+| [SWAGGER_OPENAPI_DEV_WORKFLOW_2026-10-31.md](SWAGGER_OPENAPI_DEV_WORKFLOW_2026-10-31.md) | SOURCE_COMMITTED / SYNTHETIC CI VERIFIED / NOT DEPLOYED | Backend/API |
 | [M1_API_HANDLER_IMPLEMENTATION_STATUS_2026-10-31.md](M1_API_HANDLER_IMPLEMENTATION_STATUS_2026-10-31.md) | IMPLEMENTATION_IN_PROGRESS / V2_INTEGRATION_NOT_VERIFIED | Backend/security |
 | [BUILD_AND_RUN.md](BUILD_AND_RUN.md) | DOCUMENTED_REVIEW_PENDING | Engineering lead (unassigned) |
 | [DEVELOPER_ONBOARDING_AND_CODING_STANDARDS.md](DEVELOPER_ONBOARDING_AND_CODING_STANDARDS.md) | DOCUMENTED_REVIEW_PENDING | Engineering lead (unassigned) |

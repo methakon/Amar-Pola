@@ -1,6 +1,6 @@
 # Swagger UI and OpenAPI tooling — implemented 2026-10-31
 
-**Status:** SOURCE COMMITTED on the persistent [api workstream branch](https://github.com/methakon/Madalasa-Alarka/tree/api); this documentation is maintained on main. **Scope:** local developer-only API visualization and synthetic contract testing. **Not:** a production URL, 171 implemented APIs, child-data release approval, or a V2 trusted-session completion claim.
+**Status:** SOURCE COMMITTED and **CI VERIFIED** at [api SHA b1348c6](https://github.com/methakon/Madalasa-Alarka/commit/b1348c677986e48e3ab8f01b0c0e844ec07c351d) — [all three M1 workflow jobs SUCCESS](https://github.com/methakon/Madalasa-Alarka/actions/runs/41168787562); code is on the persistent [api workstream branch](https://github.com/methakon/Madalasa-Alarka/tree/api), **not merged to dev/main**; this documentation is maintained on main. **Scope:** local developer-only API visualization and synthetic contract testing. **Not:** a production URL, 171 implemented APIs, child-data release approval, or a V2 trusted-session completion claim.
 
 ## Existing specification, now visualized
 
@@ -53,4 +53,4 @@ python3 backend/tests/check_m1_route_coverage.py
 
 The [Swagger dev regression suite](https://github.com/methakon/Madalasa-Alarka/blob/api/backend/tests/test_swagger_dev.py) is wired into M1 contract CI **and CTest**. It checks OAS 3.1 parsing, M1 counts, in-memory server selection, local assets/CSP, read-only planned view, forbidden non-M1 routes, explicit opt-in, no cookie forwarding, request size cap, and fixture-only proxy round-trip. Existing structural M1/full OpenAPI linters continue to run.
 
-**Limitations:** A source/CI pass does not verify a real browser's Swagger rendering until npm assets are installed and the UI is opened; nor does it prove that all M1 operations pass V2 verified session/guardian cross-tenant positive tests. E-02 remains open for those separate tests and dev integration. Source docs are authoritative; Swagger is a local renderer of them, not a substitute.
+**Verification evidence:** [CI run 41168787562](https://github.com/methakon/Madalasa-Alarka/actions/runs/41168787562): contracts-and-isolation (including Swagger tests), database-v2-lineage and backend-build all passed on the final code SHA. **Limitations:** A source/CI pass does not verify a real browser's Swagger rendering until npm assets are installed and the UI is opened; nor does it prove that all M1 operations pass V2 verified session/guardian cross-tenant positive tests. E-02 remains open for those separate tests and dev integration. Source docs are authoritative; Swagger is a local renderer of them, not a substitute.
