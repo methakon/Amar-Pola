@@ -72,6 +72,10 @@ add_executable(test_children_read tests/cpp/test_children_read.cc)
 target_link_libraries(test_children_read PRIVATE ma_core ma_oidc)
 add_test(NAME children_read_negative COMMAND test_children_read)
 
+add_executable(test_admin_owner tests/cpp/test_admin_owner.cc)
+target_link_libraries(test_admin_owner PRIVATE ma_core ma_oidc)
+add_test(NAME admin_owner_negative COMMAND test_admin_owner)
+
 add_executable(test_admin_applicant tests/cpp/test_admin_applicant.cc)
 target_link_libraries(test_admin_applicant PRIVATE ma_core ma_oidc)
 add_test(NAME admin_applicant_negative COMMAND test_admin_applicant)

@@ -18,6 +18,7 @@
 #include "device_revoke.h"
 #include "admin_session.h"
 #include "admin_applicant.h"
+#include "admin_owner.h"
 #include "http_support.h"
 #include "pairing.h"
 
@@ -89,6 +90,12 @@ int main() {
     std::cerr << "invalid Google OIDC client configuration" << std::endl;
     return 78;
   }
+  app().registerHandler(
+      "/v1/admin/owner/access-requests",
+      [](HttpRequestPtr req) -> Task<HttpResponsePtr> {
+        co_return co_await ma::admin_owner_access_requests(std::move(req));
+      },
+      {Get});
   app().registerHandler(
       "/v1/admin/access/profile",
       [](HttpRequestPtr req) -> Task<HttpResponsePtr> {
