@@ -16,6 +16,7 @@
 #include "device_capabilities.h"
 #include "children_create.h"
 #include "device_revoke.h"
+#include "admin_session.h"
 #include "http_support.h"
 #include "pairing.h"
 
@@ -87,6 +88,14 @@ int main() {
     std::cerr << "invalid Google OIDC client configuration" << std::endl;
     return 78;
   }
+  // Separate admin session (cookie) from ParentOIDC; no anonymous role access.
+  app().registerHandler(
+      "/v1/admin/access/me",
+      [](HttpRequestPtr req) -> Task<HttpResponsePtr> {
+        co_return co_await ma::admin_access_me(std::move(req));
+      },
+      {Get});
+
   app().registerHandler(
       "/v1/families",
       [authenticate](HttpRequestPtr req) -> Task<HttpResponsePtr> { co_return co_await ma::create_family(std::move(req), authenticate); },
