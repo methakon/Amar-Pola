@@ -18,7 +18,7 @@ test('no child private-data admin API paths',()=>{
  const api=read('src/api.ts');
  for(const path of ['/admin/media-activity','/admin/child-location','/admin/media-exports'])assert.ok(!api.includes(path));
 });
-test('Figma admin screen inventory is nine screens',()=>{
+test('Figma admin inventory includes ten variants',()=>{
  const registry=JSON.parse(read('../docs/ui/figma-functional-handoff/10-admin-back-office.json'));
- assert.equal(registry.screens.length,9);
+ assert.equal(registry.screens.length,10);
 });
