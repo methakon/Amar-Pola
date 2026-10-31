@@ -39,6 +39,10 @@ endif()
 add_test(NAME m1_route_registration
          COMMAND python3 ${CMAKE_CURRENT_SOURCE_DIR}/tests/check_m1_route_coverage.py)
 
+# Swagger UI is a separate LOCAL dev server, never linked into ma_backend.
+add_test(NAME swagger_ui_local_security
+         COMMAND python3 ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_swagger_dev.py)
+
 add_executable(test_core tests/cpp/test_core.cc)
 target_link_libraries(test_core PRIVATE ma_core)
 add_test(NAME core COMMAND test_core)

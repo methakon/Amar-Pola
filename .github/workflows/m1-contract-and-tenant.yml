@@ -13,6 +13,7 @@ on:
       - "backend/tests/**"
       - "backend/src/**"
       - "backend/scripts/**"
+      - "backend/swagger/**"
       - "backend/deploy/**"
       - "backend/CMakeLists.txt"
       - "tools/database/**"
@@ -32,6 +33,7 @@ on:
       - "backend/tests/**"
       - "backend/src/**"
       - "backend/scripts/**"
+      - "backend/swagger/**"
       - "backend/deploy/**"
       - "backend/CMakeLists.txt"
       - "tools/database/**"
@@ -61,6 +63,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Structural OpenAPI M1 lint
         run: python3 backend/tests/lint_openapi_m1.py docs/openapi-m1.yaml
+      - name: Swagger UI M1 and planned-spec local security regression
+        run: python3 -m unittest backend.tests.test_swagger_dev -v
       - name: Physical tables and columns against the logical ERD (reviewed mapping)
         run: |
           python3 backend/tests/check_physical_catalog.py
