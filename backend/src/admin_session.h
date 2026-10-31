@@ -30,7 +30,7 @@ inline std::optional<std::string> admin_session_cookie(std::string_view cookie_h
         if (!((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f')))
           return std::nullopt;
       }
-      found = std::string(part.substr(17));
+      found = std::string(part.substr(18));
     }
     if (end == cookie_header.size()) break;
     pos = end + 1;
