@@ -91,7 +91,7 @@ class SwaggerLocalTests(unittest.TestCase):
         status, page, headers = self.get("/swagger/m1")
         self.assertEqual(status, 200)
         self.assertIn(b'/swagger/m1/config.js', page)
-        self.assertIn(b"Try it out disabled", page) if False else None
+        self.assertIn(b"Read-only Swagger documentation", page)
         self.assertNotIn(b"cdn.", page)
         self.assertIn("connect-src 'self'", headers["Content-Security-Policy"])
         self.assertEqual(headers["X-Content-Type-Options"], "nosniff")
