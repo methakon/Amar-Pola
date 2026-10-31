@@ -24654,6 +24654,10 @@
             "items": {
               "type": "string"
             }
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
           }
         }
       },
@@ -26291,6 +26295,13 @@
               "string",
               "null"
             ]
+          },
+          "profile_revision": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1
           }
         }
       },

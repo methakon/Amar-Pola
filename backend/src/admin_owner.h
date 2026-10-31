@@ -37,7 +37,7 @@ inline drogon::Task<drogon::HttpResponsePtr> admin_owner_access_requests(
     // Owner-only read; account/profile metadata is never accessible to a
     // normal SUPPORT_AGENT/FAQ_EDITOR from this endpoint.
     auto rows=co_await tx->execSqlCoro(
-        "SELECT r.id::text AS id,r.admin_id::text AS applicant_id,r.state,"
+        "SELECT r.id::text AS id,r.admin_id::text AS applicant_id,r.state,r.revision,"
         "to_char(r.submitted_at AT TIME ZONE 'UTC','YYYY-MM-DD\"T\"HH24:MI:SS\"Z\"') AS submitted_at,"
         "p.full_name AS full_name,p.contact_email AS contact_email "
         "FROM ap_m1.admin_access_requests r "
@@ -51,6 +51,7 @@ inline drogon::Task<drogon::HttpResponsePtr> admin_owner_access_requests(
       item["id"]=row["id"].as<std::string>();
       item["applicant_id"]=row["applicant_id"].as<std::string>();
       item["state"]=row["state"].as<std::string>();
+      item["revision"]=Json::Int64(row["revision"].as<std::int64_t>());
       item["submitted_at"]=row["submitted_at"].as<std::string>();
       Json::Value profile(Json::objectValue);
       if(!row["full_name"].isNull()) profile["full_name"]=row["full_name"].as<std::string>();

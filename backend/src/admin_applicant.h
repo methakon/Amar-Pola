@@ -81,6 +81,8 @@ inline drogon::Task<drogon::HttpResponsePtr> admin_applicant_self_read(
       result["date_of_birth"]=Json::nullValue;
       result["gender"]=Json::nullValue;
       result["email_verified"]=a["email_verified"].as<bool>();
+      result["profile_revision"]=a["profile_revision"].isNull()?
+          Json::Value(Json::nullValue):Json::Value(Json::Int64(a["profile_revision"].as<std::int64_t>()));
       result["profile_complete"]=!a["profile_revision"].isNull() &&
           a["email_verified"].as<bool>();
       result["notice_version"]=a["notice_version"].isNull()?
