@@ -159,6 +159,40 @@ function GoogleEntry({error,onApproved}:{error:string;onApproved:(idToken:string
  },[root,clientId,onApproved]);
  return <main className="auth-layout"><div className="auth-card"><div className="brand-mark"><ShieldCheck/></div><p className="overline">MADALASA · ADMINISTRATION</p><h1>Welcome to the secure administration portal</h1><p>Continue with Google. Only a verified owner can approve staff and assign roles. An applicant may only access their own application status.</p><div ref={setRoot} className="google-button"/>{(!clientId||!root)&&<div className="notice"><LockKeyhole size={17}/> Google admin login is unavailable until the approved OAuth client and secure admin backend are configured.</div>}{status&&<div className="notice">{status}</div>}{error&&<div className="error-note" role="alert">{error}</div>}<p className="fine">Google sign-in alone does not grant administrative access, billing visibility or access to child data.</p></div></main>;
 }
-function Applicant({access,onRefresh,error}:{access:AccessState|null;onRefresh:()=>void;error:string}){return <main className="auth-layout"><div className="auth-card"><div className="brand-mark"><UserRound/></div><p className="overline">ADMIN ACCESS APPLICATION</p><h1>{access?.state==='PENDING_REVIEW'?'Application awaiting approval':'Complete your access request'}</h1><p>Account state: <strong>{access?.state||'UNKNOWN'}</strong></p>{error&&<p className="error-note">{error}</p>}<p>Only verified and owner-approved staff can access the administration workspace. Complete identity/profile and email verification through the approved backend workflow.</p><div className="notice">Requested roles are assigned by the owner, never by the applicant. No child data is available during application.</div><Button onClick={onRefresh} kind="secondary">Refresh server status</Button></div></main>}
+function Applicant({access,onRefresh,error}:{access:AccessState|null;onRefresh:()=>void;error:string}){
+ const [fullName,setFullName]=useState(''),[email,setEmail]=useState(''),[address,setAddress]=useState(''),[gender,setGender]=useState(''),[dob,setDob]=useState('');
+ const [revision]=useState(0),[busy,setBusy]=useState(false),[message,setMessage]=useState(''),[problem,setProblem]=useState('');
+ const [challenge,setChallenge]=useState(''),[code,setCode]=useState('');
+ const act=async(path:string,method:'PUT'|'POST',body:unknown)=>{
+   setBusy(true);setProblem('');setMessage('');
+   try{await request(path,{method,body});setMessage('Server acknowledged this step.');onRefresh();}
+   catch(e){setProblem(e instanceof Error?e.message:'Request rejected');}
+   finally{setBusy(false);}
+ };
+ const pending=access?.state==='PENDING_REVIEW';
+ return <main className="auth-layout"><div className="auth-card applicant-card">
+ <div className="brand-mark"><UserRound/></div><p className="overline">BO-02 / BO-02V / BO-03 · ADMIN ACCESS</p>
+ <h1>{pending?'Your access application is awaiting review':'Complete your verified applicant profile'}</h1>
+ <p>Application state: <strong>{access?.state||'UNKNOWN'}</strong>. Only your own application is visible before owner approval.</p>
+ {error&&<div className="error-note">{error}</div>}{problem&&<div className="error-note">{problem}</div>}{message&&<div className="success-note">{message}</div>}
+ {!pending&&<><div className="notice"><LockKeyhole size={18}/> Name and contact email are required by the proposed contract. Date of birth, postal address and gender remain optional unless separately justified by approved privacy policy.</div>
+ <label>Full name<input value={fullName} onChange={e=>setFullName(e.target.value)} maxLength={150} autoComplete="name"/></label>
+ <label>Contact email<input type="email" value={email} onChange={e=>setEmail(e.target.value)} autoComplete="email"/></label>
+ <label>Postal address (optional)<textarea rows={2} value={address} onChange={e=>setAddress(e.target.value)} maxLength={600}/></label>
+ <div className="grid two"><label>Date of birth (optional)<input type="date" value={dob} onChange={e=>setDob(e.target.value)}/></label><label>Gender (optional)<select value={gender} onChange={e=>setGender(e.target.value)}><option value="">Prefer not to specify</option><option>Female</option><option>Male</option><option>Non-binary</option><option>Self-describe</option><option>Prefer not to say</option></select></label></div>
+ <div className="button-row"><Button disabled={busy||!fullName.trim()||!email.includes('@')} onClick={()=>void act('/admin/access/profile','PUT',{full_name:fullName.trim(),contact_email:email.trim(),postal_address:address,date_of_birth:dob||undefined,gender:gender||undefined,privacy_notice_version:'admin-access-draft-2026-10'})}>Save profile</Button>
+ <Button kind="secondary" disabled={busy||!email.includes('@')} onClick={()=>void act('/admin/access/verify-email','POST',{contact_email:email.trim()})}>Verify email</Button></div>
+ <p className="fine">The backend must create the email challenge and validate verified Google email server-side; the UI cannot self-certify.</p>
+ <label>Verification challenge ID<input value={challenge} onChange={e=>setChallenge(e.target.value)} placeholder="Server-provided UUID"/></label><label>One-time code<input value={code} onChange={e=>setCode(e.target.value)} autoComplete="one-time-code"/></label>
+ <Button kind="secondary" disabled={busy||!challenge||code.length<6} onClick={()=>void act('/admin/access/confirm-email','POST',{challenge_id:challenge,one_time_code:code})}>Confirm email</Button>
+ <div className="line">Server email verification: <strong>{access?.email_verified?'VERIFIED':'NOT VERIFIED'}</strong></div>
+ <Button disabled={busy||!access?.email_verified||revision<1||!(access.allowed_actions||[]).includes('REQUEST_ACCESS')} onClick={()=>void act('/admin/access/requests','POST',{profile_revision:revision,privacy_notice_version:'admin-access-draft-2026-10',request_id:crypto.randomUUID()})}>Request access</Button>
+ <p className="fine">Request remains disabled until server-authorized profile revision, verified contact email and accepted privacy notice. No role may be selected by an applicant.</p>
+ <label>Verified profile revision (server-supplied only)<input value={revision||''} readOnly placeholder="Awaiting server profile revision"/></label>
+ </>}
+ <div className="button-row"><Button onClick={onRefresh} kind="secondary">Refresh application status</Button></div>
+ <p className="fine">No subscriber data or children’s private records are visible before authorized staff approval.</p>
+ </div></main>;
+}
 
 createRoot(document.getElementById('root')!).render(<App/>);
