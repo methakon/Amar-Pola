@@ -234,7 +234,8 @@ def main(binary):
         expect(error_code(editor.send('POST', f"/v1/admin/faqs/{faq['id']}/publish", publish), 403, 'FORBIDDEN'),
                'publish requires MFA step-up')
         status, public, _ = base.call(url, 'GET', '/v1/faqs')
-        expect(status == 200 and slug not in {i['slug'] for i in public['items']}, 'draft is not public')
+        expect(status == 200 and slug not in {i['slug'] for i in public['items']},
+               f'draft is not public (status={status} code={(public or {}).get("code")})')
         simulate_future_mfa(editor)
         status, published, _ = editor.send('POST', f"/v1/admin/faqs/{faq['id']}/publish", publish)
         expect(status == 200 and published['revision'] == 3, '[simulated MFA] editor publishes the exact revision')
