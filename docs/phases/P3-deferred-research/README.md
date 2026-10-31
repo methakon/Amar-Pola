@@ -6,13 +6,15 @@
 
 ## Scope and gate
 
+New [P2P-first transport ADR](01-media-and-administrator-research/P2P_MEDIA_AND_LIVE_LOCATION_TRANSPORT_ARCHITECTURE_2026-10-31.md) fixes WebRTC/STUN/TURN over a bespoke VPN for conditional media/live-map design. Android compatibility, Indian legal approval and Google Play approval remain independent OPEN gates.
+
 Deferred media experiments, activity metadata and admin-panel research. **Exit or open gate:** Not included in initial launch; OS/India law/Play gates separate.
 
 ## Category folders (1)
 
 | Category | Documents | Browse |
 |---|---:|---|
-| media and administrator research | 3 | [Open folder](01-media-and-administrator-research/README.md) |
+| media and administrator research | 4 | [Open folder](01-media-and-administrator-research/README.md) |
 
 ## Completion evidence rule
 

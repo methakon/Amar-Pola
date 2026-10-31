@@ -6570,13 +6570,13 @@
           "AdminAccess"
         ],
         "summary": "GET /admin/faqs",
-        "description": "PLANNED ONLY. Request authorization must bind to the correct account, exact child/grant or owner role on the server; this OpenAPI contract is not proof of implementation. No child-private telemetry in staff or public outputs.",
+        "description": "SOURCE IMPLEMENTED on api branch as read-only Drogon/PostgreSQL RLS handler. Public: published revision only. Admin: requires live revocable admin cookie and database FAQ_EDIT permission. Single-page max 50; full pagination, trusted OIDC session issuance, positive V2/HTTP tests and writes remain outstanding. No production access approved.",
         "security": [
           {
             "AdminBearer": []
           }
         ],
-        "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
+        "x-implementation-status": "PARTIAL_READ_HANDLER_NOT_RELEASE_VERIFIED",
         "x-fail-closed-gates": [],
         "x-screen-ids": [
           "BO-05"
@@ -6605,7 +6605,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Draft contract; not an implemented handler",
+            "description": "Read handler present in api workstream; live authorization/DB end-to-end acceptance pending.",
             "content": {
               "application/json": {
                 "schema": {
@@ -6852,13 +6852,13 @@
           "AdminAccess"
         ],
         "summary": "GET /admin/owner/access-requests",
-        "description": "PLANNED ONLY. Hard gates: OWNER_ONLY_MFA_STEP_UP. Request authorization must bind to the correct account, exact child/grant or owner role on the server; this OpenAPI contract is not proof of implementation. No child-private telemetry in staff or public outputs.",
+        "description": "PARTIAL SOURCE IMPLEMENTATION (api branch): verified owner issuer+subject, active OWNER_MANAGE MFA session and revocable cookie required. Returns a read-only 50-item pending queue. Secure login issuance, positive V2 tests, pagination and owner decisions remain NOT RELEASE-VERIFIED.",
         "security": [
           {
             "AdminBearer": []
           }
         ],
-        "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
+        "x-implementation-status": "PARTIAL_HANDLER_NOT_RELEASE_VERIFIED",
         "x-fail-closed-gates": [
           "OWNER_ONLY_MFA_STEP_UP"
         ],
@@ -6869,11 +6869,11 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "Draft contract; not an implemented handler",
+            "description": "Owner-only MFA-step-up pending request queue (max 50 in implementation; cursor pagination pending).",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AdminAccessRequest"
+                  "$ref": "#/components/schemas/AdminAccessRequestPage"
                 }
               }
             }
@@ -14391,13 +14391,13 @@
           "AdminAccess"
         ],
         "summary": "GET /admin/faqs/{faqId}",
-        "description": "PLANNED ONLY. Request authorization must bind to the correct account, exact child/grant or owner role on the server; this OpenAPI contract is not proof of implementation. No child-private telemetry in staff or public outputs.",
+        "description": "SOURCE IMPLEMENTED on api branch as read-only Drogon/PostgreSQL RLS handler. Public: published revision only. Admin: requires live revocable admin cookie and database FAQ_EDIT permission. Single-page max 50; full pagination, trusted OIDC session issuance, positive V2/HTTP tests and writes remain outstanding. No production access approved.",
         "security": [
           {
             "AdminBearer": []
           }
         ],
-        "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
+        "x-implementation-status": "PARTIAL_READ_HANDLER_NOT_RELEASE_VERIFIED",
         "x-fail-closed-gates": [],
         "x-screen-ids": [
           "BO-05"
@@ -14415,7 +14415,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Draft contract; not an implemented handler",
+            "description": "Read handler present in api workstream; live authorization/DB end-to-end acceptance pending.",
             "content": {
               "application/json": {
                 "schema": {
@@ -17457,9 +17457,9 @@
           "FAQ"
         ],
         "summary": "GET /faqs",
-        "description": "PLANNED ONLY. Request authorization must bind to the correct account, exact child/grant or owner role on the server; this OpenAPI contract is not proof of implementation. No child-private telemetry in staff or public outputs.",
+        "description": "SOURCE IMPLEMENTED on api branch as read-only Drogon/PostgreSQL RLS handler. Public: published revision only. Admin: requires live revocable admin cookie and database FAQ_EDIT permission. Single-page max 50; full pagination, trusted OIDC session issuance, positive V2/HTTP tests and writes remain outstanding. No production access approved.",
         "security": [],
-        "x-implementation-status": "PROPOSED_NOT_IMPLEMENTED",
+        "x-implementation-status": "PARTIAL_READ_HANDLER_NOT_RELEASE_VERIFIED",
         "x-fail-closed-gates": [],
         "x-screen-ids": [],
         "parameters": [
@@ -17486,7 +17486,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Draft contract; not an implemented handler",
+            "description": "Read handler present in api workstream; live authorization/DB end-to-end acceptance pending.",
             "content": {
               "application/json": {
                 "schema": {
@@ -24654,6 +24654,10 @@
             "items": {
               "type": "string"
             }
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
           }
         }
       },
@@ -26291,6 +26295,13 @@
               "string",
               "null"
             ]
+          },
+          "profile_revision": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1
           }
         }
       },
@@ -27098,6 +27109,27 @@
                   "type": "boolean"
                 }
               }
+            }
+          },
+          "next_cursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      },
+      "AdminAccessRequestPage": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminAccessRequest"
             }
           },
           "next_cursor": {

@@ -1,4 +1,6 @@
-# Progress while Google Payments identity verification is pending
+# Historical 2026-10-30 progress while Google Payments identity verification was pending
+
+> **2026-10-31 supersession notice:** This document is a historical snapshot. The owner subsequently confirmed **Google Play developer identity verification COMPLETED** and **BillDesk/payment verification SUBMITTED, with no provider response yet**. The current X-01 split (identity CLOSED; BillDesk pending; separate merchant setup unverified) is in [the blocker register](BLOCKERS_AND_OWNER_DECISIONS.md). Do not reuse this document's earlier "identity pending" wording as today's status. No private screenshot/identity/bank evidence is stored in Git.
 
 **Date:** 2026-10-30. **Status:** DOCUMENTED_REVIEW_PENDING; scoped local/CI evidence VERIFIED as stated, product/release NOT_READY. **Decision owner:** project owner for supplied publisher/product choices; qualified India legal/security/Play sign-off remains pending. **Source:** owner instruction, fetched Git/PR state, pinned PR9 and official sources cited by canonical topic documents. [Docs home](../../../README.md) · [Master control register](../../../MASTER_DOCUMENT_CONTROL_REGISTER.md) · [Coverage matrix](../../../PHASE_DOCUMENTATION_COVERAGE_MATRIX.md).
 

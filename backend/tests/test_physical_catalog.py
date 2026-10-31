@@ -1,5 +1,6 @@
 """The catalog checker must also fail when things drift (a checker that cannot fail proves nothing)."""
-import copy, json, pathlib, sys, tempfile, unittest
+import copy, hashlib, json, pathlib, sys, tempfile, unittest
+from unittest import mock
 
 HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
@@ -83,6 +84,10 @@ class DriftIsCaught(Base):
 
 
 class Parser(unittest.TestCase):
+    def test_duplicate_create_is_rejected(self):
+        with self.assertRaisesRegex(ValueError, 'duplicate CREATE TABLE'):
+            self.parse('CREATE TABLE ap_m1.a(id int); CREATE TABLE ap_m1.a(other int);')
+
     def parse(self, sql):
         with tempfile.TemporaryDirectory() as d:
             pathlib.Path(d, "0001_x.sql").write_text(sql)
@@ -108,6 +113,96 @@ class Parser(unittest.TestCase):
         erd = {"domains": [{"tables": [{"name": "x", "columns": [
             "PK FK device_id", "PK (a, b)", "FK c → y", "d, e : time", "f : enum?", "g, h optional", "invalidate cached child scopes"]}]}]}
         self.assertEqual(ps.logical_entities(erd)["x"], {"device_id", "a", "b", "c", "d", "e", "f", "g", "h"})
+
+
+class ManifestSelection(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.root = pathlib.Path(self.tmp.name)
+        self.migrations = self.root / 'backend/persistence/migrations'
+        self.migrations.mkdir(parents=True)
+        self.manifest = self.migrations.parent / 'migration-lineages.json'
+        self.entries = []
+        for n in range(1, 7):
+            p = self.migrations / f'{n:04d}_m1.sql'
+            sql = ('CREATE TABLE ap_m1.a(id int); CREATE TABLE other_schema.ignored(id int);'
+                   if n == 1 else f'ALTER TABLE ap_m1.a ADD COLUMN c{n} int;')
+            p.write_text(sql)
+            self.entries.append({'id': 'common:0001' if n == 1 else f'm1:{n:04d}',
+                                 'path': str(p.relative_to(self.root)),
+                                 'sha256': hashlib.sha256(p.read_bytes()).hexdigest()})
+        # An alphabetical reader would consume this conflicting V2 CREATE.
+        poison = self.migrations / '0002_v2.sql'
+        poison.write_text('CREATE TABLE ap_m1.a(unwanted int);')
+        self.entries.append({'id': 'v2:0002', 'path': str(poison.relative_to(self.root)),
+                             'sha256': 'deliberately-invalid-unselected-checksum'})
+        self.save()
+        patcher = mock.patch.object(ps, 'MIGRATIONS', self.migrations)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
+    def save(self):
+        self.manifest.write_text(json.dumps({'migrations': list(reversed(self.entries))}))
+
+    def parse(self, **kwargs):
+        return ps.physical_tables(self.migrations, **kwargs)
+
+    def test_current_checkpoint_selects_only_ordered_m1_through0006(self):
+        self.assertEqual(self.parse(), {'a': {'id', 'c2', 'c3', 'c4', 'c5', 'c6'}})
+
+    def test_frozen_checkpoint_selects_only_through0004(self):
+        self.assertEqual(self.parse(checkpoint='0004'), {'a': {'id', 'c2', 'c3', 'c4'}})
+
+    def test_selected_checksum_drift_is_rejected(self):
+        (self.migrations / '0006_m1.sql').write_text('-- tampered')
+        with self.assertRaisesRegex(ValueError, 'checksum drift: m1:0006'):
+            self.parse()
+
+    def test_missing_current_m1_entry_is_rejected(self):
+        self.entries = [e for e in self.entries if e['id'] != 'm1:0006']
+        self.save()
+        with self.assertRaisesRegex(ValueError, 'manifest sequence'):
+            self.parse()
+
+    def test_duplicate_manifest_identity_is_rejected(self):
+        self.entries.append(dict(self.entries[0]))
+        self.save()
+        with self.assertRaisesRegex(ValueError, 'manifest sequence'):
+            self.parse()
+
+    def test_unknown_future_m1_identity_is_rejected(self):
+        self.entries.append({**self.entries[-2], 'id': 'm1:0007'})
+        self.save()
+        with self.assertRaisesRegex(ValueError, 'manifest sequence'):
+            self.parse()
+
+    def test_selected_path_outside_migrations_is_rejected(self):
+        self.entries[0]['path'] = '../outside.sql'
+        self.save()
+        with self.assertRaisesRegex(ValueError, 'path outside migrations'):
+            self.parse()
+
+    def test_v2_and_unknown_checkpoint_are_rejected(self):
+        with self.assertRaisesRegex(ValueError, 'only historical M1'):
+            self.parse(lineage='v2')
+        with self.assertRaisesRegex(ValueError, 'unsupported historical M1 checkpoint'):
+            self.parse(checkpoint='0005')
+
+
+class ERDNegativeControls(unittest.TestCase):
+    def test_diagnostic_reports_actual_counts(self):
+        from check_erd_references import validate
+        errors = validate({'domains': [], 'domainCount': 2, 'tableCount': 3})
+        self.assertIn('ERD tableCount 3 != 0 actual entities', errors)
+        self.assertIn('ERD domainCount 2 != 0 actual domains', errors)
+
+    def test_ascii_arrow_and_non_string_are_detected(self):
+        from check_erd_references import validate
+        errors = validate({'domainCount': 1, 'tableCount': 1, 'domains': [
+            {'tables': [{'name': 'x', 'columns': ['FK y -> absent_entity', None]}]}]})
+        self.assertTrue(any('absent_entity' in e and 'FK y -> absent_entity' in e for e in errors))
+        self.assertIn('x: non-string column entry', errors)
 
 
 if __name__ == "__main__":
