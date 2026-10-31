@@ -59,8 +59,10 @@ inline drogon::Task<drogon::HttpResponsePtr> read_faqs(
         + "ORDER BY e.updated_at DESC,e.id DESC LIMIT 50";
     // Query structure, not user content, selects the optional exact-id filter.
     // No SQL string concatenation with a client-controlled value.
-    auto rows = faq_id ? co_await tx->execSqlCoro(sql,*faq_id)
-                       : co_await tx->execSqlCoro(sql);
+    // No co_await inside ?: (GCC miscompiles coroutine temporaries in conditionals).
+    drogon::orm::Result rows(nullptr);
+    if (faq_id) rows = co_await tx->execSqlCoro(sql, *faq_id);
+    else rows = co_await tx->execSqlCoro(sql);
     Json::Value items(Json::arrayValue);
     for(const auto& row: rows) {
       Json::Value value(Json::objectValue);
