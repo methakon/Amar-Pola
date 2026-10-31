@@ -21,7 +21,7 @@ inline drogon::Task<drogon::HttpResponsePtr> read_faqs(
     faq_id=normalize_uuid(*faq_id);
     if(!faq_id) co_return error_response("INVALID_REQUEST","faqId must be UUID",rid);
   }
-  auto token = admin_mode ? admin_session_cookie(req->getHeader("cookie")) : std::nullopt;
+  auto token = admin_mode ? admin_session_cookie(req) : std::nullopt;
   if(admin_mode && !token)
     co_return error_response("UNAUTHENTICATED","administrator session required",rid);
   if(!app().hasDbClient(kDbClientName))

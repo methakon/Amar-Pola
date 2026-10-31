@@ -178,7 +178,7 @@ inline drogon::Task<drogon::HttpResponsePtr> with_admin_session(
     csrf = req->getHeader("x-csrf-token");
     if (!is_hex64(csrf)) co_return admin_no_store(error_response("FORBIDDEN", "CSRF token required", rid));
   }
-  auto token = admin_session_cookie(req->getHeader("cookie"));
+  auto token = admin_session_cookie(req);
   if (!token) co_return admin_no_store(error_response("UNAUTHENTICATED", "administrator session required", rid));
   if (!app().hasDbClient(kDbClientName))
     co_return error_response("SERVICE_UNAVAILABLE", "database unavailable", rid, true);
@@ -347,7 +347,10 @@ inline drogon::Task<drogon::HttpResponsePtr> admin_login_google(drogon::HttpRequ
   const auto id_token = body["id_token"].asString();
   const auto nonce = body["nonce"].asString();
   if (!is_hex64(nonce)) co_return error_response("INVALID_REQUEST", "nonce must come from the login challenge", rid);
-  const auto state = named_hex_cookie(req->getHeader("cookie"), kAdminLoginCookie);
+  const auto& raw_cookie = req->getHeader("cookie");
+  const auto state = !raw_cookie.empty() ? named_hex_cookie(raw_cookie, kAdminLoginCookie)
+                     : is_hex64(req->getCookie(kAdminLoginCookie))
+                         ? std::optional<std::string>(req->getCookie(kAdminLoginCookie)) : std::nullopt;
   if (!state) co_return admin_no_store(error_response("UNAUTHENTICATED", "login challenge missing or expired", rid));
   auto identity = config.verifier ? config.verifier(req, id_token, nonce) : std::nullopt;
   if (!identity) co_return admin_no_store(error_response("UNAUTHENTICATED", "identity verification failed", rid));

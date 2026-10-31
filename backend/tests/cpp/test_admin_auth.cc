@@ -118,7 +118,7 @@ int main() {
   CHECK(status(drogon::sync_wait(admin_faq_draft(make(drogon::Post, "/x",
         R"({"slug":"ok-slug","category":"c","title":"Title","safe_markdown":"<script>"})"), std::nullopt))) == 422);
   CHECK(status(drogon::sync_wait(admin_faq_draft(make(drogon::Post, "/x",
-        R"({"slug":"ok-slug","category":"c","title":"Title","safe_markdown":"[link](x)"})"), std::nullopt))) == 422);
+        R"J({"slug":"ok-slug","category":"c","title":"Title","safe_markdown":"[link](x)"})J"), std::nullopt))) == 422);
   CHECK(status(drogon::sync_wait(admin_faq_draft(make(drogon::Put, "/x",
         R"({"title":"Title","safe_markdown":"x","expected_revision":0})"), uuid))) == 422);
   CHECK(status(drogon::sync_wait(admin_faq_draft(make(drogon::Post, "/x",

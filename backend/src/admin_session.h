@@ -38,11 +38,24 @@ inline std::optional<std::string> admin_session_cookie(std::string_view cookie_h
   return found;
 }
 
+// Drogon moves the Cookie request header into its cookie map (the raw header is
+// not retained), so real requests are read through getCookie(). A raw header, as
+// set by in-process tests, still goes through the strict duplicate-aware parser.
+inline std::optional<std::string> admin_session_cookie(const drogon::HttpRequestPtr& req) {
+  const auto& raw = req->getHeader("cookie");
+  if (!raw.empty()) return admin_session_cookie(std::string_view(raw));
+  const auto& value = req->getCookie("__Host-ma_admin_s");
+  if (value.size() != 64) return std::nullopt;
+  for (const unsigned char c : value)
+    if (!((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f'))) return std::nullopt;
+  return value;
+}
+
 inline drogon::Task<drogon::HttpResponsePtr> admin_access_me(
     drogon::HttpRequestPtr req) {
   using namespace drogon;
   const auto rid = request_id_of(req);
-  auto token = admin_session_cookie(req->getHeader("cookie"));
+  auto token = admin_session_cookie(req);
   if (!token) co_return error_response("UNAUTHENTICATED", "administrator session required", rid);
   if (!app().hasDbClient(kDbClientName))
     co_return error_response("SERVICE_UNAVAILABLE", "database unavailable", rid, true);
