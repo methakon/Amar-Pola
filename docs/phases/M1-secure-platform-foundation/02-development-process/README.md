@@ -6,6 +6,8 @@
 
 [M1 phase](../README.md) · [Docs home](../../../README.md) · [Master register](../../../MASTER_DOCUMENT_CONTROL_REGISTER.md)
 
+**2026-10-31 admin API:** [Partially implemented admin OIDC verifier, session self-status, applicant/owner read routes and outstanding issuer/MFA gates](ADMIN_WEB_UI_AND_API_INTEGRATION_STATUS_2026-10-31.md#admin-authenticationaccess-api-implementation--2026-10-31-synthetic). Positive end-to-end login is **not** yet available.
+
 **2026-10-31 admin-web implementation:** [Figma BO-01–BO-09 responsive UI + typed API adapter and unfinished trusted backend integration](ADMIN_WEB_UI_AND_API_INTEGRATION_STATUS_2026-10-31.md). Synthetic-only on admin-web; not a production-ready administrator service.
 
 **2026-10-31 Swagger integration:** [Local Swagger UI dev server for frozen M1 and design-only Figma API](SWAGGER_OPENAPI_DEV_WORKFLOW_2026-10-31.md); source on `api`, loopback-only, Try it out disabled by default and planned operations never executable. [Latest api Swagger CI](https://github.com/methakon/Madalasa-Alarka/actions/runs/41168787562) **PASSED**; production/UI browser rendering remains independently unverified.

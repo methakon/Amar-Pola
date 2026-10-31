@@ -39,3 +39,20 @@ No direct admin device/location media routes are permitted in the frontend API c
 ## Synthetic local commands
 
 From repository root: cd admin-web; npm install --no-audit --no-fund; VITE_ADMIN_SYNTHETIC_PREVIEW=true npm run dev. Run npm test and npm run build. No secret or real user-data fixture required.
+
+
+## Admin authentication/access API implementation — 2026-10-31 (synthetic)
+
+Source branch: [api](https://github.com/methakon/Madalasa-Alarka/tree/api); documentation/API contract: main. **Not merged to dev and not production ready.**
+
+- Google **admin-only token verifier** validates Google RS256 verified identity, separate admin audience, exact trusted nonce, \`email_verified=true\`, bounded email and 5-minute token freshness. [Code](https://github.com/methakon/Madalasa-Alarka/blob/api/backend/src/admin_oidc.h). **Important:** trusted challenge issuance, one-time consumption and session minting have not yet been implemented. It must **not** accept a nonce/state chosen solely by the browser or bootstrap owner based on email alone.
+- \`GET /v1/admin/access/me\` reads the revocable, opaque \`__Host-ma_admin_s\` admin session cookie; checks DB \`ctx_admin\`, role/scope state, pending status. [Code](https://github.com/methakon/Madalasa-Alarka/blob/api/backend/src/admin_session.h).
+- \`GET /v1/admin/access/profile\` and \`GET /v1/admin/access/requests/me\` show only the current applicant's profile and latest request, using DB RLS; returns null for nonessential DOB/address/gender. [Code](https://github.com/methakon/Madalasa-Alarka/blob/api/backend/src/admin_applicant.h).
+- \`GET /v1/admin/owner/access-requests\` is gated by the DB's \`OWNER_MANAGE\` MFA permission **and** verified owner issuer/subject identity; returns only 50 pending requests with review revisions. [Code](https://github.com/methakon/Madalasa-Alarka/blob/api/backend/src/admin_owner.h). Cursor pagination and writes still pending.
+- OpenAPI update adds correct owner queue shape \`AdminAccessRequestPage\`, applicant \`profile_revision\` and owner \`revision\` so the UI can eventually make server-checked decisions, not hardcoded revision 0.
+
+**Verification:** [api CI at 10e1446](https://github.com/methakon/Madalasa-Alarka/actions/runs/41177258392) **SUCCESS (3/3)** after correcting a cookie extraction offset. Further new owner-queue/response-revision commits require independent green CI. Cryptographic offline tests, malformed/duplicate cookie tests, no-DB denial and unchanged M1 route tests are included. Owner MFA positive, real issuer-minted login, request-specific authorization, emails and production browser tests are **NOT complete**.
+
+**Hard gates:** Authentic \`ap_auth_issuer\` login bridge must be isolated from \`ap_m1_api\`; admin-only OIDC issuer/audience/nonce/CSRF-state validation; secure single-use login challenge; server-minted HttpOnly/Secure/SameSite cookie; CSRF protection; owner MFA step-up; RLS/role-grant/epoch positive and negative tests. No direct frontend role elevation; no live family data; no claimed working production admin login.
+
+**Worker verification:** independent test prompts A01 (admin OIDC/cookie) and A02 (applicant/owner access) were supplied to project owner for separate testing branches and PR review. Their results have **not** been received. Implementation under review does not grant or imply external approval.

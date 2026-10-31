@@ -92,6 +92,10 @@ Source and decision owner: explicit project-owner instruction dated 2026-10-30. 
 
 **ALL 14 FROZEN M1 OPERATION ROUTES REGISTERED on `api`, not merged to `dev`/main; do not mark E-02 CLOSED.** [Operation-by-operation implementation/evidence register](../../M1-secure-platform-foundation/02-development-process/M1_API_HANDLER_IMPLEMENTATION_STATUS_2026-10-31.md). Added GET listFamilies/getChild/listChildDevices, POST createChild/recordCapabilities and DELETE revokeDevice, hardened issuePairingCode and corrected health Receipt, plus negative tests and static route-coverage assertion. The [api SHA `0831367` M1 CI](https://github.com/methakon/Madalasa-Alarka/actions/runs/41143455623) **PASSED all three jobs**, including the 14-route ctest assertion. Runtime V2 trusted sessions, positive exact-child access and cross-family tests are still required. **V2 trusted session issuance, authority/guardian tests, end-to-end HTTP–PostgreSQL role/isolation, revokeDevice's extra VIEW scope and P-1 owner acceptance remain OPEN.** 171 broader/Figma-planned operations are NOT M1 implementation.
 
+## Admin P0/P1 backend workstream — 2026-10-31
+
+Source on `api` **not merged to dev**. [Status/evidence](../../M1-secure-platform-foundation/02-development-process/ADMIN_WEB_UI_AND_API_INTEGRATION_STATUS_2026-10-31.md#admin-authenticationaccess-api-implementation--2026-10-31-synthetic). Google admin OIDC verified-claims helper, revocable admin cookie self-status, applicant own profile/request and MFA-gated owner pending queue are implemented and negative-tested. [CI baseline](https://github.com/methakon/Madalasa-Alarka/actions/runs/41177258392) PASSED for auth/applicant code before subsequent owner queue revision change. **Trusted nonce challenge, issuer-only minting, actual admin login, CSRF, owner MFA flow, owner approval mutations and positive V2 integration remain OPEN.** Worker A01/A02 independent testing requested, results not yet received. No public admin access or child data.
+
 ## B. Engineering blockers — resolved by building and testing, not by guessing
 
 | ID | Priority | Work and reason it blocks completion | Evidence required | Responsible role |
