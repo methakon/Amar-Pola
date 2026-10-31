@@ -2,6 +2,10 @@
 
 > **Document control:** M9 / 01-play-and-data-safety · Proposed owner: Play release owner + counsel (not assigned) · Registry: DRAFT_LEGAL_REVIEW_REQUIRED; approval not recorded. [Master register](../../../MASTER_DOCUMENT_CONTROL_REGISTER.md).
 
+## 2026-10-31 X-02 Play Families + background location assessment
+
+[Current X-02 G01/G04 assessment and evidence checklist](X02_FAMILIES_LOCATION_AND_MONITORING_POLICY_REVIEW_2026-10-31.md): truthfully classify Alarka audience first; no monitoring-flag waiver of Families location restriction; background-location form is **separate**, requires one core benefit, valid app/privacy video/consent and actual review. **Existing owner support case remains pending human response, not approval.** No Console change, signed AAB or real-child collection has been performed. **T-X02-01…10 are PLANNED/NOT EXECUTED.**
+
 ## Current Parent and Child preparation checklists — 2026-10-30
 
 **Preparation only / production NO-GO.** These checklists supersede conflicting historical identity, Family Link and auto-renew wording below. India launch; Individual publisher **SWARNA SEKHAR DHAR**; child scope **0–17**. Public support/privacy/grievance contacts and publishable postal address **pending owner confirmation**; do not reuse an administrative login as a public contact. Owner Payments identity, merchant eligibility/legal/tax details and linked catalog remain **pending**; Individual Play publisher choice does not verify a Payments profile or authorize commerce. Package IDs and release artifacts must be read from a future actual candidate, not invented or inferred from repository/signing material.

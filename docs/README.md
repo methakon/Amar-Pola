@@ -12,9 +12,27 @@ The 72 root-level compatibility pointers were consolidated into [legacy-root-lin
 
 [Current machine register](document-control-register.json) · [Evidence-separated phase checklist](DOCUMENTATION_PHASE_GATE_CHECKLIST.md) · [Documentation verification tools](tools/README.md)
 
+## Swagger/OpenAPI developer tooling — 2026-10-31
+
+[Local Swagger UI install, M1 vs design-only API views and secure synthetic Try it out](phases/M1-secure-platform-foundation/02-development-process/SWAGGER_OPENAPI_DEV_WORKFLOW_2026-10-31.md). Swagger runs on loopback as a developer process, not on production Drogon. Existing OpenAPI source files remain authoritative and unchanged.
+
+## M1 API coding progress — 2026-10-31
+
+[14-operation M1 route implementation matrix, latest synthetic CI checkpoint and unresolved security integration](phases/M1-secure-platform-foundation/02-development-process/M1_API_HANDLER_IMPLEMENTATION_STATUS_2026-10-31.md). Code lives on `api` only and is not merged. The wider Figma-linked API lists 171 *planned* operations, not completed endpoints. The V2 trusted-session issuer and positive role/tenant isolation tests still gate E-02.
+
 ## 2026-10-31 P2P-first media/live-location architecture
 
 [MA-P2P-ADR-004](phases/P3-deferred-research/01-media-and-administrator-research/P2P_MEDIA_AND_LIVE_LOCATION_TRANSPORT_ARCHITECTURE_2026-10-31.md): WebRTC ICE/STUN direct, TURN relay when necessary, existing Drogon signaling, no custom VPN for these features; separate durable GPS pipeline. **Documentation only:** Android/Indian counsel/Play gate approvals remain OPEN and child capture release OFF.
+
+## X-02 Google Play G01/G04 decision pack — 2026-10-31
+
+[Official-policy review, evidence checklist and existing-support-case status](phases/M9-play-release/01-play-and-data-safety/X02_FAMILIES_LOCATION_AND_MONITORING_POLICY_REVIEW_2026-10-31.md): Alarka true-audience and precise-location Families eligibility must be resolved **before** separate background-location declaration. Monitoring-app flag alone does not exempt location; both decisions remain open and no child release is authorized. No duplicate support case created.
+
+## X-03 Indian child-data lawfulness — clarification 2026-10-31
+
+[Independent primary-text DPDP Act/Rules review and feature matrix](phases/M0-foundation-and-approvals/03-legal-and-privacy/INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md#2026-10-31-first-party-primary-law-review-no-mandatory-paid-counsel-opinion) replaces the compulsory-paid-lawyer-paperwork assumption; substantive child-data lawfulness remains gated.
+
+**Legal compliance for each enabled feature is required; buying a signed lawyer opinion/printed certificate is not a general prerequisite.** The owner is preparing an evidence-backed feature-by-feature assessment; Tele-Law case registered, MeitY clarification email sent, responses pending. A substantive counsel email can support the record. Release-sensitive child-data features remain OFF while the substantive legality and Android/Play gates are unresolved. [Current X-03/G02 disposition](phases/M0-foundation-and-approvals/01-project-governance/BLOCKERS_AND_OWNER_DECISIONS.md).
 
 ## X-01 status — 2026-10-31
 

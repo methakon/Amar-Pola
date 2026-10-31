@@ -1,3 +1,5 @@
+> **Current 2026-10-31 legal-paperwork correction:** Older requirements for a mandatory signed Indian advocate opinion are *superseded*. The DPDP Act and Rules reviewed do not prescribe a routine legal-opinion certificate. The substantive per-feature Indian-law assessment, under-18 restrictions, Google Play and Android gates **remain**. See [2026-10-31 primary-law desk review](INDIA_DPDP_CHILD_PRIVACY_AND_CROSS_BORDER_GATE.md#2026-10-31-first-party-primary-law-review-no-mandatory-paid-counsel-opinion). This is not a finding that child monitoring is legally approved.
+
 # Madalasa & Alarka — India Government, Legal, Google Play & Android Project Assessment
 
 > **Document control:** M0 / 03-legal-and-privacy · Proposed owner: Privacy counsel + owner (not assigned) · Registry: DRAFT_LEGAL_REVIEW_REQUIRED; approval not recorded. [Master register](../../../MASTER_DOCUMENT_CONTROL_REGISTER.md).
@@ -19,7 +21,7 @@ No Google Family Link dependency: Google sign-in is account authentication, not 
 
 **R-01 — Google Play child app + GPS conflict (CRITICAL).** Google Play Families Policy states **apps solely targeted at children may not request location permission or collect, use or transmit precise location** [P1]. Alarka is to be installed on children's phones. Google's separate monitoring-app exception for parent-to-child monitoring [P2,P3] has **not** been shown to override that Families condition for our actual child companion. Written product-specific Play classification is therefore required BEFORE promising/implementing an Alarka GPS launch. **Do not falsely label the app adult-targeted to get around policy.**
 
-**R-02 — DPDP children tracking distinction (CRITICAL).** India's DPDP Act section 9 prohibits tracking/behavioural monitoring of under-18s subject to narrow exceptions. The 2025 Rules Fourth Schedule Part B item 4 addresses **real-time location limited to child safety/protection/security**, rather than blanket historic trips, geofence profiles, app usage, or media surveillance [L1,L3]. Commercial consumer applicability needs qualified Indian counsel. Until signed: **real minor data OFF; history, usage and route profiling OFF**.
+**R-02 — DPDP children tracking distinction (CRITICAL).** India's DPDP Act section 9 prohibits tracking/behavioural monitoring of under-18s subject to narrow exceptions. The 2025 Rules Fourth Schedule Part B item 4 addresses **real-time location limited to child safety/protection/security**, rather than blanket historic trips, geofence profiles, app usage, or media surveillance [L1,L3]. Commercial consumer applicability needs a primary-source-backed assessment; qualified advice is recommended if unresolved. Until supported: **real minor data OFF; history, usage and route profiling OFF**.
 
 **R-03 — transparent monitoring and OS limits (CRITICAL).** Eligible Play child-monitoring apps need a recognizable icon, monitoring disclosure, a persistent notification while running and the isMonitoringTool child_monitoring flag where applicable [P2,P3]. Android foreground/background restrictions, especially Android 14+ camera/mic/location while-in-use checks, remain effective after runtime grants [A1,A2]. **No stealth/hidden tracking, remote silent mic/camera, guaranteed background capture, or bypass.**
 
@@ -60,7 +62,7 @@ No Google Family Link dependency: Google sign-in is account authentication, not 
 | ID | Severity | Gap against rules | Product action and reason | Evidence to close |
 |---|---|---|---|---|
 | R01 | **CRITICAL** | Alarka child audience and precise location vs Families restriction [P1,P2] | BLOCK child GPS Play launch; obtain real-use eligibility decision; never misstate audience | Written Play classification for actual target ages/manifest |
-| R02 | **CRITICAL** | Historic tracking, inferred stops/behavior vs narrow DPDP real-time exception [L1,L3] | OFF for minors until case-specific legal purpose decision | Qualified India counsel memo per feature |
+| R02 | **CRITICAL** | Historic tracking, inferred stops/behavior vs narrow DPDP real-time exception [L1,L3] | OFF for minors until case-specific legal purpose decision | Dated primary-law feature assessment; specialist advice if unresolved |
 | R03 | **CRITICAL** | Parent OIDC and device permission are not verified adult/custody consent [L1,L3] | Independent lawful guardian identity and authority verification | Approved adult-age, parent proof and contested-custody workflow |
 | R04 | **CRITICAL** | Individual publisher / India ages 0–17 owner-decided; verification, retention, notice and legal approval incomplete | No real child data before M0 owner/legal signature | Publisher evidence, Payments/merchant/public support, B-01/B-02 implementation and counsel review |
 | R05 | **CRITICAL** | Hidden Alarka/stealth monitoring vs stalkerware [P2,P3] | Visible icon, persistent monitoring notification while running, clear child-accessible purpose statement | APK + actual notification/listing video |
@@ -122,7 +124,7 @@ No Google Family Link dependency: Google sign-in is account authentication, not 
 
 ## 7. Minimum viable product recommendations (NOT approval)
 
-**Option A: lawful, narrowly-scoped child-safety location** *only if* official Play classification and India counsel approve Alarka's exact child-audience/location behavior. Include current last-observed time/accuracy, minimal approved storage, visible notification, parent legal verification, no history/usage/media, child permissions and secure per-child grants. Must also pass Android background tests and Play declaration.
+**Option A: lawful, narrowly-scoped child-safety location** *only if* official Play classification and an owner-reviewed source-cited legal assessment support Alarka's exact child-audience/location behavior. Include current last-observed time/accuracy, minimal approved storage, visible notification, parent legal verification, no history/usage/media, child permissions and secure per-child grants. Must also pass Android background tests and Play declaration.
 
 **Option B: low-data family connection until location dispute resolved**: parent account+guardian verification, child-transparent Alarka, child-initiated “I'm OK / contact me” check-ins, user-controlled manual contact, permission coach. Even optional one-time location sharing is not automatically exempt from Play Families location rule. No disguised side-loaded location app or false target audience.
 
@@ -133,7 +135,7 @@ No Google Family Link dependency: Google sign-in is account authentication, not 
 | Gate | Owner role | Written proof required before live feature |
 |---|---|---|
 | G01 Play child location **CRITICAL** | Product owner / Play policy liaison | Actual child audience and monitoring classification; written location eligibility review |
-| G02 India child legal **CRITICAL** | Qualified India privacy counsel | Purposes, safety exception, history/usage, guardian verification/consent, correct dates |
+| G02 India child legal **CRITICAL** | Owner and qualified privacy reviewer (specialist lawyer optional if unresolved) | Purposes, safety exception, history/usage, guardian verification/consent, correct dates |
 | G03 Publisher/ages/guardian | Owner / legal | Verify declared individual B-01; India ages 0–17 B-02 decided; Payments/merchant/public-support pending; custody/pickup/revoke B-09/18 and adult verification remain separate |
 | G04 Play package/submission | Android+Play lead | Final Alarka/Madalasa manifests, age labels, MonitoringTool, disclosures, background video, Data Safety |
 | G05 Devices | Android QA | API 29/30/34/36 coverage; actual resettable DPC phone; native 16KB; OS deny/revoke behaviors |
@@ -208,7 +210,7 @@ The project owner received an AI-generated response in the Google Play Console s
 
 **Important limits / interpretation questions:** the text does not expressly say that all continuous location histories, trip reconstruction, school/stop profiling, geofence inference, app-usage monitoring, screen-time records, remote media capture, or broad guardian sharing are exempt. It also does not itself settle whether this commercial parent-monitoring service qualifies for the exception, what data cadence/retention is necessary, or whether a 48-hour offline queue and server inbox are within the permitted purpose. Section 9(2)'s detrimental-effect prohibition is separate from the section 9(1)/(3) exception wording and requires specific legal analysis. The exception is not a blanket authorization for all child data processing.
 
-**G02 status: CRITICAL OPEN — counsel opinion required.** Obtain a signed, dated opinion from qualified Indian privacy counsel that:
+**G02 status: CRITICAL OPEN for actual feature lawfulness, NOT for mandatory signed counsel paperwork.** Record a dated source-backed owner assessment and seek specialist advice if substantial uncertainty remains. It must:
 1. Confirms commencement/effective dates and all applicable transitional/corrigendum/other-law provisions as at intended launch.
 2. Determines whether this specific commercial service and its actual guardian/device architecture qualify for the real-time child-safety location purpose.
 3. Defines the permissible scope: live location request vs periodic collection, background operation, precision, update cadence, offline queue, PostgreSQL inbox, derived trips, historical retention, geofences, school/stop detection, exports and guardian sharing.
