@@ -5,16 +5,21 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 add_compile_options(-Wall -Wextra -Wpedantic -Werror)
 
+# Opt-in synthetic local read harness. CFamily: separate executable, never sources into ma_backend.
+option(MA_LOCAL_DB_READ_PROBE "Build the loopback-only synthetic V2 read probe" OFF)
+
 # Dependencies are built by backend/scripts/build_deps.sh; point CMAKE_PREFIX_PATH at its $PREFIX.
 find_package(Drogon CONFIG REQUIRED)
 find_package(OpenSSL 3.0 REQUIRED COMPONENTS Crypto)
+if(EXISTS "${OPENSSL_INCLUDE_DIR}/x86_64-linux-gnu")
+  include_directories("${OPENSSL_INCLUDE_DIR}/x86_64-linux-gnu")
+endif()
 find_package(CURL REQUIRED)
 find_package(Threads REQUIRED)
 enable_testing()
 
 # Test-only header authentication. NEVER enable for a deployable build (see src/auth.h).
 option(MA_SYNTHETIC_AUTH "Compile the synthetic test authenticator" OFF)
-
 
 add_library(ma_core INTERFACE)
 target_include_directories(ma_core INTERFACE src)
@@ -42,6 +47,26 @@ add_test(NAME jwks COMMAND test_jwks)
 add_executable(test_jwks_fetch tests/cpp/test_jwks_fetch.cc)
 target_link_libraries(test_jwks_fetch PRIVATE ma_oidc)
 add_test(NAME jwks_fetch COMMAND test_jwks_fetch)
+add_executable(test_crypto tests/cpp/test_crypto.cc)
+target_link_libraries(test_crypto PRIVATE ma_core OpenSSL::Crypto)
+add_test(NAME crypto COMMAND test_crypto)
+
+add_executable(test_device_endpoints tests/cpp/test_device_endpoints.cc)
+target_link_libraries(test_device_endpoints PRIVATE ma_core OpenSSL::Crypto)
+add_test(NAME device_endpoints COMMAND test_device_endpoints)
+
 add_executable(test_oidc_http tests/cpp/test_oidc_http.cc)
 target_link_libraries(test_oidc_http PRIVATE ma_core ma_oidc)
 add_test(NAME oidc_http COMMAND test_oidc_http)
+
+if(MA_LOCAL_DB_READ_PROBE)
+  add_library(ma_local_database src/Database.cc)
+  # Probe-local: links the V2 read adapter; ma_backend never sees these sources.
+  target_include_directories(ma_local_database PUBLIC include)
+  target_link_libraries(ma_local_database PUBLIC Drogon::Drogon)
+  add_executable(ma_local_db_read_probe src/local_db_read_probe.cc)
+  target_link_libraries(ma_local_db_read_probe PRIVATE ma_local_database)
+  add_executable(database_config_test tests/database_config_test.cc)
+  target_link_libraries(database_config_test PRIVATE ma_local_database)
+  add_test(NAME database_config COMMAND database_config_test)
+endif()

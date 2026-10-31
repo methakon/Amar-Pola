@@ -9,11 +9,15 @@ on:
       - "docs/data-model/M1_PHYSICAL_TO_LOGICAL_CATALOG.json"
       - "docs/M1_PHYSICAL_TABLE_CATALOG.md"
       - "backend/persistence/migrations/**"
+      - "backend/persistence/migration-lineages.json"
       - "backend/tests/**"
       - "backend/src/**"
       - "backend/scripts/**"
       - "backend/deploy/**"
       - "backend/CMakeLists.txt"
+      - "tools/database/**"
+      - "infra/local/**"
+      - "docs/data-model/local-postgresql/**"
       - ".github/workflows/m1-contract-and-tenant.yml"
   pull_request:
     paths:
@@ -24,11 +28,15 @@ on:
       - "docs/data-model/M1_PHYSICAL_TO_LOGICAL_CATALOG.json"
       - "docs/M1_PHYSICAL_TABLE_CATALOG.md"
       - "backend/persistence/migrations/**"
+      - "backend/persistence/migration-lineages.json"
       - "backend/tests/**"
       - "backend/src/**"
       - "backend/scripts/**"
       - "backend/deploy/**"
       - "backend/CMakeLists.txt"
+      - "tools/database/**"
+      - "infra/local/**"
+      - "docs/data-model/local-postgresql/**"
 jobs:
   contracts-and-isolation:
     runs-on: ubuntu-latest
@@ -158,3 +166,51 @@ jobs:
         run: python3 backend/tests/integration_db_failures.py build-it/ma_backend --case all
       - name: End-to-end createFamily against PostgreSQL
         run: bash backend/tests/integration_families.sh build-it/ma_backend
+
+  database-v2-lineage:
+    # Fresh V2 replay, lineage/ACL verification and the full synthetic database
+    # regression suite against a real PostGIS 16 service. The opt-in local read
+    # probe is not linked here; its HTTP acceptance runs in local evidence.
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgis/postgis:16-3.5
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: synthetic_test_only_password
+          POSTGRES_DB: madalasa_alarka_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d madalasa_alarka_test"
+          --health-interval 10s --health-timeout 5s --health-retries 10
+    env:
+      MA_LOCAL_DB_CI: "1"
+      MA_CI_SYNTHETIC: "1"
+      MA_CI_ADMIN_PASSWORD: synthetic_test_only_password
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install the pinned PostgreSQL client driver
+        run: python3 -m pip install 'psycopg[binary]==3.3.6'
+      - name: Write the private CI connection config
+        env:
+          MA_LOCAL_DB_CONFIG: ${{ runner.temp }}/ma-connection.json
+        run: |
+          echo "MA_LOCAL_DB_CONFIG=$MA_LOCAL_DB_CONFIG" >> "$GITHUB_ENV"
+          python3 tools/database/manage.py ci-config
+      - name: Create the synthetic database, roles and extensions
+        run: python3 tools/database/manage.py create
+      - name: Replay the complete ordered lineage from a clean V2 install
+        run: python3 tools/database/manage.py migrate
+      - name: Verify forced RLS, restricted roles and catalog counts
+        run: python3 tools/database/manage.py verify
+      - name: Full synthetic versioned-database regression suite
+        run: python3 tools/database/manage.py test
+      # Byte-level catalog drift is verified against the recorded local instance
+      # (`export_schema.py --check`, executed and recorded in evidence). It is not
+      # repeated here because `pg_get_constraintdef` renders nested AND groups
+      # differently across separate clusters, so byte equality would fail on a
+      # semantically identical deployment.

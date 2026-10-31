@@ -76,3 +76,8 @@ Before schema changes, read [deep physical schema audit and remediation](docs/da
 ## 2026-10-29 database implementation branch collision — read before SQL work
 
 The live Figma ERD page `92:2` has been synchronized for its two formerly broken references; see [physical schema deep audit](docs/data-model/PHYSICAL_SCHEMA_DEEP_AUDIT_AND_REMEDIATION_2026-10-29.md). **Important:** `feat/local-postgresql-physical-schema` already holds SQL migrations 0002–0015 with schema-completion tests, whereas the M1 PR #3/#4 line independently uses 0002–0004. Do not generate new migrations under these numbers or assume 103 missing ERD entities require separate physical tables. First reconcile histories, dependencies, naming, normalized aliases and physical FK/RLS tests. Do not overwrite or delete the existing local schema branch. Keep branch inventory updated in the canonical branching process.
+
+
+## 2026-10-31 required P2P transport reading for media/network workers
+
+For media, screen, camera, mic, TURN or high-detail live location work on `api`/`parent`/`child`, first read [MA-P2P-ADR-004](docs/phases/P3-deferred-research/01-media-and-administrator-research/P2P_MEDIA_AND_LIVE_LOCATION_TRANSPORT_ARCHITECTURE_2026-10-31.md). This owner-selected design uses WebRTC/ICE/STUN direct with quota-limited TURN fallback and existing Drogon authentication/signaling—**no custom full-device VPN**. Durable historical GPS remains in backend/PostGIS. **Design only, T-P2P-01…12 NOT RUN, all Android/India legal/Play gates OPEN, capture OFF for children**. Pre-sync both `main` and `dev`; documentation updates stay exclusively on `main`, implementation uses approved workstream → `dev` → `main`.

@@ -7,8 +7,12 @@
 
 #include "auth.h"
 #include "db_support.h"
+#include "device_activity.h"
+#include "device_credentials.h"
+#include "enrollment.h"
 #include "families.h"
 #include "http_support.h"
+#include "pairing.h"
 
 int main() {
   using namespace drogon;
@@ -81,6 +85,55 @@ int main() {
   app().registerHandler(
       "/v1/families",
       [authenticate](HttpRequestPtr req) -> Task<HttpResponsePtr> { co_return co_await ma::create_family(std::move(req), authenticate); },
+      {Post});
+
+  app().registerHandler(
+      "/v1/children/{childId}/pairing-codes",
+      [authenticate](HttpRequestPtr req, std::string childId) -> Task<HttpResponsePtr> {
+        co_return co_await ma::issue_pairing_code(std::move(req), std::move(childId), authenticate);
+      },
+      {Post});
+
+  app().registerHandler(
+      "/v1/enrollment",
+      [](HttpRequestPtr req) -> Task<HttpResponsePtr> {
+        co_return co_await ma::redeem_enrollment(std::move(req));
+      },
+      {Post});
+
+  app().registerHandler(
+      "/v1/enrollment/{enrollmentId}/proof",
+      [](HttpRequestPtr req, std::string enrollmentId) -> Task<HttpResponsePtr> {
+        co_return co_await ma::complete_enrollment_proof(std::move(req), std::move(enrollmentId));
+      },
+      {Post});
+
+  app().registerHandler(
+      "/v1/devices/{deviceId}/credential/challenge",
+      [](HttpRequestPtr req, std::string deviceId) -> Task<HttpResponsePtr> {
+        co_return co_await ma::request_credential_challenge(std::move(req), std::move(deviceId));
+      },
+      {Post});
+
+  app().registerHandler(
+      "/v1/devices/{deviceId}/credential/renew",
+      [](HttpRequestPtr req, std::string deviceId) -> Task<HttpResponsePtr> {
+        co_return co_await ma::renew_device_credential(std::move(req), std::move(deviceId));
+      },
+      {Post});
+
+  app().registerHandler(
+      "/v1/devices/{deviceId}/health",
+      [](HttpRequestPtr req, std::string deviceId) -> Task<HttpResponsePtr> {
+        co_return co_await ma::record_device_health(std::move(req), std::move(deviceId));
+      },
+      {Post});
+
+  app().registerHandler(
+      "/v1/devices/{deviceId}/locations:batch",
+      [](HttpRequestPtr req, std::string deviceId) -> Task<HttpResponsePtr> {
+        co_return co_await ma::ingest_location_batch(std::move(req), std::move(deviceId));
+      },
       {Post});
 
   // Unknown route or wrong method -> catalog format, never Drogon's HTML page.

@@ -90,17 +90,19 @@ Reserved, **not yet in the contract**: `426 UPGRADE_REQUIRED` (client too old, s
 5. Check order: quota (429, before any database work) → size (413) → syntax (400) → authentication (401) → object visibility (404) → scope (403) → state (409/410) → value rules (422).
 6. Anything not listed per operation in the contract is a bug unless it is `500`.
 
+**P-1 decision status:** Security choice documented in the register; implementation committed on the `api` branch and **P-1 runtime/DB integration evidence not yet verified as of this document revision**. Existing migrations remain immutable; any pairing-code response previously stored by an older synthetic build must be scrubbed or the test database recreated before a real deployment. No live child enrollment or public release authorized.
+
 ## 6. Idempotency
 
 A mobile client WILL retry after a lost response. A retry must not create a second family, child or pairing code.
 
-**Rule.** The three create operations require `Idempotency-Key: <uuid>`. The server keeps, for each (caller, route template, key), the request body hash and the original response for **24 hours**.
+**Rule.** The three create operations require `Idempotency-Key: <uuid>`. The server retains, for each (caller, route template, key), the request digest and (except sensitive results) the original response for **24 hours**. **P-1 security exception:** `issuePairingCode` must not persist or replay a one-time secret; same completed request returns `409 CONFLICT`, with no regenerated code. Changed child path ID is part of its request digest; different child/body under an existing key returns `409 IDEMPOTENCY_KEY_REUSED`. A new key before existing code expiry returns `409 CONFLICT` without forced rotation.
 
 | Situation | Result |
 |---|---|
 | First request with this key | Processed normally; response stored. |
-| Same key, same body, original finished | The stored status and body are returned again. No second row. |
-| Same key, same body, original still running | The second request **waits** (database `lock_timeout` 5 s) and then receives the stored response. Only if the wait times out: `409 CONFLICT` with `retryable: true`. |
+| Same key, same body, original finished | Non-secret creates: stored status and body. **One-time pairing code (P-1): `409 CONFLICT`, never return the secret again**. No second row. |
+| Same key, same body, original still running | The second request **waits** (database `lock_timeout` 5 s). When the first commits it sees the same outcome as a completed replay (**P-1 pairing: `409 CONFLICT`**); if it rolls back the waiting caller may become `NEW`. If a lock timeout occurs: `409 CONFLICT` with `retryable: true`. |
 | Same key, different body | `409 IDEMPOTENCY_KEY_REUSED`. |
 | After 24 hours | Key forgotten; treated as new. |
 
@@ -109,7 +111,7 @@ A mobile client WILL retry after a lost response. A retry must not create a seco
 | Operation | Retry behaviour |
 |---|---|
 | `listFamilies`, `listChildren`, `getChild`, `listChildDevices` | Safe, repeat freely. |
-| `createFamily`, `createChild`, `issuePairingCode` | `Idempotency-Key` (above). |
+| `createFamily`, `createChild`, `issuePairingCode` | `Idempotency-Key` (above); **`issuePairingCode` uses P-1 no-secret replay exception**. |
 | `revokeDevice` | Idempotent by nature: revoking an already revoked device returns `204` again. |
 | `recordCapabilities` | The natural key is (device, `observed_at`). A repeat returns `202` with a `Receipt` whose `state` is `ALREADY_RECORDED`. |
 | `recordHealth` | One current row per device. A report older than the stored one is acknowledged with `202` and `ALREADY_RECORDED` and does not overwrite. |
@@ -166,7 +168,7 @@ A mobile client WILL retry after a lost response. A retry must not create a seco
 | ID | Gap | Recommendation |
 |---|---|---|
 | G-1 | ~~No table stores idempotency keys.~~ **Closed** by migration `0004_m1_idempotency.sql` (tests `m1_idempotency.sql` ID_01-ID_11 and `m1_idempotency_concurrency.sh`). Claim, create and record happen in one transaction; a rolled-back create leaves no claim; a committed claim without a result (`PENDING`) is a backend bug and is answered `500 INTERNAL_ERROR`. | Handlers must call `idempotency_claim` first and `idempotency_record` last in the same transaction. |
-| P-1 | **Open decision:** `issuePairingCode` returns a one-time secret, which is never stored (`p_omit_body`). A replay therefore cannot return the same code. | Recommended: a replay returns `200` with a new code issued for the same child and cancels the earlier unredeemed one. Alternative: replay returns `409 CONFLICT` and the parent app issues a new code. Owner/security decision before the handler is written. |
+| P-1 | **RESOLVED — 2026-10-31 / conservative no-secret replay:** `issuePairingCode` returns a one-time secret only in the initial successful `201`. Idempotency records set `body_omitted=true` and never retain the raw code; request digest binds the childId, canonical body and requested TTL. A same-key, same-child, same-body replay returns **409 CONFLICT**, never another code or a stored secret; a different request/child with the same key returns **409 IDEMPOTENCY_KEY_REUSED**. | After a lost first response, retain the same key only to determine it was already attempted; use the original displayed code if available, otherwise wait for the unredeemed code's expiry (up to requested 60–600 seconds) before a new logical action with a new key. Never silently invalidate an existing usable code. This is an explicit, documented secret-bearing exception to generic 201-body replay, not a claim that the API returned a 201. Scope must be revalidated on every retry. [API code](https://github.com/methakon/Madalasa-Alarka/blob/api/backend/src/pairing.h). |
 | G-2 | `ALREADY_RECORDED` for capabilities needs a uniqueness rule; `capability_snapshots` has none. | Add a unique constraint on (device, `observed_at`) in a migration. |
 | G-3 | Technical specification §7 calls for a stable `event_id` on device observations; M1 `Health` and `Capabilities` have none. | Use (device, `observed_at`) in M1; add `event_id` when batches arrive in M2. |
 | G-4 | `public_key_spki_base64` is standard base64; every other binary field is base64url. | Decide **before the first client is built** (renaming later is a breaking change). Recommended: switch to base64url. |

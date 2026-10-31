@@ -55,7 +55,7 @@ Do not run the manual merges on `main`. On `main`, `git fetch origin main dev &&
 - The **five working branches persist**; do **not** delete them after each task. `main` also persists.
 - **New temporary branches are forbidden without explicit owner instruction** identifying scope/reason. For owner-approved exceptional work, use `temp/<task-slug>`, base it on `main`, record owner authorization and PR, and promote through **temp → dev → main** using the same reviews and tests. Temporary PRs must carry the `owner-approved-temporary` label; the label is a CI routing signal and **does not prove approval** without the owner's recorded instruction.
 - After a temporary branch's complete unique work is verified on `main`, delete it promptly and record deletion/commit traceability. If any unique data, failing tests or unresolved PRs remain, retain it with an explicit blocker until resolved; never force-delete work.
-- **Legacy exception:** `feat/local-postgresql-physical-schema` predates this policy and is retained under draft [PR #11](https://github.com/methakon/Madalasa-Alarka/pull/11). Reconcile SQL and backend conflicts; route its integration through `dev` (not directly to `main`), move any docs edits separately to `main`, and delete the old branch **only after** tested `main` integration.
+- **Legacy exception (CLOSED 2026-10-31):** `feat/local-postgresql-physical-schema` predated this policy. It was reconciled, routed through [PR #11](https://github.com/methakon/Madalasa-Alarka/pull/11) → `dev`, promoted via PR #13 → `main` (`2a8d9d4`), with documentation and evidence landed separately on `main`, and deleted only after `main` verification. Record: [PR11 acceptance](../../../../evidence/local/database/PR11_RECONCILIATION_ACCEPTANCE_2026-10-30.md).
 - Administrator must configure protected/ruleset-enforced `main` and `dev` PR checks, review requirements, push restrictions and bypass controls. [Branch-route CI](../../../../.github/workflows/branch-governance.yml) validates PR routing/doc isolation but **cannot prevent direct pushes or certify approvals without GitHub rulesets**.
 - Legal/Google Play policy blockers remain separate: merging synthetic software does not authorize real-child location, screen/media capture, billing or production release.
 
@@ -63,7 +63,7 @@ Do not run the manual merges on `main`. On `main`, `git fetch origin main dev &&
 
 ### Initial branch inventory / transition
 
-As inspected immediately before adoption, only `main` and retained `feat/local-postgresql-physical-schema` existed. The five named work branches were **created from the same `main` commit `903136f` on 2026-10-31** and verified against live GitHub. Together with `main`, there are six permanent branches, plus one separately retained legacy PostgreSQL branch pending safe integration. During legacy reconciliation a seventh branch can temporarily exist, but it must not be mistaken for a permanent sixth workstream. PR #11 remains a draft and is not merge-ready until the current M1/V2 migration tests and integration gate pass.
+As inspected immediately before adoption, only `main` and the retained legacy `feat/local-postgresql-physical-schema` existed. The five named work branches were **created from the same `main` commit `903136f` on 2026-10-31** and verified against live GitHub. The legacy PostgreSQL branch has since been reconciled, merged (`2a8d9d4`) and removed, so the permanent inventory is now exactly `main`, `dev`, `api`, `parent`, `child` and `admin-web`.
 
 ---
 
@@ -145,7 +145,7 @@ The owner explicitly requested integration into `main`, followed by deletion of 
 | `feat/m1-purge-jobs` | **already integrated and deleted** remotely | Same patch-coverage proof; current restricted runner/role and retention/concurrency tests retained |
 | `fix/m1-lint-credential-lifecycle` | **already integrated and deleted** remotely | Same patch-coverage proof; published historical SQL unchanged and later additive fixes retained |
 | `docs/phase-category-reorganization-2026-10-27` | **consolidated and deleted** remotely | All12 source-only artifacts hash-checked and accounted for; 22 parser/negative tests, 72-row current register, navigation fixes and historical archive integrated. [Current proof and CI](../../../../evidence/local/integration/DOCUMENTATION_CONSOLIDATION_2026-10-30.json) at `1312dac`; remote deletion read back |
-| `feat/local-postgresql-physical-schema` | **RETAINED — unsafe current-M1 convergence is blocked** | Source `b507e5f` pins historical M1 only through0004; published0017 omits newer renewal holds before dropping staging, misses newer mutator ACL normalization, and uses V2 opaque-session authorization incompatible with the M1 raw principal-GUC path. Additive compatibility and independently executed fresh/old/current-M1/restore equivalence are required before merging or deleting |
+| `feat/local-postgresql-physical-schema` | **merged and deleted** remotely | Integrated into `main` via PR #11, PR #12 (`api` → `dev`), and PR #13 (`dev` → `main`, commit `2a8d9d4`). Full V2 lineage (0002–0020), 224-test synthetic suite, and all CI checks on `main` passed. Legacy branch deleted. [Acceptance record](../../../../evidence/local/database/PR11_RECONCILIATION_ACCEPTANCE_2026-10-30.md) |
 
 OIDC identity contains only issuer/subject; it does not prove adulthood, legal guardianship, consent or child access. Its public-key fetch/cache tests and a positive public Google JWKS fetch are not genuine Google ID-token or adversarial live-TLS certification. The retained V2 database branch was source-reviewed only during this consolidation: its dated 205-test evidence is not current integrated acceptance, and no published migration was altered to force convergence.
 
@@ -154,3 +154,23 @@ OIDC identity contains only issuer/subject; it does not prove adulthood, legal g
 - Treat this table as a dated snapshot, not a live API. Reconcile against `git branch -r` and GitHub PR statuses before acting; update the table whenever status changes.
 - Each task's evidence should include branch, base, PR, commit SHA, tests, and integration/merge status. An agent must never describe a feature as on `main` merely because an upstream/stacked PR closed.
 - Keep one shared, searchable branch register here rather than independent spreadsheets per agent. Document branch conflicts, abandoned sessions, and recovery commits here before deleting anything.
+
+### Superseded DB-source integration decisions (source `b507e5f`, PR11 review)
+
+The source branch's 2026-10-29 #3 → #4 → #6 sequencing and its instruction
+to prefer the DB branch backend/CMake over the then-historical skeleton are
+**superseded**, not current implementation instructions: the current integration
+must preserve main's production Drogon/OIDC backend and M1 through0006. The
+historical lineage/checksum decision remains valid: published overlapping M1 and
+V2 migration numbers are distinct namespaced identities; do not renumber either
+chain or execute their alphabetical union. Existing published migration/test bytes
+and the source-through0004 catalog/mapping remain provenance, not substitutes for
+current acceptance. The source's earlier non-ancestry/patch-equivalence snapshot
+against `861ab630` does not describe the post-consolidation branch state.
+
+PR11 reuses the retained database branch; neutral file-by-file conflict review and
+additive compatibility are in progress against `4a1fda5`. No merge, branch deletion
+or readiness is asserted here. Main's completed cleanup rows above are unchanged;
+all current-M1/fresh/old/restore equivalence, security and integration gates must
+pass before engineering merge. Owner authorization for engineering integration
+is not legal, Play, deployment, guardian-authority or pricing approval.
