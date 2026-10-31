@@ -1,7 +1,7 @@
 import {useCallback,useEffect,useMemo,useState,type ReactNode} from 'react';
 import {createRoot} from 'react-dom/client';
 import {Activity,BookOpen,ChevronRight,ClipboardCheck,Clock3,CreditCard,FileQuestion,Headphones,LayoutDashboard,LockKeyhole,RefreshCw,Search,ShieldCheck,ShieldAlert,Users,UserRound,ArrowRight,LogOut,AlertCircle} from 'lucide-react';
-import {request,items,may,ApiError,type AccessState,type Role,type AdminRequest,type Faq,type Ticket,type Subscriber,type Audit,type Page} from './api';
+import {request,items,may,onlyServerRoles,ApiError,type AccessState,type Role,type AdminRequest,type Faq,type Ticket,type Subscriber,type Audit,type Page} from './api';
 import {demoRequests,demoFaqs,demoTickets,demoSubscribers,demoAudit} from './fixtures';
 import './styles.css';
 
@@ -71,7 +71,17 @@ function App(){
   catch(e){setActionError(e instanceof Error?e.message:'Action failed; no success assumed');}finally{setBusy(false);}
  };
  if(auth==='checking')return <NoAccess message="Checking administrator session…"/>;
- if(auth==='signed-out')return <NoAccess message={sessionError||'Sign in through the approved administration service to continue.'}/>;
+ if(auth==='signed-out')return <GoogleEntry error={sessionError} onApproved={async(idToken,nonce,csrfState)=>{
+   try{
+     const result=await request<{state:string;role_codes?:string[];session_expires_at:string;contact_email_verified:boolean}>('/admin/auth/google',{method:'POST',body:{id_token:idToken,nonce,csrf_state:csrfState}});
+     const validated=await request<AccessState>('/admin/access/me');
+     const nextRoles=onlyServerRoles(result.role_codes);
+     setAccess(validated);
+     if(result.state==='ACTIVE'&&validated.state==='APPROVED'&&nextRoles.length){
+       setRoles(nextRoles);setAuth('active');setSessionError('');
+     }else{setRoles([]);setAuth('applicant');}
+   }catch(e){setSessionError(e instanceof Error?e.message:'Authentication failed');setAuth('signed-out');}
+ }}/>
  if(auth==='applicant')return <Applicant access={access} onRefresh={()=>{void request<AccessState>('/admin/access/me').then(setAccess).catch(()=>setSessionError('Unable to refresh application status'));}} error={sessionError}/>;
  const accessLocked=(!permitted||!allowed);
  return <div className="app-shell">
@@ -120,6 +130,34 @@ function RequestDecision({entry,onDecision,busy,preview}:{entry:AdminRequest;onD
 }
 function SupportReply({ticket,selected,preview,busy,act}:{ticket:Ticket|undefined;selected:string;preview:boolean;busy:boolean;act:(path:string,method:'POST'|'PUT'|'PATCH',body:unknown)=>Promise<void>}){
  const [message,setMessage]=useState('');return <Box title={ticket?'Ticket conversation · '+ticket.subject:'Ticket conversation'}>{!ticket?<Empty text="Choose a ticket to inspect authorized messages."/>:<><p>Status: <Label>{ticket.status}</Label></p><p className="fine">Ticket messages are independently restricted; never infer message text from the summary.</p><label>Reply<textarea rows={5} value={message} maxLength={5000} onChange={e=>setMessage(e.target.value)} placeholder="Write an authorized support response…"/></label><div className="button-row"><Button disabled={preview||busy||!message.trim()} onClick={()=>{void act('/admin/support/tickets/'+selected+'/reply','POST',{body:message,request_id:crypto.randomUUID()});}}>Send reply</Button></div><div className="notice"><LockKeyhole size={18}/> Child GPS, private recordings and screen captures cannot be attached by default.</div></>}</Box>;
+}
+function GoogleEntry({error,onApproved}:{error:string;onApproved:(idToken:string,nonce:string,csrfState:string)=>Promise<void>}){
+ const clientId=import.meta.env.VITE_ADMIN_GOOGLE_CLIENT_ID as string|undefined;
+ const [root,setRoot]=useState<HTMLDivElement|null>(null);
+ const [status,setStatus]=useState('');
+ useEffect(()=>{
+   if(!root||!clientId)return;
+   // The backend must deliver a CSRF meta-token in the protected same-origin
+   // HTML bootstrap and independently verify OIDC issuer, audience, expiry,
+   // email_verified, nonce, subject and session authorization.
+   if(!document.querySelector('meta[name="csrf-token"]')){setStatus('Admin session bootstrap is not configured: Google login disabled.');return;}
+   const nonce=crypto.randomUUID()+crypto.randomUUID();
+   const csrfState=crypto.randomUUID()+crypto.randomUUID();
+   const script=document.createElement('script');
+   script.src='https://accounts.google.com/gsi/client';script.async=true;
+   script.onload=()=>{
+     const google=(window as Window&{google?:{accounts:{id:{initialize:(args:object)=>void;renderButton:(el:HTMLElement,opts:object)=>void}}}}).google;
+     if(!google){setStatus('Google Identity Services could not initialize.');return;}
+     google.accounts.id.initialize({client_id:clientId,nonce,auto_select:false,callback:(value:{credential?:string})=>{
+       if(value.credential)void onApproved(value.credential,nonce,csrfState);
+     }});
+     google.accounts.id.renderButton(root,{theme:'outline',size:'large',text:'continue_with',width:270});
+   };
+   script.onerror=()=>setStatus('Google Identity Services unavailable.');
+   document.head.appendChild(script);
+   return ()=>{script.remove();};
+ },[root,clientId,onApproved]);
+ return <main className="auth-layout"><div className="auth-card"><div className="brand-mark"><ShieldCheck/></div><p className="overline">MADALASA · ADMINISTRATION</p><h1>Welcome to the secure administration portal</h1><p>Continue with Google. Only a verified owner can approve staff and assign roles. An applicant may only access their own application status.</p><div ref={setRoot} className="google-button"/>{(!clientId||!root)&&<div className="notice"><LockKeyhole size={17}/> Google admin login is unavailable until the approved OAuth client and secure admin backend are configured.</div>}{status&&<div className="notice">{status}</div>}{error&&<div className="error-note" role="alert">{error}</div>}<p className="fine">Google sign-in alone does not grant administrative access, billing visibility or access to child data.</p></div></main>;
 }
 function Applicant({access,onRefresh,error}:{access:AccessState|null;onRefresh:()=>void;error:string}){return <main className="auth-layout"><div className="auth-card"><div className="brand-mark"><UserRound/></div><p className="overline">ADMIN ACCESS APPLICATION</p><h1>{access?.state==='PENDING_REVIEW'?'Application awaiting approval':'Complete your access request'}</h1><p>Account state: <strong>{access?.state||'UNKNOWN'}</strong></p>{error&&<p className="error-note">{error}</p>}<p>Only verified and owner-approved staff can access the administration workspace. Complete identity/profile and email verification through the approved backend workflow.</p><div className="notice">Requested roles are assigned by the owner, never by the applicant. No child data is available during application.</div><Button onClick={onRefresh} kind="secondary">Refresh server status</Button></div></main>}
 
